@@ -1,36 +1,35 @@
-package com.aite.mainlibrary.activity.allshopcard;
+package com.aite.mainlibrary.activity.alldoctor;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.aite.mainlibrary.base.CircleImageView;
 import com.aite.mainlibrary.fragment.doctorInfoFragment.AppointmentFagment;
 import com.aite.mainlibrary.fragment.doctorInfoFragment.ConsultFagment;
 import com.aite.mainlibrary.fragment.doctorInfoFragment.HomepageFagment;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.lxj.xpopup.XPopup;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.util.TextUtil;
+import com.lzy.basemodule.view.MorePopWindow;
 import com.lzy.basemodule.view.RatingBarView;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import com.lzy.basemodule.view.UnopenPopup;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 医生信息
  */
 
-public class DoctorInfoActivity extends BaseActivity {
+public class DoctorInfoActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener {
     @BindView(R2.id.iv_back)
     ImageView mIvBack;
     @BindView(R2.id.tv_title)
@@ -48,7 +47,7 @@ public class DoctorInfoActivity extends BaseActivity {
     @BindView(R2.id.tv_grade1)
     TextView mTvGrade1;
     @BindView(R2.id.user_icon)
-    ImageView mUserIcon;
+    CircleImageView mUserIcon;
     @BindView(R2.id.tv_grade)
     TextView mTvGrade;
     @BindView(R2.id.tv_subscribe_num)
@@ -79,6 +78,7 @@ public class DoctorInfoActivity extends BaseActivity {
     private Fragment[] mFragments = new Fragment[3];
 
     private Fragment mHomepageFragment, mConsultFragment, mAppointmentFragment;
+    private MorePopWindow mOrderPopup;
 
 
     @Override
@@ -91,7 +91,7 @@ public class DoctorInfoActivity extends BaseActivity {
 
         initToolbar("个人主页：唐欣");
         //头像
-        Glide.with(context).load(context.getResources().getDrawable(R.mipmap.orange_else)).apply(RequestOptions.circleCropTransform()).into(mUserIcon);
+        Glide.with(context).load(context.getResources().getDrawable(R.mipmap.orange_else)).into(mUserIcon);
         mTvGrade.setText(TextUtil.highlight(context, "粉丝9.4", "9.4", "#F4EA2A", 0, 0));
         mTvSubscribeNum.setText(TextUtil.highlight(context, "咨询量232", "232", "#F4EA2A", 0, 0));
         mTvConsultNum.setText(TextUtil.highlight(context, "预约数454", "454", "#F4EA2A", 0, 0));
@@ -191,18 +191,43 @@ public class DoctorInfoActivity extends BaseActivity {
     }
 
 
-    @OnClick({R2.id.tv_homepage, R2.id.tv_consult, R2.id.tv_appointment})
+    @OnClick({R2.id.tv_homepage, R2.id.tv_consult, R2.id.tv_appointment, R2.id.tv_title_right})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_homepage) {
             //主页
-            showFragment(1);
+            showFragment(0);
         } else if (id == R.id.tv_consult) {
             //咨询
             showFragment(1);
         } else if (id == R.id.tv_appointment) {
-            //预约
-            showFragment(2);
+//            //预约
+//            showFragment(2);
+            // TODO: 2019/12/16  模块未开放
+            new XPopup.Builder(context)
+                    .asCustom(new UnopenPopup(context, "该板块暂未开放"))
+                    .show();
+        } else if (id == R.id.tv_title_right) {
+            MorePopWindow popWindow = new MorePopWindow(context, this);
+            popWindow.showPopupWindow(view);
         }
+    }
+
+    @Override
+    public void onOrderClick() {
+        //点击订单
+        startActivity(OrderListActivity.class);
+    }
+
+    @Override
+    public void onRenewClick() {
+        //续费
+    }
+
+    @Override
+    public void addDoctrInfo() {
+        //添加医生信息
+
+        startActivity(AddDoctrInfoActivity.class);
     }
 }

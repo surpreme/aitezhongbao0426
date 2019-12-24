@@ -1,8 +1,6 @@
 package com.aite.mainlibrary.activity.allsetting.healthbooklist;
 
 
-import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +15,7 @@ import com.aite.mainlibrary.activity.allsetting.healthbookinformation.HealthBook
 import com.aite.mainlibrary.adapter.AdrressFixRecyAdapter;
 import com.aite.mainlibrary.adapter.HealthBookRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -28,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**

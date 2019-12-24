@@ -3,7 +3,6 @@ package com.aite.mainlibrary.activity.allshopcard.numberbank;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -23,7 +22,7 @@ import com.aite.mainlibrary.activity.allshopcard.timebankrules.TimeBankRulesActi
 import com.aite.mainlibrary.adapter.NumberBankRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.adpter.TextViewBaseRecyAdapter;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

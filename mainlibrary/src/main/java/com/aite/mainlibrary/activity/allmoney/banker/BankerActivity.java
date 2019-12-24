@@ -15,7 +15,7 @@ import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allmoney.addbankcaractvity.AddBankcarActvity;
 import com.aite.mainlibrary.adapter.BankCardRecyAdapter;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.ContentValue;
 

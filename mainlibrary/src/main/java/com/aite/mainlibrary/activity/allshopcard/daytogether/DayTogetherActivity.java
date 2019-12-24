@@ -1,7 +1,6 @@
 package com.aite.mainlibrary.activity.allshopcard.daytogether;
 
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,7 +21,7 @@ import com.aite.mainlibrary.adapter.AllLessBodyRecyAdapter;
 import com.aite.mainlibrary.adapter.RadioGroupRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.adpter.BaseItemDecoration;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -34,7 +33,6 @@ import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

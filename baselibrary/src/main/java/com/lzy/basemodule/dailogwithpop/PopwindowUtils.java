@@ -1,4 +1,4 @@
-package com.lzy.basemodule;
+package com.lzy.basemodule.dailogwithpop;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -27,11 +27,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
+import com.lzy.basemodule.OnClickLstenerInterface;
+import com.lzy.basemodule.R;
 import com.lzy.basemodule.view.PickerView;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 public class PopwindowUtils {
     private static PopwindowUtils mInstance;

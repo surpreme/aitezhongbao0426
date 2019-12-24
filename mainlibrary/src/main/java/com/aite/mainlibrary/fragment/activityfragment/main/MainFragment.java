@@ -2,7 +2,6 @@ package com.aite.mainlibrary.fragment.activityfragment.main;
 
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,11 +13,11 @@ import com.aite.mainlibrary.Constant.MainUIConstant;
 import com.aite.mainlibrary.Mainbean.MainUiDataBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.alldoctor.StarDoctorPushActvity;
 import com.aite.mainlibrary.activity.allmain.AddDeviceMainActvity;
 import com.aite.mainlibrary.activity.allmain.device.DeviceListActivity;
 import com.aite.mainlibrary.activity.allmain.elsehelp.ElseHelpActivity;
 import com.aite.mainlibrary.activity.allmain.messager.MessagerActivity;
-import com.aite.mainlibrary.activity.allshopcard.StarDoctorPushActvity;
 import com.aite.mainlibrary.activity.allshopcard.air.AirActivity;
 import com.aite.mainlibrary.activity.allshopcard.daytogether.DayTogetherActivity;
 import com.aite.mainlibrary.activity.allshopcard.helpdoctor.HelpdoctorActivity;

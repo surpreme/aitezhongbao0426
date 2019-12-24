@@ -1,7 +1,6 @@
 package com.aite.mainlibrary.activity.allmain.buydaytogether;
 
 
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,20 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aite.a.activity.li.activity.ChoiceActivity;
 import com.aite.alipaylibrary.PayAway;
 import com.aite.mainlibrary.Mainbean.BuySencondBean;
-import com.aite.mainlibrary.Mainbean.LessBodyInformationBean;
 import com.aite.mainlibrary.Mainbean.PayHelpServiceSuccessBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.aite.mainlibrary.activity.allsetting.PaySettingActivity;
-import com.aite.mainlibrary.activity.allshopcard.sureshopbook.SureShopBookActivity;
-import com.aite.mainlibrary.activity.allshopcard.sureunfactshopbook.SureUnFactShopBookActivity;
 import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.okgo.model.HttpParams;
@@ -37,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**

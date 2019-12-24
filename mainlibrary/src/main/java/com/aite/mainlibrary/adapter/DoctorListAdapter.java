@@ -32,7 +32,6 @@ public class DoctorListAdapter extends BaseRecyclerViewAdapter<String> {
         mContext = context;
     }
 
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -40,25 +39,9 @@ public class DoctorListAdapter extends BaseRecyclerViewAdapter<String> {
         return new ViewHolder(view);
     }
 
-    public OnClickLstenerInterface.OnItemRecyClickInterface getOnItemRecyClickInterface() {
-        return onItemRecyClickInterface;
-    }
-
-    public void setOnItemRecyClickInterface(OnClickLstenerInterface.OnItemRecyClickInterface onItemRecyClickInterface) {
-        this.onItemRecyClickInterface = onItemRecyClickInterface;
-    }
-
-    private OnClickLstenerInterface.OnItemRecyClickInterface onItemRecyClickInterface;
-
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ViewHolder) holder).bindView(mDataList.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemRecyClickInterface.getPosition(position);
-            }
-        });
     }
 
     class ViewHolder extends BaseRvHolder {

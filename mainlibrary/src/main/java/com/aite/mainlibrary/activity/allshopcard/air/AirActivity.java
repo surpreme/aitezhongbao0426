@@ -2,14 +2,12 @@ package com.aite.mainlibrary.activity.allshopcard.air;
 
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.aite.mainlibrary.Mainbean.AirMainListBean;
@@ -20,10 +18,9 @@ import com.aite.mainlibrary.activity.allshopcard.booktimebankinformation.BookTim
 import com.aite.mainlibrary.activity.allshopcard.postairneed.PostAirNeedActivity;
 import com.aite.mainlibrary.adapter.AirServiceRecyAdapter;
 import com.aite.mainlibrary.adapter.RadioGroupRecyAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.okgo.model.HttpParams;

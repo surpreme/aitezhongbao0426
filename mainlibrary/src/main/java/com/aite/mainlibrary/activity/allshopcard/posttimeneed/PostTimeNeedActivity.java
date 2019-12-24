@@ -2,7 +2,6 @@ package com.aite.mainlibrary.activity.allshopcard.posttimeneed;
 
 
 import android.os.Build;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.Mainbean.TypeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.aite.mainlibrary.activity.allshopcard.timebank.TimeBankActivity;
 import com.aite.mainlibrary.adapter.PostHelpDoctorTypeRecyAdapter;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -25,10 +23,9 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
-import com.lzy.basemodule.util.KeyBoardUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 
@@ -37,7 +34,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

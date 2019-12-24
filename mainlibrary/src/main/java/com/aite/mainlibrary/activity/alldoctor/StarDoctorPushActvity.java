@@ -1,30 +1,27 @@
-package com.aite.mainlibrary.activity.allshopcard;
+package com.aite.mainlibrary.activity.alldoctor;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.adapter.DoctorListAdapter;
 import com.aite.mainlibrary.base.OnClickRecyclerViewListener;
-import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.mvp2.GBaseActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class StarDoctorPushActvity extends BaseActivity {
+public class StarDoctorPushActvity extends GBaseActivity {
 
     @BindView(R2.id.iv_back)
     ImageView mIvBack;
@@ -59,39 +56,47 @@ public class StarDoctorPushActvity extends BaseActivity {
     private DoctorListAdapter mAdapter;
 
     @Override
-    protected int getLayoutResId() {
+    public int setLayoutId() {
         return R.layout.star_doctor_push;
     }
 
     @Override
-    protected void initView() {
+    public void initOthers() {
         initToolbar("名医列表");
-
         List<String> data = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             data.add("111");
         }
-        mAdapter = new DoctorListAdapter(context);
-        mRecyView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        mAdapter = new DoctorListAdapter(mContext);
+        mRecyView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mRecyView.setNestedScrollingEnabled(false);
         mAdapter.appendData(data);
         mRecyView.setAdapter(mAdapter);
-
         initListener();
+    }
+
+    @Override
+    public void showLoading() {
 
     }
 
-    private void initListener() {
-        mAdapter.setOnItemRecyClickInterface(new OnClickLstenerInterface.OnItemRecyClickInterface() {
-            @Override
-            public void getPosition(int postion) {
-                startActivity(DoctorInfoActivity.class);
+    @Override
+    public void hideLoading() {
 
-            }
-        });
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+
+    }
+
+
+
+    private void initListener() {
         mAdapter.setOnRecyclerViewListener(new OnClickRecyclerViewListener() {
             @Override
             public void onItemClick(int position) {
+                toActivity(DoctorInfoActivity.class);
             }
 
             @Override
@@ -102,32 +107,27 @@ public class StarDoctorPushActvity extends BaseActivity {
     }
 
 
-    @Override
-    protected void initDatas() {
 
-    }
-
-    @Override
-    protected void initResume() {
-
-    }
-
-    @Override
-    protected void initReStart() {
-
-    }
 
     @OnClick({R2.id.ll_nationwide, R2.id.ll_division, R2.id.ll_sales, R2.id.ll_screen})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.ll_nationwide) {
             //全国
+
         } else if (id == R.id.ll_division) {
             //科室
+
         } else if (id == R.id.ll_sales) {
             //销量
+
         } else if (id == R.id.ll_screen) {
             //筛选
+
         }
+
     }
+
+
+
 }

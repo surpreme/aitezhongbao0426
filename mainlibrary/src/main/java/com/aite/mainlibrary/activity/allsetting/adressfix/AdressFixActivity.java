@@ -1,23 +1,18 @@
 package com.aite.mainlibrary.activity.allsetting.adressfix;
 
 
-import android.app.Activity;
-import android.content.Intent;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.SettingAddressListBean;
-import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.addadrress.AddAdrressActivity;
-import com.aite.mainlibrary.activity.allshopcard.sureshopbook.SureShopBookActivity;
 import com.aite.mainlibrary.adapter.AdrressFixRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.okgo.model.HttpParams;
@@ -125,6 +120,7 @@ public class AdressFixActivity extends BaseActivity<AdressFixContract.View, Adre
             addressListBeans.clear();
             adrressFixRecyAdapter.notifyDataSetChanged();
         }
+        if (addressListBeans == null) addressListBeans = new ArrayList<>();
         addressListBeans.addAll(((SettingAddressListBean) msg).getAddress_list());
         adrressFixRecyAdapter.notifyDataSetChanged();
     }

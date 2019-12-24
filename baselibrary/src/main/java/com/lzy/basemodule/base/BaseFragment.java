@@ -1,9 +1,7 @@
 package com.lzy.basemodule.base;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +15,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.R;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.mvp.BasePresenterImpl;
 import com.lzy.basemodule.mvp.BaseView;
 import com.lzy.basemodule.util.SystemUtil;
-import com.lzy.basemodule.util.TextUtil;
 import com.lzy.basemodule.util.toast.ToastTopUtils;
 import com.lzy.basemodule.util.toast.ToastUtils;
 import com.lzy.okgo.model.HttpParams;

@@ -2,12 +2,10 @@ package com.aite.mainlibrary.activity.allshopcard.remembershopbook;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,11 +27,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
-import com.lzy.basemodule.bean.IImgBaseBean;
 import com.lzy.basemodule.logcat.LogUtils;
-import com.lzy.basemodule.util.KeyBoardUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 import com.youth.banner.Banner;
@@ -45,7 +41,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

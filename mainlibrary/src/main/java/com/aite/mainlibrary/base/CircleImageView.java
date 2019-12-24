@@ -15,9 +15,11 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 import com.aiteshangcheng.a.R;
 
-public class CircleImageView extends ImageView {
+public class CircleImageView extends AppCompatImageView {
 
 	private static final Xfermode MASK_XFERMODE;
 	private Bitmap mask;

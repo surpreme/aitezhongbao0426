@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,10 +35,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <View
-                    android:background="@color/noglay"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_10"/>
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/noglay" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:drawableRight="@drawable/right_arrow_icon"
+                        android:drawableRight="@mipmap/right_arrow_icon"
                         android:text="去挂号"
                         android:textColor="#FFB400"
                         android:textSize="15sp" />
@@ -73,9 +73,9 @@
                 </RelativeLayout>
 
                 <View
-                    android:background="@color/noglay"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_10"/>
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/noglay" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,6 +100,75 @@
 
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/noglay" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_12">
+
+                    <TextView
+                        android:id="@+id/tv_evaluate_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3123位患者发布了评论"
+                        android:textColor="@color/text1"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true" />
+
+
+                    <com.lzy.basemodule.view.FlowLayout
+                        android:id="@+id/flow_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_evaluate_num"
+                        android:layout_marginTop="@dimen/dp_10" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/noglay" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_12">
+
+                    <TextView
+                        android:id="@+id/tv_comment_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="患者点评（222）"
+                        android:textColor="@color/text1"
+                        android:textSize="@dimen/textSize_15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/right_arrow_icon"
+                        android:text="更多"
+                        android:textColor="@color/text3"
+                        android:textSize="@dimen/textSize_15sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recy_view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_comment_num"
+                        android:layout_marginTop="@dimen/dp_10" />
+
+                </RelativeLayout>
 
 
             </LinearLayout>

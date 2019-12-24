@@ -57,8 +57,17 @@ dependencies {
     // api 'com.lzy.net:okrx2:2.0.2'
     api 'com.lzy.net:okserver:2.0.5'
     //rxjava
-    api 'io.reactivex.rxjava2:rxjava:2.1.1'
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //rxjava2
+    api "io.reactivex.rxjava2:rxjava:2.1.12"
+    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    //圆形控件
+    api 'de.hdodenhof:circleimageview:3.0.1'
+
+
+    //AutoDispose解决RxJava内存泄漏
+    api 'com.uber.autodispose:autodispose:0.7.0'
+    api 'com.uber.autodispose:autodispose-android:0.7.0'
+    api 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
     api 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
     api 'org.greenrobot:eventbus:3.1.1'
     api 'io.reactivex.rxjava2:rxjava:2.1.1'
@@ -146,6 +155,12 @@ dependencies {
     api files('libs/umeng-common-2.1.8.jar')
     //友盟--------
 
+    //retrofit2
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
+    api "com.squareup.okhttp3:logging-interceptor:3.10.0"
     //弹窗
     api 'com.lxj:xpopup:1.8.2'
     //拼音

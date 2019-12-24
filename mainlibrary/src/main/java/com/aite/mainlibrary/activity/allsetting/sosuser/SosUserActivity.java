@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.BinderSosUserListBean;
-import com.aite.mainlibrary.Mainbean.BinderUserListBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.addsosuser.AddSosUserActivity;
 import com.aite.mainlibrary.adapter.BinSosderUserRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.okgo.model.HttpParams;

@@ -19,11 +19,9 @@ import com.aite.mainlibrary.adapter.MineHelpEatRecyAdapter;
 import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
-import com.lzy.basemodule.base.BaseFragment;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseLazyFragment;
 import com.lzy.basemodule.logcat.LogUtils;
-import com.lzy.basemodule.mvp.MVPBaseFragment;
 import com.lzy.basemodule.util.toast.ToastUtils;
 import com.lzy.okgo.model.HttpParams;
 

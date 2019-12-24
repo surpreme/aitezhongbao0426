@@ -20,7 +20,6 @@ import com.aite.mainlibrary.R2;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.BaseConstant.BaseConstant;
-import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.FileUtils;
@@ -29,7 +28,6 @@ import com.lzy.okgo.model.HttpParams;
 import java.io.File;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

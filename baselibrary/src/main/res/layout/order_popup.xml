@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_10"
+    android:background="#FF00BFBF"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:id="@+id/tv_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="全部订单"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+    android:id="@+id/tv_renew"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:text="续费价格"
+    android:textColor="@color/white"
+    android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/tv_add_doctr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="添加资料"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+
+</LinearLayout>

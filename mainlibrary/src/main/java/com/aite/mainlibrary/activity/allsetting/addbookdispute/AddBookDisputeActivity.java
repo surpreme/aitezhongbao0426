@@ -4,7 +4,6 @@ package com.aite.mainlibrary.activity.allsetting.addbookdispute;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,11 +19,10 @@ import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.BaseConstant.BaseConstant;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.adpter.TextWithIdBaseRecyAdapter;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.ContentValue;
-import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.FileUtils;
 import com.zhihu.matisse.Matisse;
 
@@ -32,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

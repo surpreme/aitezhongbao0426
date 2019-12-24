@@ -1,7 +1,6 @@
 package com.aite.mainlibrary.activity.allshopcard.sureunfactshopbook;
 
 
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,24 +16,21 @@ import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.Mainbean.UnFactSureBookBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.aite.mainlibrary.activity.allmain.buydaytogether.BuyDayTogetherActivity;
 import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.CallUtils;
 import com.lzy.basemodule.util.TextEmptyUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
-import com.umeng.commonsdk.debug.E;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

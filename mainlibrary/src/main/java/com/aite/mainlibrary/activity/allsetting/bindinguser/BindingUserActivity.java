@@ -16,12 +16,9 @@ import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.addbindinguser.AddBindingUserActivity;
 import com.aite.mainlibrary.adapter.BinderUserRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.ContentValue;
-import com.lzy.basemodule.mvp.MVPBaseActivity;
-import com.lzy.basemodule.util.FileUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;

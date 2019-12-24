@@ -16,7 +16,7 @@ import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.PopwindowUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 
 import java.util.List;
 
