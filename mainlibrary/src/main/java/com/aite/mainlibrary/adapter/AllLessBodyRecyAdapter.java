@@ -8,10 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aite.mainlibrary.Mainbean.AirMainListBean;
 import com.aite.mainlibrary.Mainbean.LessDayBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
@@ -73,12 +71,12 @@ public class AllLessBodyRecyAdapter extends RecyclerView.Adapter<AllLessBodyRecy
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(context).load(listBean.get(position).getGoods_image_url()).into(holder.iconImg);
         holder.titleTv.setText(listBean.get(position).getGoods_name());
-        holder.informationTv.setText(String.format("%s小时前发布", listBean.get(position).getService_hours()));
+        holder.informationTv.setText(String.format("时长： %s", listBean.get(position).getService_hours()));
         holder.priceTv.setText("￥" + listBean.get(position).getGoods_price());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
     }

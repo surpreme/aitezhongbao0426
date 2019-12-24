@@ -84,7 +84,6 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
     protected void initView() {
         initToolbar("购物车");
         tvTitleRight.setText("编辑");
-        tvTitleRight.setTextColor(getResources().getColor(R.color.black));
         deleteBottomLl.setVisibility(View.GONE);
         allMagLl.setVisibility(View.VISIBLE);
         tvTitleRight.setOnClickListener(this);
@@ -153,9 +152,13 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.add_shopcar_btn)
-            LogUtils.d(surePay(cartListBeans).toString());
-//        startActivity(SureShopBookActivity.class);
+        if (v.getId() == R.id.add_shopcar_btn) {
+            if (senduserPriceTv.getText().equals("结算(0)"))
+                return;
+            if (cartListBeans.isEmpty()) return;
+            startActivity(SureShopBookActivity.class, "cart_id", surePay(cartListBeans));
+
+        }
         if (v.getId() == R.id.tv_delete) initDlete();
         if (v.getId() == R.id.tv_title_right) initTopState();
     }
@@ -284,7 +287,6 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
     //实现接口
     @Override
     protected void initDatas() {
-        mPresenter.getShopCardList(initParams());
 
     }
 
@@ -342,6 +344,7 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
 
     @Override
     protected void initResume() {
+        mPresenter.getShopCardList(initParams());
 
     }
 
@@ -352,6 +355,7 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
 
     @Override
     public void onShopCardListSuccess(Object msg) {
+        if (!cartListBeans.isEmpty()) cartListBeans.clear();
         cartListBeans.addAll(((ShopCardlistBean) msg).getCart_list());
         shopcatAdapter.notifyDataSetChanged();
     }
@@ -371,5 +375,10 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
         shopcatAdapter.notifyItemChanged(addlessPostion, String.valueOf(((LessAddShopCardNumberBean) msg).getQuantity()));
         cartListBeans.get(addlessPostion).setGoods_num(String.valueOf(((LessAddShopCardNumberBean) msg).getQuantity()));
         statistics();
+    }
+
+    @Override
+    public void onGetShopBookThingSuccess(Object msg) {
+
     }
 }

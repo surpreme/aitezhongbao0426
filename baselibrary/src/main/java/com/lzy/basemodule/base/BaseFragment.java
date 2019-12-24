@@ -1,22 +1,32 @@
 package com.lzy.basemodule.base;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.R;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.mvp.BasePresenterImpl;
 import com.lzy.basemodule.mvp.BaseView;
 import com.lzy.basemodule.util.SystemUtil;
+import com.lzy.basemodule.util.TextUtil;
 import com.lzy.basemodule.util.toast.ToastTopUtils;
+import com.lzy.basemodule.util.toast.ToastUtils;
+import com.lzy.okgo.model.HttpParams;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -233,8 +243,68 @@ public abstract class BaseFragment<V extends BaseView, T extends BasePresenterIm
 
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
+    protected void initWebView(WebView webView) {
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setUseWideViewPort(true); // 将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        // 缩放操作
+        webSettings.setSupportZoom(true); // 支持缩放，默认为true。是下面那个的前提。
+        webSettings.setBuiltInZoomControls(true); // 设置内置的缩放控件。若为false，则该WebView不可缩放
+        webSettings.setDisplayZoomControls(false); // 隐藏原生的缩放控件
+        webSettings.setLoadsImagesAutomatically(true);  //支持自动加载图片
+    }
+
+    protected class JsInterface {
+        private WebView webView;
+
+        public JsInterface(WebView webView) {
+            this.webView = webView;
+        }
+
+        /**
+         * 返回
+         */
+        @JavascriptInterface
+        public void AppGoBack() {
+            if (webView.canGoBack()) {
+                webView.goBack();
+            } else {
+                getActivity().finish();
+            }
+        }
+    }
+
     @Override
     public void showError(String msg) {
+        showToast(msg);
+        LogUtils.d("服务器错误信息+++++++" + msg);
+    }
 
+    protected void showToast(String msg) {
+        ToastUtils.showToast(context, msg);
+    }
+
+    protected void showToast(String msg, int gravity) {
+        ToastUtils.showToast(context, msg, gravity);
+    }
+
+    protected void onBackPressed() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+        else {
+            LogUtils.d("未得到上下文");
+            showToast("处理返回键错误 ");
+        }
+    }
+    protected HttpParams initKeyParams() {
+        HttpParams params = new HttpParams();
+        params.put("key", AppConstant.KEY);
+        return params;
+    }
+    protected boolean isStringEmpty(String s) {
+        return s == null || s.isEmpty();
     }
 }

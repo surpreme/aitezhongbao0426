@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,11 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aite.mainlibrary.Mainbean.MainUiDataBean;
 import com.aite.mainlibrary.R;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,7 +62,7 @@ public class HelpElderRecyAdapter extends RecyclerView.Adapter<HelpElderRecyAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstenerInterface.getPostion(position);
+                lstenerInterface.getPosition(position);
             }
         });
     }

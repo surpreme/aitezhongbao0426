@@ -11,9 +11,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aite.a.activity.li.fragment.ZhongbaoServiceFragment;
 import com.aite.a.base.BaseFargmentActivity;
+import com.aite.a.base.Mark;
 import com.aite.a.fargment.FavoriteFargment;
 import com.aiteshangcheng.a.R;
+import com.lzy.basemodule.base.BaseApp;
+import com.lzy.basemodule.view.StatusBarUtils;
 
 import java.util.ArrayList;
 
@@ -36,12 +40,14 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
     private ArrayList<Fragment> fragmentList; // 装载显示内容
     private TextView goods_tx;
     private TextView store_tx;
+    private TextView service_tx;
     private ImageView iv_back;
     private ImageView iv_right;
     private TextView tv_name;
     private TextView _tx_right;
     private FavoriteFargment goodsFargment;
     private FavoriteFargment storeFargment;
+    private ZhongbaoServiceFragment zhongbaoServiceFragment;
 
     public ArrayList<Fragment> getFragmentList() {
         return fragmentList;
@@ -53,7 +59,9 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
         setContentView(R.layout.favorite_list_activity);
         findViewById();
         initView();
-        initCursor(2);
+        initCursor(3);
+
+
     }
 
     protected void findViewById() {
@@ -71,9 +79,11 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
         roller = (ImageView) findViewById(R.id.goods_list_iv_cursor);
         goods_tx = (TextView) findViewById(R.id.goods_tx);
         store_tx = (TextView) findViewById(R.id.store_tx);
+        service_tx = (TextView) findViewById(R.id.service_tx);
         viewPager = (ViewPager) findViewById(R.id.favorite_list_viewpager);
         goods_tx.setOnClickListener(new MyOnclickListener(0));
         store_tx.setOnClickListener(new MyOnclickListener(1));
+        service_tx.setOnClickListener(new MyOnclickListener(2));
 
     }
 
@@ -83,8 +93,11 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
         viewPager = (ViewPager) findViewById(R.id.favorite_list_viewpager);
         goodsFargment = new FavoriteFargment().newInstance(1);
         storeFargment = new FavoriteFargment().newInstance(2);
+        zhongbaoServiceFragment = new ZhongbaoServiceFragment();
         fragmentList.add(goodsFargment);
         fragmentList.add(storeFargment);
+        fragmentList.add(zhongbaoServiceFragment);
+
     }
 
     /**
@@ -98,12 +111,12 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         Display display = getWindowManager().getDefaultDisplay();
         display.getMetrics(displayMetrics);
-        offset = (displayMetrics.widthPixels / tagNum - imageWidth) / 2;
+        offset = (displayMetrics.widthPixels / tagNum - imageWidth) / 3;
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
         roller.setImageMatrix(matrix);
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList));
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setOnPageChangeListener(new PageChangeListener());
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -120,7 +133,7 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
 
     class PageChangeListener implements ViewPager.OnPageChangeListener {
 
-        int one = offset * 2 + imageWidth; // 一个页卡占的偏移量
+        int one = offset * 3 + imageWidth; // 一个页卡占的偏移量
 
         @Override
         public void onPageSelected(int position) {
@@ -133,10 +146,17 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
                 case 0:
                     goods_tx.setTextColor(getResources().getColor(R.color.cursor_text));
                     store_tx.setTextColor(getResources().getColor(R.color.black));
+                    service_tx.setTextColor(getResources().getColor(R.color.black));
                     break;
                 case 1:
                     goods_tx.setTextColor(getResources().getColor(R.color.black));
+                    service_tx.setTextColor(getResources().getColor(R.color.black));
                     store_tx.setTextColor(getResources().getColor(R.color.cursor_text));
+                    break;
+                case 2:
+                    goods_tx.setTextColor(getResources().getColor(R.color.black));
+                    store_tx.setTextColor(getResources().getColor(R.color.black));
+                    service_tx.setTextColor(getResources().getColor(R.color.cursor_text));
                     break;
             }
         }
@@ -210,6 +230,9 @@ public class FavoriteListFargmentActivity extends BaseFargmentActivity {
                 finish();
             } else if (v.getId() == R.id._tx_right) {
                 goodsFargment.goodsAdapter.isShow();
+            } else if (v.getId() == R.id.service_tx) {
+                viewPager.setCurrentItem(index);
+
             }
         }
     }

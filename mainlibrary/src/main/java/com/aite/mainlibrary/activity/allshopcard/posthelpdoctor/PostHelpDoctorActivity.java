@@ -30,6 +30,7 @@ import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.KeyBoardUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 
@@ -251,7 +252,7 @@ public class PostHelpDoctorActivity extends BaseActivity<PostHelpDoctorContract.
 
     }
 
-// R2.id.gender_ll,
+    // R2.id.gender_ll,
     @OnClick({R2.id.area_choice_ll, R2.id.time_ll, R2.id.end_time_ll, R2.id.service_type_ll})
     @Override
     public void onClick(View v) {
@@ -261,11 +262,12 @@ public class PostHelpDoctorActivity extends BaseActivity<PostHelpDoctorContract.
             else showToast("数据错误");
         }
         if (v.getId() == R.id.service_type_ll) {
+            hideSoftWare();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             PostHelpDoctorTypeRecyAdapter postHelpDoctorTypeRecyAdapter = new PostHelpDoctorTypeRecyAdapter(context, postTypeList);
             postHelpDoctorTypeRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
                 @Override
-                public void getPostion(int postion) {
+                public void getPosition(int postion) {
                     LogUtils.e(postTypeList.get(postion).getClass_name());
                     serviceTypeTv.setText(postTypeList.get(postion).getClass_name());
                     SERVICETYPEID = postTypeList.get(postion).getClass_id();
@@ -276,6 +278,7 @@ public class PostHelpDoctorActivity extends BaseActivity<PostHelpDoctorContract.
 
         }
         if (v.getId() == R.id.time_ll) {
+            hideSoftWare();
             initChoiceTimer(new OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {
@@ -288,6 +291,7 @@ public class PostHelpDoctorActivity extends BaseActivity<PostHelpDoctorContract.
 
         }
         if (v.getId() == R.id.end_time_ll) {
+            hideSoftWare();
             initChoiceTimer(new OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {

@@ -17,7 +17,7 @@
             android:id="@+id/log_img_id"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            app:srcCompat="@drawable/round_background_blue" />
+            app:srcCompat="@drawable/logo" />
 
     </LinearLayout>
 
@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@drawable/juxing_gray_background"
                 android:gravity="center"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
@@ -67,6 +68,7 @@
             android:layout_width="335dp"
             android:layout_height="43dp"
             android:layout_gravity="center"
+            android:background="@drawable/juxing_gray_background"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +117,7 @@
                 android:layout_width="335dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@null"
+                android:background="@drawable/juxing_gray_background"
                 android:hint="请设置密码"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
@@ -130,6 +132,7 @@
             android:layout_width="335dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/juxing_gray_background"
             app:hintEnabled="false"
             app:passwordToggleEnabled="false"
             app:startIconDrawable="@mipmap/lock"
@@ -160,7 +163,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingLeft="70dp">
+            android:paddingLeft="50dp">
 
 
             <CheckBox
@@ -189,8 +192,7 @@
             android:id="@+id/next_btn"
             android:layout_width="300dp"
             android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:background="@drawable/round_background_blue"
+            android:background="@drawable/critle_round_background_blue"
             android:gravity="center"
             android:text="@string/next"
             android:textColor="#ffffffff"

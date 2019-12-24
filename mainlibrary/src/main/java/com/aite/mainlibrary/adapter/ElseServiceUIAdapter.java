@@ -11,9 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aite.mainlibrary.Constant.MainUIConstant;
+import com.aite.mainlibrary.Mainbean.ElseServiceIconBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.lzy.basemodule.OnClickLstenerInterface;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +25,8 @@ import butterknife.ButterKnife;
 public class ElseServiceUIAdapter extends RecyclerView.Adapter<ElseServiceUIAdapter.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
-    private int[] imgs;
-    private String[] names;
-    private int[] backgrounds;
+    private List<ElseServiceIconBean.ListClassBean> elseServiceIconBeans;
+
 
     public OnClickLstenerInterface.OnRecyClickInterface getOnClickLstenerInterface() {
         return onClickLstenerInterface;
@@ -35,11 +38,9 @@ public class ElseServiceUIAdapter extends RecyclerView.Adapter<ElseServiceUIAdap
 
     private OnClickLstenerInterface.OnRecyClickInterface onClickLstenerInterface;
 
-    public ElseServiceUIAdapter(Context context, int[] imgs, String[] names, int[] backgrounds) {
+    public ElseServiceUIAdapter(Context context, List<ElseServiceIconBean.ListClassBean> elseServiceIconBeans) {
         this.context = context;
-        this.imgs = imgs;
-        this.names = names;
-        this.backgrounds = backgrounds;
+        this.elseServiceIconBeans = elseServiceIconBeans;
         this.inflater = LayoutInflater.from(context);
 
     }
@@ -54,13 +55,14 @@ public class ElseServiceUIAdapter extends RecyclerView.Adapter<ElseServiceUIAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.icon.setImageResource(imgs[position]);
-        holder.name.setText(names[position]);
-        holder.fatherLayout.setBackgroundResource(backgrounds[position]);
+//        Glide.with(context).load(elseServiceIconBeans.get(position).getPic()).into(holder.icon);
+        holder.icon.setImageResource(MainUIConstant.ElseHelpConstant.settingImg[position]);
+        holder.name.setText(elseServiceIconBeans.get(position).getGc_name());
+        holder.fatherLayout.setBackgroundResource(MainUIConstant.ElseHelpConstant.backgrondImg[position]);
         holder.fatherLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickLstenerInterface.getPostion(position);
+                onClickLstenerInterface.getPosition(position);
             }
         });
 
@@ -68,7 +70,7 @@ public class ElseServiceUIAdapter extends RecyclerView.Adapter<ElseServiceUIAdap
 
     @Override
     public int getItemCount() {
-        return names == null ? 0 : names.length;
+        return elseServiceIconBeans == null ? 0 : elseServiceIconBeans.size();
     }
 
     static

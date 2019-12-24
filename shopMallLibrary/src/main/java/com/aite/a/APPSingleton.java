@@ -121,7 +121,7 @@ public class APPSingleton extends BaseApp implements Mark {
         }
 
         netRun = new NetRun(this, handler);
-        initHX();
+//        initHX();
         //讯飞
         SpeechUtility.createUtility(this, SpeechConstant.APPID + "=57510e86");
     }
@@ -241,7 +241,8 @@ public class APPSingleton extends BaseApp implements Mark {
     public void initHX() {
         appContext = this;
         int pid = android.os.Process.myPid();
-        String processAppName = getAppName(pid);
+//        String processAppName = getAppName(pid);
+        String processAppName = "com.aite.aitezhongbao";
         // 如果APP启用了远程的service，此application:onCreate会被调用2次
         // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
         // 默认的APP会在以包名为默认的process name下运行，如果查到的process name不是APP的process name就立即返回

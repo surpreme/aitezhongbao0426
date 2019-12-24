@@ -26,3 +26,4 @@
 #okio
 -dontwarn okio.**
 -keep class okio.**{*;}
+-keep class com.umeng.** {*;}

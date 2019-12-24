@@ -2,25 +2,19 @@ package com.aite.mainlibrary.fragment.activityfragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.adapter.fragmentAdpter.BackgroundViewPagerApdapter;
-import com.aite.mainlibrary.adapter.fragmentAdpter.LessBodyViewPagerApdapter;
-import com.aite.mainlibrary.adapter.fragmentAdpter.LoveFamilyViewPagerApdapter;
-import com.aite.mainlibrary.fragment.lessBodyfragment.lessbodybookfragment.LessBodyBookFragment;
-import com.aite.mainlibrary.fragment.lessBodyfragment.lessbodyoveredbooklist.LessbodyoveredbooklistFragment;
-import com.aite.mainlibrary.fragment.lessBodyfragment.lessbodyunpaybooklist.LessbodyunpaybooklistFragment;
-import com.aite.mainlibrary.fragment.lovefamilychridren.ChridrenFragmentSencond;
-import com.aite.mainlibrary.fragment.lovefamilychridren.ChridrenFragmentThrid;
-import com.aite.mainlibrary.fragment.lovefamilychridren.chridrenfirst.ChridrenFirstFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.base.BaseApp;
 import com.lzy.basemodule.base.BaseFragment;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -29,12 +23,24 @@ public class LoveFamilyFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R2.id.thingsfix_tabMode)
     TabLayout tabLayout;
+    @BindView(R2.id.webView)
+    WebView webView;
     private View[] views;
     private BackgroundViewPagerApdapter viewPagerAdapter;
 
 
     @Override
     protected void initModel() {
+
+    }
+
+    public boolean WebonBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+            return false;
+        } else {
+            return true;
+        }
 
     }
 
@@ -73,6 +79,11 @@ public class LoveFamilyFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+        webView.loadUrl(AppConstant.ZHONGBAOLOVEFAMILYSURL + AppConstant.KEY);
+        webView.setWebViewClient(new WebViewClient());
+        initWebView(webView);
+        webView.addJavascriptInterface(new JsInterface(webView), "AndroidWebView");
+
         initFragment();
     }
 

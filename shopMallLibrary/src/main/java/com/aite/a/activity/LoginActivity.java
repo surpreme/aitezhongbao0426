@@ -30,8 +30,6 @@ import com.aite.a.base.BaseActivity;
 import com.aite.a.base.Mark;
 import com.aite.a.parse.NetRun;
 import com.aite.a.utils.CommonTools;
-import com.aite.a.utils.lingshi;
-import com.aiteshangcheng.a.wxapi.WXEntryActivity;
 import com.aiteshangcheng.a.R;
 import com.tencent.connect.UserInfo;
 import com.tencent.tauth.IUiListener;
@@ -305,7 +303,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 //            case R.id.tv_wxlogin:
 //                // TODO 微信登录 (暂无接口)
 //                lingshi.getInstance().setIslogin(true);
-//                startActivity(new Intent(LoginActivity.this, WXEntryActivity.class));
+//                startActivity(new Intent(LoginActivity.this, WXEntryActivity2.class));
 //                break;
 //            case R.id.iv_cha:
 //                et_name.setText("");

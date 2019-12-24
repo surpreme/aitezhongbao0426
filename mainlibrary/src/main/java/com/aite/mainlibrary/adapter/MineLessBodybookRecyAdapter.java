@@ -1,6 +1,7 @@
 package com.aite.mainlibrary.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.BookLessBodyFamilyBean;
-import com.aite.mainlibrary.Mainbean.BookMorningNoonEatBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.allshopcard.chatoutbook.ChatOutBookActivity;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.OnClickLstenerInterface;
 
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 
 
 public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBodybookRecyAdapter.ViewHolder> {
+
     private Context context;
     private LayoutInflater inflater;
     private List<BookLessBodyFamilyBean.OrderListBean> orderListBeans;
@@ -46,6 +48,20 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
 
     public OnClickLstenerInterface.OnRecyClickInterface getClickInterface() {
         return clickInterface;
+    }
+
+    public interface OnStartEatcodeInterface {
+        void getStartqrPosition(int position);
+    }
+
+    private OnStartEatcodeInterface onStartEatcodeInterface;
+
+    public OnStartEatcodeInterface getOnStartEatcodeInterface() {
+        return onStartEatcodeInterface;
+    }
+
+    public void setOnStartEatcodeInterface(OnStartEatcodeInterface onStartEatcodeInterface) {
+        this.onStartEatcodeInterface = onStartEatcodeInterface;
     }
 
     public void setClickInterface(OnClickLstenerInterface.OnRecyClickInterface clickInterface) {
@@ -75,12 +91,17 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
         holder.titleTv.setText(orderListBeans.get(position).getGoods_name());
         holder.timeTv.setText(String.format("下单时间%s", orderListBeans.get(position).getAdd_time()));
         holder.stateTv.setText(orderListBeans.get(position).getOrder_state_text());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickInterface.getPostion(position);
-            }
+        holder.talk_tv.setVisibility(orderListBeans.get(position).getIf_evaluation() == 1 ? View.VISIBLE : View.GONE);
+        holder.talk_tv.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatOutBookActivity.class);
+            intent.putExtra("order_id", orderListBeans.get(position).getOrder_id());
+            context.startActivity(intent);
         });
+        holder.cancel_tv.setVisibility(orderListBeans.get(position).getIf_cancel() == 1 ? View.VISIBLE : View.GONE);
+        holder.payTv.setVisibility(orderListBeans.get(position).getIf_pay() == 1 ? View.VISIBLE : View.GONE);
+        holder.startEatTv.setVisibility(orderListBeans.get(position).getIs_verify() == 1 ? View.VISIBLE : View.GONE);
+        holder.startEatTv.setOnClickListener(v -> onStartEatcodeInterface.getStartqrPosition(position));
+        holder.itemView.setOnClickListener(v -> clickInterface.getPosition(position));
 
 
     }
@@ -106,6 +127,14 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
         TextView lookInformationTv;
         @BindView(R2.id.time_tv)
         TextView timeTv;
+        @BindView(R2.id.pay_tv)
+        TextView payTv;
+        @BindView(R2.id.start_eat_tv)
+        TextView startEatTv;
+        @BindView(R2.id.talk_tv)
+        TextView talk_tv;
+        @BindView(R2.id.cancel_tv)
+        TextView cancel_tv;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

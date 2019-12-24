@@ -63,7 +63,8 @@
         android:paddingEnd="16dp"
         android:text="编辑"
         android:textColor="#FFFFFFFF"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_delete"

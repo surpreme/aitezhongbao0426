@@ -144,7 +144,7 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         radioGroupRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 //for循环不能放在这里 会卡顿 放到适配器中
                 LogUtils.d(postion);
                 switch (type.toString()) {
@@ -252,7 +252,7 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
 
 
     @Override
-    public void getPostion(int postion) {
+    public void getPosition(int postion) {
         startActivity(DayInformationActivity.class, "goods_id", goodsListBeans.get(postion).getGoods_id());
 
     }

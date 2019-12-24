@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/booknumber_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="账单号:5454151541545" />
+
+            <TextView
+                android:id="@+id/state_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingRight="15dp"
+                android:text="已完成"
+                android:textColor="@color/oranger"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/book_list_recy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="2019-10-12 12:00" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="15dp">
+
+
+            <View
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/information_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="共7件商品" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text=" 合计："
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/price_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right|center"
+                    android:text="￥100.00"
+                    android:textColor="#ffff2d2b"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="right|bottom"
+            android:paddingRight="15dp">
+
+
+            <TextView
+                android:id="@+id/look_information_tv"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
+                android:gravity="center"
+                android:text="查看详情"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13sp" />
+
+
+            <TextView
+                android:id="@+id/talk_tv"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
+                android:gravity="center"
+                android:text="评价"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13sp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/cancel_tv"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:background="@drawable/round_background_blue"
+                android:gravity="center"
+                android:text="取消订单"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13sp" />
+
+
+            <TextView
+                android:id="@+id/pay_tv"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
+                android:gravity="center"
+                android:text="去付款"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/start_eat_tv"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
+                android:gravity="center"
+                android:text="核销码"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+
+</LinearLayout>

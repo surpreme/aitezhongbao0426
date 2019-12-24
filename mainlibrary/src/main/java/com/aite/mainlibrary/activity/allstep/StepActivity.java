@@ -1,18 +1,14 @@
 package com.aite.mainlibrary.activity.allstep;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.view.StatusBarUtils;
 import com.lzy.basemodule.view.StepsView;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class StepActivity extends BaseActivity {
     @BindView(R2.id.iv_back)
@@ -21,7 +17,7 @@ public class StepActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R2.id.stepview)
     StepsView stepview;
-    private int mprogress = 5;
+    private int mprogress = 1;
 
     @Override
     protected int getLayoutResId() {
@@ -34,7 +30,7 @@ public class StepActivity extends BaseActivity {
         stepview.setOnClickListener(this);
         initToolbar("签到");
         StatusBarUtils.setColor(context, getResources().getColor(R.color.blue_day_login));
-        setInitStepview(30, mprogress);
+        setInitStepview(31, mprogress);
 
     }
 
@@ -43,12 +39,17 @@ public class StepActivity extends BaseActivity {
         stepview.setProgress(progress);
     }
 
+    private void setInitStepview(int progress) {
+        stepview.setProgress(progress);
+
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) onBackPressed();
         if (v.getId() == R.id.stepview) {
             mprogress++;
-            setInitStepview(31, mprogress);
+            setInitStepview(mprogress);
         }
     }
 

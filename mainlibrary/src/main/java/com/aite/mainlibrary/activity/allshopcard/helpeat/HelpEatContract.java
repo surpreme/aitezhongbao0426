@@ -12,11 +12,13 @@ import com.lzy.okgo.model.HttpParams;
 public class HelpEatContract {
     interface View extends BaseView {
         void getUiDataSuccess(Object msg);
+        void onChangeHouseSuccess(Object msg);
 
     }
 
     interface Presenter extends BasePresenter<View> {
         void showUiData(HttpParams httpParams);
+        void ChangeHouse(HttpParams httpParams);
 
 
     }

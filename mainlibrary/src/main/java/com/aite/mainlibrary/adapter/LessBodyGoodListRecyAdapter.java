@@ -37,14 +37,11 @@ public class LessBodyGoodListRecyAdapter extends RecyclerView.Adapter<LessBodyGo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.moringnoon_eat_item, parent, false);
+        View view = inflater.inflate(R.layout.recy_good_lessbody, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
-    public OnClickLstenerInterface.OnRecyClickInterface getLstenerInterface() {
-        return lstenerInterface;
-    }
 
     public void setLstenerInterface(OnClickLstenerInterface.OnRecyClickInterface lstenerInterface) {
         this.lstenerInterface = lstenerInterface;
@@ -66,17 +63,12 @@ public class LessBodyGoodListRecyAdapter extends RecyclerView.Adapter<LessBodyGo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.titleTv.setText(lessBodyInformationBeans.get(position).getGoods_name());
-        holder.buyBtn.setVisibility(View.GONE);
-        holder.informationTv.setVisibility(View.GONE);
         holder.priceTv.setText(String.format("￥ %s", lessBodyInformationBeans.get(position).getGoods_price()));
         Glide.with(context).
                 load(lessBodyInformationBeans.get(position).getGoods_image_url())
                 .into(holder.icon);
-        holder.buyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lstenerInterface.getPostion(position);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            if (lstenerInterface != null) lstenerInterface.getPosition(position);
         });
     }
 
@@ -91,12 +83,8 @@ public class LessBodyGoodListRecyAdapter extends RecyclerView.Adapter<LessBodyGo
         ImageView icon;
         @BindView(R2.id.title_tv)
         TextView titleTv;
-        @BindView(R2.id.information_tv)
-        TextView informationTv;
         @BindView(R2.id.price_tv)
         TextView priceTv;
-        @BindView(R2.id.buy_btn)
-        TextView buyBtn;
         @BindView(R2.id.father_layout)
         LinearLayout fatherLayout;
 

@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.a.APPSingleton;
 import com.aite.a.HomeTabActivity;
@@ -39,6 +41,7 @@ import com.aite.a.view.MyAdGallery.MyOnItemClickListener;
 import com.aite.a.view.MyGridView;
 import com.aite.a.view.RvItemClickListener;
 import com.aiteshangcheng.a.R;
+import com.aiteshangcheng.a.R2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -51,15 +54,20 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * 自定义首页
  *
  * @author Administrator
  */
 public class CustomHomeActivity extends BaseActivity implements OnClickListener {
+    @BindView(R2.id.iv_logo)
+    ImageView ivLogo;
     private EditText et_search;
     // private RecyclerView rv_home;
-    private LinearLayout  ll_pager;
+    private LinearLayout ll_pager;
     private View searchIv;
     private ImageView iv_location;
     private LinearLayout ll_right;
@@ -68,7 +76,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
     private NetRun netRun;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
                 case home_ad_id:// 首页数据
                     if (msg.obj != null) {
@@ -94,6 +102,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customhome);
+        ButterKnife.bind(this);
         // 注册订阅者
         EventBus.getDefault().register(this);
         findViewById();
@@ -101,14 +110,14 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
 
     @Override
     protected void findViewById() {
-        iv_location=findViewById(R.id.iv_location);
-        ll_right=findViewById(R.id.ll_right);
+        iv_location = findViewById(R.id.iv_location);
+        ll_right = findViewById(R.id.ll_right);
         et_search = (EditText) findViewById(R.id.et_search);
         // rv_home = (RecyclerView) findViewById(R.id.rv_home);
-        searchIv =  findViewById(R.id.iv_search);
+        searchIv = findViewById(R.id.iv_search);
         ll_pager = (LinearLayout) findViewById(R.id.ll_pager);
         Log.i("----home-city", " " + APPSingleton.city);
-        locationTv =  findViewById(R.id.home_location_tv);
+        locationTv = findViewById(R.id.home_location_tv);
         locationTv.setText(APPSingleton.city);
         initView();
     }
@@ -128,6 +137,13 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
         bitmapUtils = new BitmapUtils(this);
         searchIv.setOnClickListener(this);
         ll_right.setOnClickListener(this);
+        ivLogo.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         // LinearLayoutManager linearLayoutManager = new
         // LinearLayoutManager(this);
         // rv_home.setLayoutManager(linearLayoutManager);
@@ -170,9 +186,9 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
 //                startActivity(new Intent(this, AroundActivity.class));
 //                break;
 //        }
-        if(v.getId()==R.id.iv_search){
+        if (v.getId() == R.id.iv_search) {
             search();
-        }else if(v.getId()==R.id.ll_right){
+        } else if (v.getId() == R.id.ll_right) {
             startActivity(new Intent(this, AroundActivity.class));
         }
     }
@@ -214,9 +230,9 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                             R.layout.item_custom_adv_list, null);
                     MyAdGallery adgallery = convertView
                             .findViewById(R.id.adgallery);
-                    LinearLayout ovalLayout =  convertView
+                    LinearLayout ovalLayout = convertView
                             .findViewById(R.id.ovalLayout);
-                    RelativeLayout rl_avditem =convertView
+                    RelativeLayout rl_avditem = convertView
                             .findViewById(R.id.rl_avditem);
 
                     setAD(custom.adv_list.item, adgallery, ovalLayout);
@@ -247,19 +263,19 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
 */
                     View homeServiceNavig = inflater2.inflate(R.layout.home_service_navigation, null);
                     RecyclerView homeNavigRv = homeServiceNavig.findViewById(R.id.home_navig_rv);
-                    homeNavigRv.setLayoutManager(new GridLayoutManager(CustomHomeActivity.this,2,RecyclerView.HORIZONTAL,false));
-                    homeNavigRv.setAdapter(new HomeNavigRvAdapter (this,navigationInfo));
+                    homeNavigRv.setLayoutManager(new GridLayoutManager(CustomHomeActivity.this, 2, RecyclerView.HORIZONTAL, false));
+                    homeNavigRv.setAdapter(new HomeNavigRvAdapter(this, navigationInfo));
                     homeNavigRv.addOnItemTouchListener(new RvItemClickListener(homeNavigRv) {
                         @Override
                         public void itemSingleClick(RecyclerView.ViewHolder viewHolder, View itemView, int itemPosition) {
                             NavigationInfo navigationInfo = CustomHomeActivity.this.navigationInfo.get(itemPosition);
-                            Log.i("----itemSingleClick", "pisition:"+itemPosition+"  "+navigationInfo.name+"  "+navigationInfo.img);
+                            Log.i("----itemSingleClick", "pisition:" + itemPosition + "  " + navigationInfo.name + "  " + navigationInfo.img);
                             navigationItemClick(navigationInfo);
                         }
 
                         @Override
                         public void itemLongPress(RecyclerView.ViewHolder childViewHolder, View childView, int itemPosition) {
-                            Log.i("----itemLongPress", " itemLongPress" );
+                            Log.i("----itemLongPress", " itemLongPress");
 
                         }
                     });
@@ -316,11 +332,11 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                             .from(CustomHomeActivity.this);
                     View convertView4 = inflater4.inflate(
                             R.layout.item_custom_home2, null);
-                    ImageView iv_img1 =  convertView4
+                    ImageView iv_img1 = convertView4
                             .findViewById(R.id.iv_img1);
                     ImageView iv_img2 = convertView4
                             .findViewById(R.id.iv_img2);
-                    ImageView iv_img3 =  convertView4
+                    ImageView iv_img3 = convertView4
                             .findViewById(R.id.iv_img3);
                     LinearLayout ll_home2item = convertView4
                             .findViewById(R.id.ll_home2item);
@@ -403,15 +419,15 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                             .from(CustomHomeActivity.this);
                     View convertView6 = inflater6.inflate(
                             R.layout.item_custom_home4, null);
-                    ImageView iv_img4 =  convertView6
+                    ImageView iv_img4 = convertView6
                             .findViewById(R.id.iv_img4);
-                    ImageView iv_img5 =  convertView6
+                    ImageView iv_img5 = convertView6
                             .findViewById(R.id.iv_img5);
-                    ImageView iv_img6 =  convertView6
+                    ImageView iv_img6 = convertView6
                             .findViewById(R.id.iv_img6);
-                    LinearLayout ll_home4 =  convertView6
+                    LinearLayout ll_home4 = convertView6
                             .findViewById(R.id.ll_home4);
-                    LinearLayout ll_home4item =convertView6
+                    LinearLayout ll_home4item = convertView6
                             .findViewById(R.id.ll_home4item);
                     LinearLayout.LayoutParams layoutParams4 = (LinearLayout.LayoutParams) ll_home4item.getLayoutParams();
                     layoutParams4.height = (int) (getw / 2.46);
@@ -480,7 +496,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                             .from(CustomHomeActivity.this);
                     View convertView7 = inflater7.inflate(
                             R.layout.item_custom_goods, null);
-                    MyGridView mlv_goodslist =  convertView7
+                    MyGridView mlv_goodslist = convertView7
                             .findViewById(R.id.mlv_goodslist);
                     GoodsAdapter goods = new GoodsAdapter(custom.goods.item,
                             CustomHomeActivity.this);
@@ -494,9 +510,9 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                             R.layout.item_custom_home5, null);
                     ImageView iv_home5t1 = convertView8
                             .findViewById(R.id.iv_home5t1);
-                    ImageView iv_home5t2 =  convertView8
+                    ImageView iv_home5t2 = convertView8
                             .findViewById(R.id.iv_home5t2);
-                    ImageView iv_home5t3 =  convertView8
+                    ImageView iv_home5t3 = convertView8
                             .findViewById(R.id.iv_home5t3);
                     final LinearLayout ll_home5item = convertView8
                             .findViewById(R.id.ll_home5item);
@@ -589,13 +605,13 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                             R.layout.item_custom_home6, null);
                     ImageView iv_home6t1 = convertView10
                             .findViewById(R.id.iv_home6t1);
-                    ImageView iv_home6t2 =  convertView10
+                    ImageView iv_home6t2 = convertView10
                             .findViewById(R.id.iv_home6t2);
                     ImageView iv_home6t3 = convertView10
                             .findViewById(R.id.iv_home6t3);
-                    ImageView iv_home6t4 =  convertView10
+                    ImageView iv_home6t4 = convertView10
                             .findViewById(R.id.iv_home6t4);
-                    final LinearLayout ll_home6item =  convertView10
+                    final LinearLayout ll_home6item = convertView10
                             .findViewById(R.id.ll_home6item);
                     if (custom.home6.item != null) {
                         if (custom.home6.item.size() > 0) {
@@ -643,7 +659,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                                     Intent intent6 = new Intent(CustomHomeActivity.this,
                                             WebActivity.class);
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("url",custom.home6.item.get(1).data);
+                                    bundle.putString("url", custom.home6.item.get(1).data);
                                     bundle.putString("title", custom.home6.title);
                                     intent6.putExtras(bundle);
                                     startActivity(intent6);
@@ -695,7 +711,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
     private void navigationItemClick(NavigationInfo data) {
         // 导航
         if (data.name.equals(this.getString(R.string.signin))) {//签到
-            if (Mark.State.UserKey != null) {
+            if (State.UserKey != null) {
                 Intent intent26 = new Intent(this, MyCalendarActivity.class);
                 this.startActivity(intent26);
             } else {
@@ -706,12 +722,12 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
             Intent intent = new Intent(this, WebActivity.class);
             intent.putExtra("url", "https://aitecc.com/wap/index.php?act=circle&recommend=1");
             this.startActivity(intent);
-        }else if (data.name.equals(this.getString(R.string.shequ))) {//社区
+        } else if (data.name.equals(this.getString(R.string.shequ))) {//社区
             Intent intent = new Intent(this, WebActivity.class);
             intent.putExtra("url", "https://aitecc.com/wap/index.php?act=circle");
             this.startActivity(intent);
         } else if (data.name.equals(this.getString(R.string.footprint))) {//足迹
-            if (Mark.State.UserKey != null) {
+            if (State.UserKey != null) {
                 Intent zuji = new Intent(this,
                         MyfootprintActivity.class);
                 zuji.putExtra("person_in", "2");
@@ -729,7 +745,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
             rdintent.putExtra("url", "http://aitecc.com/wap/index.php?act=news");
             this.startActivity(rdintent);
         } else if (data.name.equals(this.getString(R.string.integrall))) {//积分
-            if (Mark.State.UserKey == null) {
+            if (State.UserKey == null) {
                 Toast.makeText(this, this
                                 .getString(R.string.not_login_please_login),
                         Toast.LENGTH_SHORT).show();
@@ -746,7 +762,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
                     HotVouchersListActivity.class);
             this.startActivity(intent6);
         } else if (data.name.equals(this.getString(R.string.store_up))) {//收藏
-            if (Mark.State.UserKey == null) {
+            if (State.UserKey == null) {
                 Toast.makeText(this, this
                                 .getString(R.string.not_login_please_login),
                         Toast.LENGTH_SHORT).show();
@@ -764,7 +780,7 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
             intent9.putExtra("person_in", "1");
             this.startActivity(intent9);
         } else if (data.name.equals(this.getString(R.string.distribution2))) {//分销
-            if (Mark.State.UserKey == null) {
+            if (State.UserKey == null) {
                 Toast.makeText(this, this
                                 .getString(R.string.not_login_please_login),
                         Toast.LENGTH_SHORT).show();

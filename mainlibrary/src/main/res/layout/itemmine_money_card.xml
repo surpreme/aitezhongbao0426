@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/father_layout"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:gravity="center|left"
-    android:id="@+id/father_layout"
     android:orientation="horizontal"
     android:paddingLeft="15dp"
     android:paddingTop="5dp">
@@ -39,21 +39,25 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/price_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:paddingRight="15dp"
-                android:text="-10"
+                android:text="-000"
                 android:textSize="18sp" />
         </LinearLayout>
 
 
         <TextView
+            android:id="@+id/information_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:paddingLeft="20dp"
-            android:text="成功提现到微信" />
+            android:text="暂无最新数据" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -67,10 +71,11 @@
                 android:layout_height="5dp" />
 
             <TextView
+                android:id="@+id/time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="09-11 11:33"
+                android:text="0000-00-00-09：10"
                 android:textColor="@color/glaytxt"
                 android:textSize="12sp" />
 

@@ -41,8 +41,8 @@ import butterknife.OnClick;
  */
 
 public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, HelpdoctorPresenter> implements HelpdoctorContract.View, OnBannerListener {
-    @BindView(R2.id.floatbutton)
-    FloatingActionButton floatbutton;
+    @BindView(R2.id.floatimg)
+    ImageView floatimg;
     @BindView(R2.id.banner)
     Banner banner;
     @BindView(R2.id.father_tab_ll)
@@ -76,7 +76,7 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
 
     @Override
     protected void initView() {
-        initToolbar("助医服务", getResources().getColor(R.color.white));
+        initToolbar("助医服务");
         initRecy();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mBaserecyclerView.setLayoutManager(linearLayoutManager);
@@ -101,7 +101,7 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
         });
         helpDoctorRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
 //                startActivity(HelpDoctorInformationActivity.class, "TYPEID", helpDoctorlistBean.get(postion).getId());
                 startActivity(BookHelpDoctorInformationActivity.class, "TYPEID", helpDoctorlistBean.get(postion).getId());
 
@@ -109,10 +109,10 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
         });
     }
 
-    @OnClick({R2.id.floatbutton, R2.id.all_ll, R2.id.time_ll, R2.id.service_ll})
+    @OnClick({R2.id.floatimg, R2.id.all_ll, R2.id.time_ll, R2.id.service_ll})
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.floatbutton) {
+        if (v.getId() == R.id.floatimg) {
             startActivity(PostHelpDoctorActivity.class);
         }
         if (v.getId() == R.id.service_ll) {
@@ -181,7 +181,7 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         radioGroupRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 //for循环不能放在这里 会卡顿 放到适配器中
                 LogUtils.d(postion);
                 switch (type.toString()) {

@@ -49,7 +49,7 @@ public class TextViewBaseRecyAdapter extends RecyclerView.Adapter<TextViewBaseRe
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
 

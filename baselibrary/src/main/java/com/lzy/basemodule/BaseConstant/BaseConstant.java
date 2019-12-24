@@ -30,9 +30,37 @@ public class BaseConstant {
 
 
     }
+
     public class ACTIVITY_RESULT_CODE {
         public static final int REQUEST_CODE_ACTIVITY_RESULT = 4515;
 
     }
 
+    public class PERMISSION {
+        public static final int OVERLAY_PERMISSION_REQ_CODE = 1825;
+
+    }
+
+
+    /**
+     * 微信登录
+     * APPID：wxfb45ab55efde3e64
+     * AppSecret：55a05f880182902f6e135b628d1bc8d9
+     */
+    public class WECAHT {
+        public static final String APP_ID = "wxfb45ab55efde3e64";
+        public static final String APP_SECRET = "55a05f880182902f6e135b628d1bc8d9";
+        public static final String SCOPE = "snsapi_userinfo";
+        public static final String STATE = "wechat_sdk_demo_test";
+
+    }
+
+    /**
+     * 友盟
+     * "5df706653fc195c5e3000f1f"
+     */
+    public class YOUMENG {
+        public static final String KEY = "5df706653fc195c5e3000f1f";
+
+    }
 }

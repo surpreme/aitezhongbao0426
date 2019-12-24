@@ -2,12 +2,14 @@ package com.aite.mainlibrary.activity.allshopcard.air;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.aite.mainlibrary.Mainbean.AirMainListBean;
@@ -44,8 +46,8 @@ import butterknife.OnClick;
 
 public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> implements AirContract.View, OnBannerListener {
 
-    @BindView(R2.id.floatbutton)
-    FloatingActionButton floatbutton;
+    @BindView(R2.id.floatimg)
+    ImageView floatimg;
     @BindView(R2.id.banner)
     Banner banner;
     @BindView(R2.id.father_tab_ll)
@@ -79,7 +81,7 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
 
     @Override
     protected void initView() {
-        initToolbar("喘息服务", getResources().getColor(R.color.white));
+        initToolbar("喘息服务");
         initRecy();
         //初始化banner
         initBanner(banner);
@@ -97,7 +99,7 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
         mBaserecyclerView.setAdapter(airServiceRecyAdapter);
         airServiceRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 Intent intent = new Intent(context, BookTimebankInformationActivity.class);
                 intent.putExtra("TYPEID", airMainListBean.get(postion).getId());
                 intent.putExtra("activity", "AirActivity");
@@ -201,10 +203,10 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
         typeAirBean.getTime_array().get(0).setChecked(true);
     }
 
-    @OnClick({R2.id.floatbutton, R2.id.all_ll, R2.id.time_ll, R2.id.service_ll})
+    @OnClick({R2.id.floatimg, R2.id.all_ll, R2.id.time_ll, R2.id.service_ll})
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.floatbutton) {
+        if (v.getId() == R.id.floatimg) {
             startActivity(PostAirNeedActivity.class);
         }
         if (v.getId() == R.id.service_ll) {
@@ -233,7 +235,7 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         radioGroupRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 //for循环不能放在这里 会卡顿 放到适配器中
                 LogUtils.d(postion);
                 switch (type.toString()) {

@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <include layout="@layout/toolbar_right_layout" />
+        <include layout="@layout/toolbar_right_layout" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/noglay" />
 
 
-    <include layout="@layout/recy_layout" />
+        <include layout="@layout/recy_layout" />
+    </LinearLayout>
 
 
     <RelativeLayout
         android:id="@+id/delete_bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <CheckBox
             android:id="@+id/choice_delete_all_check"
@@ -47,9 +60,9 @@
         android:id="@+id/all_mag_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/all_check"
@@ -97,7 +110,7 @@
                 android:id="@+id/senduser_price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="配送费0.0"
+                android:text="结算(0)"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -106,9 +119,9 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@color/oranger"
-            android:text="支付订单"
+            android:background="@color/noyelllow"
+            android:text="结算"
             android:textColor="@color/white" />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -63,6 +63,7 @@ public class FileUtils {
 
     /**
      * 以下为直接从assets读取代码
+     * 读流 一行一行读
      */
     public static String getFromAssets(Context context, String fileName) {
         AssetManager manager = null;

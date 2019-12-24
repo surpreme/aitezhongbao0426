@@ -33,32 +33,76 @@ public class AppConstant {
     //3
     public static final String THREENEWUSERFIRSTURL = BASEURL + "index.php?act=login&op=register3";
 
-
+    //获取会员收藏列表 商品收藏和商家收藏
+    public static final String COLLECTSERVICEBOOKURL = BASEURL + "index.php?act=member_favorites&op=favorites_list";
     //登录
     public static final String LOGINURL = BASEURL + "index.php?act=login&op=index";
-    //
+    //App微信授权
+    public static final String WECHATLOGINURL = BASEURL + "index.php?act=login&op=app_wx_oauth";
+    //App微信注册
+    public static final String NOWWECHATLOGINURL = BASEURL + "index.php?act=login&op=APP_wx_register";
+    //获取账号设置页信息
+    public static final String SETTINGINFORMATIONURL = BASEURL + "index.php?act=member_index&op=getMemberSetting";
+
+    //APP添加银行卡  保存银行卡
+    public static final String ADDSAVEBANKINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_add_bank";
+    //APP添加银行卡  APP删除银行卡
+    public static final String DELETESAVEBANKINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_del_bank";
+    //APP我的银行卡接口  获取我的银行卡信息列表
+    public static final String BANKLISTINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_My_bank";
+
     //获取支付方式 注：如果使用钱包支付 则单独调用对应钱包支付提交接口
     public static final String PAYAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_payment&op=APP_getPaymentList";
+    //购物车、直接购买第二步:保存订单入库，产生订单号，开始选择支付方式
+    public static final String PAYMORNINGMEALAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_buy&op=meal_buy_step2";
+    //钱包-实物订单支付 助餐自选 实体订单
+    public static final String PAYCOLLECTMORNINGMEALAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_payment&op=predeposit_pay";
+    //使用钱包支付虚拟订单  钱包-虚拟订单支付
+    public static final String NOREALPAYCOLLECTMORNINGMEALAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_payment&op=predeposit_vr_pay";
+    //更换收货地址，重新返回第二步提交所需信息及运费信息
+    public static final String ADDRESSSUREPAYMORNINGMEALAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_buy&op=change_address";
+    //
+    //获取钱包首页信息接口
+    public static final String MYWALLETINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=My_wallet";
+
     //app首页
     public static final String MAINUIDATAURL = BASEURL + "index.php?act=index&op=APPindex";
     //添加地址 -获取地址列表信息
     public static final String LISTINFORMATIONADDRESSDATAURL = BASEURL + "index.php?act=member_address&op=address_list";
     //添加地址 -地址详细信息
     public static final String INFORMATIONADDRESSPERSONDATAURL = BASEURL + "index.php?act=member_address&op=address_info";
+    //删除会员收货地址 成功返回1，错误返回对应提示信息
+    public static final String DELETEADDRESSPERSONDATAURL = BASEURL + "index.php?act=member_address&op=address_del";
     //添加地址-提交
     public static final String ADDADDRESSDATAURL = BASEURL + "index.php?act=member_address&op=address_add";
+    //添加地址-编辑地址
+    public static final String FIXCHANGEADDRESSDATAURL = BASEURL + "index.php?act=member_address&op=address_edit";
     //健康档案-得到信息
     public static final String GETHEALTHINFORMATIONDATAURL = BASEURL + "index.php?act=health_record&op=detail";
     //健康档案-子页面提交
     public static final String CHDRENADDHEALTHINFORMATIONDATAURL = BASEURL + "index.php?act=health_record&op=health_add";
     //健康档案-疾病史/医疗笔记/过敏反应/药物使用列表信息
     public static final String LISTMSGHEALTHINFORMATIONDATAURL = BASEURL + "index.php?act=health_record&op=health_list";
-    // index.php?act=member_timebank&op=my_qrcode
+    //健康档案-疾病史/医疗笔记/过敏反应/药物使用列表信息-详细信息
+    public static final String ALLMORELISTMSGHEALTHINFORMATIONDATAURL = BASEURL + "index.php?act=health_record&op=health_detail";
+    //健康档案-健康档案信息删除(删除疾病史/医疗笔记/过敏反应/药物使用)
+    public static final String DELETEHEALTHINFORMATIONDATAURL = BASEURL + "index.php?act=health_record&op=health_del";
+
 
     //健康档案-主页面提交
     public static final String MIANADDHEALTHINFORMATIONDATAURL = BASEURL + "index.php?act=health_record&op=info_add";
+    //会员对订单中的商品发起新投诉(展示)
+    public static final String DISPUTETYPEINFORMATIONDATAURL = BASEURL + "index.php?act=member_complain&op=complain_new";
+    //保存用户提交的投诉
+    public static final String SAVEDISPUTEINFORMATIONDATAURL = BASEURL + "index.php?act=member_complain&op=complain_save";
+    //查看会员投诉详情
+    public static final String GETALLINFORMATIONDISPUTEINFORMATIONDATAURL = BASEURL + "index.php?act=member_complain&op=complain_show";
+    //获取会员的投诉记录
+    public static final String GETLISTDISPUTEINFORMATIONDATAURL = BASEURL + "index.php?act=member_complain&op=index";
     //助餐首页
     public static final String HELPEATUIURL = BASEURL + "index.php?act=goods_meal&op=index";
+    //助餐首页 保存切换养老院
+    public static final String CHANGEHOUSEHELPEATURL = BASEURL + "index.php?act=goods_meal&op=SwitchNursing";
     //早、午餐——商品列表信息
     public static final String MORNINGNOONTHINGLISTURL = BASEURL + "index.php?act=goods_meal&op=meal_goods_list";
     //菜品选择页面信息
@@ -70,9 +114,24 @@ public class AppConstant {
     //早、午餐——预约订餐 第二步 产生订单
     public static final String SUREREMEMBERFOODINFORMATIONURL = BASEURL + "index.php?act=goods_meal&op=meal_buy2";
     //
-    //订单详情接口 index.php?act=member_vr_order&op=order_detail
-    public static final String ALLBOOKINFORMATIONURL = BASEURL + "index.php?act=member_vr_order&op=order_detail";
-    //
+    //早、午餐——预约订餐 取消订单接口
+    public static final String CANCELEATBOOKINFORMATIONURL = BASEURL + "index.php?act=member_vr_order&op=order_cancel";
+    //实体订单详情接口
+    public static final String FACTALLBOOKINFORMATIONURL = BASEURL + "index.php?act=member_order&op=show_order";
+    //助餐购物车订单详情接口 index.php?act=member_vr_order&op=order_detail
+    public static final String HELPEATALLBOOKINFORMATIONURL = BASEURL + "index.php?act=member_buy&op=meal_buy_step1";
+    /**
+     * 助餐的早餐和午餐是虚拟，菜品是实体的
+     */
+    //订单评价 虚拟
+    public static final String NOFACTTALKINFORMATIONFACTBOOKURL = BASEURL + "index.php?act=member_vr_order&op=add_vr_evaluate";
+    //订单详情 实体订单
+    public static final String INFORMATIONFACTBOOKURL = BASEURL + "index.php?act=member_order&op=order_list";
+
+    //订单详情 虚拟订单
+    public static final String INFORMATIONUNFACTBOOKURL = BASEURL + "index.php?act=member_vr_order&op=order_detail";
+    //订单详情取餐码接口
+    public static final String EATGETQRBOOKURL = BASEURL + "index.php?act=member_vr_order&op=meal_order_code";
     //助餐服务——早、午餐订单列表
     public static final String MINEALLBOOKURL = BASEURL + "index.php?act=member_vr_order&op=meal_order_list";
     //时间银行 获取服务列表页筛选条件及广告信息接口
@@ -148,11 +207,15 @@ public class AppConstant {
     public static final String LISTSOSPEPPLEINFORMATIONURL = BASEURL + "index.php?act=member_contact&op=my_list";
     //我的关联账号 - 列表接口
     public static final String LISTPEPPLEINFORMATIONURL = BASEURL + "index.php?act=member_associate&op=my_list";
+    //我的关联账号 - 我的紧急联系人 - 删除接口
+    public static final String DELETEPEPPLEINFORMATIONURL = BASEURL + "index.php?act=member_contact&op=my_delete";
 
     //我的关联账号-获取关系信息
     public static final String GETFIMILYBINDINGUSERURL = BASEURL + "index.php?act=member_associate&op=relation";
     //我的关联账号-保存接口
     public static final String SAVEBINDINGUSERURL = BASEURL + "index.php?act=member_associate&op=my_save";
+    //我的关联账号-保存接口
+    public static final String UNBINDBINDINGUSERURL = BASEURL + "index.php?act=member_associate&op=my_delete";
     // index.php?act=member_contact&op=my_save
     //紧急联系人-保存接口
     public static final String SAVESOSUSERURL = BASEURL + "index.php?act=member_contact&op=my_save";
@@ -194,6 +257,13 @@ public class AppConstant {
     //助医服务 我参与的服务——服务详情
     public static final String HELPDOCTORINFORMATIONMINETOGETHERURL = BASEURL + "index.php?act=member_doctor_help&op=order_detail";
     /**
+     * 其他服务-首页接口刷新文档
+     * 接口说明
+     * 获取除平安打卡外的其他导航信息接口
+     */
+
+    public static final String ELSESERVICEINFORMATIONURL = BASEURL + "index.php?act=punch&op=index";
+    /**
      *
      */
     // index.php?act=member_respite&op=order_list
@@ -221,7 +291,10 @@ public class AppConstant {
     public static String AITEURL = "https://aitecc.com/mobile/";
     //圈子
     public static String NEWSURL = AITEURL + "index.php?act=sns";
-
+    //    圈子
+    public static String ZHONGBAONEWSURL = "http://zhongbyi.aitecc.com/wap/index.php?act=circle&comefrom=APP&key=";
+    //    爱家
+    public static String ZHONGBAOLOVEFAMILYSURL = "http://zhongbyi.aitecc.com/wap/index.php?act=news&comefrom=APP&key=";
     // * 底部推荐新闻
 
     public static String RECOMMENDED_NEWS = AITEURL + "index.php?act=cms&op=article_index_commend";

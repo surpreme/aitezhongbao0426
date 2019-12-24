@@ -13,15 +13,17 @@ import java.util.List;
 public class LessBodyInformationBean extends ErrorBean implements Serializable {
 
     /**
-     * goods_info : {"goods_id":"1","goods_name":"测试日托服务商品","goods_price":"0.01","is_virtual":"1","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/29/2_06256787071214709_240.jpg"}
-     * isFavorites : 0
-     * goods_commend_list : [{"goods_id":"8","goods_name":"测试早餐1","goods_price":"0.01","goods_marketprice":"1.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/29/2_06256787071214709_240.jpg"},{"goods_id":"9","goods_name":"测试早餐2","goods_price":"0.10","goods_marketprice":"1.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg"},{"goods_id":"1","goods_name":"测试日托服务商品","goods_price":"0.01","goods_marketprice":"1.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/29/2_06256787071214709_240.jpg"},{"goods_id":"10","goods_name":"测试午餐1","goods_price":"0.01","goods_marketprice":"1.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/31/2_06258484919002918_240.jpg"},{"goods_id":"11","goods_name":"测试午餐2","goods_price":"0.10","goods_marketprice":"1.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/29/2_06256787071214709_240.jpg"},{"goods_id":"2","goods_name":"日托服务商品","goods_price":"0.10","goods_marketprice":"1.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/31/2_06258484919002918_240.jpg"}]
+     * goods_info : {"goods_id":"26","goods_name":"培训专家，1天上王者","goods_price":"1000.00","is_virtual":"1","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png"}
+     * isFavorites : 1
+     * isLike : 0
+     * goods_commend_list : [{"page_type":2,"goods_id":"16","goods_name":"技能培训","goods_price":"10000.00","goods_marketprice":"1000000.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg"},{"page_type":2,"goods_id":"26","goods_name":"培训专家，1天上王者","goods_price":"1000.00","goods_marketprice":"1500.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png"},{"page_type":2,"goods_id":"22","goods_name":"教你成大师","goods_price":"10000.00","goods_marketprice":"100000.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281102722142715_240.jpg"}]
      * evaluate_info : {"good":0,"normal":0,"bad":0,"all":0,"good_percent":100,"normal_percent":0,"bad_percent":0,"good_star":0,"star_average":0}
      * goods_evaluate_list : []
      */
 
     private GoodsInfoBean goods_info;
     private int isFavorites;
+    private int isLike;
     private EvaluateInfoBean evaluate_info;
     private List<GoodsCommendListBean> goods_commend_list;
     private List<?> goods_evaluate_list;
@@ -40,6 +42,14 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
 
     public void setIsFavorites(int isFavorites) {
         this.isFavorites = isFavorites;
+    }
+
+    public int getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(int isLike) {
+        this.isLike = isLike;
     }
 
     public EvaluateInfoBean getEvaluate_info() {
@@ -68,11 +78,11 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
 
     public static class GoodsInfoBean {
         /**
-         * goods_id : 1
-         * goods_name : 测试日托服务商品
-         * goods_price : 0.01
+         * goods_id : 26
+         * goods_name : 培训专家，1天上王者
+         * goods_price : 1000.00
          * is_virtual : 1
-         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/29/2_06256787071214709_240.jpg
+         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png
          */
 
         private String goods_id;
@@ -220,18 +230,28 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
 
     public static class GoodsCommendListBean {
         /**
-         * goods_id : 8
-         * goods_name : 测试早餐1
-         * goods_price : 0.01
-         * goods_marketprice : 1.00
-         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/29/2_06256787071214709_240.jpg
+         * page_type : 2
+         * goods_id : 16
+         * goods_name : 技能培训
+         * goods_price : 10000.00
+         * goods_marketprice : 1000000.00
+         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg
          */
 
+        private int page_type;
         private String goods_id;
         private String goods_name;
         private String goods_price;
         private String goods_marketprice;
         private String goods_image_url;
+
+        public int getPage_type() {
+            return page_type;
+        }
+
+        public void setPage_type(int page_type) {
+            this.page_type = page_type;
+        }
 
         public String getGoods_id() {
             return goods_id;

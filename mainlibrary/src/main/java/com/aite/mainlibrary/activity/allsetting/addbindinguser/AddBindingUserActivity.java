@@ -17,6 +17,7 @@ import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.KeyBoardUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
@@ -68,11 +69,12 @@ public class AddBindingUserActivity extends BaseActivity<AddBindingUserContract.
     public void onClick(View v) {
         if (v.getId() == R.id.choice_family_ll) {
             if (datasBeans == null || datasBeans.isEmpty()) return;
+            hideSoftWare();
             AddBindingUserAdapter addBindingUserAdapter = new AddBindingUserAdapter(context, datasBeans);
             PopwindowUtils.getmInstance().showChioceBottomPopupWindow(context, Gravity.BOTTOM, 0.7f, addBindingUserAdapter);
             addBindingUserAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
                 @Override
-                public void getPostion(int postion) {
+                public void getPosition(int postion) {
                     LogUtils.d("id=======" + datasBeans.get(postion).getId());
                     FAMILY_ID = String.valueOf(datasBeans.get(postion).getId());
                     PopwindowUtils.getmInstance().dismissPopWindow();

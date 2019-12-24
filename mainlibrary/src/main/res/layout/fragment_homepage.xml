@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:drawableRight="@mipmap/right_arrow_icon"
+                        android:drawableRight="@drawable/right_arrow_icon"
                         android:text="去挂号"
                         android:textColor="#FFB400"
                         android:textSize="15sp" />

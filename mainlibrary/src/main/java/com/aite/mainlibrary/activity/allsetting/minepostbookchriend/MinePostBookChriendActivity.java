@@ -88,7 +88,7 @@ public class MinePostBookChriendActivity extends BaseActivity<MinePostBookChrien
         });
         postServiceBookRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 Bundle bundle = new Bundle();
                 if (getIntent().getStringExtra("type").equals("1")) {
                     bundle.putString("id", String.valueOf(minelistbean.get(postion).getId()));

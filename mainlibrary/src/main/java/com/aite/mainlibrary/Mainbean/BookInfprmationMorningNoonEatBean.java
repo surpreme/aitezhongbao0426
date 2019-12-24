@@ -3,183 +3,369 @@ package com.aite.mainlibrary.Mainbean;
 import com.lzy.basemodule.bean.ErrorBean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class BookInfprmationMorningNoonEatBean extends ErrorBean implements Serializable {
 
-
     /**
-     * order_info : {"order_id":"38","order_sn":"820628432284431007","store_id":"2","store_name":"艾特技术","buyer_id":"7","buyer_name":"18614079738","buyer_phone":"18614079738","add_time":"1575088284","payment_code":"","payment_time":"0","trade_no":null,"close_time":"0","close_reason":null,"finnshed_time":null,"order_amount":"0.01","goods_points_offset":"0","order_points_offset":"0","order_costamount":"0.00","refund_amount":"0.00","rcb_amount":"0.00","pd_amount":"0.00","order_state":"10","refund_state":"0","buyer_msg":null,"delete_state":"0","goods_id":"8","goods_name":"测试早餐1","goods_price":"0.01","goods_num":"1","goods_image":"2019/10/29/2_06256787071214709.jpg","commis_rate":"200","gc_id":"14","gc_id2":"3","vr_indate":"1890230399","vr_send_times":"0","vr_invalid_refund":"0","order_promotion_type":"0","promotions_id":"0","order_from":"2","evaluation_state":"0","evaluation_time":"0","use_state":"0","first_comm":"0.00","second_comm":"0.00","three_comm":"0.00","is_visit_comm":"0","is_Independent_comm":"0","comm_rule":null,"is_buy_apply":"0","meal_info":{"type":1,"meal_time":"1970-01-01 08:00","meal_address":"南山科技园福安大厦","type_text":"到店吃"},"order_shipping_fee":"0.00","order_state_text":"待付款","payment_name":"","is_delete":1,"store_qq":null,"store_phone":null}
+     * goods_list : [{"cart_id":"56","buyer_id":"7","store_id":"2","store_name":"艾特技术","goods_id":"13","goods_name":"助餐商品","goods_price":"0.01","goods_num":"10","goods_image":"2019/11/22/2_06277498241227640.jpg","bl_id":"0","cart_type":"1","state":true,"storage_state":true,"goods_commonid":"13","gc_id":"16","goods_shipping_fee":"0.00","goods_costprice":"0.00","transport_id":"0","goods_freight":"0.00","is_vat":"0","goods_vat":"0","goods_storage":"100","goods_storage_alarm":"0","is_fcode":"0","have_gift":"0","is_more_discount":"0","groupbuy_info":null,"xianshi_info":null,"miaosha_info":[],"wholesale_price":"","goods_points_offset":0,"is_visit_comm":"0","is_Independent_comm":"0","comm_rule":null,"goods_total":"0.10","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg","goods_costtotal":"0.00"},{"cart_id":"57","buyer_id":"7","store_id":"2","store_name":"艾特技术","goods_id":"12","goods_name":"测试助餐套餐","goods_price":"0.01","goods_num":"1","goods_image":"2019/10/31/2_06258484919002918.jpg","bl_id":"0","cart_type":"1","state":true,"storage_state":true,"goods_commonid":"12","gc_id":"16","goods_shipping_fee":"0.10","goods_costprice":"0.00","transport_id":"0","goods_freight":"0.00","is_vat":"0","goods_vat":"0","goods_storage":"100","goods_storage_alarm":"0","is_fcode":"0","have_gift":"0","is_more_discount":"0","groupbuy_info":null,"xianshi_info":null,"miaosha_info":[],"wholesale_price":"","goods_points_offset":0,"is_visit_comm":"0","is_Independent_comm":"0","comm_rule":null,"goods_total":"0.01","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/10/31/2_06258484919002918_240.jpg","goods_costtotal":"0.00"}]
+     * goods_total : 0.21000000000000002
+     * total_shipping_fee : 0.1
+     * freight_hash : -4KY9W2X93_pubw6MqjsFbvVOXvPKXMC98kbN3v57OaaTFZfuLLEh1ccmEK6dlMYPuKaDQEac6vcM5K3_CDrzKIZmeLJYQAsc7MZrcFY_m9XnpNnQf4opze
+     * address_info : {"address_id":"10","member_id":"7","true_name":"南京","area_id":"2134","city_id":"175","area_info":"浙江 杭州市 上城区","address":"数据库","tel_phone":"120","mob_phone":"18614079728","is_default":"0","dlyp_id":"0","province_id":"11"}
+     * ifshow_offpay : true
+     * is_vat_deny : true
+     * vat_hash : syoKlDFziq1-d8ozjyNxrKU50OnCHUIy1mt
+     * inv_info : {"content":"不需要发票"}
+     * available_predeposit : null
+     * available_rc_balance : null
+     * member_paypwd : false
      */
 
-    private OrderInfoBean order_info;
+    private double goods_total;
+    private double total_shipping_fee;
+    private String freight_hash;
+    private AddressInfoBean address_info;
+    private boolean ifshow_offpay;
+    private boolean is_vat_deny;
+    private String vat_hash;
+    private InvInfoBean inv_info;
+    private Object available_predeposit;
+    private Object available_rc_balance;
+    private boolean member_paypwd;
+    private List<GoodsListBean> goods_list;
 
-    public OrderInfoBean getOrder_info() {
-        return order_info;
+    public double getGoods_total() {
+        return goods_total;
     }
 
-    public void setOrder_info(OrderInfoBean order_info) {
-        this.order_info = order_info;
+    public void setGoods_total(double goods_total) {
+        this.goods_total = goods_total;
     }
 
-    /**
-     * 返回结果
-     * 返回字段	类型	说明
-     * page_total	整型	总页数
-     * datas->order_info[]	数组	订单记录
-     * datas->order_info[]->order_id	字符串	订单id
-     * datas->order_info[]->order_amount	字符串	订单价格
-     * datas->order_info[]->order_shipping_fee	字符串	订单配送费
-     * datas->order_info[]->order_state_text	字符串	订单状态文字
-     * datas->order_info[]->buyer_name	字符串	姓名
-     * datas->order_info[]->buyer_phone	字符串	手机号码
-     * datas->order_info[]->goods_id	字符串	商品id
-     * datas->order_info[]->goods_name	字符串	商品名称
-     * datas->order_info[]->goods_price	字符串	商品价格
-     * datas->order_info[]->goods_image_url	字符串	商品图片
-     * datas->order_info[]->order_sn	字符串	订单编号
-     * datas->order_info[]->payment_name	字符串	支付方式名称
-     * datas->order_info[]->trade_no	字符串	第三方交易号
-     * datas->order_info[]->add_time	字符串	下单时间
-     * datas->order_info[]->store_qq	字符串	服务商QQ
-     * datas->order_info[]->store_phone	字符串	服务商电话
-     * datas->order_info[]->meal_info[]	字符串	早、午餐信息
-     * datas->order_info[]->meal_info[]->meal_time	字符串	用餐时间
-     * datas->order_info[]->meal_info[]->meal_address	字符串	用餐地址
-     * datas->order_info[]->meal_info[]->type_text	字符串	订餐方式文字
-     * datas->order_info[]->is_delete	字符串	是否可以删除 1是
-     */
+    public double getTotal_shipping_fee() {
+        return total_shipping_fee;
+    }
 
-    public static class OrderInfoBean {
+    public void setTotal_shipping_fee(double total_shipping_fee) {
+        this.total_shipping_fee = total_shipping_fee;
+    }
+
+    public String getFreight_hash() {
+        return freight_hash;
+    }
+
+    public void setFreight_hash(String freight_hash) {
+        this.freight_hash = freight_hash;
+    }
+
+    public AddressInfoBean getAddress_info() {
+        return address_info;
+    }
+
+    public void setAddress_info(AddressInfoBean address_info) {
+        this.address_info = address_info;
+    }
+
+    public boolean isIfshow_offpay() {
+        return ifshow_offpay;
+    }
+
+    public void setIfshow_offpay(boolean ifshow_offpay) {
+        this.ifshow_offpay = ifshow_offpay;
+    }
+
+    public boolean isIs_vat_deny() {
+        return is_vat_deny;
+    }
+
+    public void setIs_vat_deny(boolean is_vat_deny) {
+        this.is_vat_deny = is_vat_deny;
+    }
+
+    public String getVat_hash() {
+        return vat_hash;
+    }
+
+    public void setVat_hash(String vat_hash) {
+        this.vat_hash = vat_hash;
+    }
+
+    public InvInfoBean getInv_info() {
+        return inv_info;
+    }
+
+    public void setInv_info(InvInfoBean inv_info) {
+        this.inv_info = inv_info;
+    }
+
+    public Object getAvailable_predeposit() {
+        return available_predeposit;
+    }
+
+    public void setAvailable_predeposit(Object available_predeposit) {
+        this.available_predeposit = available_predeposit;
+    }
+
+    public Object getAvailable_rc_balance() {
+        return available_rc_balance;
+    }
+
+    public void setAvailable_rc_balance(Object available_rc_balance) {
+        this.available_rc_balance = available_rc_balance;
+    }
+
+    public boolean isMember_paypwd() {
+        return member_paypwd;
+    }
+
+    public void setMember_paypwd(boolean member_paypwd) {
+        this.member_paypwd = member_paypwd;
+    }
+
+    public List<GoodsListBean> getGoods_list() {
+        return goods_list;
+    }
+
+    public void setGoods_list(List<GoodsListBean> goods_list) {
+        this.goods_list = goods_list;
+    }
+
+    public static class AddressInfoBean {
         /**
-         * order_id : 38
-         * order_sn : 820628432284431007
+         * address_id : 10
+         * member_id : 7
+         * true_name : 南京
+         * area_id : 2134
+         * city_id : 175
+         * area_info : 浙江 杭州市 上城区
+         * address : 数据库
+         * tel_phone : 120
+         * mob_phone : 18614079728
+         * is_default : 0
+         * dlyp_id : 0
+         * province_id : 11
+         */
+
+        private String address_id;
+        private String member_id;
+        private String true_name;
+        private String area_id;
+        private String city_id;
+        private String area_info;
+        private String address;
+        private String tel_phone;
+        private String mob_phone;
+        private String is_default;
+        private String dlyp_id;
+        private String province_id;
+
+        public String getAddress_id() {
+            return address_id;
+        }
+
+        public void setAddress_id(String address_id) {
+            this.address_id = address_id;
+        }
+
+        public String getMember_id() {
+            return member_id;
+        }
+
+        public void setMember_id(String member_id) {
+            this.member_id = member_id;
+        }
+
+        public String getTrue_name() {
+            return true_name;
+        }
+
+        public void setTrue_name(String true_name) {
+            this.true_name = true_name;
+        }
+
+        public String getArea_id() {
+            return area_id;
+        }
+
+        public void setArea_id(String area_id) {
+            this.area_id = area_id;
+        }
+
+        public String getCity_id() {
+            return city_id;
+        }
+
+        public void setCity_id(String city_id) {
+            this.city_id = city_id;
+        }
+
+        public String getArea_info() {
+            return area_info;
+        }
+
+        public void setArea_info(String area_info) {
+            this.area_info = area_info;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getTel_phone() {
+            return tel_phone;
+        }
+
+        public void setTel_phone(String tel_phone) {
+            this.tel_phone = tel_phone;
+        }
+
+        public String getMob_phone() {
+            return mob_phone;
+        }
+
+        public void setMob_phone(String mob_phone) {
+            this.mob_phone = mob_phone;
+        }
+
+        public String getIs_default() {
+            return is_default;
+        }
+
+        public void setIs_default(String is_default) {
+            this.is_default = is_default;
+        }
+
+        public String getDlyp_id() {
+            return dlyp_id;
+        }
+
+        public void setDlyp_id(String dlyp_id) {
+            this.dlyp_id = dlyp_id;
+        }
+
+        public String getProvince_id() {
+            return province_id;
+        }
+
+        public void setProvince_id(String province_id) {
+            this.province_id = province_id;
+        }
+    }
+
+    public static class InvInfoBean {
+        /**
+         * content : 不需要发票
+         */
+
+        private String content;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+    }
+
+    public static class GoodsListBean {
+        /**
+         * cart_id : 56
+         * buyer_id : 7
          * store_id : 2
          * store_name : 艾特技术
-         * buyer_id : 7
-         * buyer_name : 18614079738
-         * buyer_phone : 18614079738
-         * add_time : 1575088284
-         * payment_code :
-         * payment_time : 0
-         * trade_no : null
-         * close_time : 0
-         * close_reason : null
-         * finnshed_time : null
-         * order_amount : 0.01
-         * goods_points_offset : 0
-         * order_points_offset : 0
-         * order_costamount : 0.00
-         * refund_amount : 0.00
-         * rcb_amount : 0.00
-         * pd_amount : 0.00
-         * order_state : 10
-         * refund_state : 0
-         * buyer_msg : null
-         * delete_state : 0
-         * goods_id : 8
-         * goods_name : 测试早餐1
+         * goods_id : 13
+         * goods_name : 助餐商品
          * goods_price : 0.01
-         * goods_num : 1
-         * goods_image : 2019/10/29/2_06256787071214709.jpg
-         * commis_rate : 200
-         * gc_id : 14
-         * gc_id2 : 3
-         * vr_indate : 1890230399
-         * vr_send_times : 0
-         * vr_invalid_refund : 0
-         * order_promotion_type : 0
-         * promotions_id : 0
-         * order_from : 2
-         * evaluation_state : 0
-         * evaluation_time : 0
-         * use_state : 0
-         * first_comm : 0.00
-         * second_comm : 0.00
-         * three_comm : 0.00
+         * goods_num : 10
+         * goods_image : 2019/11/22/2_06277498241227640.jpg
+         * bl_id : 0
+         * cart_type : 1
+         * state : true
+         * storage_state : true
+         * goods_commonid : 13
+         * gc_id : 16
+         * goods_shipping_fee : 0.00
+         * goods_costprice : 0.00
+         * transport_id : 0
+         * goods_freight : 0.00
+         * is_vat : 0
+         * goods_vat : 0
+         * goods_storage : 100
+         * goods_storage_alarm : 0
+         * is_fcode : 0
+         * have_gift : 0
+         * is_more_discount : 0
+         * groupbuy_info : null
+         * xianshi_info : null
+         * miaosha_info : []
+         * wholesale_price :
+         * goods_points_offset : 0
          * is_visit_comm : 0
          * is_Independent_comm : 0
          * comm_rule : null
-         * is_buy_apply : 0
-         * meal_info : {"type":1,"meal_time":"1970-01-01 08:00","meal_address":"南山科技园福安大厦","type_text":"到店吃"}
-         * order_shipping_fee : 0.00
-         * order_state_text : 待付款
-         * payment_name :
-         * is_delete : 1
-         * store_qq : null
-         * store_phone : null
+         * goods_total : 0.10
+         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg
+         * goods_costtotal : 0.00
          */
 
-        private String order_id;
-        private String order_sn;
+        private String cart_id;
+        private String buyer_id;
         private String store_id;
         private String store_name;
-        private String buyer_id;
-        private String buyer_name;
-        private String buyer_phone;
-        private String add_time;
-        private String payment_code;
-        private String payment_time;
-        private Object trade_no;
-        private String close_time;
-        private Object close_reason;
-        private Object finnshed_time;
-        private String order_amount;
-        private String goods_points_offset;
-        private String order_points_offset;
-        private String order_costamount;
-        private String refund_amount;
-        private String rcb_amount;
-        private String pd_amount;
-        private String order_state;
-        private String refund_state;
-        private Object buyer_msg;
-        private String delete_state;
         private String goods_id;
         private String goods_name;
         private String goods_price;
         private String goods_num;
         private String goods_image;
-        private String commis_rate;
+        private String bl_id;
+        private String cart_type;
+        private boolean state;
+        private boolean storage_state;
+        private String goods_commonid;
         private String gc_id;
-        private String gc_id2;
-        private String vr_indate;
-        private String vr_send_times;
-        private String vr_invalid_refund;
-        private String order_promotion_type;
-        private String promotions_id;
-        private String order_from;
-        private String evaluation_state;
-        private String evaluation_time;
-        private String use_state;
-        private String first_comm;
-        private String second_comm;
-        private String three_comm;
+        private String goods_shipping_fee;
+        private String goods_costprice;
+        private String transport_id;
+        private String goods_freight;
+        private String is_vat;
+        private String goods_vat;
+        private String goods_storage;
+        private String goods_storage_alarm;
+        private String is_fcode;
+        private String have_gift;
+        private String is_more_discount;
+        private Object groupbuy_info;
+        private Object xianshi_info;
+        private String wholesale_price;
+        private int goods_points_offset;
         private String is_visit_comm;
         private String is_Independent_comm;
         private Object comm_rule;
-        private String is_buy_apply;
-        private MealInfoBean meal_info;
-        private String order_shipping_fee;
-        private String order_state_text;
-        private String payment_name;
-        private int is_delete;
-        private Object store_qq;
-        private Object store_phone;
+        private String goods_total;
+        private String goods_image_url;
+        private String goods_costtotal;
+        private List<?> miaosha_info;
 
-        public String getOrder_id() {
-            return order_id;
+        public String getCart_id() {
+            return cart_id;
         }
 
-        public void setOrder_id(String order_id) {
-            this.order_id = order_id;
+        public void setCart_id(String cart_id) {
+            this.cart_id = cart_id;
         }
 
-        public String getOrder_sn() {
-            return order_sn;
+        public String getBuyer_id() {
+            return buyer_id;
         }
 
-        public void setOrder_sn(String order_sn) {
-            this.order_sn = order_sn;
+        public void setBuyer_id(String buyer_id) {
+            this.buyer_id = buyer_id;
         }
 
         public String getStore_id() {
@@ -196,174 +382,6 @@ public class BookInfprmationMorningNoonEatBean extends ErrorBean implements Seri
 
         public void setStore_name(String store_name) {
             this.store_name = store_name;
-        }
-
-        public String getBuyer_id() {
-            return buyer_id;
-        }
-
-        public void setBuyer_id(String buyer_id) {
-            this.buyer_id = buyer_id;
-        }
-
-        public String getBuyer_name() {
-            return buyer_name;
-        }
-
-        public void setBuyer_name(String buyer_name) {
-            this.buyer_name = buyer_name;
-        }
-
-        public String getBuyer_phone() {
-            return buyer_phone;
-        }
-
-        public void setBuyer_phone(String buyer_phone) {
-            this.buyer_phone = buyer_phone;
-        }
-
-        public String getAdd_time() {
-            return add_time;
-        }
-
-        public void setAdd_time(String add_time) {
-            this.add_time = add_time;
-        }
-
-        public String getPayment_code() {
-            return payment_code;
-        }
-
-        public void setPayment_code(String payment_code) {
-            this.payment_code = payment_code;
-        }
-
-        public String getPayment_time() {
-            return payment_time;
-        }
-
-        public void setPayment_time(String payment_time) {
-            this.payment_time = payment_time;
-        }
-
-        public Object getTrade_no() {
-            return trade_no;
-        }
-
-        public void setTrade_no(Object trade_no) {
-            this.trade_no = trade_no;
-        }
-
-        public String getClose_time() {
-            return close_time;
-        }
-
-        public void setClose_time(String close_time) {
-            this.close_time = close_time;
-        }
-
-        public Object getClose_reason() {
-            return close_reason;
-        }
-
-        public void setClose_reason(Object close_reason) {
-            this.close_reason = close_reason;
-        }
-
-        public Object getFinnshed_time() {
-            return finnshed_time;
-        }
-
-        public void setFinnshed_time(Object finnshed_time) {
-            this.finnshed_time = finnshed_time;
-        }
-
-        public String getOrder_amount() {
-            return order_amount;
-        }
-
-        public void setOrder_amount(String order_amount) {
-            this.order_amount = order_amount;
-        }
-
-        public String getGoods_points_offset() {
-            return goods_points_offset;
-        }
-
-        public void setGoods_points_offset(String goods_points_offset) {
-            this.goods_points_offset = goods_points_offset;
-        }
-
-        public String getOrder_points_offset() {
-            return order_points_offset;
-        }
-
-        public void setOrder_points_offset(String order_points_offset) {
-            this.order_points_offset = order_points_offset;
-        }
-
-        public String getOrder_costamount() {
-            return order_costamount;
-        }
-
-        public void setOrder_costamount(String order_costamount) {
-            this.order_costamount = order_costamount;
-        }
-
-        public String getRefund_amount() {
-            return refund_amount;
-        }
-
-        public void setRefund_amount(String refund_amount) {
-            this.refund_amount = refund_amount;
-        }
-
-        public String getRcb_amount() {
-            return rcb_amount;
-        }
-
-        public void setRcb_amount(String rcb_amount) {
-            this.rcb_amount = rcb_amount;
-        }
-
-        public String getPd_amount() {
-            return pd_amount;
-        }
-
-        public void setPd_amount(String pd_amount) {
-            this.pd_amount = pd_amount;
-        }
-
-        public String getOrder_state() {
-            return order_state;
-        }
-
-        public void setOrder_state(String order_state) {
-            this.order_state = order_state;
-        }
-
-        public String getRefund_state() {
-            return refund_state;
-        }
-
-        public void setRefund_state(String refund_state) {
-            this.refund_state = refund_state;
-        }
-
-        public Object getBuyer_msg() {
-            return buyer_msg;
-        }
-
-        public void setBuyer_msg(Object buyer_msg) {
-            this.buyer_msg = buyer_msg;
-        }
-
-        public String getDelete_state() {
-            return delete_state;
-        }
-
-        public void setDelete_state(String delete_state) {
-            this.delete_state = delete_state;
         }
 
         public String getGoods_id() {
@@ -406,12 +424,44 @@ public class BookInfprmationMorningNoonEatBean extends ErrorBean implements Seri
             this.goods_image = goods_image;
         }
 
-        public String getCommis_rate() {
-            return commis_rate;
+        public String getBl_id() {
+            return bl_id;
         }
 
-        public void setCommis_rate(String commis_rate) {
-            this.commis_rate = commis_rate;
+        public void setBl_id(String bl_id) {
+            this.bl_id = bl_id;
+        }
+
+        public String getCart_type() {
+            return cart_type;
+        }
+
+        public void setCart_type(String cart_type) {
+            this.cart_type = cart_type;
+        }
+
+        public boolean isState() {
+            return state;
+        }
+
+        public void setState(boolean state) {
+            this.state = state;
+        }
+
+        public boolean isStorage_state() {
+            return storage_state;
+        }
+
+        public void setStorage_state(boolean storage_state) {
+            this.storage_state = storage_state;
+        }
+
+        public String getGoods_commonid() {
+            return goods_commonid;
+        }
+
+        public void setGoods_commonid(String goods_commonid) {
+            this.goods_commonid = goods_commonid;
         }
 
         public String getGc_id() {
@@ -422,108 +472,124 @@ public class BookInfprmationMorningNoonEatBean extends ErrorBean implements Seri
             this.gc_id = gc_id;
         }
 
-        public String getGc_id2() {
-            return gc_id2;
+        public String getGoods_shipping_fee() {
+            return goods_shipping_fee;
         }
 
-        public void setGc_id2(String gc_id2) {
-            this.gc_id2 = gc_id2;
+        public void setGoods_shipping_fee(String goods_shipping_fee) {
+            this.goods_shipping_fee = goods_shipping_fee;
         }
 
-        public String getVr_indate() {
-            return vr_indate;
+        public String getGoods_costprice() {
+            return goods_costprice;
         }
 
-        public void setVr_indate(String vr_indate) {
-            this.vr_indate = vr_indate;
+        public void setGoods_costprice(String goods_costprice) {
+            this.goods_costprice = goods_costprice;
         }
 
-        public String getVr_send_times() {
-            return vr_send_times;
+        public String getTransport_id() {
+            return transport_id;
         }
 
-        public void setVr_send_times(String vr_send_times) {
-            this.vr_send_times = vr_send_times;
+        public void setTransport_id(String transport_id) {
+            this.transport_id = transport_id;
         }
 
-        public String getVr_invalid_refund() {
-            return vr_invalid_refund;
+        public String getGoods_freight() {
+            return goods_freight;
         }
 
-        public void setVr_invalid_refund(String vr_invalid_refund) {
-            this.vr_invalid_refund = vr_invalid_refund;
+        public void setGoods_freight(String goods_freight) {
+            this.goods_freight = goods_freight;
         }
 
-        public String getOrder_promotion_type() {
-            return order_promotion_type;
+        public String getIs_vat() {
+            return is_vat;
         }
 
-        public void setOrder_promotion_type(String order_promotion_type) {
-            this.order_promotion_type = order_promotion_type;
+        public void setIs_vat(String is_vat) {
+            this.is_vat = is_vat;
         }
 
-        public String getPromotions_id() {
-            return promotions_id;
+        public String getGoods_vat() {
+            return goods_vat;
         }
 
-        public void setPromotions_id(String promotions_id) {
-            this.promotions_id = promotions_id;
+        public void setGoods_vat(String goods_vat) {
+            this.goods_vat = goods_vat;
         }
 
-        public String getOrder_from() {
-            return order_from;
+        public String getGoods_storage() {
+            return goods_storage;
         }
 
-        public void setOrder_from(String order_from) {
-            this.order_from = order_from;
+        public void setGoods_storage(String goods_storage) {
+            this.goods_storage = goods_storage;
         }
 
-        public String getEvaluation_state() {
-            return evaluation_state;
+        public String getGoods_storage_alarm() {
+            return goods_storage_alarm;
         }
 
-        public void setEvaluation_state(String evaluation_state) {
-            this.evaluation_state = evaluation_state;
+        public void setGoods_storage_alarm(String goods_storage_alarm) {
+            this.goods_storage_alarm = goods_storage_alarm;
         }
 
-        public String getEvaluation_time() {
-            return evaluation_time;
+        public String getIs_fcode() {
+            return is_fcode;
         }
 
-        public void setEvaluation_time(String evaluation_time) {
-            this.evaluation_time = evaluation_time;
+        public void setIs_fcode(String is_fcode) {
+            this.is_fcode = is_fcode;
         }
 
-        public String getUse_state() {
-            return use_state;
+        public String getHave_gift() {
+            return have_gift;
         }
 
-        public void setUse_state(String use_state) {
-            this.use_state = use_state;
+        public void setHave_gift(String have_gift) {
+            this.have_gift = have_gift;
         }
 
-        public String getFirst_comm() {
-            return first_comm;
+        public String getIs_more_discount() {
+            return is_more_discount;
         }
 
-        public void setFirst_comm(String first_comm) {
-            this.first_comm = first_comm;
+        public void setIs_more_discount(String is_more_discount) {
+            this.is_more_discount = is_more_discount;
         }
 
-        public String getSecond_comm() {
-            return second_comm;
+        public Object getGroupbuy_info() {
+            return groupbuy_info;
         }
 
-        public void setSecond_comm(String second_comm) {
-            this.second_comm = second_comm;
+        public void setGroupbuy_info(Object groupbuy_info) {
+            this.groupbuy_info = groupbuy_info;
         }
 
-        public String getThree_comm() {
-            return three_comm;
+        public Object getXianshi_info() {
+            return xianshi_info;
         }
 
-        public void setThree_comm(String three_comm) {
-            this.three_comm = three_comm;
+        public void setXianshi_info(Object xianshi_info) {
+            this.xianshi_info = xianshi_info;
+        }
+
+        public String getWholesale_price() {
+            return wholesale_price;
+        }
+
+        public void setWholesale_price(String wholesale_price) {
+            this.wholesale_price = wholesale_price;
+        }
+
+        public int getGoods_points_offset() {
+            return goods_points_offset;
+        }
+
+        public void setGoods_points_offset(int goods_points_offset) {
+            this.goods_points_offset = goods_points_offset;
         }
 
         public String getIs_visit_comm() {
@@ -550,114 +616,36 @@ public class BookInfprmationMorningNoonEatBean extends ErrorBean implements Seri
             this.comm_rule = comm_rule;
         }
 
-        public String getIs_buy_apply() {
-            return is_buy_apply;
+        public String getGoods_total() {
+            return goods_total;
         }
 
-        public void setIs_buy_apply(String is_buy_apply) {
-            this.is_buy_apply = is_buy_apply;
+        public void setGoods_total(String goods_total) {
+            this.goods_total = goods_total;
         }
 
-        public MealInfoBean getMeal_info() {
-            return meal_info;
+        public String getGoods_image_url() {
+            return goods_image_url;
         }
 
-        public void setMeal_info(MealInfoBean meal_info) {
-            this.meal_info = meal_info;
+        public void setGoods_image_url(String goods_image_url) {
+            this.goods_image_url = goods_image_url;
         }
 
-        public String getOrder_shipping_fee() {
-            return order_shipping_fee;
+        public String getGoods_costtotal() {
+            return goods_costtotal;
         }
 
-        public void setOrder_shipping_fee(String order_shipping_fee) {
-            this.order_shipping_fee = order_shipping_fee;
+        public void setGoods_costtotal(String goods_costtotal) {
+            this.goods_costtotal = goods_costtotal;
         }
 
-        public String getOrder_state_text() {
-            return order_state_text;
+        public List<?> getMiaosha_info() {
+            return miaosha_info;
         }
 
-        public void setOrder_state_text(String order_state_text) {
-            this.order_state_text = order_state_text;
-        }
-
-        public String getPayment_name() {
-            return payment_name;
-        }
-
-        public void setPayment_name(String payment_name) {
-            this.payment_name = payment_name;
-        }
-
-        public int getIs_delete() {
-            return is_delete;
-        }
-
-        public void setIs_delete(int is_delete) {
-            this.is_delete = is_delete;
-        }
-
-        public Object getStore_qq() {
-            return store_qq;
-        }
-
-        public void setStore_qq(Object store_qq) {
-            this.store_qq = store_qq;
-        }
-
-        public Object getStore_phone() {
-            return store_phone;
-        }
-
-        public void setStore_phone(Object store_phone) {
-            this.store_phone = store_phone;
-        }
-
-        public static class MealInfoBean {
-            /**
-             * type : 1
-             * meal_time : 1970-01-01 08:00
-             * meal_address : 南山科技园福安大厦
-             * type_text : 到店吃
-             */
-
-            private int type;
-            private String meal_time;
-            private String meal_address;
-            private String type_text;
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
-            }
-
-            public String getMeal_time() {
-                return meal_time;
-            }
-
-            public void setMeal_time(String meal_time) {
-                this.meal_time = meal_time;
-            }
-
-            public String getMeal_address() {
-                return meal_address;
-            }
-
-            public void setMeal_address(String meal_address) {
-                this.meal_address = meal_address;
-            }
-
-            public String getType_text() {
-                return type_text;
-            }
-
-            public void setType_text(String type_text) {
-                this.type_text = type_text;
-            }
+        public void setMiaosha_info(List<?> miaosha_info) {
+            this.miaosha_info = miaosha_info;
         }
     }
 }

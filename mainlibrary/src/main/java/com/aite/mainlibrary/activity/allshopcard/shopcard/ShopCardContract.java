@@ -6,20 +6,29 @@ import com.lzy.okgo.model.HttpParams;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
 public class ShopCardContract {
     interface View extends BaseView {
         void onShopCardListSuccess(Object msg);
+
         void ondeleteShopCardItemSuccess(Object msg);
+
         void onlessShopThingNumberSuccess(Object msg);
+
+        void onGetShopBookThingSuccess(Object msg);
+
     }
 
-    interface  Presenter extends BasePresenter<View> {
+    interface Presenter extends BasePresenter<View> {
         void getShopCardList(HttpParams httpParams);
+
         void deleteShopCardItem(HttpParams httpParams);
-        void  addlessShopThingNumber(HttpParams httpParams);
+
+        void addlessShopThingNumber(HttpParams httpParams);
+
+        void GetShopBookThing(HttpParams httpParams);
 
 
     }

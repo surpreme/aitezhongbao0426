@@ -12,11 +12,13 @@ import com.lzy.okgo.model.HttpParams;
 public class HealthBookListContract {
     interface View extends BaseView {
         void onGetInformationListSuccess(Object msg);
+        void onDeleteInformationSuccess(Object msg);
 
     }
 
     interface  Presenter extends BasePresenter<View> {
         void GetInformationList(HttpParams httpParams);
+        void deleteInformation(HttpParams httpParams);
 
     }
 }

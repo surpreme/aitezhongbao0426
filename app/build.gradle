@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/valy/aitezhongbao')
+            keyAlias = 'androidx.key'
+            storePassword 'aite8899'
+            keyPassword 'aite8899'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     compileOptions {
@@ -48,6 +56,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
 }
@@ -103,6 +115,7 @@ dependencies {
     implementation project(path: ':baselibrary')
     implementation project(path: ':mainlibrary')
     implementation project(path: ':testlibrary')
+    implementation project(path: ':alipaylibrary')
 
 
 //    implementation project(path: ':mainmodules')

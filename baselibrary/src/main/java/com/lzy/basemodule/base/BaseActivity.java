@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +15,12 @@ import androidx.annotation.Nullable;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.R;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.mvp.BasePresenterImpl;
 import com.lzy.basemodule.mvp.BaseView;
+import com.lzy.basemodule.util.KeyBoardUtils;
+import com.lzy.basemodule.util.SharePreferencesHelper;
 import com.lzy.basemodule.util.SystemUtil;
 import com.lzy.basemodule.util.toast.ToastUtils;
 import com.lzy.basemodule.util.toast.ToastTopUtils;
@@ -133,7 +134,9 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenterIm
     @Override
     protected void onStart() {
         super.onStart();
-        applypermission();
+        SharePreferencesHelper sharePreferencesHelper = new SharePreferencesHelper(context, "PERMISSION_OK");
+        if (!sharePreferencesHelper.contain("PERMISSION_OK") && !Boolean.valueOf(String.valueOf(sharePreferencesHelper.getSharePreference("PERMISSION_OK", false))))
+            applypermission();
     }
 
     @Override
@@ -221,6 +224,10 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenterIm
     }
 
     @Override
+    protected void applyperssionbody() {
+    }
+
+    @Override
     public void showLoading() {
         PopwindowUtils.getmInstance().showloaddingPopupWindow(this);
     }
@@ -236,8 +243,18 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenterIm
             @Override
             public void run() {
                 ToastUtils.showToast(context, msg);
+                if (msg.equals("请登录")) {
+                    Intent intent = new Intent();
+                    intent.setAction("com.aite.aitezhongbao.app.activity.login.LoginActivity");
+                    AppManager.getInstance().killAllActivity();
+                    startActivity(intent);
+                }
                 LogUtils.e("服务器返回错误信息-----------" + msg);
             }
         });
+    }
+
+    protected void hideSoftWare() {
+        KeyBoardUtils.hideKeyboard(getWindow().getDecorView());
     }
 }

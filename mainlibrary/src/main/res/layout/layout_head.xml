@@ -77,8 +77,8 @@
                         android:id="@+id/starView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:starEmpty="@mipmap/no_star_icon"
-                        app:starFill="@mipmap/star_icon"
+                        app:starEmpty="@drawable/no_star_icon"
+                        app:starFill="@drawable/star_icon"
                         app:starImageSize="22sp" />
 
                     <TextView
@@ -101,7 +101,7 @@
                 android:layout_gravity="center_vertical">
 
 
-                <com.aite.a.view.CircleImageView
+                <ImageView
                     android:id="@+id/user_icon"
                     android:layout_width="65dp"
                     android:layout_height="65dp" />
@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignRight="@+id/user_icon"
                     android:layout_alignBottom="@+id/user_icon"
-                    android:src="@mipmap/on_line_icon" />
+                    android:src="@drawable/on_line_icon" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -209,7 +209,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp_12"
-                    android:src="@mipmap/down_icon" />
+                    android:src="@drawable/down_icon" />
 
             </RelativeLayout>
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_layout" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:text="服务满意度" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="良" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="差" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
+    <EditText
+        android:id="@+id/talk_edit"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="服务满足您的期待吗？"
+        android:lines="2" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/noglay" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:layout_marginTop="@dimen/margin_20dp"
+        android:gravity="center|left"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/add_image_tv"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:background="@color/noglay"
+            android:gravity="center"
+            android:text="+"
+            android:textSize="@dimen/textSize_20sp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/post_img"
+                android:layout_width="130dp"
+                android:layout_height="130dp" />
+
+            <ImageView
+                android:id="@+id/post_two_img"
+                android:layout_width="130dp"
+                android:layout_height="130dp" />
+
+            <ImageView
+                android:id="@+id/post_three_img"
+                android:layout_width="130dp"
+                android:layout_height="130dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_image_tv"
+            android:gravity="center"
+            android:text="上传图片" />
+    </RelativeLayout>
+
+    <include layout="@layout/bottom_btn" />
+
+
+</LinearLayout>

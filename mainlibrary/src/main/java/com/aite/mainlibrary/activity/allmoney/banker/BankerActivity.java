@@ -8,11 +8,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aite.mainlibrary.Mainbean.MineBankListBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.aite.mainlibrary.activity.allmoney.AddBankcarActvity;
+import com.aite.mainlibrary.activity.allmoney.addbankcaractvity.AddBankcarActvity;
 import com.aite.mainlibrary.adapter.BankCardRecyAdapter;
+import com.lzy.basemodule.OnClickLstenerInterface;
+import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.bean.ContentValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +34,8 @@ public class BankerActivity extends BaseActivity<BankerContract.View, BankerPres
     RecyclerView bankRecy;
     @BindView(R2.id.add_bankcard_ll)
     LinearLayout addBankcardLl;
-    private List<String> banknames = new ArrayList<>();
-    private List<String> banknumbers = new ArrayList<>();
     private BankCardRecyAdapter bankCardRecyAdapter;
+    private List<MineBankListBean.BankListBean> bankListBeans = new ArrayList<>();
 
     @Override
     protected int getLayoutResId() {
@@ -50,19 +54,34 @@ public class BankerActivity extends BaseActivity<BankerContract.View, BankerPres
     protected void initView() {
         initToolbar("我的银行卡");
         addBankcardLl.setOnClickListener(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        bankRecy.setLayoutManager(linearLayoutManager);
+        bankRecy.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         bankRecy.setItemAnimator(new DefaultItemAnimator());
-        banknames.add("中国银行");
-        banknumbers.add("**** **** **** 4124");
-        bankCardRecyAdapter = new BankCardRecyAdapter(this, banknames, banknumbers);
-        bankRecy.setAdapter(bankCardRecyAdapter);
-        bankCardRecyAdapter.notifyDataSetChanged();
+        bankRecy.setAdapter(bankCardRecyAdapter = new BankCardRecyAdapter(this, bankListBeans));
+        bankCardRecyAdapter.setOnItemRecyClickInterface(new OnClickLstenerInterface.OnItemRecyClickInterface() {
+            @Override
+            public void getPosition(int postion) {
+                PopwindowUtils.
+                        getmInstance().
+                        showdiadlogPopupWindow
+                                (context,
+                                        "您确定要删除卡号为" + bankListBeans.get(postion).getBank_no() + "的银行卡吗？",
+                                        new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mPresenter.Deletebank(initListHttpParams(
+                                                        true,
+                                                        new ContentValue("bank_id",
+                                                                bankListBeans.get(postion).getId())));
 
+                                            }
+                                        });
+            }
+        });
     }
 
     @Override
     protected void initDatas() {
+        mPresenter.GetbankList(initListHttpParams(true));
 
     }
 
@@ -77,4 +96,23 @@ public class BankerActivity extends BaseActivity<BankerContract.View, BankerPres
     }
 
 
+    @Override
+    public void onGetbankListSuccess(Object msg) {
+        MineBankListBean mineBankListBean = (MineBankListBean) msg;
+        bankListBeans.addAll(mineBankListBean.getBank_list());
+        bankCardRecyAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onDeletebankSuccess(Object msg) {
+        TwoSuccessCodeBean twoSuccessCodeBean = (TwoSuccessCodeBean) msg;
+        if (twoSuccessCodeBean.getResult() == null) return;
+        if (twoSuccessCodeBean.getResult().equals("1")) {
+            if (twoSuccessCodeBean.getMsg() == null) return;
+            showToast(twoSuccessCodeBean.getMsg());
+            onBackPressed();
+        }
+
+    }
 }

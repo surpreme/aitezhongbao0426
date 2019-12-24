@@ -20,7 +20,7 @@
         android:textColor="@color/white"
         android:textSize="10sp" />
 
-    <com.aite.a.view.CircleImageView
+    <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"

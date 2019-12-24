@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.logcat.LogUtils;
 
 import java.io.IOException;

@@ -55,6 +55,7 @@ public class Model {
         });
     }
 
+
     public void amAroundActivity(String type, int toplow, String loction, final int pages, final ModelInteface.AmClassShopFragmentInterface amClassShopFragmentInterface) {
         NetRun netRun = new NetRun(context);
         netRun.onAround(type, toplow, loction, pages, new RequestCallBack<String>() {
@@ -74,6 +75,7 @@ public class Model {
 
     /**
      * 弃用
+     *
      * @param amClassBrandFragmentInterface
      */
     public void aAroundLocationChoiceActivity(final ModelInteface.AmClassBrandFragmentInterface amClassBrandFragmentInterface) {
@@ -109,7 +111,6 @@ public class Model {
                 for (int i = 0; aroundLocationChoiceBean.getDatas().getG().size() > i; i++) {
                     list.add(aroundLocationChoiceBean.getDatas().getG().get(i).getArea_name());
                 }
-
 
 
                 for (int i = 0; aroundLocationChoiceBean.getDatas().getH().size() > i; i++) {

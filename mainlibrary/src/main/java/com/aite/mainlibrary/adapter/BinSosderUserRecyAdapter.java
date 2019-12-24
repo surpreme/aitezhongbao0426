@@ -16,7 +16,6 @@ import com.aite.mainlibrary.R2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.util.List;
 
@@ -43,6 +42,17 @@ public class BinSosderUserRecyAdapter extends RecyclerView.Adapter<BinSosderUser
         return viewHolder;
     }
 
+    public interface OnClickThingInterface {
+        void onDelete(String position);
+
+        void onedit(String position);
+    }
+
+    public void setOnClickThingInterface(OnClickThingInterface onClickThingInterface) {
+        this.onClickThingInterface = onClickThingInterface;
+    }
+
+    private OnClickThingInterface onClickThingInterface;
     private OnClickLstenerInterface.OnRecyClickInterface clickInterface;
 
     public OnClickLstenerInterface.OnRecyClickInterface getClickInterface() {
@@ -114,10 +124,25 @@ public class BinSosderUserRecyAdapter extends RecyclerView.Adapter<BinSosderUser
 
         }
 
+        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onClickThingInterface != null)
+                    onClickThingInterface.onDelete(String.valueOf(position));
+            }
+        });
+        holder.tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onClickThingInterface != null)
+                    onClickThingInterface.onedit(String.valueOf(position));
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                if (clickInterface != null)
+                    clickInterface.getPosition(position);
             }
         });
 

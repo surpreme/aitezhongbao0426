@@ -131,7 +131,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@mipmap/year_icon" />
+            android:src="@drawable/year_icon" />
 
         <View
             android:layout_width="20dp"
@@ -245,7 +245,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
 
         <LinearLayout
@@ -280,7 +281,7 @@
             android:layout_width="13dp"
             android:layout_height="13dp"
             android:layout_gravity="center"
-            android:src="@drawable/go_black"/>
+            android:src="@drawable/go_black" />
 
         <View
             android:layout_width="20dp"

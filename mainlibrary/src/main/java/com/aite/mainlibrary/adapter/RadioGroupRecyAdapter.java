@@ -76,8 +76,8 @@ public class RadioGroupRecyAdapter extends RecyclerView.Adapter<RadioGroupRecyAd
             @Override
             public void onClick(View v) {
 //                listBean.get(position).setChecked();
-                clickInterface.getPostion(Integer.valueOf(listBean.get(position).getId()));
-//                clickInterfaceAndString.getPostion();
+                clickInterface.getPosition(Integer.valueOf(listBean.get(position).getId()));
+//                clickInterfaceAndString.getPosition();
                 listBean.get(position).setChecked(true);
                 for (int i = 0; i < listBean.size(); i++) {
                     if (i == position) listBean.get(i).setChecked(true);

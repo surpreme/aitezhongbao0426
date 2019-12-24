@@ -12,22 +12,35 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
+
         <View
             android:layout_width="wrap_content"
-            android:layout_height="20dp"/>
+            android:layout_height="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="核销码" />
+            android:text="核销码"
+            android:textColor="@color/black" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/information_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="详细信息" />
 
         <ImageView
             android:id="@+id/qrcode_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <View
             android:layout_width="wrap_content"
-            android:layout_height="20dp"/>
+            android:layout_height="20dp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -1,15 +1,27 @@
 apply plugin: 'com.android.library'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/valy/aitezhongbao')
+            storePassword 'aite8899'
+            keyAlias = 'androidx.key'
+            keyPassword 'aite8899'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -21,19 +33,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-//
-//    flatDir {
-//        dirs project(':alipaylibrary').file('libs')
-//    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation (name: 'alipaySdk-15.6.8-20191021122455-noUtdid', ext: 'aar')
+    api (name: 'alipaySdk-15.6.8-20191021122455-noUtdid', ext: 'aar')
+    implementation project(path: ':baselibrary')
 
 }

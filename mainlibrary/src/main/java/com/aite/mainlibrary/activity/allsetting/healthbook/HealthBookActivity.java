@@ -91,12 +91,9 @@ public class HealthBookActivity extends BaseActivity<HealthBookContract.View, He
         xueTypeEdit.setFocusableInTouchMode(false);
         sendBodySwitch.setTextColor(getColor(R.color.black));
         sendBodySwitch.setEnabled(false);
-        sendBodySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                LogUtils.d(isChecked);
-                sendBodySwitch.setText(String.format("是否捐赠器官者: %s", isChecked ? "是" : "否"));
-            }
+        sendBodySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            LogUtils.d(isChecked);
+            sendBodySwitch.setText(String.format("是否捐赠器官者: %s", isChecked ? "是" : "否"));
         });
 
     }
@@ -142,10 +139,11 @@ public class HealthBookActivity extends BaseActivity<HealthBookContract.View, He
     @OnClick({R2.id.disease_ll, R2.id.hostory_note_ll, R2.id.hate_ll, R2.id.medicine_ll})
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.disease_ll) startActivity(HealthBookListActivity.class,"type","1");
-        if (v.getId() == R.id.hostory_note_ll)startActivity(HealthBookListActivity.class,"type","2");
-        if (v.getId() == R.id.hate_ll) startActivity(HealthBookListActivity.class,"type","3");
-        if (v.getId() == R.id.medicine_ll)startActivity(HealthBookListActivity.class,"type","4");
+        if (v.getId() == R.id.disease_ll) startActivity(HealthBookListActivity.class, "type", "1");
+        if (v.getId() == R.id.hostory_note_ll)
+            startActivity(HealthBookListActivity.class, "type", "2");
+        if (v.getId() == R.id.hate_ll) startActivity(HealthBookListActivity.class, "type", "3");
+        if (v.getId() == R.id.medicine_ll) startActivity(HealthBookListActivity.class, "type", "4");
     }
 
     /**
@@ -164,12 +162,11 @@ public class HealthBookActivity extends BaseActivity<HealthBookContract.View, He
         highEdit.setHint(String.format("身高：%s cm", getJsonToString(((HealthbookMainBean) msg).getMember_height())));
         heightEdit.setHint(String.format("体重：%s kg", getJsonToString(((HealthbookMainBean) msg).getMember_weight())));
         xueTypeEdit.setHint(String.format("血型：%s 型", getJsonToString(((HealthbookMainBean) msg).getMember_blood_types())));
-
 //        weightTv.setText(String.format("体重：%s", ((HealthbookMainBean) msg).getMember_weight()) == null ? "未知" : ((HealthbookMainBean) msg).getMember_weight().toString());
 //        xueTypeTv.setText(String.format("血型：%s", ((HealthbookMainBean) msg).getMember_blood_types()) == null ? "未知" : ((HealthbookMainBean) msg).getMember_blood_types().toString());
         if (((HealthbookMainBean) msg).getIs_organ_donor() != null) {
-            sendBodySwitch.setText(String.format("是否捐赠器官者: %s", ((HealthbookMainBean) msg).getIs_organ_donor().toString().equals("1") ? "是" : "否"));
-            sendBodySwitch.setChecked(((HealthbookMainBean) msg).getIs_organ_donor().toString().equals("1"));
+            sendBodySwitch.setText(String.format("是否捐赠器官者: %s", ((HealthbookMainBean) msg).getIs_organ_donor().equals("1") ? "是" : "否"));
+            sendBodySwitch.setChecked(((HealthbookMainBean) msg).getIs_organ_donor().equals("1"));
         } else sendBodySwitch.setText("是否捐赠器官者:未知");
 
 

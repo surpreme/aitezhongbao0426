@@ -155,6 +155,7 @@ public class UserTypeActivity extends BaseActivity<UserTypeContract.View, UserTy
 
     @Override
     protected void initView() {
+        key = getIntent().getStringExtra("key");
         StatusBarUtils.setColor(context, Color.WHITE);
         doctorPostMsgLl.setVisibility(View.GONE);
         doctorChex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -204,7 +205,6 @@ public class UserTypeActivity extends BaseActivity<UserTypeContract.View, UserTy
     @Override
     protected void onResume() {
         super.onResume();
-        key = getIntent().getStringExtra("key");
     }
 
     @Override
@@ -223,8 +223,11 @@ public class UserTypeActivity extends BaseActivity<UserTypeContract.View, UserTy
             @Override
             public void run() {
                 showTopToasts(((SureFindPasswordCodeBean) msg).getMsg());
-                if (((SureFindPasswordCodeBean) msg).getState().equals("1"))
+                if (((SureFindPasswordCodeBean) msg).getState().equals("1")) {
+                    showToast("注册完善信息结束 请登录");
                     startActivity(LoginActivity.class);
+
+                }
             }
         });
 
@@ -232,40 +235,4 @@ public class UserTypeActivity extends BaseActivity<UserTypeContract.View, UserTy
     }
 
 
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                break;
-            case R.id.log_img_id:
-                break;
-            case R.id.people_chex:
-                break;
-            case R.id.worker_chex:
-                break;
-            case R.id.girldoctor_chex:
-                break;
-            case R.id.doctor_chex:
-                break;
-            case R.id.person_book_first_tv:
-                break;
-            case R.id.person_book_sencond_tv:
-                break;
-            case R.id.person_book_first_img:
-                break;
-            case R.id.person_book_sencond_img:
-                break;
-            case R.id.work_book_first_tv:
-                break;
-            case R.id.work_book_second_tv:
-                break;
-            case R.id.work_book_first_img:
-                break;
-            case R.id.work_book_second_img:
-                break;
-            case R.id.doctor_post_msg_ll:
-                break;
-            case R.id.next_btn:
-                break;
-        }
-    }
 }

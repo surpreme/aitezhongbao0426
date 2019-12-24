@@ -3,6 +3,7 @@ package com.aite.mainlibrary.fragment.activityfragment.main;
 import android.app.Activity;
 
 import com.aite.mainlibrary.Mainbean.MainUiDataBean;
+import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
@@ -18,10 +19,10 @@ import org.json.JSONObject;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
-public class MainPresenter extends BasePresenterImpl<MainContract.View> implements MainContract.Presenter{
+public class MainPresenter extends BasePresenterImpl<MainContract.View> implements MainContract.Presenter {
 
     @Override
     public void showUiData(HttpParams httpParams) {
@@ -39,12 +40,11 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
                             return null;
                         } else {
                             JSONObject object = jsonObject.optJSONObject("datas");
-                            MainUiDataBean firstNewUserBean = BeanConvertor.convertBean(object.toString(), MainUiDataBean.class);
-                            ((Activity)mView.getContext()).runOnUiThread(()
+                            Gson gson = new Gson();
+                            MainUiDataBean firstNewUserBean = gson.fromJson(object.toString(), MainUiDataBean.class);
+                            ((Activity) mView.getContext()).runOnUiThread(()
                                     -> mView.getUiDataSuccess(firstNewUserBean));
                         }
-
-
 
 
                         return null;

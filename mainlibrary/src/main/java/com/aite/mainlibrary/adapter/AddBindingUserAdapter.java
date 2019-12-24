@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.AddbinduserfamilyBean;
-import com.aite.mainlibrary.Mainbean.TypeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.lzy.basemodule.OnClickLstenerInterface;
@@ -62,7 +61,7 @@ public class AddBindingUserAdapter extends RecyclerView.Adapter<AddBindingUserAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
 

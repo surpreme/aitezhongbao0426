@@ -3,16 +3,13 @@ package com.aite.mainlibrary.activity.allshopcard.daytogether;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.aite.mainlibrary.Mainbean.AirMainListBean;
 import com.aite.mainlibrary.Mainbean.DayTogetherChoiceBean;
 import com.aite.mainlibrary.Mainbean.LessDayBean;
-import com.aite.mainlibrary.Mainbean.RecyChoiceUIBean;
 import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
-import com.lzy.basemodule.bean.EtraLoginBaseData;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.mvp.BasePresenterImpl;
 import com.lzy.okgo.OkGo;

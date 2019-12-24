@@ -32,8 +32,8 @@ public class StepsView extends View {
     /**
      * 中间线 以及背景线
      */
-    private int backColor = Color.parseColor("#cbdddf"),
-            rashColor = Color.parseColor("#c2d2e2"),
+    private int backColor = Color.parseColor("#DDDDDD"),
+            rashColor = Color.parseColor("#DDDDDD"),
             textColor = Color.parseColor("#EEEEEE");
     private List<Bitmap> bitmapList = new LinkedList<>();
     private int signInCount = 9;
@@ -55,7 +55,7 @@ public class StepsView extends View {
         paint = new Paint();
         paint.setAntiAlias(true);
         //控制线的宽度
-        strokeWidth = SystemUtil.dip2px(context, 7);
+        strokeWidth = SystemUtil.dip2px(context, 20);
 //        checkBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sign_ok);
         //控制图的大小
         checkBitmap = BitmapUtils.setBitmapSize(new WeakReference<Context>(context), R.drawable.sign2x, 45, 45, false);
@@ -101,28 +101,25 @@ public class StepsView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        /**
-         * 5一行有几个
-         */
+        //一行有7个
         paint.setColor(backColor);
         paint.setStrokeWidth(strokeWidth);
-        int rowCount = (monthDays % 5 == 0 ? monthDays / 5 : monthDays / 5 + 1);
+        int rowCount = (monthDays % 7 == 0 ? monthDays / 7 : monthDays / 7 + 1);
         int rowHeigh = height / (rowCount);
-//        int rowHeigh = width / (rowCount);
         int startX = 0 + rowHeigh / 2;
         int endX = width - rowHeigh / 2;
         int days = 0;
 
         for (int a = 0; a < rowCount; a++) {
             if (a + 1 == rowCount) {
-                endX = (endX - startX) / 5 * (monthDays % 5 == 0 ? 5 : (monthDays % 5)) + checkBitmap.getWidth() / 2;
+                endX = (endX - startX) / 7 * (monthDays % 7 == 0 ? 7 : (monthDays % 7)) + checkBitmap.getWidth() / 2;
             }
             paint.setStrokeWidth(strokeWidth);
             int y = rowHeigh * a + rowHeigh / 2;
             canvas.drawLine(startX, y, endX, y, paint);
 
             paint.setColor(rashColor);
-            paint.setStrokeWidth(3);
+            paint.setStrokeWidth(1);
             canvas.drawLine(startX, y, endX, y, paint);
             // 这里是来判断，是否需要画出左半边还是右半边的半圆弧度？
             if (a % 2 != 0) {
@@ -137,17 +134,17 @@ public class StepsView extends View {
 
             // 这里是来判断，本次这根线上画出的礼物的点，以及顺序是顺画，还是倒画出。
             bitmapList.clear();
-            int lastDay = (monthDays % 5) == 0 ? 5 : (monthDays % 5);
-            for (int b = 0; b < (a + 1 == rowCount ? (lastDay) : 5); b++) {
+            int lastDay = (monthDays % 7) == 0 ? 7 : (monthDays % 7);
+            for (int b = 0; b < (a + 1 == rowCount ? (lastDay) : 7); b++) {
                 days++;
                 if (days <= signInCount) {
-                    if (days == 3 || days == 8 || days == 14 || days == 22 || days == monthDays) {
+                    if (days == 3 || days == 8 || days == 14 || days == 21 || days == monthDays) {
                         bitmapList.add(a % 2 != 0 ? 0 : bitmapList.size(), openGiftBitmap);
                     } else {
                         bitmapList.add(a % 2 != 0 ? 0 : bitmapList.size(), checkBitmap);
                     }
                 } else {
-                    if (days == 3 || days == 8 || days == 14 || days == 22 || days == monthDays) {
+                    if (days == 3 || days == 8 || days == 14 || days == 21 || days == monthDays) {
                         bitmapList.add(a % 2 != 0 ? 0 : bitmapList.size(), closeGiftBitmap);
                     } else {
                         bitmapList.add(a % 2 != 0 ? 0 : bitmapList.size(), uncheckBitmap);

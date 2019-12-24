@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.HealthListBean;
@@ -26,8 +27,6 @@ import butterknife.ButterKnife;
  * @desc:
  */
 public class HealthBookRecyAdapter extends RecyclerView.Adapter<HealthBookRecyAdapter.ViewHolder> {
-
-
     private Context context;
     private LayoutInflater inflater;
     private List<HealthListBean.DatasBean> datasBeans;
@@ -36,6 +35,18 @@ public class HealthBookRecyAdapter extends RecyclerView.Adapter<HealthBookRecyAd
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.datasBeans = datasBeans;
+    }
+
+    public interface OnClickThingInterface {
+        void onDelete(String position);
+
+        void onedit(String position);
+    }
+
+    private AdrressFixRecyAdapter.OnClickThingInterface onClickThingInterface;
+
+    public void setOnClickThingInterface(AdrressFixRecyAdapter.OnClickThingInterface onClickThingInterface) {
+        this.onClickThingInterface = onClickThingInterface;
     }
 
     @NonNull
@@ -62,12 +73,16 @@ public class HealthBookRecyAdapter extends RecyclerView.Adapter<HealthBookRecyAd
         holder.titleTv.setText(datasBeans.get(position).getName());
         holder.timeTv.setText(datasBeans.get(position).getTime());
         holder.informationTv.setText(datasBeans.get(position).getDescription());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickInterface.getPostion(position);
-            }
+
+        holder.tvDelete.setOnClickListener(v -> {
+            if (onClickThingInterface != null)
+                onClickThingInterface.onDelete(String.valueOf(position));
         });
+        holder.tvEdit.setOnClickListener(v -> {
+            if (onClickThingInterface != null)
+                onClickThingInterface.onedit(String.valueOf(position));
+        });
+        holder.fatherLl.setOnClickListener(v -> clickInterface.getPosition(position));
 
     }
 
@@ -86,6 +101,13 @@ public class HealthBookRecyAdapter extends RecyclerView.Adapter<HealthBookRecyAd
         TextView timeTv;
         @BindView(R2.id.information_iv)
         ImageView informationIv;
+        @BindView(R2.id.father_ll)
+        LinearLayoutCompat fatherLl;
+        @BindView(R2.id.tv_edit)
+        TextView tvEdit;
+        @BindView(R2.id.tv_delete)
+        TextView tvDelete;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

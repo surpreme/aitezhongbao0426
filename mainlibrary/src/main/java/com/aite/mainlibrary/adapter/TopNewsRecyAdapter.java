@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aite.mainlibrary.Mainbean.NewsBean;
 import com.aite.mainlibrary.Mainbean.TopNewsBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
@@ -75,7 +74,7 @@ public class TopNewsRecyAdapter extends RecyclerView.Adapter<TopNewsRecyAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstenerInterface.getPostion(position);
+                lstenerInterface.getPosition(position);
             }
         });
     }

@@ -136,50 +136,65 @@
             android:gravity="right|bottom"
             android:paddingRight="15dp">
 
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="26dp"
-                android:background="@drawable/juxing_background_yellow"
-                android:gravity="center"
-                android:text="提交信息"
-                android:textSize="@dimen/textSize_13sp" />
-
 
             <TextView
                 android:id="@+id/look_information_tv"
                 android:layout_width="70dp"
                 android:layout_height="26dp"
-                android:background="@drawable/juxing_background_yellow"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
                 android:gravity="center"
                 android:text="查看详情"
+                android:textColor="@color/white"
                 android:textSize="@dimen/textSize_13sp" />
 
 
             <TextView
+                android:id="@+id/talk_tv"
                 android:layout_width="70dp"
                 android:layout_height="26dp"
-                android:background="@drawable/juxing_background_blue"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
                 android:gravity="center"
                 android:text="评价"
-                android:textSize="@dimen/textSize_13sp"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="26dp"
-                android:background="@drawable/juxing_background_yellow"
-                android:gravity="center"
-                android:text="取消订单"
+                android:textColor="@color/white"
                 android:textSize="@dimen/textSize_13sp" />
 
 
             <TextView
+                android:id="@+id/cancel_tv"
                 android:layout_width="70dp"
                 android:layout_height="26dp"
+                android:background="@drawable/round_background_blue"
+                android:gravity="center"
+                android:text="取消订单"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13sp" />
+
+
+            <TextView
+                android:id="@+id/pay_tv"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
                 android:gravity="center"
                 android:text="去付款"
-                android:textColor="@color/red" />
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/start_eat_tv"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:background="@drawable/round_background_blue"
+                android:gravity="center"
+                android:text="核销码"
+                android:textColor="@color/white" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View

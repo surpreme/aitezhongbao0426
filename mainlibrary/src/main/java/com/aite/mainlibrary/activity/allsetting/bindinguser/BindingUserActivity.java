@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.BinderUserListBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.addbindinguser.AddBindingUserActivity;
 import com.aite.mainlibrary.adapter.BinderUserRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
+import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.mvp.MVPBaseActivity;
 import com.lzy.basemodule.util.FileUtils;
 import com.lzy.okgo.model.HttpParams;
@@ -57,11 +60,17 @@ public class BindingUserActivity extends BaseActivity<BindingUserContract.View, 
         bottomBtn.setOnClickListener(this);
         bankRecy.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         bankRecy.setAdapter(binderUserRecyAdapter = new BinderUserRecyAdapter(context, binderUserListBeans));
-        binderUserRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPostion(int postion) {
+        binderUserRecyAdapter.setOnThingClickInterface(position -> {
+            PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, "您确定要解绑此用户吗?", v -> {
+                mPresenter.deleteInformation(initListHttpParams(true,
+                        new ContentValue("id", binderUserListBeans.get(Integer.parseInt(position)).getId())));
+                PopwindowUtils.getmInstance().dismissPopWindow();
+                onBackPressed();
 
-            }
+            });
+        });
+        binderUserRecyAdapter.setClickInterface(postion -> {
+
         });
     }
 
@@ -98,6 +107,18 @@ public class BindingUserActivity extends BaseActivity<BindingUserContract.View, 
     public void onGetInformationSuccess(Object msg) {
         binderUserListBeans.addAll(((BinderUserListBean) msg).getList());
         binderUserRecyAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onDeleteInformationSuccess(Object msg) {
+        TwoSuccessCodeBean twoSuccessCodeBean = (TwoSuccessCodeBean) msg;
+        if (twoSuccessCodeBean != null) {
+            if (twoSuccessCodeBean.getResult().equals("1")) {
+                showToast(twoSuccessCodeBean.getMsg());
+                onBackPressed();
+            }
+        }
 
     }
 }

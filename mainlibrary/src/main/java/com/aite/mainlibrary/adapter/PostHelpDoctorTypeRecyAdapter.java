@@ -57,7 +57,7 @@ public class PostHelpDoctorTypeRecyAdapter extends RecyclerView.Adapter<PostHelp
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
 

@@ -101,6 +101,15 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
         typeRecy.setLayoutManager(linearLayoutManager);
         choiceEatTypeRecyAdapter = new ChoiceEatTypeRecyAdapter(context, listClassBeans);
         typeRecy.setAdapter(choiceEatTypeRecyAdapter);
+        choiceEatTypeRecyAdapter.setLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
+            @Override
+            public void getPosition(int postion) {
+                goodsListBeanList.clear();
+                choiceEatRecyAdapter.notifyDataSetChanged();
+                mPresenter.getScondDatalist(initScondParams(String.valueOf(postion)));
+
+            }
+        });
 
         //2
         LinearLayoutManager sencondlinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -108,7 +117,7 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
         choiceEatRecyAdapter = new ChoiceEatRecyAdapter(context, goodsListBeanList);
         choiceEatRecyAdapter.setLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 mPresenter.addShopCard(initAddShopCardParams(postion));
 
             }
@@ -179,9 +188,10 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
     @Override
     public void getDataSuccess(Object msg) {
         listClassBeans.addAll(((TypeChoiceUIBean) msg).getList_class());
+        listClassBeans.get(0).setChecked(true);
         choiceEatTypeRecyAdapter.notifyDataSetChanged();
         if (((TypeChoiceUIBean) msg).getList_class().get(0) != null) {
-            mPresenter.getScondDatalist(initScondParams(((TypeChoiceUIBean) msg).getList_class().get(0).getGc_id()));
+            mPresenter.getScondDatalist(initScondParams(((TypeChoiceUIBean) msg).getList_class().get(0).getId()));
         }
         if (((TypeChoiceUIBean) msg).getAdv_list() != null || ((TypeChoiceUIBean) msg).getAdv_list().size() > 0) {
             for (TypeChoiceUIBean.AdvListBean advListBean : ((TypeChoiceUIBean) msg).getAdv_list()) {

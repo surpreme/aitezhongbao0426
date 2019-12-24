@@ -1,5 +1,7 @@
 package com.aite.mainlibrary.activity.allmain.device;
 
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,7 +11,16 @@ import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allanimation.LoveProgressBaractivity;
 import com.aite.mainlibrary.activity.allanimation.ProgressBaractivity;
 import com.aite.mainlibrary.activity.allanimation.SleepCircleBarStepViewActivity;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.map.BaseGaodeAmap;
+import com.lzy.basemodule.util.map.BaseGaodeAmapView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +32,13 @@ public class DeviceInformationActivity extends BaseActivity {
     LinearLayout footLl;
     @BindView(R2.id.sleep_ll)
     LinearLayout sleepLl;
+    @BindView(R2.id.gaode_mapview)
+    MapView gaodeMapview;
+    /**
+     * 单次定位
+     */
+    private AMapLocationClient locationClientSingle = null;
+    private AMap aMap;
 
 
     @Override
@@ -34,8 +52,26 @@ public class DeviceInformationActivity extends BaseActivity {
         love_ll.setOnClickListener(this);
         footLl.setOnClickListener(this);
         sleepLl.setOnClickListener(this);
+        applyLocationpermission();
+        BaseGaodeAmap.startSingleLocation(locationClientSingle, context);
+        initGaoDeAmapView();
+
 
     }
+
+    @Override
+    protected void applyperssionbody() {
+
+    }
+
+    private void initGaoDeAmapView() {
+        gaodeMapview.onCreate(getSavedInstanceState());// 此方法必须重写
+        aMap = gaodeMapview.getMap();
+        BaseGaodeAmapView.setupMapView(aMap, context);
+        BaseGaodeAmapView.setupLocationStyle(aMap);
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -62,9 +98,9 @@ public class DeviceInformationActivity extends BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    protected void onDestroy() {
+        super.onDestroy();
+        BaseGaodeAmap.destoryOnce(locationClientSingle);
+
     }
 }

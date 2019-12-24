@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.os.Debug;
+import android.util.Config;
 
 import androidx.multidex.MultiDex;
 
+import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.BuildConfig;
 import com.lzy.basemodule.R;
 import com.lzy.basemodule.crash.CrashHandler;
@@ -20,8 +23,10 @@ import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
-import java.net.Proxy;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
@@ -47,54 +52,6 @@ public class BaseApp extends Application {
         init();
     }
 
-    //    protected void initOkGo() {
-//
-//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-//
-//        //超时时间设置，默认60秒
-//        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);      //全局的读取超时时间
-//        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);     //全局的写入超时时间
-//        builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);   //全局的连接超时时间
-//        if (!BuildConfig.DEBUG&&!isDebug(getContext())){
-//            builder.proxy(Proxy.NO_PROXY);
-//
-//        }
-//
-//
-//        // 其他统一的配置
-//        OkGo.getInstance().init(this)                           // 必须调用初始化
-//                .setOkHttpClient(builder.build())               // 底层okhttp框架的参数设置
-//                // okGo框架的特有设置
-//                .setCacheMode(CacheMode.NO_CACHE)               //全局统一缓存模式，默认不使用缓存，可以不传
-//                .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传
-//                .setRetryCount(3);                   //全局公共参数
-//    }
-//
-//    /**
-//     * 这里只是我谁便写的认证规则，具体每个业务是否需要验证，以及验证规则是什么，请与服务端或者leader确定
-//     * 重要的事情说三遍，以下代码不要直接使用，只是提供一个自定义认证规则的实现案例供参考，请自行注释掉
-//     */
-//    private class SafeTrustManager implements X509TrustManager {
-//        @Override
-//        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-//        }
-//
-//        @Override
-//        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-//            try {
-//                for (X509Certificate certificate : chain) {
-//                    certificate.checkValidity(); //检查证书是否过期，签名是否通过等
-//                }
-//            } catch (Exception e) {
-//                throw new CertificateException(e);
-//            }
-//        }
-//
-//        @Override
-//        public X509Certificate[] getAcceptedIssuers() {
-//            return new X509Certificate[0];
-//        }
-//    }
     private void initOkGo() {
         //---------这里给出的是示例代码,告诉你可以这么传,实际使用的时候,根据需要传,不需要就不传-------------//
         HttpHeaders headers = new HttpHeaders();
@@ -203,13 +160,34 @@ public class BaseApp extends Application {
         CrashHandler.init(new CrashHandler(getApplicationContext()));
         BGASwipeBackHelper.init(this, null);
 //        initOkGo();
+        initYouMen();
 
+    }
+
+    private void initYouMen() {
+        /**
+         * 设置组件化的Log开关
+         * 参数: boolean 默认为false，如需查看LOG设置为true
+         */
+        UMShareAPI.get(this);//初始化sdk
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, BaseConstant.YOUMENG.KEY);
+        UMConfigure.setLogEnabled(true);
+        //开启debug模式，方便定位错误，具体错误检查方式可以查看http://dev.umeng.com/social/android/quick-integration的报错必看，正式发布，请关闭该模式
     }
 
     public static Context getContext() {
         return context;
     }
 
+    //各个平台的配置
+    {
+        //微信
+        PlatformConfig.setWeixin(BaseConstant.WECAHT.APP_ID, BaseConstant.WECAHT.APP_SECRET);
+        //新浪微博(第三个参数为回调地址)
+//        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com/sina2/callback");
+//        //QQ
+//        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+    }
 
     @Override
     protected void attachBaseContext(Context base) {

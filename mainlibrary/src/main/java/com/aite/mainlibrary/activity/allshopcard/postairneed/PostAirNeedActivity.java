@@ -27,6 +27,8 @@ import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.KeyBoardUtils;
+import com.lzy.basemodule.util.SpUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 
@@ -134,6 +136,7 @@ public class PostAirNeedActivity extends BaseActivity<PostAirNeedContract.View, 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.start_time_ll) {
+            hideSoftWare();
             initChoiceTimer(new OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {
@@ -149,6 +152,7 @@ public class PostAirNeedActivity extends BaseActivity<PostAirNeedContract.View, 
             pvTime.show();
 
         } else if (v.getId() == R.id.end_time_ll) {
+            hideSoftWare();
             initChoiceTimer(new OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {
@@ -169,11 +173,12 @@ public class PostAirNeedActivity extends BaseActivity<PostAirNeedContract.View, 
                 pvOptions.show();
             else showToast("数据错误");
         } else if (v.getId() == R.id.service_type_ll) {
+            hideSoftWare();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             PostHelpDoctorTypeRecyAdapter postHelpDoctorTypeRecyAdapter = new PostHelpDoctorTypeRecyAdapter(context, postTypeList);
             postHelpDoctorTypeRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
                 @Override
-                public void getPostion(int postion) {
+                public void getPosition(int postion) {
                     LogUtils.e(postTypeList.get(postion).getClass_name());
                     serviceTypeTv.setText(postTypeList.get(postion).getClass_name());
                     SERVICETYPEID = postTypeList.get(postion).getClass_id();

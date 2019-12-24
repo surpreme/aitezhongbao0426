@@ -6,6 +6,7 @@ import com.aite.mainlibrary.Mainbean.MoreAdressInormationBean;
 import com.aite.mainlibrary.Mainbean.MorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
 import com.aite.mainlibrary.Mainbean.RememberFoodInformationBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
@@ -194,5 +195,47 @@ public class RememberShopBookPresenter extends BasePresenterImpl<RememberShopBoo
 
                     }
                 });
+    }
+
+    @Override
+    public void PayCollect(HttpParams httpParams) {
+        OkGo.<BaseData<TwoSuccessCodeBean>>get(AppConstant.NOREALPAYCOLLECTMORNINGMEALAWYGETINFORMATIONURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                    @Override
+                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                mView.showError(baseData.getDatas().getError());
+                                return null;
+                            }
+                        } catch (Exception e) {
+                        }
+                        JSONObject object = jsonObject.optJSONObject("datas");
+                        Gson gson = new Gson();
+                        TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.onPayCollectSuccess(twoSuccessCodeBean));
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+
     }
 }

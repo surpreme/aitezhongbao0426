@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.BinderUserListBean;
-import com.aite.mainlibrary.Mainbean.MineTogetherServiceBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.lzy.basemodule.OnClickLstenerInterface;
@@ -22,6 +21,7 @@ import butterknife.ButterKnife;
 
 
 public class BinderUserRecyAdapter extends RecyclerView.Adapter<BinderUserRecyAdapter.ViewHolder> {
+
     private Context context;
     private LayoutInflater inflater;
     private List<BinderUserListBean.ListBean> listBean;
@@ -41,6 +41,12 @@ public class BinderUserRecyAdapter extends RecyclerView.Adapter<BinderUserRecyAd
     }
 
     private OnClickLstenerInterface.OnRecyClickInterface clickInterface;
+
+    public void setOnThingClickInterface(OnClickLstenerInterface.OnThingClickInterface onThingClickInterface) {
+        this.onThingClickInterface = onThingClickInterface;
+    }
+
+    private OnClickLstenerInterface.OnThingClickInterface onThingClickInterface;
 
     public OnClickLstenerInterface.OnRecyClickInterface getClickInterface() {
         return clickInterface;
@@ -98,13 +104,11 @@ public class BinderUserRecyAdapter extends RecyclerView.Adapter<BinderUserRecyAd
                 break;
 
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickInterface.getPostion(position);
-            }
+        holder.tvUnbinder.setOnClickListener(v -> {
+            if (onThingClickInterface != null)
+                onThingClickInterface.getString(String.valueOf(position));
         });
+        holder.itemView.setOnClickListener(v -> clickInterface.getPosition(position));
 
     }
 
@@ -120,6 +124,8 @@ public class BinderUserRecyAdapter extends RecyclerView.Adapter<BinderUserRecyAd
         TextView informationTv;
         @BindView(R2.id.state_tv)
         TextView stateTv;
+        @BindView(R2.id.tv_unbinder)
+        TextView tvUnbinder;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

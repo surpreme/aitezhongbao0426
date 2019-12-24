@@ -126,7 +126,13 @@ public class TextUtil {
         String format1 = formatter.format(calendar.getTime());
         return format1;
     }
+    public static boolean isNumber(String str){
 
+        String reg = "^[0-9]+(.[0-9]+)?$";
+
+        return str.matches(reg);
+
+    }
 
 //    /**
 //     * @param time   动画时间

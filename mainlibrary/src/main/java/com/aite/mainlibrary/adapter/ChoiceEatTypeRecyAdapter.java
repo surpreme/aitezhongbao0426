@@ -54,7 +54,20 @@ public class ChoiceEatTypeRecyAdapter extends RecyclerView.Adapter<ChoiceEatType
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.typeTv.setText(listClassBeans.get(position).getGc_name());
+        holder.typeTv.setText(listClassBeans.get(position).getNasme());
+        holder.itemView.setBackgroundColor(context.getResources().getColor(listClassBeans.get(position).isIsCheck() ? R.color.white : R.color.noglay));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < listClassBeans.size(); i++) {
+                    if (i == position) listClassBeans.get(i).setChecked(true);
+                    else listClassBeans.get(i).setChecked(false);
+                    notifyDataSetChanged();
+
+                }
+                lstenerInterface.getPosition(Integer.parseInt(listClassBeans.get(position).getId()));
+            }
+        });
     }
 
     @Override

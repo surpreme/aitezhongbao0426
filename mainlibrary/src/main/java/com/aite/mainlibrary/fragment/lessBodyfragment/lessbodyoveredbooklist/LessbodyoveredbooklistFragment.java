@@ -9,6 +9,7 @@ import com.aite.mainlibrary.Mainbean.BookLessBodyFamilyBean;
 import com.aite.mainlibrary.Mainbean.BookMorningNoonEatBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.activity.allshopcard.dayinformation.DayInformationActivity;
+import com.aite.mainlibrary.activity.allshopcard.sureunfactshopbook.SureUnFactShopBookActivity;
 import com.aite.mainlibrary.adapter.MineHelpEatRecyAdapter;
 import com.aite.mainlibrary.adapter.MineLessBodybookRecyAdapter;
 import com.blankj.rxbus.RxBus;
@@ -51,8 +52,8 @@ public class LessbodyoveredbooklistFragment extends BaseFragment<Lessbodyoveredb
         mBaserecyclerView.setAdapter(mineLessBodybookRecyAdapter);
         mineLessBodybookRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
-                startActivity(DayInformationActivity.class, "goods_id", orderListBeans.get(postion).getGoods_id());
+            public void getPosition(int postion) {
+                startActivity(SureUnFactShopBookActivity.class, "order_id", orderListBeans.get(postion).getOrder_id());
             }
         });
         //smartlayout

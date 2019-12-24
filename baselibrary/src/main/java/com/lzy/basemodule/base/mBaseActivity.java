@@ -1,12 +1,17 @@
 package com.lzy.basemodule.base;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -20,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -31,23 +37,32 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.jakewharton.rxbinding3.view.RxView;
+import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.OnSmartLayoutLstenerInterface;
+import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.R;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.mvp.BasePresenterImpl;
 import com.lzy.basemodule.mvp.BaseView;
+import com.lzy.basemodule.util.SharePreferencesHelper;
 import com.lzy.basemodule.util.SystemUtil;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.basemodule.util.toast.ToastTopUtils;
 import com.lzy.basemodule.util.toast.ToastUtils;
 import com.lzy.basemodule.view.GlideImageLoader;
+import com.lzy.okgo.model.HttpParams;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -64,8 +79,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Action;
 import butterknife.BindView;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -110,6 +127,8 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
     protected abstract boolean isUseMvp();
 
     protected RecyclerView mBaserecyclerView;
+    private Disposable disposable;
+
 
     //  市地理
     protected List<List<String>> options2Itemsnumber = new ArrayList<>();
@@ -145,6 +164,9 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
         if (grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //已授权
+                SharePreferencesHelper sharePreferencesHelper = new SharePreferencesHelper(context, "PERMISSION");
+                sharePreferencesHelper.put("PERMISSION_OK", true);
+
             } else {
                 //拒绝授权
             }
@@ -197,10 +219,10 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
     }
 
     protected TimePickerView initChoiceTimer(OnTimeSelectListener listener, String title, boolean isHM) {
-        Calendar selectedDate = Calendar.getInstance();
+        Calendar currDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
-        startDate.set(2019, 10, 21);
+        startDate.setTime(new Date(System.currentTimeMillis()));
         endDate.set(2050, 11, 31);
         pvTime = new TimePickerBuilder(this, listener)
                 .setType(new boolean[]{true, true, true, isHM, isHM, false})// 默认全部显示
@@ -384,12 +406,7 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
     public void initToolbar(String title, String righTitle, View.OnClickListener listener) {
         try {
             ImageView backImg = this.findViewById(R.id.iv_back);
-            backImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+            backImg.setOnClickListener(v -> onBackPressed());
             TextView titleTv = this.findViewById(R.id.tv_title);
             tv_title_right = this.findViewById(R.id.tv_title_right);
             tv_title_right.setText(righTitle);
@@ -408,12 +425,7 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
     public void initToolbar(String title, int color) {
         try {
             ImageView backImg = this.findViewById(R.id.iv_back);
-            backImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+            backImg.setOnClickListener(v -> onBackPressed());
             TextView titleTv = this.findViewById(R.id.tv_title);
             titleTv.setTextColor(color);
             titleTv.setText(title);
@@ -498,7 +510,12 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
      */
     protected String haveTwoDouble(double d) {
         DecimalFormat df = new DecimalFormat("0.00");
-        return df.format(d);
+        try {
+            return df.format(d);
+        } catch (Exception e) {
+            LogUtils.e(d);
+            return "";
+        }
     }
 
     protected boolean isEditTextEmpty(TextInputEditText editText) {
@@ -537,14 +554,127 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
                 .forResult(resultcode); // 设置作为标记的请求码
     }
 
+    @SuppressLint("CheckResult")
+    protected void applyLocationpermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            RxPermissions rxPermissions = new RxPermissions(this);
+            rxPermissions.setLogging(true);
+            rxPermissions
+                    .requestEach(Manifest.permission.ACCESS_COARSE_LOCATION)
+                    .subscribe(permission -> { // will emit 2 Permission objects
+                        if (permission.granted) {
+                            // `permission.name` is granted !
+                            LogUtils.d("ACCESS_COARSE_LOCATION权限同意");
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // Denied permission without ask never again
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("ACCESS_COARSE_LOCATION权限被拒绝");
 
+                        } else {
+                            // Denied permission with ask never again
+                            // Need to go to the settings
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("ACCESS_COARSE_LOCATION权限被拒绝");
+                        }
+                    });
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    protected void applycallphonepermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            RxPermissions rxPermissions = new RxPermissions(this);
+            rxPermissions.setLogging(true);
+            rxPermissions
+                    .requestEach(Manifest.permission.CALL_PHONE)
+                    .subscribe(permission -> { // will emit 2 Permission objects
+                        if (permission.granted) {
+                            // `permission.name` is granted !
+                            LogUtils.d("ACCESS_COARSE_LOCATION权限同意");
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // Denied permission without ask never again
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("ACCESS_COARSE_LOCATION权限被拒绝");
+
+                        } else {
+                            // Denied permission with ask never again
+                            // Need to go to the settings
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("ACCESS_COARSE_LOCATION权限被拒绝");
+                        }
+                    });
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    protected void applycamerapermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            RxPermissions rxPermissions = new RxPermissions(this);
+            rxPermissions.setLogging(true);
+            rxPermissions
+                    .requestEach(Manifest.permission.CAMERA)
+                    .subscribe(permission -> { // will emit 2 Permission objects
+                        if (permission.granted) {
+                            // `permission.name` is granted !
+                            LogUtils.d("CAMERA权限同意");
+                            applyperssionbody();
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // Denied permission without ask never again
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("CAMERA权限被拒绝");
+
+                        } else {
+                            // Denied permission with ask never again
+                            // Need to go to the settings
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("CAMERA权限被拒绝");
+                        }
+                    });
+        }
+    }
+
+    protected abstract void applyperssionbody();
+
+    @SuppressLint("CheckResult")
     public void applypermission() {
         if (Build.VERSION.SDK_INT >= 23) {
-            int checkpermission = ContextCompat.checkSelfPermission(getApplicationContext(),
-                    Arrays.toString(requestPermissions));
-            if (checkpermission != PackageManager.PERMISSION_GRANTED) {//没有给权限
-                ActivityCompat.requestPermissions((Activity) context, requestPermissions, 1);
-            }
+            RxPermissions rxPermissions = new RxPermissions(this);
+            //多个权限处理
+            rxPermissions
+                    .requestEach(Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.CALL_PHONE,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.CAMERA)
+                    .subscribe(permission -> { // will emit 2 Permission objects
+                        if (permission.granted) {
+                            // `permission.name` is granted !
+                            LogUtils.d("权限全部同意");
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // Denied permission without ask never again
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("权限被拒绝");
+
+                        } else {
+                            // Denied permission with ask never again
+                            // Need to go to the settings
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                            startActivityForResult(intent, BaseConstant.PERMISSION.OVERLAY_PERMISSION_REQ_CODE);
+                            LogUtils.e("权限被拒绝");
+                        }
+                    });
+
+//            int checkpermission = ContextCompat.checkSelfPermission(getApplicationContext(),
+//                    Arrays.toString(requestPermissions));
+//            if (checkpermission != PackageManager.PERMISSION_GRANTED) {//没有给权限
+//                ActivityCompat.requestPermissions((Activity) context, requestPermissions, 1);
+//            }
         }
     }
 
@@ -603,6 +733,7 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
 
         startActivity(intent);
     }
+
     /**
      * 跳转页面
      *
@@ -624,6 +755,19 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
         }
     }
 
+    protected HttpParams initListHttpParams(boolean isusekey, ContentValue... values) {
+        HttpParams httpParams = new HttpParams();
+        if (isusekey) {
+            httpParams.put("key", AppConstant.KEY);
+        }
+        if (values != null && values.length > 0) {
+            for (ContentValue value : values) {
+                value.fillHttpParams(httpParams);
+            }
+        }
+        return httpParams;
+    }
+
     protected void startActivityWithCls(Intent intent, int requestCode) {
         if (requestCode > 0) {
             startActivityForResult(intent, requestCode);
@@ -631,6 +775,7 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
             startActivity(intent);
         }
     }
+
     /**
      * 跳转页面
      *

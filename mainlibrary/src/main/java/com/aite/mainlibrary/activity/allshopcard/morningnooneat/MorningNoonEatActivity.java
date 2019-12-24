@@ -21,24 +21,19 @@ import java.util.List;
 import butterknife.BindView;
 
 
-/**
- * MVPPlugin
- * 邮箱 784787081@qq.com
- */
+
 
 public class MorningNoonEatActivity extends BaseActivity<MorningNoonEatContract.View, MorningNoonEatPresenter> implements MorningNoonEatContract.View {
 
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R2.id.smartlayout)
-    SmartRefreshLayout smartlayout;
     private MorningNoonEatsRecyAdapter morningNoonEatRecyAdapter;
     private List<MorningNoonEatBean.GoodsListBean> goodsListBeanList = new ArrayList<>();
     private String moniningnoontyye;
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.toolbar_recy;
+        return R.layout.recy_toolbar;
     }
 
     @Override
@@ -50,10 +45,9 @@ public class MorningNoonEatActivity extends BaseActivity<MorningNoonEatContract.
         recyclerView.setLayoutManager(linearLayoutManager);
         morningNoonEatRecyAdapter = new MorningNoonEatsRecyAdapter(context, goodsListBeanList);
         recyclerView.setAdapter(morningNoonEatRecyAdapter);
-        smartlayout.setEnableAutoLoadMore(false);
         morningNoonEatRecyAdapter.setLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 startActivity(RememberShopBookActivity.class,"goods_id",goodsListBeanList.get(postion).getGoods_id());
             }
         });

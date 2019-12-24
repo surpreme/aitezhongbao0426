@@ -20,14 +20,52 @@ import org.json.JSONObject;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
-public class BindingUserPresenter extends BasePresenterImpl<BindingUserContract.View> implements BindingUserContract.Presenter{
+public class BindingUserPresenter extends BasePresenterImpl<BindingUserContract.View> implements BindingUserContract.Presenter {
 
     @Override
     public void getInformation(HttpParams httpParams) {
-        OkGo.<BaseData<TwoSuccessCodeBean>>get(AppConstant.LISTPEPPLEINFORMATIONURL)
+        OkGo.<BaseData<BinderUserListBean>>get(AppConstant.LISTPEPPLEINFORMATIONURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<BinderUserListBean>>() {
+                    @Override
+                    public BaseData<BinderUserListBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                        if (baseData.getDatas().getError() != null) {
+                            mView.showError(baseData.getDatas().getError());
+                            return null;
+                        }
+                        JSONObject object = jsonObject.optJSONObject("datas");
+                        Gson gson = new Gson();
+
+                        BinderUserListBean binderUserListBean = gson.fromJson(object.toString(), BinderUserListBean.class);
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.onGetInformationSuccess(binderUserListBean));
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<BinderUserListBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<BinderUserListBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void deleteInformation(HttpParams httpParams) {
+        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.UNBINDBINDINGUSERURL)
                 .tag(mView.getContext())
                 .params(httpParams)
                 .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
@@ -41,11 +79,11 @@ public class BindingUserPresenter extends BasePresenterImpl<BindingUserContract.
                             return null;
                         }
                         JSONObject object = jsonObject.optJSONObject("datas");
-                        Gson gson=new Gson();
+                        Gson gson = new Gson();
 
-                        BinderUserListBean binderUserListBean=gson.fromJson(object.toString(),BinderUserListBean.class);
+                        TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
                         ((Activity) mView.getContext()).runOnUiThread(()
-                                -> mView.onGetInformationSuccess(binderUserListBean));
+                                -> mView.onDeleteInformationSuccess(twoSuccessCodeBean));
                         return null;
                     }
 

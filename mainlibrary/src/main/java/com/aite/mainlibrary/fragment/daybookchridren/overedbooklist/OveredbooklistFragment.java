@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.aite.mainlibrary.Mainbean.BookMorningNoonEatBean;
 import com.aite.mainlibrary.R;
+import com.aite.mainlibrary.activity.allshopcard.bookinformation.BookinformationActivity;
 import com.aite.mainlibrary.adapter.MineHelpEatRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseFragment;
+import com.lzy.basemodule.base.BaseLazyFragment;
 import com.lzy.basemodule.mvp.MVPBaseFragment;
 import com.lzy.okgo.model.HttpParams;
 
@@ -21,14 +24,13 @@ import java.util.List;
  * 邮箱 784787081@qq.com
  */
 
-public class OveredbooklistFragment extends BaseFragment<OveredbooklistContract.View, OveredbooklistPresenter> implements OveredbooklistContract.View {
+public class OveredbooklistFragment extends BaseLazyFragment<OveredbooklistContract.View, OveredbooklistPresenter> implements OveredbooklistContract.View {
     private MineHelpEatRecyAdapter mineHelpEatRecyAdapter;
     private List<BookMorningNoonEatBean.OrderListBean> orderListBeans = new ArrayList<>();
 
 
     @Override
     protected void initModel() {
-        mPresenter.getinformation(initEatParams());
 
 
     }
@@ -40,6 +42,12 @@ public class OveredbooklistFragment extends BaseFragment<OveredbooklistContract.
         mBaserecyclerView.setLayoutManager(linearLayoutManager);
         mineHelpEatRecyAdapter = new MineHelpEatRecyAdapter(context, orderListBeans);
         mBaserecyclerView.setAdapter(mineHelpEatRecyAdapter);
+        mineHelpEatRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
+            @Override
+            public void getPosition(int postion) {
+                startActivity(BookinformationActivity.class, "ORDER_ID", String.valueOf(orderListBeans.get(postion).getOrder_id()));
+            }
+        });
         //smartlayout
         initSmartLayout(true);
         //初始化加载
@@ -76,6 +84,7 @@ public class OveredbooklistFragment extends BaseFragment<OveredbooklistContract.
      * curpage	get	字符串	必须	1		当前页码
      * state	get	整型	必须	0		状态 0全部 1待付款 2待核销 3已完成 4评价 5已取消
      * page_type	get	整型	必须	1		页面类型 1早餐 2午餐
+     * getArguments().getString("page_type").equals("morning")?1:2
      *
      * @return
      */
@@ -84,8 +93,31 @@ public class OveredbooklistFragment extends BaseFragment<OveredbooklistContract.
         httpParams.put("key", AppConstant.KEY);
         httpParams.put("curpage", mCurrentPage);
         httpParams.put("state", 3);
-        httpParams.put("page_type", 1);
+        if (getArguments() != null && getArguments().getString("type") != null) {
+            switch (getArguments().getString("type")) {
+                case "all":
+                    httpParams.put("page_type", 0);
+                    break;
+                case "morning":
+                    httpParams.put("page_type", 1);
+                    break;
+                case "noon":
+                    httpParams.put("page_type", 2);
+                    break;
+                default:
+                    httpParams.put("page_type", 0);
+                    break;
+            }
+        } else {
+            httpParams.put("page_type", 0);
+        }
         return httpParams;
+    }
+
+    @Override
+    public void loadData() {
+        mPresenter.getinformation(initEatParams());
+
     }
 
     @Override

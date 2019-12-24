@@ -14,18 +14,25 @@ public class RememberShopBookContract {
         void onGetFoodInformationSuccess(Object msg);
 
         void postAllInformationSuccess(Object msg);
+
         void onGetAddressSuccess(Object msg);
+
         void onPayListSuccess(Object msg);
 
-
+        //使用钱包支付实物订单 这里是助餐自选
+        void onPayCollectSuccess(Object msg);
     }
 
     interface Presenter extends BasePresenter<View> {
         void getFoodInformation(HttpParams httpParams);
 
         void postAllInformation(HttpParams httpParams);
+
         void getAddress(HttpParams httpParams);
+
         void getPayList(HttpParams httpParams);
+
+        void PayCollect(HttpParams httpParams);
 
 
     }

@@ -3,6 +3,7 @@ package com.aite.aitezhongbao;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -10,9 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.aite.a.HomeTabActivity;
+import com.aite.a.activity.InformationActivity;
 import com.aite.mainlibrary.fragment.activityfragment.AroundBackgroundFragment;
 import com.aite.mainlibrary.fragment.activityfragment.LoveFamilyFragment;
 import com.aite.mainlibrary.fragment.activityfragment.ShopFragment;
@@ -67,6 +71,21 @@ public class MainActivity extends BaseActivity {
     private AroundBackgroundFragment aroundBackgroundFragment;
     private int mFragmentTag_index = 0;
 
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        if (fragment instanceof MainFragment)
+            mainFragment = (MainFragment) fragment;
+        else if (fragment instanceof MineFragment)
+            mineFragment = (MineFragment) fragment;
+        else if (fragment instanceof LoveFamilyFragment)
+            loveFamilyFragment = (LoveFamilyFragment) fragment;
+        else if (fragment instanceof ShopFragment)
+            shopFragment = (ShopFragment) fragment;
+        else if (fragment instanceof AroundBackgroundFragment)
+            aroundBackgroundFragment = (AroundBackgroundFragment) fragment;
+
+        super.onAttachFragment(fragment);
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -81,7 +100,7 @@ public class MainActivity extends BaseActivity {
             if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 0 && mainFragment == null)
                 mainFragment = (MainFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[0]);
 //            if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 1 && shopFragment == null)
-//                shopFragment = (ShopFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);
+//                shopFragment = (ShopFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);\
             if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 1 && aroundBackgroundFragment == null)
                 aroundBackgroundFragment = (AroundBackgroundFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);
             if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 2 && loveFamilyFragment == null)
@@ -105,11 +124,17 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected boolean isUseMvp() {
+        return false;
+    }
 
     @Override
     protected void initResume() {
 
     }
+
+
 
     @Override
     protected void initReStart() {
@@ -227,66 +252,58 @@ public class MainActivity extends BaseActivity {
     @OnClick({R.id.main_layout, R.id.shop_layout, R.id.aroundbackground_layout, R.id.news_layout, R.id.my_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-//            case R.id.content:
-//                break;
-//            case R.id.main_img:
-//                break;
-//            case R.id.main_tv:
-//                break;
             case R.id.main_layout:
                 setTabSelection(0);
                 break;
-//            case R.id.shop_img:
-//                break;
-//            case R.id.shop_tv:
-//                break;
             case R.id.shop_layout:
-
-
-
                 //       setTabSelection(1);
-//                Intent intent = new Intent(/*getContext(), HomeTabActivity.class*/);
-//                intent.setClassName(getContext(),com.aite.a.HomeTabActivity);
+                Intent intent = new Intent(/*getContext(), HomeTabActivity.class*/);
+                intent.setClass(getContext(), HomeTabActivity.class);
 //                //getContext(),com.aite.a.activity.MainActivity.class
-////                intent.setAction("com.aite.zhongbao.shop.MainActivity");
-//                startActivity(intent);
+//                intent.setAction("com.aite.zhongbao.shop.MainActivity");
+                startActivity(intent);
 
                 break;
-//            case R.id.aroundbackground_img:
-//                break;
-//            case R.id.aroundbackground_tv:
-//                break;
             case R.id.aroundbackground_layout:
                 setTabSelection(1);
 //                Intent information = new Intent(/*getContext(), InformationActivity.class*/);
-//                information.setClassName(getContext(),"com.aite.a.activity.InformationActivity");
+//                information.setClass(getContext(), InformationActivity.class);
 //                startActivity(information);
-
                 break;
-//            case R.id.news_img:
-//                break;
-//            case R.id.news_tv:
-//                break;
             case R.id.news_layout:
-//                Intent intent1 = new Intent(com.aite.a.activity.MainActivity.this,
+//                Intent intent1 = new Intent(context,
 //                        InformationActivity.class);
 //                startActivity(intent1);
 //                Intent person_in = new Intent(/*getContext(), InformationActivity.class*/);
-//                person_in.setClassName(getContext(),"com.aite.a.activity.InformationActivity");
+//                person_in.setClassName(getContext(), "com.aite.a.activity.InformationActivity");
 //                person_in.putExtra("person_in", "2");
 //                startActivity(person_in);
                 setTabSelection(2);
                 break;
-//            case R.id.my_img:
-//                break;
-//            case R.id.my_tv:
-//                break;
             case R.id.my_layout:
                 setTabSelection(3);
                 break;
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mFragmentTag_index == 2) {
+            if (aroundBackgroundFragment.WebonBackPressed()) {
+                super.onBackPressed();
+            } else {
+                return;
+            }
+        } else if (mFragmentTag_index == 3) {
+            if (loveFamilyFragment.WebonBackPressed()) {
+                super.onBackPressed();
+            } else {
+                return;
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
 //public class AroundBackgroundFragment extends BaseFragment {
 //    @BindView(R2.id.webView)

@@ -99,7 +99,7 @@ public class BanderRecyAdapter extends RecyclerView.Adapter<BanderRecyAdapter.Vi
 //        holder.layout.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                onclickInterface.getPostion(position);
+//                onclickInterface.getPosition(position);
 //            }
 //        });
 

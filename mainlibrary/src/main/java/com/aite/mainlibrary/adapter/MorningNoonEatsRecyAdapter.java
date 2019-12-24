@@ -27,7 +27,8 @@ public class MorningNoonEatsRecyAdapter extends RecyclerView.Adapter<MorningNoon
     private Context context;
     private LayoutInflater inflater;
     private List<MorningNoonEatBean.GoodsListBean> goodsListBeanList;
-//MorningNoonEatsRecyAdapter
+
+    //MorningNoonEatsRecyAdapter
     public MorningNoonEatsRecyAdapter(Context context, List<MorningNoonEatBean.GoodsListBean> goodsListBeanList) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
@@ -78,10 +79,10 @@ public class MorningNoonEatsRecyAdapter extends RecyclerView.Adapter<MorningNoon
         Glide.with(context).
                 load(goodsListBeanList.get(position).getGoods_image_url())
                 .into(holder.icon);
-        holder.buyBtn.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstenerInterface.getPostion(position);
+                lstenerInterface.getPosition(position);
             }
         });
     }

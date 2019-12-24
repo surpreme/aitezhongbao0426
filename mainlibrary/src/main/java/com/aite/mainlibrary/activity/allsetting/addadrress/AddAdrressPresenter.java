@@ -26,6 +26,47 @@ import org.json.JSONObject;
 public class AddAdrressPresenter extends BasePresenterImpl<AddAdrressContract.View> implements AddAdrressContract.Presenter {
 
     @Override
+    public void ChangeAdrress(HttpParams httpParams) {
+        OkGo.<BaseData<AddbinduserfamilyBean>>post(AppConstant.FIXCHANGEADDRESSDATAURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<AddbinduserfamilyBean>>() {
+                    @Override
+                    public BaseData<AddbinduserfamilyBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                mView.showError(baseData.getDatas().getError());
+                            }
+
+                        } catch (Exception e) {
+                            LogUtils.e(e);
+                        }
+                        String object = jsonObject.optString("datas");
+//                        Gson gson = new Gson();
+//                        AddbinduserfamilyBean addbinduserfamilyBean = gson.fromJson(jsonObject.toString(), AddbinduserfamilyBean.class);
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.onChangeAdrressSuccess(object));
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<AddbinduserfamilyBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<AddbinduserfamilyBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
     public void postMsg(HttpParams httpParams) {
         OkGo.<BaseData<AddbinduserfamilyBean>>post(AppConstant.ADDADDRESSDATAURL)
                 .tag(mView.getContext())

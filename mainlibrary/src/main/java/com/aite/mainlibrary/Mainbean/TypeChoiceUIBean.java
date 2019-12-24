@@ -88,7 +88,7 @@ public class TypeChoiceUIBean extends ErrorBean implements Serializable {
         }
     }
 
-    public static class ListClassBean {
+    public class ListClassBean extends IBaseBean {
         /**
          * gc_id : 16
          * gc_name : 特色经典
@@ -97,20 +97,20 @@ public class TypeChoiceUIBean extends ErrorBean implements Serializable {
         private String gc_id;
         private String gc_name;
 
-        public String getGc_id() {
+
+        @Override
+        public String getId() {
             return gc_id;
         }
 
-        public void setGc_id(String gc_id) {
-            this.gc_id = gc_id;
-        }
-
-        public String getGc_name() {
+        @Override
+        public String getNasme() {
             return gc_name;
         }
 
-        public void setGc_name(String gc_name) {
-            this.gc_name = gc_name;
+        @Override
+        public boolean isIsCheck() {
+            return isChecked;
         }
     }
 }

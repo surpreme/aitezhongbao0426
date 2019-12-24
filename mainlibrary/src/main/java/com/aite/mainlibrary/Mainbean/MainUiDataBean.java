@@ -7,8 +7,9 @@ import java.util.List;
 
 public class MainUiDataBean extends ErrorBean implements Serializable {
 
+
     private List<AdvListBean> adv_list;
-    private List<?> article;
+    private List<ArticleBean> article;
     private List<PensionAdvsBean> pension_advs;
     private List<DisAdvsBean> dis_advs;
 
@@ -20,11 +21,11 @@ public class MainUiDataBean extends ErrorBean implements Serializable {
         this.adv_list = adv_list;
     }
 
-    public List<?> getArticle() {
+    public List<ArticleBean> getArticle() {
         return article;
     }
 
-    public void setArticle(List<?> article) {
+    public void setArticle(List<ArticleBean> article) {
         this.article = article;
     }
 
@@ -46,8 +47,8 @@ public class MainUiDataBean extends ErrorBean implements Serializable {
 
     public static class AdvListBean {
         /**
-         * adv_content : {"adv_pic":"http://zhongbyi.aitecc.com/data/upload/shop/adv/06269587721719728.jpg","adv_pic_url":""}
-         * adv_title : 广告
+         * adv_content : {"adv_pic":"http://zhongbyi.aitecc.com/data/upload/shop/adv/06277532036505080.png","adv_pic_url":""}
+         * adv_title : 轮播2
          * adv_desc :
          */
 
@@ -81,7 +82,7 @@ public class MainUiDataBean extends ErrorBean implements Serializable {
 
         public static class AdvContentBean {
             /**
-             * adv_pic : http://zhongbyi.aitecc.com/data/upload/shop/adv/06269587721719728.jpg
+             * adv_pic : http://zhongbyi.aitecc.com/data/upload/shop/adv/06277532036505080.png
              * adv_pic_url :
              */
 
@@ -106,9 +107,35 @@ public class MainUiDataBean extends ErrorBean implements Serializable {
         }
     }
 
+    public static class ArticleBean {
+        /**
+         * article_id : 79
+         * article_title : 关爱老年健康
+         */
+
+        private String article_id;
+        private String article_title;
+
+        public String getArticle_id() {
+            return article_id;
+        }
+
+        public void setArticle_id(String article_id) {
+            this.article_id = article_id;
+        }
+
+        public String getArticle_title() {
+            return article_title;
+        }
+
+        public void setArticle_title(String article_title) {
+            this.article_title = article_title;
+        }
+    }
+
     public static class PensionAdvsBean {
         /**
-         * adv_content : {"adv_pic":"http://zhongbyi.aitecc.com/data/upload/shop/adv/06269595991492265.png","adv_pic_url":""}
+         * adv_content : {"adv_pic":"http://zhongbyi.aitecc.com/data/upload/shop/adv/06277529439276474.png","adv_pic_url":""}
          * adv_title : 助餐
          * adv_desc :
          * page_pension : 1
@@ -153,7 +180,7 @@ public class MainUiDataBean extends ErrorBean implements Serializable {
 
         public static class AdvContentBeanX {
             /**
-             * adv_pic : http://zhongbyi.aitecc.com/data/upload/shop/adv/06269595991492265.png
+             * adv_pic : http://zhongbyi.aitecc.com/data/upload/shop/adv/06277529439276474.png
              * adv_pic_url :
              */
 
@@ -180,7 +207,7 @@ public class MainUiDataBean extends ErrorBean implements Serializable {
 
     public static class DisAdvsBean {
         /**
-         * adv_content : {"adv_pic":"http://zhongbyi.aitecc.com/data/upload/shop/adv/06269598566563979.png","adv_pic_url":""}
+         * adv_content : {"adv_pic":"http://zhongbyi.aitecc.com/data/upload/shop/adv/06295701142062625.png","adv_pic_url":""}
          * adv_title : 日托
          * adv_desc :
          * page_dis : 1
@@ -225,7 +252,7 @@ public class MainUiDataBean extends ErrorBean implements Serializable {
 
         public static class AdvContentBeanXX {
             /**
-             * adv_pic : http://zhongbyi.aitecc.com/data/upload/shop/adv/06269598566563979.png
+             * adv_pic : http://zhongbyi.aitecc.com/data/upload/shop/adv/06295701142062625.png
              * adv_pic_url :
              */
 

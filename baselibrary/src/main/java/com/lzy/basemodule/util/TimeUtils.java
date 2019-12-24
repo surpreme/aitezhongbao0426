@@ -3,6 +3,7 @@ package com.lzy.basemodule.util;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -90,14 +91,14 @@ public class TimeUtils {
     }
 
     public static String getCurrentMM() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");// HH:mm:ss
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM");// HH:mm:ss
         Date date = new Date(System.currentTimeMillis());
         String format = simpleDateFormat.format(date);
         return format;
     }
 
     public static String getCurrentDD() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");// HH:mm:ss
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");// HH:mm:ss
         Date date = new Date(System.currentTimeMillis());
         String format = simpleDateFormat.format(date);
         return format;
@@ -391,6 +392,7 @@ public class TimeUtils {
      * @return
      */
     public static Date getLastDayOfMonth(Date date) {
+
         gregorianCalendar.setTime(date);
         gregorianCalendar.set(Calendar.DAY_OF_MONTH, 1);
         gregorianCalendar.add(Calendar.MONTH, 1);

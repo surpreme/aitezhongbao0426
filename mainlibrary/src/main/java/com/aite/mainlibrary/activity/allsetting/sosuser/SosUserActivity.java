@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.BinderSosUserListBean;
 import com.aite.mainlibrary.Mainbean.BinderUserListBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.addsosuser.AddSosUserActivity;
 import com.aite.mainlibrary.adapter.BinSosderUserRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
@@ -41,16 +44,28 @@ public class SosUserActivity extends BaseActivity<SosUserContract.View, SosUserP
     @Override
     protected void initView() {
         initToolbar("紧急联系人");
-        initBottomBtn("新增紧急联系人", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(AddSosUserActivity.class);
-            }
-        });
+        initBottomBtn("新增紧急联系人", v -> startActivity(AddSosUserActivity.class));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         binSosderUserRecyAdapter = new BinSosderUserRecyAdapter(context, binderSosUserListBeans);
         recyclerView.setAdapter(binSosderUserRecyAdapter);
+        binSosderUserRecyAdapter.setOnClickThingInterface(new BinSosderUserRecyAdapter.OnClickThingInterface() {
+            @Override
+            public void onDelete(String position) {
+                PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, "您确定要删除此紧急联系人吗?", v -> {
+                    mPresenter.DeleteSosUserSoslistInformation(initListHttpParams(true,
+                            new ContentValue("id", binderSosUserListBeans.get(Integer.parseInt(position)).getId())));
+                    PopwindowUtils.getmInstance().dismissPopWindow();
+                    onBackPressed();
+
+                });
+            }
+
+            @Override
+            public void onedit(String position) {
+
+            }
+        });
     }
 
     @Override
@@ -86,6 +101,16 @@ public class SosUserActivity extends BaseActivity<SosUserContract.View, SosUserP
         binderSosUserListBeans.addAll(((BinderSosUserListBean) msg).getList());
         binSosderUserRecyAdapter.notifyDataSetChanged();
 
+
+    }
+
+    @Override
+    public void onDeleteSosUserInformation(Object msg) {
+        TwoSuccessCodeBean twoSuccessCodeBean = (TwoSuccessCodeBean) msg;
+        if (twoSuccessCodeBean.getResult().equals("1")) {
+            showToast(twoSuccessCodeBean.getMsg());
+            onBackPressed();
+        }
 
     }
 }

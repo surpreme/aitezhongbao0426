@@ -1,10 +1,13 @@
 package com.aite.aitezhongbao.activity.login;
 
 import android.app.Activity;
+
 import com.aite.aitezhongbao.app.App;
 import com.aite.aitezhongbao.bean.FirstNewUserBean;
 import com.aite.aitezhongbao.bean.LogInBean;
 import com.aite.aitezhongbao.bean.SureFindPasswordCodeBean;
+import com.aite.mainlibrary.Mainbean.ThreeSuccessCodeBean;
+import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BaseDataEtras;
@@ -16,7 +19,9 @@ import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+
 import org.json.JSONObject;
+
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
@@ -47,7 +52,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 //                            JSONObject keyjson = jsonObject.optJSONObject("key");
 //                            LogUtils.d(registejson.toString() + "------" + keyjson.toString());
                             LogInBean logInBean = BeanConvertor.convertBean(jsonObject.toString(), LogInBean.class);
-                            ((Activity)mView.getContext()).runOnUiThread(()
+                            ((Activity) mView.getContext()).runOnUiThread(()
                                     -> mView.logInSuccess(logInBean));
 
 //                            mView.setNewPasswordonSuccess(sureFindPasswordCodeBean);
@@ -69,45 +74,94 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
                     }
                 });
-//        Observable.create(new ObservableOnSubscribe<String>() {
-//            @Override
-//            public void subscribe(ObservableEmitter<String> o) {
-//
-////                if (name.equals("lzy") && password.equals("123456")) {
-////                    try {
-////                        Thread.sleep(500);
-////                    } catch (InterruptedException e) {
-////                        e.printStackTrace();
-////                    } finally {
-////                        o.onNext("ok");
-////                    }
-////
-////                } else o.onComplete();
-//            }
-//        })
-//                .observeOn(AndroidSchedulers.mainThread())//回调在主线程
-//                .subscribeOn(Schedulers.io())//执行在io线程
-//                .subscribe(new Observer<String>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(String s) {
-//                        mView.logInSuccess(s);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        mView.logInFail("失败");
-//                    }
-//                });
+
+    }
+
+    @Override
+    public void weChatLogin(HttpParams httpParams) {
+        OkGo.<BaseDataEtras<ThreeSuccessCodeBean>>post(AppConstant.WECHATLOGINURL)
+                .tag(App.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseDataEtras<ThreeSuccessCodeBean>>() {
+                    @Override
+                    public BaseDataEtras<ThreeSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        BaseDataEtras baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseDataEtras.class);
+                        LogUtils.d(baseData.getRegister_step() + "------" + baseData.getKey());
+                        if (baseData.getRegister_step() != null || baseData.getKey() != null) {
+                            if (baseData.getRegister_step().equals("2") || baseData.getRegister_step().equals("3"))
+                                mView.logInNeedMoreMsg(baseData.getRegister_step(), baseData.getKey());
+                        } else if (baseData.getDatas().getError() != null) {
+                            mView.showError(baseData.getDatas().getError());
+                            return null;
+                        } else {
+                            JSONObject datas = jsonObject.optJSONObject("datas");
+                            Gson gson = new Gson();
+                            ThreeSuccessCodeBean threeSuccessCodeBean = gson.fromJson(datas.toString(), ThreeSuccessCodeBean.class);
+                            ((Activity) mView.getContext()).runOnUiThread(()
+                                    -> mView.weChatLoginSuccess(threeSuccessCodeBean));
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseDataEtras<ThreeSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseDataEtras<ThreeSuccessCodeBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void weChatnowloginLogin(HttpParams httpParams) {
+        OkGo.<BaseDataEtras<ThreeSuccessCodeBean>>post(AppConstant.NOWWECHATLOGINURL)
+                .tag(App.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseDataEtras<ThreeSuccessCodeBean>>() {
+                    @Override
+                    public BaseDataEtras<ThreeSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        Gson gsonn = new Gson();
+                        BaseDataEtras baseData = gsonn.fromJson(jsonObject.toString(), BaseDataEtras.class);
+                        LogUtils.d(baseData.getRegister_step() + "------" + baseData.getKey());
+                        if (baseData.getRegister_step() != null || baseData.getKey() != null) {
+                            if (baseData.getRegister_step().equals("2") || baseData.getRegister_step().equals("3"))
+                                mView.logInNeedMoreMsg(baseData.getRegister_step(), baseData.getKey());
+                        } else if (baseData.getDatas().getError() != null) {
+                            mView.showError(baseData.getDatas().getError());
+                            return null;
+                        }
+                        JSONObject datas = jsonObject.optJSONObject("datas");
+                        Gson gson = new Gson();
+                        ThreeSuccessCodeBean threeSuccessCodeBean = gson.fromJson(datas.toString(), ThreeSuccessCodeBean.class);
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.weChatnowloginSuccess(threeSuccessCodeBean));
+
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseDataEtras<ThreeSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseDataEtras<ThreeSuccessCodeBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
     }
 
 

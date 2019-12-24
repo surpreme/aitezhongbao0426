@@ -111,7 +111,7 @@ public class QrCodeActivity extends BaseActivity<QrCodeContract.View, QrCodePres
 //        mPresenter.sureBook(initParams(result));
         if (!getIntent().getStringExtra("type").equals("watch"))
             mPresenter.sureBook(initParams(getUrlKey(result, "id")));
-        else mPresenter.BindingDevice(initDeviceParams(getUrlKey(result,"imei")));
+        else mPresenter.BindingDevice(initDeviceParams(getUrlKey(result, "imei")));
 
     }
 
@@ -130,6 +130,12 @@ public class QrCodeActivity extends BaseActivity<QrCodeContract.View, QrCodePres
                 tipText = tipText.substring(0, tipText.indexOf(ambientBrightnessTip));
                 zXingView.getScanBoxView().setTipText(tipText);
             }
+            try {
+                zXingView.closeFlashlight();
+            } catch (Exception e) {
+                LogUtils.e(e);
+            }
+
         }
     }
 

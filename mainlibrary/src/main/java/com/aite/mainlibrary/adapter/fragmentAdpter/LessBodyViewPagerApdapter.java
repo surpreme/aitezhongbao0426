@@ -38,6 +38,7 @@ public class LessBodyViewPagerApdapter extends FragmentPagerAdapter {
         Fragment fragment = fragments.get(position);
         Bundle bundle = new Bundle();
         bundle.putString("page_type", page_type);
+        bundle.putString("position", String.valueOf(position));
         assert fragment != null;
         fragment.setArguments(bundle);
         return fragment;

@@ -5,8 +5,7 @@ import android.content.Intent;
 
 import com.aite.mainlibrary.Mainbean.MineTogetherServiceBean;
 import com.google.gson.Gson;
-import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
 import com.lzy.basemodule.logcat.LogUtils;

@@ -108,12 +108,15 @@
                         android:layout_gravity="left|center"
                         android:src="@mipmap/sound" />
 
-                    <TextView
+                    <com.superluo.textbannerlibrary.TextBannerView
+                        android:id="@+id/sound_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center"
                         android:paddingLeft="20dp"
-                        android:text="关爱老年健康 记忆与爱同行" />
+                        app:setDirection="top_to_bottom"
+                        app:setGravity="left"
+                        app:setTypeface="bold"
+                        app:setTextColor="@color/black" />
                 </LinearLayout>
 
                 <View
@@ -257,7 +260,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:background="@drawable/round_background_doctor_blue"
+                        android:background="@drawable/left_round_background_blue"
                         android:gravity="center">
 
                         <ImageView

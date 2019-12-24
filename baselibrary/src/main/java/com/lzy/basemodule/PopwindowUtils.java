@@ -3,18 +3,21 @@ package com.lzy.basemodule;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -24,13 +27,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
-import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.view.PickerView;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PopwindowUtils {
     private static PopwindowUtils mInstance;
@@ -46,6 +47,8 @@ public class PopwindowUtils {
     private static final int qrcodelayoutid = R.layout.pop_img;
     private static final int payawylayoutid = R.layout.pop_pay_awy;
     private static final int choicethreerecylayoutid = R.layout.choice_three_recy;
+    private static final int popdailoglayoutid = R.layout.popdailog;
+    private static final int popwechatchoicenewslayoutid = R.layout.wechat_pop_newsuser;
 
     public static PopwindowUtils getmInstance() {
         if (mInstance == null) {
@@ -79,7 +82,7 @@ public class PopwindowUtils {
 
     }
 
-    public void showImgPopupWindow(final Context context, String url) {
+    public void showImgPopupWindow(final Context context, String url, String information) {
         @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(qrcodelayoutid, null);
         setBackGroundAlpha(0.6f, context);
         popupWindow = new PopupWindow(view, 1000, 700, false);
@@ -87,7 +90,54 @@ public class PopwindowUtils {
         Glide.with(context).load(url).into(qrcode_iv);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setContentView(view);
+        TextView information_tv = view.findViewById(R.id.information_tv);
+        information_tv.setText(information);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setBackGroundAlpha(1.0f, context);
+            }
+        });
+
+    }
+
+    public interface OnWechatChoiceBackInterface {
+        void onGetWay(String way);
+    }
+
+    public void showwechatPopupWindow(final Context context, OnWechatChoiceBackInterface onWechatChoiceBackInterface) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(popwechatchoicenewslayoutid, null);
+        setBackGroundAlpha(0.6f, context);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        TextView binderOlderTv = view.findViewById(R.id.binder_older_tv);
+        TextView newUserTv = view.findViewById(R.id.new_user_tv);
+        TextView cancelTv = view.findViewById(R.id.cancel_tv);
+        binderOlderTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onWechatChoiceBackInterface.onGetWay("BINDEROLDER");
+                dismissPopWindow();
+            }
+        });
+        newUserTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onWechatChoiceBackInterface.onGetWay("NEWSUSERS");
+                dismissPopWindow();
+
+            }
+        });
+        cancelTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismissPopWindow();
+
+            }
+        });
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.setContentView(view);
+        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -238,6 +288,36 @@ public class PopwindowUtils {
 
     }
 
+    public void showdiadlogPopupWindow(final Context context, String information, View.OnClickListener listener) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(popdailoglayoutid, null);
+        setBackGroundAlpha(0.8f, context);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        final TextView information_tv = view.findViewById(R.id.information_tv);
+        final Button sure_btn = view.findViewById(R.id.sure_btn);
+        final Button cancel_btn = view.findViewById(R.id.cancel_btn);
+        information_tv.setText(information);
+        sure_btn.setOnClickListener(listener);
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBackGroundAlpha(1.0f, context);
+                dismissPopWindow();
+            }
+        });
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setBackGroundAlpha(1.0f, context);
+                dismissPopWindow();
+            }
+        });
+
+    }
+
     public void showRecyPopupWindow(final Context context, RecyclerView.Adapter recyadpater, RecyclerView.LayoutManager layoutManager, View ui) {
         @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(recylayoutid, null);
         setBackGroundAlpha(1.0f, context);
@@ -275,11 +355,12 @@ public class PopwindowUtils {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyadpater);
         popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         popupWindow.setContentView(view);
-        popupWindow.showAsDropDown(ui, 0, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            popupWindow.showAsDropDown(ui, 0, 0, Gravity.CENTER);
+        }
         popupWindow.setOnDismissListener(onDismissListeners);
-
-
     }
 
 
@@ -358,7 +439,7 @@ public class PopwindowUtils {
 
     }
 
-    public void showNewUerTogtherInformaionPopupWindow(final Activity context) {
+    public void showNewUerTogtherInformaionPopupWindow(final Activity context, String url) {
         @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(newuertogtherinformaionlayoutid, null);
         setBackGroundAlpha(0.5f, context);
         popupWindow = new PopupWindow(view,
@@ -366,6 +447,9 @@ public class PopwindowUtils {
                 context.getResources().getDisplayMetrics().heightPixels * 3 / 4,
                 true);
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.check_view);
+        WebView webview = view.findViewById(R.id.webview);
+        webview.loadUrl(url);
+        webview.setWebViewClient(new WebViewClient());
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -405,7 +489,8 @@ public class PopwindowUtils {
     }
 
     public void dismissPopWindow() {
-        popupWindow.dismiss();
+        if (popupWindow != null)
+            popupWindow.dismiss();
     }
 
 

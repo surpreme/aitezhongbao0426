@@ -13,11 +13,11 @@
         <item name="android:minHeight">48dip</item>
         <item name="android:maxHeight">48dip</item>
     </style>
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <!--<item name="android:colorPrimary">@color/commRed</item>-->
-    </style>
+<!--     Application theme. -->
+<!--    <style name="AppTheme" parent="AppBaseTheme">-->
+<!--        &lt;!&ndash; All customizations that are NOT specific to a particular API-level can go here. &ndash;&gt;-->
+<!--        &lt;!&ndash;<item name="android:colorPrimary">@color/commRed</item>&ndash;&gt;-->
+<!--    </style>-->
 
     <style name="popWindow_anim_style" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/pop_up_in</item>

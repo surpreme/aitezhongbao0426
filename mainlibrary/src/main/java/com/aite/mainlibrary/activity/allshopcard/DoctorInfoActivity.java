@@ -6,19 +6,22 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.aite.a.view.CircleImageView;
+
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.base.CircleImageView;
 import com.aite.mainlibrary.fragment.doctorInfoFragment.AppointmentFagment;
 import com.aite.mainlibrary.fragment.doctorInfoFragment.ConsultFagment;
 import com.aite.mainlibrary.fragment.doctorInfoFragment.HomepageFagment;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.util.TextUtil;
 import com.lzy.basemodule.view.RatingBarView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,7 +48,7 @@ public class DoctorInfoActivity extends BaseActivity {
     @BindView(R2.id.tv_grade1)
     TextView mTvGrade1;
     @BindView(R2.id.user_icon)
-    CircleImageView mUserIcon;
+    ImageView mUserIcon;
     @BindView(R2.id.tv_grade)
     TextView mTvGrade;
     @BindView(R2.id.tv_subscribe_num)
@@ -88,7 +91,7 @@ public class DoctorInfoActivity extends BaseActivity {
 
         initToolbar("个人主页：唐欣");
         //头像
-        Glide.with(context).load(context.getResources().getDrawable(R.mipmap.orange_else)).into(mUserIcon);
+        Glide.with(context).load(context.getResources().getDrawable(R.mipmap.orange_else)).apply(RequestOptions.circleCropTransform()).into(mUserIcon);
         mTvGrade.setText(TextUtil.highlight(context, "粉丝9.4", "9.4", "#F4EA2A", 0, 0));
         mTvSubscribeNum.setText(TextUtil.highlight(context, "咨询量232", "232", "#F4EA2A", 0, 0));
         mTvConsultNum.setText(TextUtil.highlight(context, "预约数454", "454", "#F4EA2A", 0, 0));
@@ -96,7 +99,7 @@ public class DoctorInfoActivity extends BaseActivity {
         //设置星级
         mStarView.setStar(4);
 
-        showFragment(0);
+        showFragment(1);
 
     }
 
@@ -193,7 +196,7 @@ public class DoctorInfoActivity extends BaseActivity {
         int id = view.getId();
         if (id == R.id.tv_homepage) {
             //主页
-            showFragment(0);
+            showFragment(1);
         } else if (id == R.id.tv_consult) {
             //咨询
             showFragment(1);

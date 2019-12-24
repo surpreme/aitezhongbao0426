@@ -140,14 +140,14 @@ public class PostServiceBookRecyAdapter extends RecyclerView.Adapter<PostService
             holder.elderSureTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopwindowUtils.getmInstance().showImgPopupWindow(context, listBean.get(position).getQrcodeimg());
+                    PopwindowUtils.getmInstance().showImgPopupWindow(context, listBean.get(position).getQrcodeimg(), listBean.get(position).getTitle()+"   " + listBean.get(position).getStart_time());
                 }
             });
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
 

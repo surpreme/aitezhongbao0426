@@ -15,8 +15,8 @@ public class MainUIConstant {
     public static class MainFragmentConstant {
         public static int[] settingImg = {
                 R.drawable.baomu,
-                R.drawable.finduser,
                 R.mipmap.learn_work,
+                R.drawable.finduser,
                 R.drawable.lessbodything,
                 R.drawable.elseservice,
         };
@@ -36,7 +36,7 @@ public class MainUIConstant {
         };
 
         public static String[] settingTv = {
-                "提现", "充值", "助残活动", "银行卡"
+                "提现", "充值", "红包", "银行卡"
         };
 
     }
@@ -94,6 +94,20 @@ public class MainUIConstant {
 
         public static String[] settingTv = {
                 "时间银行", "助医服务", "喘息服务"
+        };
+
+    }
+
+    public static class MirningNoonbookConstant {
+        public static int[] settingImg = {
+                R.mipmap.service,
+                R.mipmap.helpdoctor,
+                R.mipmap.elsesevice,
+                R.mipmap.bankcard
+        };
+
+        public static String[] settingTv = {
+                "全部", "早餐", "午餐", "助餐"
         };
 
     }

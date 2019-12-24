@@ -2,14 +2,13 @@ package com.aite.mainlibrary.activity.allshopcard.choiceeat;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 
-import com.aite.mainlibrary.Mainbean.AddShopCardBean;
 import com.aite.mainlibrary.Mainbean.ShopCardlistBean;
 import com.aite.mainlibrary.Mainbean.TypeChoiceUIBean;
 import com.aite.mainlibrary.Mainbean.RecyChoiceUIBean;
+import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
 import com.lzy.basemodule.bean.EtraLoginBaseData;
@@ -47,7 +46,8 @@ public class ChoiceEatPresenter extends BasePresenterImpl<ChoiceEatContract.View
                             return null;
                         } else {
                             JSONObject object = jsonObject.optJSONObject("datas");
-                            TypeChoiceUIBean choiceUIBean = BeanConvertor.convertBean(object.toString(), TypeChoiceUIBean.class);
+                            Gson gson=new Gson();
+                            TypeChoiceUIBean choiceUIBean = gson.fromJson(object.toString(), TypeChoiceUIBean.class);
                             ((Activity) mView.getContext()).runOnUiThread(()
                                     -> mView.getDataSuccess(choiceUIBean));
                         }
@@ -87,7 +87,8 @@ public class ChoiceEatPresenter extends BasePresenterImpl<ChoiceEatContract.View
                             return null;
                         } else {
                             JSONObject object = jsonObject.optJSONObject("datas");
-                            RecyChoiceUIBean recyChoiceUIBean = BeanConvertor.convertBean(object.toString(), RecyChoiceUIBean.class);
+                            Gson gson = new Gson();
+                            RecyChoiceUIBean recyChoiceUIBean = gson.fromJson(object.toString(), RecyChoiceUIBean.class);
                             ((Activity) mView.getContext()).runOnUiThread(()
                                     -> mView.getScondDataSuccess(recyChoiceUIBean));
                         }

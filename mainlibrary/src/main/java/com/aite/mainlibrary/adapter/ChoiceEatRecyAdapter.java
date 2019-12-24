@@ -80,7 +80,7 @@ public class ChoiceEatRecyAdapter extends RecyclerView.Adapter<ChoiceEatRecyAdap
         holder.buyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstenerInterface.getPostion(position);
+                lstenerInterface.getPosition(position);
             }
         });
         Glide.with(context).
@@ -89,7 +89,7 @@ public class ChoiceEatRecyAdapter extends RecyclerView.Adapter<ChoiceEatRecyAdap
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                lstenerInterface.getPostion(position);
+//                lstenerInterface.getPosition(position);
 //            }
 //        });
     }

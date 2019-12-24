@@ -3,7 +3,10 @@ package com.aite.mainlibrary.activity.allsetting.thingsbook;
 import android.app.Activity;
 
 import com.aite.mainlibrary.Mainbean.NewsBean;
+import com.aite.mainlibrary.Mainbean.PayListBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.fragment.activityfragment.main.MainContract;
+import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
@@ -23,5 +26,6 @@ import org.json.JSONObject;
  */
 
 public class ThingsbookPresenter extends BasePresenterImpl<ThingsbookContract.View> implements ThingsbookContract.Presenter {
+
 
 }

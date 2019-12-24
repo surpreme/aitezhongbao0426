@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.aite.aitezhongbao.R;
 import com.aite.aitezhongbao.activity.login.LoginActivity;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.view.StatusBarUtils;
 import com.lzy.basemodule.base.BaseActivity;
 

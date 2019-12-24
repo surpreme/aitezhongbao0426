@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.aite.mainlibrary.Mainbean.HelpEatUIBean;
 import com.aite.mainlibrary.Mainbean.MainUiDataBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
@@ -61,4 +62,47 @@ public class HelpEatPresenter extends BasePresenterImpl<HelpEatContract.View> im
                     }
                 });
     }
+
+    @Override
+    public void ChangeHouse(HttpParams httpParams) {
+        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.CHANGEHOUSEHELPEATURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                    @Override
+                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                        if (baseData.getDatas().getError() != null) {
+                            mView.showError(baseData.getDatas().getError());
+                            return null;
+                        } else {
+                            JSONObject object = jsonObject.optJSONObject("datas");
+                            String  result =object.optString("result");
+                            ((Activity)mView.getContext()).runOnUiThread(()
+                                    -> mView.onChangeHouseSuccess(result));
+                        }
+
+
+
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+
 }

@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.KeyBoardUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
@@ -59,38 +60,73 @@ public class AddAdrressActivity extends BaseActivity<AddAdrressContract.View, Ad
         return R.layout.add_address;
     }
 
+    /**
+     * new ContentValue("TYPE", "edit"),
+     * new ContentValue("name", addressListBeans.get(Integer.parseInt(position)).getTrue_name()),
+     * new ContentValue("phone", addressListBeans.get(Integer.parseInt(position)).getMob_phone()),
+     * new ContentValue("address", addressListBeans.get(Integer.parseInt(position)).getArea_info()),
+     * new ContentValue("factaddress", addressListBeans.get(Integer.parseInt(position)).getAddress()),
+     * new ContentValue("isAlways", addressListBeans.get(Integer.parseInt(position)).getIs_default()));
+     */
     @Override
     protected void initView() {
-        initToolbar("添加地址", "保存", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.postMsg(initParams());
+        if (getIntent().getStringExtra("TYPE") != null) {
+            if (getIntent().getStringExtra("TYPE").equals("edit")) {
+                initToolbar("修改地址", "保存", v -> {
+                    if (isStringEmpty(CITY_ID) || isStringEmpty(AREA_ID) || isStringEmpty(ALL_AREA_NAME)) {
+                        showToast("请重新选择地址");
+                        return;
+                    }
+                    mPresenter.ChangeAdrress(initParams());
 
 
+                });
+                nameEdit.setText(getIntent().getStringExtra("name"));
+                phoneEdit.setText(getIntent().getStringExtra("phone"));
+                areaTv.setText(getIntent().getStringExtra("address"));
+                allLactionaddressEdit.setText(getIntent().getStringExtra("factaddress"));
+                switchOftenUser.setChecked(getIntent().getStringExtra("isAlways").equals("1"));
+            } else {
+                initToolbar("添加地址", "保存", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.postMsg(initParams());
+
+
+                    }
+                });
             }
-        });
-        initChoiceArea(new OnOptionsSelectListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+        } else {
+            initToolbar("添加地址", "保存", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPresenter.postMsg(initParams());
+
+
+                }
+            });
+        }
+
+        initChoiceArea((options1, options2, options3, v) -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 areaTv.setTextColor(getColor(R.color.black));
-                areaTv.setTextSize(16);
-                PROVINCE_ID = options1Itemsnumber.get(options1);
-                CITY_ID = options2Itemsnumber.get(options1).get(options2);
-                AREA_ID = options3Itemsnumber.get(options1).get(options2).get(options3);
-                ALL_AREA_NAME = String.format("%s %s %s",
-                        options1Items.get(options1),
-                        options2Items.get(options1).get(options2),
-                        options3Items.get(options1).get(options2).get(options3));
-                areaTv.setText(String.format("%s省--%s--%s",
-                        options1Items.get(options1),
-                        options2Items.get(options1).get(options2),
-                        options3Items.get(options1).get(options2).get(options3)));
-                LogUtils.e(
-                        options1Itemsnumber.get(options1) + options1Items.get(options1)
-                                + options2Itemsnumber.get(options1).get(options2) + options2Items.get(options1).get(options2)
-                                + options3Itemsnumber.get(options1).get(options2).get(options3) + options3Items.get(options1).get(options2).get(options3));
             }
+            areaTv.setTextSize(16);
+            PROVINCE_ID = options1Itemsnumber.get(options1);
+            CITY_ID = options2Itemsnumber.get(options1).get(options2);
+            AREA_ID = options3Itemsnumber.get(options1).get(options2).get(options3);
+            ALL_AREA_NAME = String.format("%s %s %s",
+                    options1Items.get(options1),
+                    options2Items.get(options1).get(options2),
+                    options3Items.get(options1).get(options2).get(options3));
+            areaTv.setText(String.format("%s省--%s--%s",
+                    options1Items.get(options1),
+                    options2Items.get(options1).get(options2),
+                    options3Items.get(options1).get(options2).get(options3)));
+            LogUtils.e(
+                    options1Itemsnumber.get(options1) + options1Items.get(options1)
+                            + options2Itemsnumber.get(options1).get(options2) + options2Items.get(options1).get(options2)
+                            + options3Itemsnumber.get(options1).get(options2).get(options3) + options3Items.get(options1).get(options2).get(options3));
         }, new OnOptionsSelectChangeListener() {
             @Override
             public void onOptionsSelectChanged(int options1, int options2, int options3) {
@@ -106,9 +142,10 @@ public class AddAdrressActivity extends BaseActivity<AddAdrressContract.View, Ad
         areaChoiceLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!options1Items.isEmpty() || !options2Items.isEmpty() || !options3Items.isEmpty())
+                if (!options1Items.isEmpty() || !options2Items.isEmpty() || !options3Items.isEmpty()) {
+                    hideSoftWare();
                     pvOptions.show();
-                else showToast("数据错误");
+                } else showToast("数据错误");
 
             }
         });
@@ -125,6 +162,13 @@ public class AddAdrressActivity extends BaseActivity<AddAdrressContract.View, Ad
         httpParams.put("city_id", CITY_ID);
         httpParams.put("area_id", AREA_ID);
         httpParams.put("area_info", ALL_AREA_NAME);
+        if (getIntent().getStringExtra("TYPE") != null) {
+            if (getIntent().getStringExtra("TYPE").equals("edit")) {
+                httpParams.put("address_id", getIntent().getStringExtra("address_id"));
+
+            }
+        }
+
         return httpParams;
     }
 
@@ -194,6 +238,15 @@ public class AddAdrressActivity extends BaseActivity<AddAdrressContract.View, Ad
         }
         if (!options1Items.isEmpty() && !options1Items.isEmpty() && !options3Items.isEmpty())
             pvOptions.setPicker(options1Items, options2Items, options3Items);//添加数据源
+    }
+
+    @Override
+    public void onChangeAdrressSuccess(Object msg) {
+        if (msg.equals("1")) {
+            showToast("修改成功", Gravity.TOP);
+            onBackPressed();
+        }
+
     }
 
 }

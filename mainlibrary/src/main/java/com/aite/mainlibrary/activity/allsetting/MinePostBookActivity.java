@@ -42,7 +42,7 @@ public class MinePostBookActivity extends BaseActivity {
         recyclerView.setAdapter(iconHormationRecyAdapter = new IconHormationRecyAdapter(context, MainUIConstant.MinePostServiceConstant.settingTv, MainUIConstant.MinePostServiceConstant.settingImg));
         iconHormationRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 if (postion == 0)
                     startActivity(MinePostBookChriendActivity.class, "type", "1", "COMETYPE", getIntent().getStringExtra("COMETYPE"));
                 if (postion == 1)

@@ -51,7 +51,7 @@ public class ElderHelpHouseActivity extends BaseActivity<ElderHelpHouseContract.
         recyclerView.setAdapter(helpElderHouseRecyAdapter = new HelpElderHouseRecyAdapter(context, helpelderlistbean));
         helpElderHouseRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 mPresenter.changeBinderHelpEdlerHouse(
                         initBindingParams(helpelderlistbean.get(postion).getStore_id()),
                         !helpelderlistbean.get(postion).getIs_binding().equals("1") ?

@@ -12,11 +12,13 @@ import com.lzy.okgo.model.HttpParams;
 public class AdressFixContract {
     interface View extends BaseView {
         void onGetAdressListSuccess(Object msg);
+        void onDleteAdressSuccess(Object msg);
 
     }
 
     interface  Presenter extends BasePresenter<View> {
         void getAdressList(HttpParams httpParams);
+        void dleteAddress(HttpParams httpParams);
 
     }
 }

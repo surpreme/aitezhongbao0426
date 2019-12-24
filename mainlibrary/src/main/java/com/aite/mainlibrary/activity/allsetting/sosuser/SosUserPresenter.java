@@ -21,10 +21,10 @@ import org.json.JSONObject;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
-public class SosUserPresenter extends BasePresenterImpl<SosUserContract.View> implements SosUserContract.Presenter{
+public class SosUserPresenter extends BasePresenterImpl<SosUserContract.View> implements SosUserContract.Presenter {
 
     @Override
     public void getUserSoslistInformation(HttpParams httpParams) {
@@ -42,9 +42,9 @@ public class SosUserPresenter extends BasePresenterImpl<SosUserContract.View> im
                             return null;
                         }
                         JSONObject object = jsonObject.optJSONObject("datas");
-                        Gson gson=new Gson();
+                        Gson gson = new Gson();
 
-                        BinderSosUserListBean binderUserListBean=gson.fromJson(object.toString(),BinderSosUserListBean.class);
+                        BinderSosUserListBean binderUserListBean = gson.fromJson(object.toString(), BinderSosUserListBean.class);
                         ((Activity) mView.getContext()).runOnUiThread(()
                                 -> mView.onGetSoslistUserInformation(binderUserListBean));
                         return null;
@@ -58,6 +58,44 @@ public class SosUserPresenter extends BasePresenterImpl<SosUserContract.View> im
 
                     @Override
                     public void onSuccess(Response<BaseData<BinderSosUserListBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void DeleteSosUserSoslistInformation(HttpParams httpParams) {
+        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.DELETEPEPPLEINFORMATIONURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                    @Override
+                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                        if (baseData.getDatas().getError() != null) {
+                            mView.showError(baseData.getDatas().getError());
+                            return null;
+                        }
+                        JSONObject object = jsonObject.optJSONObject("datas");
+                        Gson gson = new Gson();
+
+                        TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.onDeleteSosUserInformation(twoSuccessCodeBean));
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }

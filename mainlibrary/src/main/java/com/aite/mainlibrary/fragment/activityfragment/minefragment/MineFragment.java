@@ -1,6 +1,8 @@
 package com.aite.mainlibrary.fragment.activityfragment.minefragment;
 
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,14 +18,15 @@ import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allmain.AddDeviceMainActvity;
 import com.aite.mainlibrary.activity.allmain.device.DeviceListActivity;
 import com.aite.mainlibrary.activity.allmain.messager.MessagerActivity;
-import com.aite.mainlibrary.activity.allmoney.MoneycartActivity;
+import com.aite.mainlibrary.activity.allmoney.moneycart.MoneycartActivity;
 import com.aite.mainlibrary.activity.allsetting.LessbodybookActivity;
 import com.aite.mainlibrary.activity.allsetting.MinePostBookActivity;
 import com.aite.mainlibrary.activity.allsetting.bookdispute.BookDisputeActivity;
 import com.aite.mainlibrary.activity.allsetting.healthbook.HealthBookActivity;
 import com.aite.mainlibrary.activity.allsetting.minerural.MineRuralActivity;
 import com.aite.mainlibrary.activity.allsetting.setting.SettingActivity;
-import com.aite.mainlibrary.activity.allsetting.thingsbook.ThingsbookActivity;
+import com.aite.mainlibrary.activity.allsetting.thingbook.ThingbookActivity;
+import com.aite.mainlibrary.activity.allsetting.thingsbook.ChiendThingsbookActivity;
 import com.aite.mainlibrary.activity.allsetting.userinformation.UserInformationActivity;
 import com.aite.mainlibrary.adapter.GridViewIconAdapter;
 import com.bumptech.glide.Glide;
@@ -31,6 +34,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseFragment;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.TextUtil;
 import com.lzy.okgo.model.HttpParams;
 
 import butterknife.BindView;
@@ -92,90 +96,80 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
         bookGridview.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.bookImg, MainUIConstant.MineConstant.bookTv));
         elseGridview.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.elseImg, MainUIConstant.MineConstant.elseTv));
         deviceGridview.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.deviceImg, MainUIConstant.MineConstant.deviceTv));
-        settingGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        startActivity(DeviceListActivity.class);
-                        break;
-                    case 1:
-                        startActivity(MinePostBookActivity.class, "COMETYPE", "MINEGETBOOKACTIVITY");
-                        break;
-                    case 2:
-                        startActivity(MineRuralActivity.class);
-                        break;
-                    case 3:
+        settingGridview.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    startActivity(DeviceListActivity.class);
+                    break;
+                case 1:
+                    startActivity(MinePostBookActivity.class, "COMETYPE", "MINEGETBOOKACTIVITY");
+                    break;
+                case 2:
+                    startActivity(MineRuralActivity.class);
+                    break;
+                case 3:
 //                        startActivity(MineCollectActivity.class);
-//                        Intent intent7 = new Intent(getContext(), com.aite.a.activity.FavoriteListFargmentActivity.class);
-//                        intent7.putExtra("i", 1);
-//                        context.startActivity(intent7);
-                        break;
+                    Intent intent7 = new Intent(getContext(), com.aite.a.activity.FavoriteListFargmentActivity.class);
+                    intent7.putExtra("i", 1);
+                    intent7.putExtra("key", AppConstant.KEY);
+                    intent7.putExtra("url", "");
+                    context.startActivity(intent7);
+                    break;
 
-                    default:
-                        break;
-                }
+                default:
+                    break;
             }
         });
-        bookGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        startActivity(ThingsbookActivity.class);
-                        break;
-                    case 1:
-                        startActivity(LessbodybookActivity.class, "page_type", "5");
-                        break;
-                    case 2:
-                        startActivity(LessbodybookActivity.class, "page_type", "1");
-                        break;
-                    case 3:
-                        startActivity(LessbodybookActivity.class, "page_type", "2");
-                        break;
-                    case 4:
-                        startActivity(LessbodybookActivity.class, "page_type", "3");
-                        break;
-                    case 5:
-                        startActivity(LessbodybookActivity.class, "page_type", "4");
-                        break;
-                    default:
-                        break;
-                }
+        bookGridview.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    startActivity(ThingbookActivity.class);
+                    break;
+                case 1:
+                    startActivity(LessbodybookActivity.class, "page_type", "5");
+                    break;
+                case 2:
+                    startActivity(LessbodybookActivity.class, "page_type", "1");
+                    break;
+                case 3:
+                    startActivity(LessbodybookActivity.class, "page_type", "2");
+                    break;
+                case 4:
+                    startActivity(LessbodybookActivity.class, "page_type", "3");
+                    break;
+                case 5:
+                    startActivity(LessbodybookActivity.class, "page_type", "4");
+                    break;
+                default:
+                    break;
             }
         });
-        deviceGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        startActivity(AddDeviceMainActvity.class);
-                        break;
-                    default:
-                        break;
-                }
+        deviceGridview.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    startActivity(AddDeviceMainActvity.class);
+                    break;
+                default:
+                    break;
             }
         });
-        elseGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        startActivity(MoneycartActivity.class);
-                        break;
-                    case 1:
-                        startActivity(HealthBookActivity.class);
-                        break;
-                    case 2:
-                        startActivity(MinePostBookActivity.class, "COMETYPE", "MINEPOSTBOOKACTIVITY");
-                        break;
-                    case 3:
-                        startActivity(BookDisputeActivity.class);
-                        break;
+        elseGridview.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    startActivity(MoneycartActivity.class);
+                    break;
+                case 1:
+                    startActivity(HealthBookActivity.class);
+                    break;
+                case 2:
+                    startActivity(MinePostBookActivity.class, "COMETYPE", "MINEPOSTBOOKACTIVITY");
+                    break;
+                case 3:
+                    startActivity(BookDisputeActivity.class);
+                    break;
 
-                    default:
-                        break;
-                }
+                default:
+                    break;
             }
         });
 
@@ -206,11 +200,16 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
     @Override
     public void onGetUserInformation(Object msg) {
         if (((UseInformationBean) msg).getMember_info().getMember_avatar() == null) return;
-        AppConstant.ICON_URL = ((UseInformationBean) msg).getMember_info().getMember_avatar();
-        AppConstant.PHONENUMBER = ((UseInformationBean) msg).getMember_info().getMember_mobile();
-        Glide.with(context).load(((UseInformationBean) msg).getMember_info().getMember_avatar()).apply(RequestOptions.circleCropTransform()).into(userIcon);
-        userPhoneNumberTv.setText(replaceString(((UseInformationBean) msg).getMember_info().getMember_mobile(), 2, 8));
-
+        if (((UseInformationBean) msg).getMember_info().getMember_avatar() != null)
+            AppConstant.ICON_URL = ((UseInformationBean) msg).getMember_info().getMember_avatar();
+        if (((UseInformationBean) msg).getMember_info().getMember_mobile() != null)
+            AppConstant.PHONENUMBER = ((UseInformationBean) msg).getMember_info().getMember_mobile();
+        if (((UseInformationBean) msg).getMember_info().getMember_avatar() != null)
+            Glide.with(context).load(((UseInformationBean) msg).getMember_info().getMember_avatar()).apply(RequestOptions.circleCropTransform()).into(userIcon);
+        if (((UseInformationBean) msg).getMember_info().getMember_truename() != null) {
+            AppConstant.USERNAME = ((UseInformationBean) msg).getMember_info().getMember_truename();
+            userPhoneNumberTv.setText(((UseInformationBean) msg).getMember_info().getMember_truename());
+        }
 
     }
 

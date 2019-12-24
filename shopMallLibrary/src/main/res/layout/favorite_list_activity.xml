@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include layout="@layout/include_titile_sort" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp" >
+        android:layout_height="35dp">
 
         <TextView
             android:id="@+id/goods_tx"
@@ -21,8 +21,8 @@
 
         <View
             style="@style/view_height"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
 
         <TextView
             android:id="@+id/store_tx"
@@ -33,8 +33,20 @@
 
         <View
             style="@style/view_height"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/service_tx"
+            style="@style/goods_details_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="服务" />
+
+        <View
+            style="@style/view_height"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
     </LinearLayout>
 
     <ImageView

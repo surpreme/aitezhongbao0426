@@ -73,8 +73,8 @@
 
             <ImageView
                 android:id="@+id/iv_img"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
         </androidx.cardview.widget.CardView>
 
 
@@ -132,8 +132,8 @@
 
         <LinearLayout
             android:id="@+id/tv_number_ll_hide"
-            android:layout_width="80dp"
-            android:layout_height="25dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
             android:layout_alignBottom="@+id/tv_price"
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
@@ -143,7 +143,7 @@
 
             <TextView
                 android:id="@+id/tv_less"
-                android:layout_width="25dp"
+                android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="-"
@@ -162,7 +162,7 @@
                 android:gravity="center"
                 android:text="1"
                 android:textColor="@color/glaytxt"
-                android:textSize="13sp" />
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="0.5dp"
@@ -171,7 +171,7 @@
 
             <TextView
                 android:id="@+id/tv_plus"
-                android:layout_width="25dp"
+                android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="+"

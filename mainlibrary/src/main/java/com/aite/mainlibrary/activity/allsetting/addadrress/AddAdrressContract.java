@@ -12,12 +12,18 @@ import com.lzy.okgo.model.HttpParams;
 public class AddAdrressContract {
     interface View extends BaseView {
         void onPostMsgSuccess(Object msg);
+
         void onGetAreaChoiceSuccess(Object msg);
+
+        void onChangeAdrressSuccess(Object msg);
 
     }
 
     interface Presenter extends BasePresenter<View> {
+        void ChangeAdrress(HttpParams httpParams);
+
         void postMsg(HttpParams httpParams);
+
         void getAreachoice();
 
     }

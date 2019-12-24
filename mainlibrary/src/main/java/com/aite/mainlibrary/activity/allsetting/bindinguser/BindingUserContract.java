@@ -12,12 +12,14 @@ import com.lzy.okgo.model.HttpParams;
 public class BindingUserContract {
     interface View extends BaseView {
         void  onGetInformationSuccess(Object msg);
+        void  onDeleteInformationSuccess(Object msg);
 
         
     }
 
     interface  Presenter extends BasePresenter<View> {
         void  getInformation(HttpParams httpParams);
+        void  deleteInformation(HttpParams httpParams);
 
     }
 }

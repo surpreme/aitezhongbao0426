@@ -79,7 +79,7 @@ public class MainNewsFragment extends BaseFragment<MainNewsContract.View, MainNe
         topRecy.setAdapter(topNewsRecyAdapter);
         topNewsRecyAdapter.setLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 startActivity(NewsInformationActivity.class, "article_id", topnewsbean.get(postion).getArticle_id());
 
             }

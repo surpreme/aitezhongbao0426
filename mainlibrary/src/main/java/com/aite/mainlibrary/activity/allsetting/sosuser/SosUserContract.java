@@ -12,12 +12,14 @@ import com.lzy.okgo.model.HttpParams;
 public class SosUserContract {
     interface View extends BaseView {
         void onGetSoslistUserInformation(Object msg);
+        void onDeleteSosUserInformation(Object msg);
 
 
     }
 
     interface  Presenter extends BasePresenter<View> {
         void getUserSoslistInformation(HttpParams httpParams);
+        void DeleteSosUserSoslistInformation(HttpParams httpParams);
 
     }
 }

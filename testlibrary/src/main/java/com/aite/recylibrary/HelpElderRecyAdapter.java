@@ -46,7 +46,7 @@ public class HelpElderRecyAdapter extends RecyclerView.Adapter<HelpElderRecyAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstenerInterface.getPostion(position);
+                lstenerInterface.getPosition(position);
             }
         });
     }

@@ -170,7 +170,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="@dimen/margin_10dp"
                         android:gravity="right|center"
-                        android:text="2019-05-21"
+                        android:text="请选择开始时间"
                         android:textSize="@dimen/textSize_16sp" />
 
                 </LinearLayout>
@@ -197,7 +197,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="@dimen/margin_10dp"
                         android:gravity="right|center"
-                        android:text="2019-05-21"
+                        android:text="请选择结束时间"
                         android:textSize="@dimen/textSize_16sp" />
 
                 </LinearLayout>

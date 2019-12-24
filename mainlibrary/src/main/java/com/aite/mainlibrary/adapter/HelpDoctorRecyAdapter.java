@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,10 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.mainlibrary.Mainbean.HelpDoctorListBean;
-import com.aite.mainlibrary.Mainbean.TimeBankListBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.bumptech.glide.Glide;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.logcat.LogUtils;
 
@@ -83,18 +80,18 @@ public class HelpDoctorRecyAdapter extends RecyclerView.Adapter<HelpDoctorRecyAd
         holder.timeTv.setText(String.format("%s-%s", listBean.get(position).getStart_time(), listBean.get(position).getEnd_time()));
         holder.typeTv.setText(listBean.get(position).getClass_name());
         holder.getNumberTv.setText(String.format("%s积分", listBean.get(position).getCredit()));
-        holder.serviceBtn.setText(listBean.get(position).getIs_order() == 1 ? "接单" : "已接单");
-        holder.serviceBtn.setAlpha(listBean.get(position).getIs_order()==1?1.0f:0.5f);
+        holder.serviceBtn.setVisibility(listBean.get(position).getIs_order() == 1 ? View.VISIBLE : View.GONE);
+        holder.serviceBtn.setAlpha(listBean.get(position).getIs_order() == 1 ? 1.0f : 0.5f);
 //        holder.serviceBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                itemRecyClickInterface.getPostion(position);
+//                itemRecyClickInterface.getPosition(position);
 //            }
 //        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
     }

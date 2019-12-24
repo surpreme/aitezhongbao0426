@@ -228,13 +228,14 @@ public class NewusermsgActivity extends BaseActivity<NewusermsgContract.View, Ne
             public void run() {
                 LogUtils.d(msg);
                 showTopToasts(msg);
-                startActivity(UserTypeActivity.class);
+                startActivity(UserTypeActivity.class, "key", key);
             }
         });
     }
 
     /**
      * 全部省市区数据
+     *
      * @param bean
      */
     @Override

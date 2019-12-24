@@ -10,6 +10,7 @@ import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.adapter.DoctorListAdapter;
 import com.aite.mainlibrary.base.OnClickRecyclerViewListener;
+import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,10 +82,16 @@ public class StarDoctorPushActvity extends BaseActivity {
     }
 
     private void initListener() {
+        mAdapter.setOnItemRecyClickInterface(new OnClickLstenerInterface.OnItemRecyClickInterface() {
+            @Override
+            public void getPosition(int postion) {
+                startActivity(DoctorInfoActivity.class);
+
+            }
+        });
         mAdapter.setOnRecyclerViewListener(new OnClickRecyclerViewListener() {
             @Override
             public void onItemClick(int position) {
-                startActivity(DoctorInfoActivity.class);
             }
 
             @Override

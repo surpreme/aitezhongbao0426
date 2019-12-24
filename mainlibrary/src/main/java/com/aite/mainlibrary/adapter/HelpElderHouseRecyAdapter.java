@@ -73,7 +73,7 @@ public class HelpElderHouseRecyAdapter extends RecyclerView.Adapter<HelpElderHou
         holder.stateTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
 

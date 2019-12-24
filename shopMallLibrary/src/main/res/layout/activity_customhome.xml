@@ -14,10 +14,10 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="70dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
-            android:src="@drawable/aite_logo2" />
+            android:src="@drawable/back" />
 
         <!--<LinearLayout
             android:layout_width="match_parent"
@@ -27,30 +27,30 @@
             android:background="#F4F4F4"
             android:orientation="horizontal">-->
 
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#F4F4F4"
-                android:layout_toLeftOf="@+id/ll_right"
-                android:layout_toRightOf="@+id/iv_logo"
-            android:layout_marginBottom="8dp"
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:singleLine="true"
-                android:hint="@string/homeserch"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textColor="@color/gray"
-                android:textSize="12sp" />
+            android:layout_marginBottom="8dp"
+            android:layout_toLeftOf="@+id/ll_right"
+            android:layout_toRightOf="@+id/iv_logo"
+            android:background="#F4F4F4"
+            android:hint="@string/homeserch"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
         <!--</LinearLayout>-->
         <ImageView
             android:id="@+id/iv_search"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:layout_centerVertical="true"
             android:layout_alignEnd="@+id/et_search"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp_2"
             android:src="@drawable/search" />
 

@@ -1,6 +1,7 @@
 package com.aite.mainlibrary.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aite.mainlibrary.Mainbean.BookMorningNoonEatBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.allshopcard.chatoutbook.ChatOutBookActivity;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.OnClickLstenerInterface;
 
@@ -23,6 +25,7 @@ import butterknife.ButterKnife;
 
 
 public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecyAdapter.ViewHolder> {
+
     private Context context;
     private LayoutInflater inflater;
     private List<BookMorningNoonEatBean.OrderListBean> orderListBeans;
@@ -47,8 +50,37 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
         return clickInterface;
     }
 
+    private MineLessBodybookRecyAdapter.OnStartEatcodeInterface onStartEatcodeInterface;
+
+    public MineLessBodybookRecyAdapter.OnStartEatcodeInterface getOnStartEatcodeInterface() {
+        return onStartEatcodeInterface;
+    }
+
+    public void setOnStartEatcodeInterface(MineLessBodybookRecyAdapter.OnStartEatcodeInterface onStartEatcodeInterface) {
+        this.onStartEatcodeInterface = onStartEatcodeInterface;
+    }
+
+
     public void setClickInterface(OnClickLstenerInterface.OnRecyClickInterface clickInterface) {
         this.clickInterface = clickInterface;
+    }
+
+    public void setOnInformationInteface(OnInformationInteface onInformationInteface) {
+        this.onInformationInteface = onInformationInteface;
+    }
+
+    private OnInformationInteface onInformationInteface;
+
+    public interface OnInformationInteface {
+        void pay(int position);
+
+        void lookInformation(int position);
+
+        void talkTv(int position);
+
+        void cancelTv(int position);
+
+
     }
 
     //    page_total	整型	总页数
@@ -74,6 +106,22 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
         holder.titleTv.setText(orderListBeans.get(position).getGoods_name());
         holder.timeTv.setText(String.format("下单时间%s", orderListBeans.get(position).getAdd_time()));
         holder.stateTv.setText(orderListBeans.get(position).getOrder_state_text());
+        holder.cancelTv.setVisibility(orderListBeans.get(position).getIf_cancel() == 1 ? View.VISIBLE : View.GONE);
+        holder.cancelTv.setOnClickListener(v -> onInformationInteface.cancelTv(position));
+        holder.talkTv.setVisibility(orderListBeans.get(position).getIf_evaluation() == 1 ? View.VISIBLE : View.GONE);
+        holder.talkTv.setOnClickListener(v -> {
+            onInformationInteface.talkTv(position);
+            Intent intent = new Intent(context, ChatOutBookActivity.class);
+            intent.putExtra("order_id", orderListBeans.get(position).getOrder_id());
+            context.startActivity(intent);
+        });
+        holder.payTv.setVisibility(orderListBeans.get(position).getIf_pay() == 1 ? View.VISIBLE : View.GONE);
+        holder.payTv.setOnClickListener(v -> onInformationInteface.pay(position));
+        holder.lookInformationTv.setVisibility(orderListBeans.get(position).getIf_detail() == 1 ? View.VISIBLE : View.GONE);
+        holder.lookInformationTv.setOnClickListener(v -> onInformationInteface.lookInformation(position));
+        holder.startEatTv.setVisibility(orderListBeans.get(position).getIs_verify() == 1 ? View.VISIBLE : View.GONE);
+        holder.startEatTv.setOnClickListener(v -> onStartEatcodeInterface.getStartqrPosition(position));
+        holder.itemView.setOnClickListener(v -> clickInterface.getPosition(position));
 
 
     }
@@ -83,22 +131,31 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
         return orderListBeans == null ? 0 : orderListBeans.size();
     }
 
+
     static
     class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R2.id.talk_tv)
+        TextView talkTv;
         @BindView(R2.id.icon_iv)
         ImageView iconIv;
         @BindView(R2.id.title_tv)
         TextView titleTv;
         @BindView(R2.id.state_tv)
         TextView stateTv;
+        @BindView(R2.id.time_tv)
+        TextView timeTv;
         @BindView(R2.id.information_tv)
         TextView informationTv;
         @BindView(R2.id.price_tv)
         TextView priceTv;
         @BindView(R2.id.look_information_tv)
         TextView lookInformationTv;
-        @BindView(R2.id.time_tv)
-        TextView timeTv;
+        @BindView(R2.id.cancel_tv)
+        TextView cancelTv;
+        @BindView(R2.id.pay_tv)
+        TextView payTv;
+        @BindView(R2.id.start_eat_tv)
+        TextView startEatTv;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -106,4 +163,6 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
 
         }
     }
+
+
 }

@@ -13,10 +13,14 @@ import com.aite.mainlibrary.Mainbean.HealthListBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.addhealthbook.AddHealthBookActivity;
+import com.aite.mainlibrary.activity.allsetting.healthbookinformation.HealthBookInformationActivity;
+import com.aite.mainlibrary.adapter.AdrressFixRecyAdapter;
 import com.aite.mainlibrary.adapter.HealthBookRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
+import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.okgo.model.HttpParams;
 
@@ -52,12 +56,7 @@ public class HealthBookListActivity extends BaseActivity<HealthBookListContract.
     //信息类型,1为疾病史,2为医疗笔记,3为过敏反应,4为药物使用
     @Override
     protected void initView() {
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        ivBack.setOnClickListener(v -> onBackPressed());
         switch (getIntent().getStringExtra("type")) {
             case "1":
                 tvTitle.setText("疾病史");
@@ -75,20 +74,35 @@ public class HealthBookListActivity extends BaseActivity<HealthBookListContract.
                 break;
         }
         tvTitleRight.setText("添加");
-        tvTitleRight.setOnClickListener(new View.OnClickListener() {
+        tvTitleRight.setOnClickListener(v ->
+                startActivity(AddHealthBookActivity.class, "type", getIntent().getStringExtra("type")));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(healthBookRecyAdapter = new HealthBookRecyAdapter(context, datasBeanList));
+        healthBookRecyAdapter.setOnClickThingInterface(new AdrressFixRecyAdapter.OnClickThingInterface() {
             @Override
-            public void onClick(View v) {
-                startActivity(AddHealthBookActivity.class, "type", getIntent().getStringExtra("type"));
+            public void onDelete(String position) {
+                PopwindowUtils.
+                        getmInstance().
+                        showdiadlogPopupWindow
+                                (context,
+                                        "您确定要命名为" + datasBeanList.get(Integer.parseInt(position)).getName() + "的记录吗？",
+                                        v -> {
+                                            PopwindowUtils.getmInstance().dismissPopWindow();
+                                            mPresenter.deleteInformation(initListHttpParams(
+                                                    true,
+                                                    new ContentValue("id", datasBeanList.get(Integer.parseInt(position)).getId())));
+                                        });
+                ;
+            }
+
+            @Override
+            public void onedit(String position) {
 
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(healthBookRecyAdapter = new HealthBookRecyAdapter(context, datasBeanList));
-        healthBookRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPostion(int postion) {
-                LogUtils.d(postion);
-            }
+        healthBookRecyAdapter.setClickInterface(position -> {
+            LogUtils.d(position);
+            startActivityWithCls(HealthBookInformationActivity.class, 0, new ContentValue("id", datasBeanList.get(position).getId()));
         });
     }
 
@@ -130,6 +144,12 @@ public class HealthBookListActivity extends BaseActivity<HealthBookListContract.
 
     }
 
+    @Override
+    public void onDeleteInformationSuccess(Object msg) {
+        showToast(msg.toString());
+        onBackPressed();
+
+    }
 
 
 }

@@ -28,6 +28,7 @@ import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.KeyBoardUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 
@@ -218,6 +219,7 @@ public class PostTimeNeedActivity extends BaseActivity<PostTimeNeedContract.View
 
         }
         if (v.getId() == R.id.choice_time_end_ll) {
+            hideSoftWare();
             initChoiceTimer(new OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {
@@ -232,6 +234,7 @@ public class PostTimeNeedActivity extends BaseActivity<PostTimeNeedContract.View
             }, "选择结束时间", true);
             pvTime.show();
         } else if (v.getId() == R.id.choice_time_start_ll) {
+            hideSoftWare();
             initChoiceTimer(new OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {
@@ -247,15 +250,17 @@ public class PostTimeNeedActivity extends BaseActivity<PostTimeNeedContract.View
             }, "选择开始时间", true);
             pvTime.show();
         } else if (v.getId() == R.id.area_choice_ll) {
+            hideSoftWare();
             if (!options1Items.isEmpty() || !options2Items.isEmpty() || !options3Items.isEmpty())
                 pvOptions.show();
             else showToast("数据错误");
         } else if (v.getId() == R.id.choice_type_ll) {
+            hideSoftWare();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             PostHelpDoctorTypeRecyAdapter postHelpDoctorTypeRecyAdapter = new PostHelpDoctorTypeRecyAdapter(context, postTypeList);
             postHelpDoctorTypeRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
                 @Override
-                public void getPostion(int postion) {
+                public void getPosition(int postion) {
                     LogUtils.e(postTypeList.get(postion).getClass_name());
                     typeTv.setText(postTypeList.get(postion).getClass_name());
                     SERVICETYPEID = postTypeList.get(postion).getClass_id();

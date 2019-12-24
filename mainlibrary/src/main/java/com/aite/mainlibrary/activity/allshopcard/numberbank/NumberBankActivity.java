@@ -116,7 +116,7 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
             PopwindowUtils.getmInstance().showRecyPopupWindow(context, textViewBaseRecyAdapter, gridLayoutManager, allLl);
             textViewBaseRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
                 @Override
-                public void getPostion(int postion) {
+                public void getPosition(int postion) {
                     LogUtils.d(postion);
                 }
             });

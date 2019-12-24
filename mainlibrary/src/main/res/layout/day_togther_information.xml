@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="3dp"
-                        android:text="共有10人参与评分"
+                        android:text="共有0人参与评分"
                         android:textSize="13sp" />
                 </LinearLayout>
 

@@ -2,15 +2,15 @@ package com.lzy.basemodule;
 
 public class OnClickLstenerInterface {
     public interface OnRecyClickInterface {
-        void getPostion(int postion);
+        void getPosition(int position);
     }
 
     public interface OnRecyClickInterfaceAndString {
-        void getPostion(String type, int postion);
+        void getPosition(String type, int position);
     }
 
     public interface OnItemRecyClickInterface {
-        void getPostion(int postion);
+        void getPosition(int position);
     }
 
     public interface OnThingClickInterface {

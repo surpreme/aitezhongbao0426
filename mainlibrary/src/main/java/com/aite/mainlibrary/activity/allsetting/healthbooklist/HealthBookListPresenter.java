@@ -44,10 +44,49 @@ public class HealthBookListPresenter extends BasePresenterImpl<HealthBookListCon
                         } catch (Exception e) {
                             LogUtils.e(e);
                         }
-                        Gson gson=new Gson();
-                        HealthListBean healthListBean=gson.fromJson(jsonObject.toString(),HealthListBean.class);
+                        Gson gson = new Gson();
+                        HealthListBean healthListBean = gson.fromJson(jsonObject.toString(), HealthListBean.class);
                         ((Activity) mView.getContext()).runOnUiThread(()
                                 -> mView.onGetInformationListSuccess(healthListBean));
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<HealthListBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<HealthListBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void deleteInformation(HttpParams httpParams) {
+        OkGo.<BaseData<HealthListBean>>get(AppConstant.DELETEHEALTHINFORMATIONDATAURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<HealthListBean>>() {
+                    @Override
+                    public BaseData<HealthListBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                mView.showError(baseData.getDatas().getError());
+                            }
+
+                        } catch (Exception e) {
+                            LogUtils.e(e);
+                        }
+                        String datas = jsonObject.optString("datas");
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.onDeleteInformationSuccess(datas));
                         return null;
                     }
 

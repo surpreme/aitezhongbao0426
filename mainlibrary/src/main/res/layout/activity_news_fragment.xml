@@ -21,12 +21,18 @@
         android:layout_height="0.5dp"
         android:background="@color/noglay" />
 
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/thingsfix_tabMode"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:background="@color/white"
+        android:visibility="gone"
         app:tabIndicatorHeight="0dp"
         app:tabSelectedTextColor="@color/blue"
         app:tabTextColor="@color/black">
@@ -41,7 +47,7 @@
             android:id="@+id/thingsfix_tab2_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="推荐圈子" />
+            android:text="热门圈子" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/thingsfix_tab3_id"
@@ -59,7 +65,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 
 </LinearLayout>

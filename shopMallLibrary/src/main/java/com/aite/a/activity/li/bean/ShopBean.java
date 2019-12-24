@@ -1,9 +1,11 @@
 package com.aite.a.activity.li.bean;
 
+import com.lzy.basemodule.bean.ErrorBean;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class ShopBean implements Serializable {
+public class ShopBean extends ErrorBean implements Serializable {
 
 
     /**

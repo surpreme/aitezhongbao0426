@@ -33,6 +33,18 @@ public class AdrressFixRecyAdapter extends RecyclerView.Adapter<AdrressFixRecyAd
         this.addressListBeans = addressListBeans;
     }
 
+    public interface OnClickThingInterface {
+        void onDelete(String position);
+
+        void onedit(String position);
+    }
+
+    private OnClickThingInterface onClickThingInterface;
+
+    public void setOnClickThingInterface(OnClickThingInterface onClickThingInterface) {
+        this.onClickThingInterface = onClickThingInterface;
+    }
+
     public OnClickLstenerInterface.OnThingClickInterface getOnItemRecyClickInterface() {
         return onItemRecyClickInterface;
     }
@@ -56,8 +68,22 @@ public class AdrressFixRecyAdapter extends RecyclerView.Adapter<AdrressFixRecyAd
         holder.tvAddress.setText(addressListBeans.get(position).getArea_info());
         holder.tvNamephone.setText(String.format("%s %s", addressListBeans.get(position).getTrue_name(), addressListBeans.get(position).getMob_phone()));
         holder.press.setOnClickListener(v -> {
-            if (onItemRecyClickInterface!= null)
+            if (onItemRecyClickInterface != null)
                 onItemRecyClickInterface.getString(addressListBeans.get(position).getAddress_id());
+        });
+        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onClickThingInterface != null)
+                    onClickThingInterface.onDelete(String.valueOf(position));
+            }
+        });
+        holder.tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onClickThingInterface != null)
+                    onClickThingInterface.onedit(String.valueOf(position));
+            }
         });
     }
 

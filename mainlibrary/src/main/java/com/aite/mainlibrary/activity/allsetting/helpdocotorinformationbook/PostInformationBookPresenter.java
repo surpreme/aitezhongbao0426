@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.aite.mainlibrary.Mainbean.HelpDoctorBookInformationBean;
 import com.google.gson.Gson;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.mvp.BasePresenterImpl;

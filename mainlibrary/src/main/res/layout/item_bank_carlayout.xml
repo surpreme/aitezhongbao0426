@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="130dp"
     android:layout_marginLeft="15dp"
+    android:layout_marginTop="@dimen/margin_5dp"
     android:layout_marginRight="15dp"
+    android:layout_marginBottom="@dimen/margin_5dp"
     android:background="@drawable/round_background_gray"
     android:orientation="horizontal">
 
@@ -49,11 +51,11 @@
         android:id="@+id/tv_delete"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:background="@null"
+        android:background="@color/allglay"
         android:gravity="center"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:text="删除"
-        android:textColor="#FFFFFFFF"
+        android:textColor="@color/black"
         android:textSize="14sp" />
 </com.mcxtzhang.swipemenulib.SwipeMenuLayout>

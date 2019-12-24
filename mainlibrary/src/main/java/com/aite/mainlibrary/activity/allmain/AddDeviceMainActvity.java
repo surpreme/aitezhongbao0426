@@ -35,10 +35,15 @@ public class AddDeviceMainActvity extends BaseActivity {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.scode_img) {
-            startActivity(QrCodeActivity.class,"type","watch");
+            applycamerapermission();
+            startActivity(QrCodeActivity.class, "type", "watch");
         } else if (v.getId() == R.id.edit_device_number)
             startActivity(DeviceNumberEditActivity.class);
 
+    }
+
+    @Override
+    protected void applyperssionbody() {
     }
 
     @Override
@@ -55,7 +60,6 @@ public class AddDeviceMainActvity extends BaseActivity {
     protected void initReStart() {
 
     }
-
 
 
     @Override

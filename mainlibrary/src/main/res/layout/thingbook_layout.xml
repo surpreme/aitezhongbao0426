@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/noglay" />
-
+    <!--    状态 0全部 1待付款 2待核销 3已完成 4评价 5已取消-->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/thingsfix_tabMode"
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/margin_15dp"
-        android:layout_marginRight="@dimen/margin_15dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_5dp"
+        android:layout_marginRight="@dimen/margin_5dp"
         android:background="@color/white"
         app:tabIndicatorColor="@color/blue"
         app:tabSelectedTextColor="@color/blue"
@@ -39,10 +39,20 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已完成" />
+            android:text="待发货" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待收货" />
+
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待评价" />
 
     </com.google.android.material.tabs.TabLayout>
-
 
 
     <View
@@ -54,12 +64,6 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-<!--    <fragment-->
-<!--        android:id="@+id/fragment"-->
-<!--        android:name="com.aite.mainlibrary.fragment.daybookchridren.daybooklist.DaybooklistFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
 
 
 </LinearLayout>

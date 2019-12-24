@@ -28,7 +28,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    repositories {
+        flatDir {
+            dirs 'libs', '../alipaylibrary/libs'
+        }
+    }
 }
 
 dependencies {
@@ -41,6 +45,8 @@ dependencies {
     implementation project(path: ':baselibrary')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation project(path: ':shopMallLibrary')
+    api project(path: ':shopMallLibrary')
+    api project(path: ':baselibrary')
+    implementation project(path: ':alipaylibrary')
 //jpush聊天ui
 }

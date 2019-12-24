@@ -4,7 +4,9 @@ public interface Mark {
     public static int GoodsDetails_detailsInfo = 30001;
     public static int Evaluation_list = 30004;
 
+    public static String zhongbaokey = "";
 
+    public static String zhongbaocollecturl = "";
 
 
     /**
@@ -1929,7 +1931,7 @@ public interface Mark {
     /**
      * 谷歌地图搜索经纬度
      */
-    public static String GooglePositon ="https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD3Sl5ldPHGihqN1qilzMC-7e1msNXt45M&language=zh&address=";
+    public static String GooglePositon = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD3Sl5ldPHGihqN1qilzMC-7e1msNXt45M&language=zh&address=";
 
     /**
      * 服务器
@@ -2584,7 +2586,7 @@ public interface Mark {
      */
     public static String integral_type = APPUrl
             + "index.php?act=member_points&op=get_points_type";
-       /**
+    /**
      * 积分规则
      */
     public static String integral_rules = APPUrl
@@ -3552,44 +3554,70 @@ public interface Mark {
      * 房间标签
      */
     public static String room_tag = APPUrl + "index.php?act=live&op=getLiveRoomTag";
-    /** 地址信息接口 */
+    /**
+     * 地址信息接口
+     */
     public static final String sregion2_list = APPUrl
             + "index.php?act=index&op=area_list";
-    /** 房间信息 */
+    /**
+     * 房间信息
+     */
     public static final String liveroom_datails = APPUrl
             + "index.php?act=live&op=getLiveRoomInfo";
-    /** 直播关注 */
+    /**
+     * 直播关注
+     */
     public static final String follow_room = APPUrl
             + "index.php?act=member_live&op=follow_room";
-    /** 礼物列表 */
+    /**
+     * 礼物列表
+     */
     public static final String gift_list = APPUrl
             + "index.php?act=live&op=getGiftList";
-    /** 赠送礼物 */
+    /**
+     * 赠送礼物
+     */
     public static final String giving_gift = APPUrl
             + "index.php?act=member_live&op=get_gift";
-    /** 在线充值 */
+    /**
+     * 在线充值
+     */
     public static final String online_top_up = APPUrl
             + "index.php?act=predeposit&op=recharge_add";
 
-    /**周边-分类-分类  */
+    /**
+     * 周边-分类-分类
+     */
     public static final String NEAR_CHOICE_TYPE_URL = APPUrl
             + "index.php?act=store&op=store_class";
-    /**周边-全城-分类  */
+    /**
+     * 周边-全城-分类
+     */
     public static final String NEAR_CHOICE_Area_URL = APPUrl
             + "index.php?act=area&op=getChildrenArea";
-    /**周边-全城-广告  */
+    /**
+     * 周边-全城-广告
+     */
     public static final String NEAR_Advertisement_URL = APPUrl
             + "index.php?act=near_store&op=get_near_store_swiper";
-    /**猜你喜欢  */
+    /**
+     * 猜你喜欢
+     */
     public static final String GUSSESLOVEURL = APPUrl
             + "index.php?act=member_cart&op=get_guesslike";
-    /**分类》品牌分类  */
+    /**
+     * 分类》品牌分类
+     */
     public static final String band_type_choice = APPUrl
             + "index.php?act=near_store&op=get_near_brand";
-    /**周边》定位城市列表  */
+    /**
+     * 周边》定位城市列表
+     */
     public static final String AROUND_CITY_URL = APPUrl
             + "index.php?act=near_store&op=cityList";
-    /**品牌分类 弃用 */
+    /**
+     * 品牌分类 弃用
+     */
     public static final String shop_type_choice = APPUrl
             + "index.php?act=store&op=list_app";
     /**
@@ -3598,14 +3626,20 @@ public interface Mark {
     public static final String WELCOME_IMAGE_URL = APPUrl
             + "index.php?act=app_start_pages&op=getInfo";
 
-    /**提示流程页面 */
+    /**
+     * 提示流程页面
+     */
     public static final String WELCOME_ONE_IMAGE_URL = APPUrl
             + "index.php?act=app_guide_pages&op=getInfo";
-    /**周边 店铺列表  */
+    /**
+     * 周边 店铺列表
+     */
     public static final String NEAR_SHOP_LIST_URL = APPUrl
             + "index.php?act=index&op=nearby_store";
 
-    /**可用支付方式列表 */
+    /**
+     * 可用支付方式列表
+     */
     public static final String online_pay_type = APPUrl
             + "index.php?act=member_payment&op=payment_list";
     // 跳转标志

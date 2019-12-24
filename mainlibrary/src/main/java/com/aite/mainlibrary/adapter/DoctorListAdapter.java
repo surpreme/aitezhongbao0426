@@ -5,16 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.base.BaseRecyclerViewAdapter;
+import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.util.TextUtil;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -39,9 +40,25 @@ public class DoctorListAdapter extends BaseRecyclerViewAdapter<String> {
         return new ViewHolder(view);
     }
 
+    public OnClickLstenerInterface.OnItemRecyClickInterface getOnItemRecyClickInterface() {
+        return onItemRecyClickInterface;
+    }
+
+    public void setOnItemRecyClickInterface(OnClickLstenerInterface.OnItemRecyClickInterface onItemRecyClickInterface) {
+        this.onItemRecyClickInterface = onItemRecyClickInterface;
+    }
+
+    private OnClickLstenerInterface.OnItemRecyClickInterface onItemRecyClickInterface;
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ViewHolder) holder).bindView(mDataList.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemRecyClickInterface.getPosition(position);
+            }
+        });
     }
 
     class ViewHolder extends BaseRvHolder {

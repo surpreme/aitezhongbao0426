@@ -1,11 +1,9 @@
 package com.aite.mainlibrary.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +24,7 @@ public class RecyMainIconAdapter extends RecyclerView.Adapter<RecyMainIconAdapte
     private LayoutInflater inflater;
     private int[] imgs;
     private String[] names;
-    private static float screenwidth;
+    private static double screenwidth;
     private OnClickLstenerInterface.OnRecyClickInterface onRecyClickInterface;
 
     public OnClickLstenerInterface.OnRecyClickInterface getOnRecyClickInterface() {
@@ -42,7 +40,7 @@ public class RecyMainIconAdapter extends RecyclerView.Adapter<RecyMainIconAdapte
         this.inflater = LayoutInflater.from(context);
         this.imgs = imgs;
         this.names = names;
-        this.screenwidth = screenwidth / 5;
+        this.screenwidth = screenwidth / 5.3;
 
     }
 
@@ -62,7 +60,7 @@ public class RecyMainIconAdapter extends RecyclerView.Adapter<RecyMainIconAdapte
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onRecyClickInterface.getPostion(position);
+                    onRecyClickInterface.getPosition(position);
                 }
             });
         }

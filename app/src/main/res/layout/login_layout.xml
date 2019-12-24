@@ -131,10 +131,10 @@
 
         <Button
             android:id="@+id/login_btn"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="37dp"
             android:layout_gravity="center"
-            android:background="@drawable/round_background_blue"
+            android:background="@drawable/critle_round_background_blue"
             android:gravity="center"
             android:text="@string/login"
             android:textColor="#ffffffff"

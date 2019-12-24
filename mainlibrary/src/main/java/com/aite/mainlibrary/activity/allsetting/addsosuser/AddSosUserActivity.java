@@ -88,15 +88,12 @@ public class AddSosUserActivity extends BaseActivity<AddSosUserContract.View, Ad
             if (datasBeans == null || datasBeans.isEmpty()) return;
             AddBindingUserAdapter addBindingUserAdapter = new AddBindingUserAdapter(context, datasBeans);
             PopwindowUtils.getmInstance().showChioceBottomPopupWindow(context, Gravity.BOTTOM, 0.7f, addBindingUserAdapter);
-            addBindingUserAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-                @Override
-                public void getPostion(int postion) {
-                    LogUtils.d("id=======" + datasBeans.get(postion).getId());
-                    FAMILY_ID = String.valueOf(datasBeans.get(postion).getId());
-                    PopwindowUtils.getmInstance().dismissPopWindow();
-                    famlilyTv.setText(datasBeans.get(postion).getTitle());
+            addBindingUserAdapter.setClickInterface(postion -> {
+                LogUtils.d("id=======" + datasBeans.get(postion).getId());
+                FAMILY_ID = String.valueOf(datasBeans.get(postion).getId());
+                PopwindowUtils.getmInstance().dismissPopWindow();
+                famlilyTv.setText(datasBeans.get(postion).getTitle());
 
-                }
             });
 
         }

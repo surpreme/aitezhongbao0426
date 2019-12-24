@@ -97,6 +97,15 @@ public class NetRun implements Mark {
         });
     }
 
+    public void zhongbaocollect(String url, String key, RequestCallBack<String> call) {
+        httpUtils = new HttpUtils();
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("key", key);
+        params.addBodyParameter("curpage", "1");
+        params.addBodyParameter("fav_type", "goods");
+        httpUtils.send(HttpMethod.POST, url, params, call);
+    }
+
     /**
      * 获取商品列表
      *
@@ -408,6 +417,7 @@ public class NetRun implements Mark {
                     }
                 });
     }
+
     /**
      * 获得选择城市
      */
@@ -430,6 +440,7 @@ public class NetRun implements Mark {
                     }
                 });
     }
+
     /**
      * 获得选择城市
      */
@@ -12199,9 +12210,10 @@ public class NetRun implements Mark {
         httpUtils.send(HttpRequest.HttpMethod.POST, GUSSESLOVEURL, params, call
         );
     }
+
     /**
-     *
      * 开屏页
+     *
      * @param call
      */
     public void OnWelcome(RequestCallBack<String> call) {
@@ -12211,9 +12223,10 @@ public class NetRun implements Mark {
         httpUtils.send(HttpRequest.HttpMethod.GET, WELCOME_IMAGE_URL, params, call
         );
     }
+
     /**
-     *
      * 安装起始页
+     *
      * @param call
      */
     public void OnFirstWelcome(RequestCallBack<String> call) {

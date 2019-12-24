@@ -11,7 +11,7 @@ public class TwoSuccessCodeBean extends ErrorBean implements Serializable {
      * "result":1,
      * "msg":"申请成功"
      */
-    @SerializedName(value = "result", alternate = {"state"})
+    @SerializedName(value = "result", alternate = {"state","id"})
     private String result;
     private String msg;
 

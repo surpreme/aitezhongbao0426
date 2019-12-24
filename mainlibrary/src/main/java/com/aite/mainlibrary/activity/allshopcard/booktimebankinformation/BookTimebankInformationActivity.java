@@ -58,7 +58,6 @@ public class BookTimebankInformationActivity extends BaseActivity<BookTimebankIn
                         getIntent().getStringExtra("activity")
                                 .equals("TimeBankActivity")
                                 ? AppConstant.STARTHELPTIMEBANKURL : AppConstant.STARTAIRINSERVICEURL);
-                LogUtils.d("测试");
 //                startActivity(HekpStartActivity.class, "HELPID", getIntent().getStringExtra("TYPEID"));
 
             }

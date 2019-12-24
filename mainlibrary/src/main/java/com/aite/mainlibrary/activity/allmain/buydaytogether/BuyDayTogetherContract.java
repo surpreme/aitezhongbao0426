@@ -14,12 +14,20 @@ public class BuyDayTogetherContract {
         void onBuyThingSuccesss(Object msg);
 
         void onGetInformationSuceess(Object msg);
+
+        void onPayListSuccess(Object msg);
+
+        void onPayCollectSuccess(Object msg);
     }
 
     interface Presenter extends BasePresenter<View> {
         void buyService(HttpParams httpParams);
 
         void getInformation(HttpParams httpParams);
+
+        void getPayList(HttpParams httpParams);
+
+        void PayCollect(HttpParams httpParams);
 
     }
 }

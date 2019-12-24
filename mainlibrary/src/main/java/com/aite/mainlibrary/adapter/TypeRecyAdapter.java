@@ -64,7 +64,7 @@ public class TypeRecyAdapter extends RecyclerView.Adapter<TypeRecyAdapter.ViewHo
         holder.father_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
 

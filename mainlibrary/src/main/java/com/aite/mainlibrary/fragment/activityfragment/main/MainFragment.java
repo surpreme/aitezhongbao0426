@@ -2,8 +2,8 @@ package com.aite.mainlibrary.fragment.activityfragment.main;
 
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +15,8 @@ import com.aite.mainlibrary.Mainbean.MainUiDataBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allmain.AddDeviceMainActvity;
-import com.aite.mainlibrary.activity.allmain.ElseHelpActivity;
 import com.aite.mainlibrary.activity.allmain.device.DeviceListActivity;
+import com.aite.mainlibrary.activity.allmain.elsehelp.ElseHelpActivity;
 import com.aite.mainlibrary.activity.allmain.messager.MessagerActivity;
 import com.aite.mainlibrary.activity.allshopcard.StarDoctorPushActvity;
 import com.aite.mainlibrary.activity.allshopcard.air.AirActivity;
@@ -27,15 +27,13 @@ import com.aite.mainlibrary.activity.allshopcard.timebank.TimeBankActivity;
 import com.aite.mainlibrary.adapter.HelpElderRecyAdapter;
 import com.aite.mainlibrary.adapter.RecyMainIconAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.adpter.BaseItemDecoration;
 import com.lzy.basemodule.base.BaseFragment;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.SystemUtil;
 import com.lzy.okgo.model.HttpParams;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.superluo.textbannerlibrary.TextBannerView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -70,6 +68,8 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
     LinearLayout deviceListLl;
     @BindView(R2.id.less_body_revy)
     RecyclerView lessBodyRevy;
+    @BindView(R2.id.sound_tv)
+    TextBannerView soundTv;
     private HelpElderRecyAdapter helpElderRecyAdapter;
     private RecyMainIconAdapter recyMainIconAdapter;
     private List<MainUiDataBean.PensionAdvsBean> pensionAdvsBeans = new ArrayList<>();
@@ -105,19 +105,16 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
         deviceListLl.setOnClickListener(this);
         //smartlayout
         smartRefreshLayout.setEnableLoadMore(false);//是否启用上拉加载功能
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishRefresh(5000/*,false*/);//传入false表示刷新失败
+        smartRefreshLayout.setOnRefreshListener(refreshLayout -> {
+            smartRefreshLayout.finishRefresh(5000/*,false*/);//传入false表示刷新失败
+            initModel();
 
-            }
         });
 
         //banner
         initBanner(banner);
         banner.setIndicatorGravity(BannerConfig.RIGHT)
                 .setOnBannerListener(this);
-
 
         //初始化适配器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -142,44 +139,38 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
         }
 
         //设置适配器点击监听
-        recyMainIconAdapter.setOnRecyClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPostion(int postion) {
-                switch (postion) {
-                    case 0:
-                        startActivity(DayTogetherActivity.class, "type", "1");
-                        break;
-                    case 1:
-                        startActivity(DayTogetherActivity.class, "type", "2");
-                        break;
-                    case 2:
-                        startActivity(DayTogetherActivity.class, "type", "3");
-                        break;
-                    case 3:
-                        startActivity(DayTogetherActivity.class, "type", "4");
-                        break;
-                    case 4:
-                        startActivity(DayTogetherActivity.class, "type", "5");
-                        break;
-                    default:
-                        break;
-                }
+        recyMainIconAdapter.setOnRecyClickInterface(postion -> {
+            switch (postion) {
+                case 0:
+                    startActivity(DayTogetherActivity.class, "type", "1");
+                    break;
+                case 1:
+                    startActivity(DayTogetherActivity.class, "type", "2");
+                    break;
+                case 2:
+                    startActivity(DayTogetherActivity.class, "type", "3");
+                    break;
+                case 3:
+                    startActivity(DayTogetherActivity.class, "type", "4");
+                    break;
+                case 4:
+                    startActivity(DayTogetherActivity.class, "type", "5");
+                    break;
+                default:
+                    break;
             }
         });
-        helpElderRecyAdapter.setLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPostion(int postion) {
-                if (postion == 0) {
-                    startActivity(HelpEatActivity.class);
-                } else if (postion == 1) {
-                    startActivity(HelpdoctorActivity.class);
-                } else if (postion == 2) {
-                    startActivity(TimeBankActivity.class);
-                } else if (postion == 3) {
-                    startActivity(AirActivity.class);
-                } else if (postion == 4) {
-                    startActivity(ElseHelpActivity.class);
-                }
+        helpElderRecyAdapter.setLstenerInterface(position -> {
+            if (position == 0) {
+                startActivity(HelpEatActivity.class);
+            } else if (position == 1) {
+                startActivity(HelpdoctorActivity.class);
+            } else if (position == 2) {
+                startActivity(TimeBankActivity.class);
+            } else if (position == 3) {
+                startActivity(AirActivity.class);
+            } else if (position == 4) {
+                startActivity(ElseHelpActivity.class);
             }
         });
 
@@ -207,14 +198,27 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
     }
 
 
-
     @Override
     public void getUiDataSuccess(Object msg) {
+        if (!((MainUiDataBean) msg).getPension_advs().isEmpty()) pensionAdvsBeans.clear();
+        if (!((MainUiDataBean) msg).getAdv_list().isEmpty()) pensionAdvsBeans.clear();
+
         if (((MainUiDataBean) msg).getPension_advs() != null || ((MainUiDataBean) msg).getPension_advs().size() > 0) {
             pensionAdvsBeans.addAll(((MainUiDataBean) msg).getPension_advs());
             helpElderRecyAdapter.notifyDataSetChanged();
         }
+        //设置数据 textbanner
+        List<String> soundlist = new ArrayList<>();
+        if (((MainUiDataBean) msg).getArticle() != null) {
+            for (int i = 0; i < ((MainUiDataBean) msg).getArticle().size(); i++) {
+                soundlist.add(((MainUiDataBean) msg).getArticle().get(i).getArticle_title());
+            }
+            soundTv.setDatas(soundlist);
+        }
+//        mTvBanner.setDatasWithDrawableIcon(mList,drawable,18, Gravity.LEFT);
         if (((MainUiDataBean) msg).getAdv_list() != null || ((MainUiDataBean) msg).getAdv_list().size() > 0) {
+            if (!list_img.isEmpty()) list_img.clear();
+            if (!list_title.isEmpty()) list_title.clear();
             for (MainUiDataBean.AdvListBean advListBean : ((MainUiDataBean) msg).getAdv_list()) {
                 list_img.add(advListBean.getAdv_content().getAdv_pic());
                 list_title.add(advListBean.getAdv_title());
@@ -233,6 +237,19 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
     @Override
     public void OnBannerClick(int position) {
 
+    }
+
+    //处理textbanner的问题
+    @Override
+    public void onResume() {
+        super.onResume();
+        soundTv.startViewAnimator();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        soundTv.stopViewAnimator();
     }
 
 }

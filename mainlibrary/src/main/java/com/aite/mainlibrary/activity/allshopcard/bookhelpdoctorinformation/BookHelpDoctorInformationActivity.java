@@ -93,7 +93,7 @@ public class BookHelpDoctorInformationActivity extends BaseActivity<BookHelpDoct
         addressTv.setText(String.format("地点：%s", infoBean.getAddress()));
         serviceTimeTv.setText(String.format("服务时间：%s", TimeUtils.stampToDatemm2(Long.valueOf(infoBean.getAddtime()))));
         Glide.with(context).load(((HelpDoctorInformationBean) msg).getAdvs().getAdv_img()).into(topIv);
-        informationTv.setText(String.format("详情%s", infoBean.getRemarks()));
+        informationTv.setText(String.format("%s", infoBean.getRemarks()));
         typeTv.setText(String.format("服务类型：%s", infoBean.getClass_name()));
 //        是否可以接单 1是 0否
         LogUtils.d(infoBean.getIs_order());

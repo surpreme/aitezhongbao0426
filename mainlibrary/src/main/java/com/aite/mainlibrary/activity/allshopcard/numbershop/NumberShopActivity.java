@@ -37,7 +37,7 @@ public class NumberShopActivity extends BaseActivity<NumberShopContract.View, Nu
         mBaserecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         timeShopRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
 
             }
         });

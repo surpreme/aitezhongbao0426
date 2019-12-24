@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.aite.mainlibrary.Mainbean.LessAddShopCardNumberBean;
-import com.aite.mainlibrary.Mainbean.RecyChoiceUIBean;
 import com.aite.mainlibrary.Mainbean.ShopCardlistBean;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
 import com.lzy.basemodule.bean.EtraLoginBaseData;
@@ -162,5 +161,10 @@ public class ShopCardPresenter extends BasePresenterImpl<ShopCardContract.View> 
 
                     }
                 });
+    }
+
+    @Override
+    public void GetShopBookThing(HttpParams httpParams) {
+
     }
 }

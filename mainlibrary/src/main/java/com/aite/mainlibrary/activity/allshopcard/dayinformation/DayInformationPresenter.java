@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.aite.mainlibrary.Mainbean.LessBodyInformationBean;
-import com.aite.mainlibrary.Mainbean.LessDayBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.androidlife.AppManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
 import com.lzy.basemodule.logcat.LogUtils;

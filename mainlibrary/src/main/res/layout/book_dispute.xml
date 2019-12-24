@@ -8,209 +8,32 @@
 
     <include layout="@layout/toolbar_layout" />
 
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp">
+            android:text="全部" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="15dp"
-                android:text="投诉类型"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="进行中" />
 
-            <TextView
-                android:id="@+id/app_version_tv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:paddingRight="15dp"
-                android:text="请选择类型"
-                android:textColor="#ff999999"
-                android:textSize="15sp" />
-        </LinearLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已关闭" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center"
-            android:src="@drawable/go_black" />
+    </com.google.android.material.tabs.TabLayout>
 
-        <View
-            android:layout_width="20dp"
-            android:layout_height="0dp" />
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="match_parent" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="15dp"
-                android:text="投诉类型"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="70dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/noglay" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_marginTop="@dimen/margin_20dp"
-        android:paddingRight="15dp"
-        android:text="上传凭证"
-        android:textColor="@color/black"
-        android:textSize="17sp" />
-
-    <RelativeLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_marginTop="@dimen/margin_20dp"
-        android:layout_marginBottom="40dp">
-
-
-
-        <LinearLayout
-            android:id="@+id/choice_iv_ll"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-
-            android:background="@color/noglay"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:layout_weight="0.7"
-                android:gravity="bottom|center"
-                android:paddingRight="15dp"
-                android:text="+"
-                android:textColor="@color/black"
-                android:textSize="23sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:layout_weight="0.3"
-                android:gravity="center"
-                android:paddingRight="15dp"
-                android:text="上传类型"
-                android:textColor="@color/glay"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:layout_weight="0.3"
-                android:gravity="center|top"
-                android:paddingRight="15dp"
-                android:text="（最多三张）"
-                android:textColor="@color/glay"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/src_iv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/noglay" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="15dp"
-                android:text="订单号："
-                android:textColor="@color/black"
-                android:textSize="17sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:hint="请输入订单号"
-                android:inputType="number" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/noglay" />
-
-    <include layout="@layout/bottom_btn" />
 </LinearLayout>

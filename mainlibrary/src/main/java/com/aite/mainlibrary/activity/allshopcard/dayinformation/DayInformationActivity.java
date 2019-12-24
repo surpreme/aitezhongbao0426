@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,11 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
-/**
- * MVPPlugin
- * 邮箱 784787081@qq.com
- */
 
 public class DayInformationActivity extends BaseActivity<DayInformationContract.View, DayInformationPresenter> implements DayInformationContract.View {
     @BindView(R2.id.iv_back)
@@ -80,8 +76,11 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
     protected void initView() {
 //        buy_tv.setOnClickListener(this);
 //        collectIv.setOnClickListener(this);
-        goodsRecy.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        goodsRecy.setLayoutManager(new GridLayoutManager(context, 2));
         goodsRecy.setAdapter(lessBodyGoodListRecyAdapter = new LessBodyGoodListRecyAdapter(context, goodsCommendListBeans));
+        lessBodyGoodListRecyAdapter.setLstenerInterface(position -> {
+            startActivity(DayInformationActivity.class, "goods_id", goodsCommendListBeans.get(position).getGoods_id());
+        });
 
     }
 
@@ -161,10 +160,4 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

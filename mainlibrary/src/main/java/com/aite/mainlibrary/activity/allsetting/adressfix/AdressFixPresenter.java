@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.aite.mainlibrary.Mainbean.AddbinduserfamilyBean;
 import com.aite.mainlibrary.Mainbean.SettingAddressListBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
@@ -61,6 +62,45 @@ public class AdressFixPresenter extends BasePresenterImpl<AdressFixContract.View
 
                     @Override
                     public void onSuccess(Response<BaseData<SettingAddressListBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void dleteAddress(HttpParams httpParams) {
+        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.DELETEADDRESSPERSONDATAURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                    @Override
+                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                mView.showError(baseData.getDatas().getError());
+                            }
+
+                        } catch (Exception e) {
+                            LogUtils.e(e);
+                        }
+                        String object = jsonObject.optString("datas");
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.onDleteAdressSuccess(object.toString()));
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }

@@ -14,9 +14,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.aite.a.activity.li.activity.ChoiceActivity;
+import com.aite.alipaylibrary.PayAway;
 import com.aite.mainlibrary.Mainbean.MoreAdressInormationBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
 import com.aite.mainlibrary.Mainbean.RememberFoodInformationBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.adressfix.AdressFixActivity;
@@ -30,6 +33,7 @@ import com.lzy.basemodule.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.IImgBaseBean;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.KeyBoardUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 import com.youth.banner.Banner;
@@ -84,6 +88,7 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
     //banner datalist
     private List<String> list_img = new ArrayList<>();
     private List<String> list_title = new ArrayList<>();
+    private String ORDER_ID = "";
 
 
     @Override
@@ -98,19 +103,16 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
         initBanner(banner);
         banner.setIndicatorGravity(BannerConfig.RIGHT)
                 .setOnBannerListener(this);
-        eatAwayCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sendUserTv.setBackground(
-                        getResources().getDrawable(isChecked ? R.drawable.round_background_yellow : R.drawable.round_background_white));
-                getshopTv.setBackground(
-                        getResources().getDrawable(isChecked ? R.drawable.round_background_white : R.drawable.round_background_yellow));
+        eatAwayCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            sendUserTv.setBackground(
+                    getResources().getDrawable(isChecked ? R.drawable.round_background_yellow : R.drawable.round_background_white));
+            getshopTv.setBackground(
+                    getResources().getDrawable(isChecked ? R.drawable.round_background_white : R.drawable.round_background_yellow));
 
-                getshopTv.setTextColor(getResources().getColor(isChecked ? R.color.black : R.color.white));
-                sendUserTv.setTextColor(getResources().getColor(isChecked ? R.color.white : R.color.black));
-                EATAWAYTYPE = isChecked ? "2" : "1";
+            getshopTv.setTextColor(getResources().getColor(isChecked ? R.color.black : R.color.white));
+            sendUserTv.setTextColor(getResources().getColor(isChecked ? R.color.white : R.color.black));
+            EATAWAYTYPE = isChecked ? "2" : "1";
 
-            }
         });
 
 
@@ -130,7 +132,7 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
         params.put("buyer_phone", getEditString(phoneEdit));
         params.put("type", EATAWAYTYPE);
         params.put("meal_time", isStringEmpty(mDate) ? "" : mDate);
-        params.put("meal_address", "南山科技园福安大厦");
+//        params.put("meal_address", "南山科技园福安大厦");
 
         return params;
     }
@@ -162,19 +164,18 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
             // 产生订单
             mPresenter.postAllInformation(initAllInformationParams());
         } else if (v.getId() == R.id.choice_time_ll) {
-            initChoiceTimer(new OnTimeSelectListener() {
-                @Override
-                public void onTimeSelect(Date date, View v) {
-                    long time = date.getTime();
-                    String tim = TimeUtils.stampToDate(time);
-                    timeTv.setText(tim);
-                    LogUtils.e(String.valueOf(TimeUtils.getTime(date.getTime())) + "--" + tim);
-                    mDate = TimeUtils.stampToDate(time);
-                    isYearCheck = true;
-                }
+            hideSoftWare();
+            initChoiceTimer((date, v1) -> {
+                long time = date.getTime();
+                String tim = TimeUtils.stampToDate(time);
+                timeTv.setText(tim);
+                LogUtils.e(String.valueOf(TimeUtils.getTime(date.getTime())) + "--" + tim);
+                mDate = TimeUtils.stampToDate(time);
+                isYearCheck = true;
             }, "选择用餐日期", false);
             pvTime.show();
         } else if (v.getId() == R.id.choice_oclock_ll) {
+            hideSoftWare();
             initChoiceHMTimer(new OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date, View v) {
@@ -199,6 +200,15 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
             if (data != null) {
 //                ADDRESS_ID = data.getStringExtra("address_id");
                 mPresenter.getAddress(initParams(data.getStringExtra("address_id")));
+
+            }
+        } else {
+            switch (resultCode) {
+                case 10010:
+//                        Intent intent2 = new Intent(RememberShopBookActivity.this, );
+//                        startActivity(intent2);
+//                        finish();
+                    break;
 
             }
         }
@@ -237,6 +247,7 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
         if ((String) msg != null || !isStringEmpty((String) msg)) {
             LogUtils.d(msg.toString());
             showToast("订单生成成功");
+            ORDER_ID = msg.toString();
             mPresenter.getPayList(initKeyParams());
 
             //订单id
@@ -266,13 +277,48 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         payRadioGroupRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 LogUtils.d(postion);
                 PopwindowUtils.getmInstance().dismissPopWindow();
+                PopwindowUtils.getmInstance().dismissPopWindow();
+                if (postion == 99) {
+                    mPresenter.PayCollect(initCollectParams());
+
+                } else if (postion==1) {
+                    PayAway.Alipay("fgydfgsxdfgscfgdf", RememberShopBookActivity.this, ChoiceActivity.class);
+
+                }
 
             }
         });
         PopwindowUtils.getmInstance().showPayRecyPopupWindow(context, Gravity.BOTTOM, payRadioGroupRecyAdapter, manager);
+
+
+    }
+
+    /**
+     * key	get	字符串	必须			会员登录key
+     * pay_sn	get	字符串	必须			订单交易编号
+     *
+     * @return
+     */
+    private HttpParams initCollectParams() {
+        HttpParams params = new HttpParams();
+        params.put("key", AppConstant.KEY);
+        if (!isStringEmpty(ORDER_ID))
+            params.put("order_id", ORDER_ID);
+        return params;
+    }
+
+
+    @Override
+    public void onPayCollectSuccess(Object msg) {
+        if (((TwoSuccessCodeBean) msg).getResult().equals("1") && ((TwoSuccessCodeBean) msg).getMsg().equals("支付成功")) {
+            showToast(((TwoSuccessCodeBean) msg).getMsg(), Gravity.TOP);
+            onBackPressed();
+        } else {
+            showToast("支付失败", Gravity.TOP);
+        }
 
 
     }

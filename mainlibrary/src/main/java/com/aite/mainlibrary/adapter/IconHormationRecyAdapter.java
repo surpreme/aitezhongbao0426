@@ -58,7 +58,7 @@ public class IconHormationRecyAdapter extends RecyclerView.Adapter<IconHormation
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPostion(position);
+                clickInterface.getPosition(position);
             }
         });
     }

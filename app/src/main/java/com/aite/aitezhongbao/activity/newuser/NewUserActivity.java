@@ -67,7 +67,7 @@ public class NewUserActivity extends BaseActivity<NewUserContract.View, NewUserP
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    PopwindowUtils.getmInstance().showNewUerTogtherInformaionPopupWindow(NewUserActivity.this);
+                    PopwindowUtils.getmInstance().showNewUerTogtherInformaionPopupWindow(NewUserActivity.this,"http://zhongbyi.aitecc.com/mobile/index.php?act=login&op=pactContent");
                 }
             }
         });

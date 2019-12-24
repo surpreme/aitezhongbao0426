@@ -17,8 +17,9 @@
 
 
         <!--头-->
-        <include layout="@layout/layout_head" />
 
+
+        <include layout="@layout/layout_head" />
 
         <LinearLayout
             android:layout_width="match_parent"

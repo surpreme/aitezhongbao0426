@@ -1,22 +1,18 @@
 package com.aite.mainlibrary.adapter.fragmentAdpter;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.aite.mainlibrary.activity.allsetting.thingsbook.ThingsbookActivity;
 import com.aite.mainlibrary.fragment.daybookchridren.daybooklist.DaybooklistFragment;
 import com.aite.mainlibrary.fragment.daybookchridren.overedbooklist.OveredbooklistFragment;
 import com.aite.mainlibrary.fragment.daybookchridren.unpaybooklist.UnPaybooklistFragment;
-import com.aite.mainlibrary.fragment.lessBodyfragment.lessbodybookfragment.LessBodyBookFragment;
 import com.aite.mainlibrary.fragment.lovefamilychridren.ChridrenFragmentFour;
-import com.aite.mainlibrary.fragment.lovefamilychridren.ChridrenFragmentSencond;
-import com.aite.mainlibrary.fragment.lovefamilychridren.ChridrenFragmentThrid;
-import com.aite.mainlibrary.fragment.lovefamilychridren.chridrenfirst.ChridrenFirstFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Auther: liziyang
@@ -24,47 +20,36 @@ import java.util.List;
  * @desc:
  */
 public class ThingBookPagerApdapter extends FragmentPagerAdapter {
-    DaybooklistFragment daybooklistFragment;
-    private int num;
-    //    ChridrenFirstFragment chridrenFragmentFirst;
-    UnPaybooklistFragment unPaybooklistFragment;
-    OveredbooklistFragment overedbooklistFragment;
-    ChridrenFragmentFour chridrenFragmentFour;
+    private String buytype = "";
+    private ArrayList<Fragment> fragments;
 
-
-    public ThingBookPagerApdapter(FragmentManager fm, int num) {
-        super(fm);
-        this.num = num;
+    public ThingBookPagerApdapter(FragmentManager fm, ArrayList<Fragment> fragments, String buytype) {
+        super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        this.fragments = fragments;
+        this.buytype = buytype;
     }
 
+    /**
+     * * <!--    状态 0全部 1待付款 2待核销 3已完成 4评价 5已取消-->
+     *
+     * @param position
+     * @return
+     */
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                if (daybooklistFragment == null) {
-                    return new DaybooklistFragment();
-                }
-            case 1:
-                if (unPaybooklistFragment == null) {
-                    return new UnPaybooklistFragment();
-                }
-            case 2:
-                if (overedbooklistFragment == null) {
-                    return new OveredbooklistFragment();
-                }
-            case 3:
-                if (chridrenFragmentFour == null) {
-                    return new ChridrenFragmentFour();
-                }
-            default:
-                return null;
-        }
+        Fragment fragment = fragments.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putString("state", String.valueOf(position));
+        bundle.putString("type",buytype);
+        assert fragment != null;
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public int getCount() {
-        return num;
+        return fragments.size();
     }
 
 }

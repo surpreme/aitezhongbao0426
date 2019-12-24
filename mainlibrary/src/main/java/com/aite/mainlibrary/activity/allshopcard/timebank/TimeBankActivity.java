@@ -103,7 +103,7 @@ public class TimeBankActivity extends BaseActivity<TimeBankContract.View, TimeBa
 //        fatherTabLl.setOnClickListener(this);
         timeBankRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 Intent intent = new Intent(context, BookTimebankInformationActivity.class);
                 intent.putExtra("TYPEID", timeBankListBean.get(postion).getId());
                 intent.putExtra("activity", "TimeBankActivity");
@@ -185,7 +185,7 @@ public class TimeBankActivity extends BaseActivity<TimeBankContract.View, TimeBa
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         radioGroupRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
-            public void getPostion(int postion) {
+            public void getPosition(int postion) {
                 //for循环不能放在这里 会卡顿 放到适配器中
                 LogUtils.d(postion);
                 switch (type.toString()) {

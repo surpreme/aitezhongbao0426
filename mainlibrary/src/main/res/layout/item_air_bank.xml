@@ -13,6 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:cardCornerRadius="7dp">
 
         <ImageView
@@ -90,12 +91,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/service_btn"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:background="@drawable/round_background_yellow"
+                    android:background="@drawable/round_background_blue"
                     android:gravity="center"
                     android:text="接单"
                     android:textColor="@color/white"
