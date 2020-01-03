@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="text1">#333</color>
+    <color name="text2">#666</color>
+    <color name="text3">#2B2B2B</color>
+
+    <color name="yellow">#FFB400</color>
+    <color name="green1">#00BFBF</color>
+
+    <color name="classify_bg">#F8F8F8</color>
+    <!-- 茶色 -->
+    <color name="chocolate">#d2691e</color>
+
+</resources>

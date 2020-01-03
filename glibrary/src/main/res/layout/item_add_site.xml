@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_10">
+
+    <EditText
+        android:hint="请填写执业地址"
+        android:id="@+id/et_add_site"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text1"
+        android:textSize="@dimen/text14" />
+
+
+</LinearLayout>
+
+
+

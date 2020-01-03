@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/dp_20"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_icon"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:text="患者女 2岁"
+            android:textColor="@color/text1"
+            android:textSize="@dimen/text15" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="疾病：咳嗽"
+            android:textColor="@color/text1"
+            android:textSize="@dimen/text15" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="详情：小孩从星期五低烧咳嗽"
+            android:textColor="@color/text1"
+            android:textSize="@dimen/text15" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="#FFEEEEEE"
+        android:paddingLeft="16dp"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="16dp"
+        android:paddingBottom="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="医生回复：布地奈德，一定要复查，一周后吧"
+            android:textColor="@color/text2"
+            android:textSize="@dimen/text15" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <TextView
+            android:textSize="@dimen/text13"
+            android:textColor="@color/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5名患者觉得有帮助" />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/text13"
+            android:textColor="@color/text2"
+            android:text="20条对话"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text13"
+            android:textColor="@color/text2"
+            android:text="2019-10-20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFEEEEEE" />
+
+</LinearLayout>

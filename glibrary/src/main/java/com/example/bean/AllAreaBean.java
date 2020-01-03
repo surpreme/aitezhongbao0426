@@ -1,0 +1,54 @@
+package com.example.bean;
+
+import java.util.List;
+
+public class AllAreaBean {
+
+    /**
+     * code : 200
+     * message : 操作成功
+     * datas : {"list":[{"area_id":"1","area_name":"北京","citylist":[{"area_id":"36","area_name":"北京市","arealist":[{"area_id":"37","area_name":"东城区"},{"area_id":"38","area_name":"西城区"},{"area_id":"41","area_name":"朝阳区"},{"area_id":"42","area_name":"丰台区"},{"area_id":"43","area_name":"石景山区"},{"area_id":"44","area_name":"海淀区"},{"area_id":"45","area_name":"门头沟区"},{"area_id":"46","area_name":"房山区"},{"area_id":"47","area_name":"通州区"},{"area_id":"48","area_name":"顺义区"},{"area_id":"49","area_name":"昌平区"},{"area_id":"50","area_name":"大兴区"},{"area_id":"51","area_name":"怀柔区"},{"area_id":"52","area_name":"平谷区"},{"area_id":"53","area_name":"密云县"},{"area_id":"54","area_name":"延庆县"},{"area_id":"566","area_name":"其他"}]}]},{"area_id":"2","area_name":"天津","citylist":[{"area_id":"40","area_name":"天津市","arealist":[{"area_id":"55","area_name":"和平区"},{"area_id":"56","area_name":"河东区"},{"area_id":"57","area_name":"河西区"},{"area_id":"58","area_name":"南开区"},{"area_id":"59","area_name":"河北区"},{"area_id":"60","area_name":"红桥区"},{"area_id":"61","area_name":"塘沽区"},{"area_id":"64","area_name":"东丽区"},{"area_id":"65","area_name":"西青区"},{"area_id":"66","area_name":"津南区"},{"area_id":"67","area_name":"北辰区"},{"area_id":"68","area_name":"武清区"},{"area_id":"69","area_name":"宝坻区"},{"area_id":"70","area_name":"宁河县"},{"area_id":"71","area_name":"静海县"},{"area_id":"72","area_name":"蓟县"}]}]},{"area_id":"3","area_name":"河北","citylist":[{"area_id":"73","area_name":"石家庄市","arealist":[{"area_id":"1126","area_name":"井陉县"},{"area_id":"1127","area_name":"井陉矿区"},{"area_id":"1128","area_name":"元氏县"},{"area_id":"1129","area_name":"平山县"},{"area_id":"1130","area_name":"新乐市"},{"area_id":"1131","area_name":"新华区"},{"area_id":"1132","area_name":"无极县"},{"area_id":"1133","area_name":"晋州市"},{"area_id":"1134","area_name":"栾城县"},{"area_id":"1135","area_name":"桥东区"},{"area_id":"1136","area_name":"桥西区"},{"area_id":"1137","area_name":"正定县"},{"area_id":"1138","area_name":"深泽县"},{"area_id":"1139","area_name":"灵寿县"},{"area_id":"1140","area_name":"藁城市"},{"area_id":"1141","area_name":"行唐县"},{"area_id":"1142","area_name":"裕华区"},{"area_id":"1143","area_name":"赞皇县"},{"area_id":"1144","area_name":"赵县"},{"area_id":"1145","area_name":"辛集市"},{"area_id":"1146","area_name":"长安区"},{"area_id":"1147","area_name":"高邑县"},{"area_id":"1148","area_name":"鹿泉市"}]},{"area_id":"74","area_name":"唐山市","arealist":[{"area_id":"1149","area_name":"丰南区"},{"area_id":"1150","area_name":"丰润区"},{"area_id":"1151","area_name":"乐亭县"},{"area_id":"1152","area_name":"古冶区"},{"area_id":"1153","area_name":"唐海县"},{"area_id":"1154","area_name":"开平区"},{"area_id":"1155","area_name":"滦南县"},{"area_id":"1156","area_name":"滦县"},{"area_id":"1157","area_name":"玉田县"},{"area_id":"1158","area_name":"路北区"},{"area_id":"1159","area_name":"路南区"},{"area_id":"1160","area_name":"迁安市"},{"area_id":"1161","area_name":"迁西县"},{"area_id":"1162","area_name":"遵化市"}]},{"area_id":"75","area_name":"秦皇岛市","arealist":[{"area_id":"1163","area_name":"北戴河区"},{"area_id":"1164","area_name":"卢龙县"},{"area_id":"1165","area_name":"山海关区"},{"area_id":"1166","area_name":"抚宁县"},{"area_id":"1167","area_name":"昌黎县"},{"area_id":"1168","area_name":"海港区"},{"area_id":"1169","area_name":"青龙满族自治县"}]},{"area_id":"76","area_name":"邯郸市","arealist":[{"area_id":"1170","area_name":"丛台区"},{"area_id":"1171","area_name":"临漳县"},{"area_id":"1172","area_name":"复兴区"},{"area_id":"1173","area_name":"大名县"},{"area_id":"1174","area_name":"峰峰矿区"},{"area_id":"1175","area_name":"广平县"},{"area_id":"1176","area_name":"成安县"},{"area_id":"1177","area_name":"曲周县"},{"area_id":"1178","area_name":"武安市"},{"area_id":"1179","area_name":"永年县"},{"area_id":"1180","area_name":"涉县"},{"area_id":"1181","area_name":"磁县"},{"area_id":"1182","area_name":"肥乡县"},{"area_id":"1183","area_name":"邯山区"},{"area_id":"1184","area_name":"邯郸县"},{"area_id":"1185","area_name":"邱县"},{"area_id":"1186","area_name":"馆陶县"},{"area_id":"1187","area_name":"魏县"},{"area_id":"1188","area_name":"鸡泽县"}]},{"area_id":"77","area_name":"邢台市","arealist":[{"area_id":"1189","area_name":"临城县"},{"area_id":"1190","area_name":"临西县"},{"area_id":"1191","area_name":"任县"},{"area_id":"1192","area_name":"内丘县"},{"area_id":"1193","area_name":"南和县"},{"area_id":"1194","area_name":"南宫市"},{"area_id":"1195","area_name":"威县"},{"area_id":"1196","area_name":"宁晋县"},{"area_id":"1197","area_name":"巨鹿县"},{"area_id":"1198","area_name":"平乡县"},{"area_id":"1199","area_name":"广宗县"},{"area_id":"1200","area_name":"新河县"},{"area_id":"1201","area_name":"柏乡县"},{"area_id":"1202","area_name":"桥东区"},{"area_id":"1203","area_name":"桥西区"},{"area_id":"1204","area_name":"沙河市"},{"area_id":"1205","area_name":"清河县"},{"area_id":"1206","area_name":"邢台县"},{"area_id":"1207","area_name":"隆尧县"},{"area_id":"46595","area_name":"豫让桥街道"},{"area_id":"46596","area_name":"东汪镇"},{"area_id":"46597","area_name":"王快镇"},{"area_id":"46598","area_name":"祝村镇"},{"area_id":"46599","area_name":"晏家屯镇"},{"area_id":"46600","area_name":"南石门镇"},{"area_id":"46601","area_name":"羊范镇"},{"area_id":"46602","area_name":"皇寺镇"},{"area_id":"46603","area_name":"会宁镇"},{"area_id":"46604","area_name":"西黄村镇"},{"area_id":"46605","area_name":"路罗镇"},{"area_id":"46606","area_name":"将军墓镇"},{"area_id":"46607","area_name":"浆水镇"},{"area_id":"46608","area_name":"宋家庄镇"},{"area_id":"46609","area_name":"太子井乡"},{"area_id":"46610","area_name":"龙泉寺乡"},{"area_id":"46611","area_name":"北小庄乡"},{"area_id":"46612","area_name":"城计头乡"},{"area_id":"46613","area_name":"白岸乡"},{"area_id":"46614","area_name":"冀家村乡"}]},{"area_id":"78","area_name":"保定市","arealist":[{"area_id":"1208","area_name":"北市区"},{"area_id":"1209","area_name":"南市区"},{"area_id":"1210","area_name":"博野县"},{"area_id":"1211","area_name":"唐县"},{"area_id":"1212","area_name":"安国市"},{"area_id":"1213","area_name":"安新县"},{"area_id":"1214","area_name":"定兴县"},{"area_id":"1215","area_name":"定州市"},{"area_id":"1216","area_name":"容城县"},{"area_id":"1217","area_name":"徐水县"},{"area_id":"1218","area_name":"新市区"},{"area_id":"1219","area_name":"易县"},{"area_id":"1220","area_name":"曲阳县"},{"area_id":"1221","area_name":"望都县"},{"area_id":"1222","area_name":"涞水县"},{"area_id":"1223","area_name":"涞源县"},{"area_id":"1224","area_name":"涿州市"},{"area_id":"1225","area_name":"清苑县"},{"area_id":"1226","area_name":"满城县"},{"area_id":"1227","area_name":"蠡县"},{"area_id":"1228","area_name":"阜平县"},{"area_id":"1229","area_name":"雄县"},{"area_id":"1230","area_name":"顺平县"},{"area_id":"1231","area_name":"高碑店市"},{"area_id":"1232","area_name":"高阳县"}]},{"area_id":"79","area_name":"张家口市","arealist":[{"area_id":"1233","area_name":"万全县"},{"area_id":"1234","area_name":"下花园区"},{"area_id":"1235","area_name":"宣化区"},{"area_id":"1236","area_name":"宣化县"},{"area_id":"1237","area_name":"尚义县"},{"area_id":"1238","area_name":"崇礼县"},{"area_id":"1239","area_name":"康保县"},{"area_id":"1240","area_name":"张北县"},{"area_id":"1241","area_name":"怀安县"},{"area_id":"1242","area_name":"怀来县"},{"area_id":"1243","area_name":"桥东区"},{"area_id":"1244","area_name":"桥西区"},{"area_id":"1245","area_name":"沽源县"},{"area_id":"1246","area_name":"涿鹿县"},{"area_id":"1247","area_name":"蔚县"},{"area_id":"1248","area_name":"赤城县"},{"area_id":"1249","area_name":"阳原县"}]},{"area_id":"80","area_name":"承德市","arealist":[{"area_id":"1250","area_name":"丰宁满族自治县"},{"area_id":"1251","area_name":"兴隆县"},{"area_id":"1252","area_name":"双桥区"},{"area_id":"1253","area_name":"双滦区"},{"area_id":"1254","area_name":"围场满族蒙古族自治县"},{"area_id":"1255","area_name":"宽城满族自治县"},{"area_id":"1256","area_name":"平泉县"},{"area_id":"1257","area_name":"承德县"},{"area_id":"1258","area_name":"滦平县"},{"area_id":"1259","area_name":"隆化县"},{"area_id":"1260","area_name":"鹰手营子矿区"},{"area_id":"47387","area_name":"下板城镇"},{"area_id":"47388","area_name":"甲山镇"},{"area_id":"47389","area_name":"六沟镇"},{"area_id":"47390","area_name":"三沟镇"},{"area_id":"47391","area_name":"头沟镇"},{"area_id":"47392","area_name":"高寺台镇"},{"area_id":"47393","area_name":"东小白旗乡"},{"area_id":"47394","area_name":"鞍匠镇"},{"area_id":"47395","area_name":"刘杖子乡"},{"area_id":"47396","area_name":"新杖子乡"},{"area_id":"47397","area_name":"孟家院乡"},{"area_id":"47398","area_name":"大营子乡"},{"area_id":"47399","area_name":"八家乡"},{"area_id":"47400","area_name":"上谷乡"},{"area_id":"47401","area_name":"满杖子乡"},{"area_id":"47402","area_name":"石灰窑乡"},{"area_id":"47403","area_name":"五道河乡"},{"area_id":"47404","area_name":"岔沟乡"},{"area_id":"47405","area_name":"岗子满族乡"},{"area_id":"47406","area_name":"磴上乡"},{"area_id":"47407","area_name":"两家满族乡"},{"area_id":"47408","area_name":"三家镇"},{"area_id":"47409","area_name":"仓子乡"}]},{"area_id":"81","area_name":"衡水市","arealist":[{"area_id":"1261","area_name":"冀州市"},{"area_id":"1262","area_name":"安平县"},{"area_id":"1263","area_name":"故城县"},{"area_id":"1264","area_name":"景县"},{"area_id":"1265","area_name":"枣强县"},{"area_id":"1266","area_name":"桃城区"},{"area_id":"1267","area_name":"武强县"},{"area_id":"1268","area_name":"武邑县"},{"area_id":"1269","area_name":"深州市"},{"area_id":"1270","area_name":"阜城县"},{"area_id":"1271","area_name":"饶阳县"}]},{"area_id":"82","area_name":"廊坊市","arealist":[{"area_id":"1272","area_name":"三河市"},{"area_id":"1273","area_name":"固安县"},{"area_id":"1274","area_name":"大厂回族自治县"},{"area_id":"1275","area_name":"大城县"},{"area_id":"1276","area_name":"安次区"},{"area_id":"1277","area_name":"广阳区"},{"area_id":"1278","area_name":"文安县"},{"area_id":"1279","area_name":"永清县"},{"area_id":"1280","area_name":"霸州市"},{"area_id":"1281","area_name":"香河县"}]},{"area_id":"83","area_name":"沧州市","arealist":[{"area_id":"1282","area_name":"东光县"},{"area_id":"1283","area_name":"任丘市"},{"area_id":"1284","area_name":"南皮县"},{"area_id":"1285","area_name":"吴桥县"},{"area_id":"1286","area_name":"孟村回族自治县"},{"area_id":"1287","area_name":"新华区"},{"area_id":"1288","area_name":"沧县"},{"area_id":"1289","area_name":"河间市"},{"area_id":"1290","area_name":"泊头市"},{"area_id":"1291","area_name":"海兴县"},{"area_id":"1292","area_name":"献县"},{"area_id":"1293","area_name":"盐山县"},{"area_id":"1294","area_name":"肃宁县"},{"area_id":"1295","area_name":"运河区"},{"area_id":"1296","area_name":"青县"},{"area_id":"1297","area_name":"黄骅市"}]}]}]}
+     */
+
+    private int code;
+    private String message;
+    private DatasBean datas;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public DatasBean getDatas() {
+        return datas;
+    }
+
+    public void setDatas(DatasBean datas) {
+        this.datas = datas;
+    }
+
+    public static class DatasBean {
+        private List<ListBean> list;
+
+        public List<ListBean> getList() {
+            return list;
+        }
+
+        public void setList(List<ListBean> list) {
+            this.list = list;
+        }
+
+
+    }
+}

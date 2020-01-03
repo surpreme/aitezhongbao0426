@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">GlIbrary</string>
+
+
+    <string name="TCM">中医</string>
+
+    <string name="western_medicine">西医</string>
+
+
+
+</resources>
