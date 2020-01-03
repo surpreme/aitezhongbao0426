@@ -162,7 +162,7 @@ public class NewUserActivity extends BaseActivity<NewUserContract.View, NewUserP
 
     @Override
     public void sendphonecodeonSuccess(Object msg) {
-        showTopToasts(((SureFindPasswordCodeBean) msg).getMsg());
+        showToast(((SureFindPasswordCodeBean) msg).getMsg(),Gravity.TOP);
         LogUtils.d(msg);
     }
 

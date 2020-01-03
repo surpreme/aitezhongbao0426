@@ -2,6 +2,8 @@ package com.aite.mainlibrary.activity.allshopcard.sureunfactshopbook;
 
 import android.app.Activity;
 
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
+import com.aite.mainlibrary.Mainbean.AlipayOrderIdBean;
 import com.aite.mainlibrary.Mainbean.BookInfprmationMorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
@@ -143,6 +145,58 @@ public class SureUnFactShopBookPresenter extends BasePresenterImpl<SureUnFactSho
 
                     @Override
                     public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+
+    }
+
+    @Override
+    public void PayThreeElse(HttpParams httpParams, String payAway) {
+        OkGo.<BaseData<AlipayOrderIdBean>>get(AppConstant.GET_UNFACTORDERPAYTHREEAPPFACTMONEYLISTINFORMATIONURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<AlipayOrderIdBean>>() {
+                    @Override
+                    public BaseData<AlipayOrderIdBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                mView.showError(baseData.getDatas().getError());
+                            } else {
+                                JSONObject object = jsonObject.optJSONObject("datas");
+                                Gson gson = new Gson();
+                                if (payAway.equals("alipay")) {
+                                    AlipayOrderIdBean alipayOrderIdBean = gson.fromJson(object.toString(), AlipayOrderIdBean.class);
+                                    ((Activity) mView.getContext()).runOnUiThread(()
+                                            -> mView.onPayThreeElseSuccess(alipayOrderIdBean, "alipay"));
+                                } else if (payAway.equals("app_wxpay")) {
+                                    WeChatPayBackBean weChatPayBackBean = gson.fromJson(object.toString(), WeChatPayBackBean.class);
+                                    ((Activity) mView.getContext()).runOnUiThread(()
+                                            -> mView.onPayThreeElseSuccess(weChatPayBackBean, "app_wxpay"));
+
+                                }
+
+                            }
+
+                        } catch (Exception e) {
+                            LogUtils.e(e);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<AlipayOrderIdBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<AlipayOrderIdBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }

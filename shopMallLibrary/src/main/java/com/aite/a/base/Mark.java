@@ -1937,6 +1937,7 @@ public interface Mark {
      * 服务器
      */
     public static String APPUrl = "https://aitecc.com/mobile/";
+
 //    public static String APPUrl = "https://mall2.aitecc.com/mobile/";
 //	public static String APPUrl = "http://cqzy.cnaite.cn/mobile/";
     /**

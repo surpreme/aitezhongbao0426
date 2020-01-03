@@ -60,13 +60,25 @@
 
         <!--第三方key-->
 
-
+        <!--wechat登录-->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- wechat支付-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--appid-->
+                <data android:scheme="wxfb45ab55efde3e64" />
+            </intent-filter>
+        </activity>
 
         <!--*******************第三方*******************-->
 
@@ -76,7 +88,7 @@
         <activity android:name="com.aite.mainlibrary.activity.allmoney.banker.BankerActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allchat.ChatActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allmoney.moneycart.MoneycartActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.allmoney.FactMoneyActivity" />
+        <activity android:name="com.aite.mainlibrary.activity.allmoney.factmoney.FactMoneyActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allmoney.addbankcaractvity.AddBankcarActvity" />
         <activity android:name="com.aite.mainlibrary.activity.allmain.device.DeviceListActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.helpdoctor.HelpdoctorActivity" />
@@ -95,11 +107,11 @@
         <activity android:name="com.aite.mainlibrary.activity.allmain.AddDeviceMainActvity" />
         <activity android:name="com.aite.mainlibrary.activity.allqr.qrcode.QrCodeActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allmain.device.DeviceNumberEditActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.alldoctor.DoctorInfoActivity" />
+        <activity android:name="com.example.ui.activity.DoctorInfoActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.daytogether.DayTogetherActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.dayinformation.DayInformationActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allmain.buydaytogether.BuyDayTogetherActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.alldoctor.StarDoctorPushActvity" />
+        <activity android:name="com.example.ui.activity.StarDoctorPushActvity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.helpeat.HelpEatActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allmain.device.DeviceInformationActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allanimation.ProgressBaractivity" />
@@ -118,7 +130,8 @@
         <activity android:name=".activity.findkey.FindKeyActivity" />
         <activity android:name=".activity.usertype.UserTypeActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.seviceshopbook.SeviceShopBookActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.allshopcard.sureshopbook.SureShopBookActivity" />
+        <activity android:name="com.aite.mainlibrary.activity.allshopcard.sureshopbook.SureShopBookActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".activity.newusermsg.NewusermsgActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.morningnooneat.MorningNoonEatActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.remembershopbook.RememberShopBookActivity" />
@@ -155,11 +168,14 @@
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.disputebookinformation.DisputeBookInformationActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.sureunfactshopbook.SureUnFactShopBookActivity" />
         <activity android:name="com.aite.mainlibrary.activity.allshopcard.chatoutbook.ChatOutBookActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.alldoctor.OrderListActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.alldoctor.AddDoctrInfoActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.alldoctor.ConsultActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.alldoctor.EvaluateActivity" />
-        <activity android:name="com.aite.mainlibrary.activity.alldoctor.OrdersInfoActivity" />
+        <activity android:name="com.example.ui.activity.OrderListActivity" />
+        <activity android:name="com.example.ui.activity.AddDoctrInfoActivity" />
+        <activity android:name="com.example.ui.activity.ConsultActivity" />
+        <activity android:name="com.example.ui.activity.EvaluateActivity" />
+        <activity android:name="com.example.ui.activity.OrdersInfoActivity" />
+        <activity android:name="com.aite.mainlibrary.activity.allmoney.moneybook.MoneyBookActivity" />
+        <activity android:name="com.aite.mainlibrary.activity.allmain.soundadvice.SoundAdviceActivity" />
+        <activity android:name="com.aite.mainlibrary.activity.im.systemmsg.SyStemMsgActivity" />
 
 
     </application>

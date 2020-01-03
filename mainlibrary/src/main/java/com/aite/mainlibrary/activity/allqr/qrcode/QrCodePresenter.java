@@ -26,6 +26,51 @@ import org.json.JSONObject;
 public class QrCodePresenter extends BasePresenterImpl<QrCodeContract.View> implements QrCodeContract.Presenter {
 
     @Override
+    public void sureUnfactBook(HttpParams httpParams) {
+        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.POST_SUREUNFACTBOOKSERVICETIMEBANKURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                    @Override
+                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                mView.showError(baseData.getDatas().getError());
+                            } else {
+                                JSONObject object = jsonObject.optJSONObject("datas");
+//                        String dataresult = object.optString("msg");
+                                Gson gson = new Gson();
+                                TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
+                                ((Activity) mView.getContext()).runOnUiThread(()
+                                        -> mView.onSureUnfactBookSuccess(twoSuccessCodeBean));
+                            }
+
+                        } catch (Exception e) {
+                            LogUtils.e(e);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+
+    }
+
+    @Override
     public void sureBook(HttpParams httpParams) {
         OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.SUREBOOKSERVICETIMEBANKURL)
                 .tag(mView.getContext())
@@ -39,17 +84,19 @@ public class QrCodePresenter extends BasePresenterImpl<QrCodeContract.View> impl
                             BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
                             if (baseData.getDatas().getError() != null) {
                                 mView.showError(baseData.getDatas().getError());
+                            }else {
+                                JSONObject object = jsonObject.optJSONObject("datas");
+//                        String dataresult = object.optString("msg");
+                                Gson gson = new Gson();
+                                TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
+                                ((Activity) mView.getContext()).runOnUiThread(()
+                                        -> mView.onSureSuccess(twoSuccessCodeBean));
                             }
 
                         } catch (Exception e) {
                             LogUtils.e(e);
                         }
-                        JSONObject object = jsonObject.optJSONObject("datas");
-//                        String dataresult = object.optString("msg");
-                        Gson gson = new Gson();
-                        TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
-                        ((Activity) mView.getContext()).runOnUiThread(()
-                                -> mView.onSureSuccess(twoSuccessCodeBean));
+
                         return null;
                     }
 
@@ -82,17 +129,19 @@ public class QrCodePresenter extends BasePresenterImpl<QrCodeContract.View> impl
                             BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
                             if (baseData.getDatas().getError() != null) {
                                 mView.showError(baseData.getDatas().getError());
+                            }else {
+                                JSONObject object = jsonObject.optJSONObject("datas");
+//                        String dataresult = object.optString("msg");
+                                Gson gson = new Gson();
+                                TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
+                                ((Activity) mView.getContext()).runOnUiThread(()
+                                        -> mView.onBindingDeviceSuccess(twoSuccessCodeBean));
                             }
 
                         } catch (Exception e) {
                             LogUtils.e(e);
                         }
-                        JSONObject object = jsonObject.optJSONObject("datas");
-//                        String dataresult = object.optString("msg");
-                        Gson gson = new Gson();
-                        TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
-                        ((Activity) mView.getContext()).runOnUiThread(()
-                                -> mView.onBindingDeviceSuccess(twoSuccessCodeBean));
+
                         return null;
                     }
 

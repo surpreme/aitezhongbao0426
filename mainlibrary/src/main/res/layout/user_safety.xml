@@ -28,6 +28,11 @@
             android:textSize="15sp" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/noglay" />
+
     <LinearLayout
         android:layout_width="335dp"
         android:layout_height="43dp"
@@ -52,7 +57,7 @@
                 android:inputType="phone"
                 android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -65,7 +70,10 @@
             android:textSize="13sp" />
 
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/noglay" />
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="335dp"
         android:layout_height="43dp"
@@ -84,10 +92,13 @@
             android:inputType="number"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/noglay" />
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="335dp"
         android:layout_height="43dp"
@@ -106,10 +117,13 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/noglay" />
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="335dp"
         android:layout_height="43dp"
@@ -128,10 +142,13 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/noglay" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -144,10 +161,10 @@
             android:layout_marginLeft="19dp"
             android:layout_marginRight="19dp"
             android:layout_marginBottom="26dp"
-            android:background="@drawable/round_background_doctor_blue"
+            android:background="@drawable/critle_round_background_blue"
             android:text="确定"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </LinearLayout>

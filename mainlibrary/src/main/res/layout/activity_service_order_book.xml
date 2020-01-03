@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_right_layout"
+        android:background="@color/white" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/noglay" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/noglay" />
+    <!--    状态 0全部 1待付款 2待核销 3已完成 4评价 5已取消-->
+
+    <LinearLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/all_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/all_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部" />
+
+            <ImageView
+                android:id="@+id/all_iv"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/low" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/unpay_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待付款" />
+
+        <TextView
+            android:id="@+id/unqr_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待核销" />
+
+        <TextView
+            android:id="@+id/overed_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="已完成" />
+
+        <TextView
+            android:id="@+id/talk_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="评价" />
+
+        <TextView
+            android:id="@+id/cancel_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="已取消" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/noglay" />
+
+    <include layout="@layout/smartlayout_father_layout" />
+
+
+</LinearLayout>

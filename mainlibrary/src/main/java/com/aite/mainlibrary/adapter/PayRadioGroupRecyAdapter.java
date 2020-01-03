@@ -94,7 +94,7 @@ public class PayRadioGroupRecyAdapter extends RecyclerView.Adapter<PayRadioGroup
             public void onClick(View v) {
 //                listBean.get(position).setChecked();
                 clickInterface.getPosition(Integer.valueOf(listBean.get(position).getId()));
-//                clickInterfaceAndString.getPosition();
+//                clickInterfaceAndString.getPostion();
                 listBean.get(position).setChecked(true);
                 for (int i = 0; i < listBean.size(); i++) {
                     if (i == position) listBean.get(i).setChecked(true);

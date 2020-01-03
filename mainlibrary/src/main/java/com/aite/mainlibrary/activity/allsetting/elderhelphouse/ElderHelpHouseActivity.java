@@ -2,8 +2,9 @@ package com.aite.mainlibrary.activity.allsetting.elderhelphouse;
 
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
-import android.widget.SearchView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,11 +13,13 @@ import com.aite.mainlibrary.Mainbean.HelpElderHouseListBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.allsetting.helpeatorderbook.HelpEatOrderBookActivity;
 import com.aite.mainlibrary.adapter.HelpElderHouseRecyAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
-import com.lzy.basemodule.view.SearchEditText;
+import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
@@ -34,6 +37,9 @@ import butterknife.ButterKnife;
 public class ElderHelpHouseActivity extends BaseActivity<ElderHelpHouseContract.View, ElderHelpHousePresenter> implements ElderHelpHouseContract.View {
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R2.id.search_view_edit)
+    TextInputEditText searchViewEdit;
+
     //    @BindView(R2.id.search_view)
 //    SearchEditText searchView;
     private HelpElderHouseRecyAdapter helpElderHouseRecyAdapter;
@@ -49,6 +55,26 @@ public class ElderHelpHouseActivity extends BaseActivity<ElderHelpHouseContract.
         initToolbar("关联养老院");
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(helpElderHouseRecyAdapter = new HelpElderHouseRecyAdapter(context, helpelderlistbean));
+        initSmartLayout(true, false);
+        searchViewEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                LogUtils.d(s);
+                mPresenter.getHelpEdlerHouseInformation(initSearchParams(s.toString()));
+
+
+            }
+        });
         helpElderHouseRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
             public void getPosition(int postion) {
@@ -68,9 +94,33 @@ public class ElderHelpHouseActivity extends BaseActivity<ElderHelpHouseContract.
 
     }
 
+    @Override
+    protected void onSmartLoadMore() {
+        super.onSmartLoadMore();
+        initDatas();
+    }
+
+    @Override
+    protected void onSmartRefresh() {
+        super.onSmartRefresh();
+        if (helpelderlistbean != null && !helpelderlistbean.isEmpty()) {
+            helpelderlistbean.clear();
+            helpElderHouseRecyAdapter.notifyDataSetChanged();
+        }
+        initDatas();
+    }
+
     private HttpParams initParams() {
         HttpParams httpParams = new HttpParams();
         httpParams.put("key", AppConstant.KEY);
+        httpParams.put("curpage", mCurrentPage);
+        return httpParams;
+    }
+
+    private HttpParams initSearchParams(String s) {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("key", AppConstant.KEY);
+        httpParams.put("keyword", s);
         return httpParams;
     }
 
@@ -93,6 +143,11 @@ public class ElderHelpHouseActivity extends BaseActivity<ElderHelpHouseContract.
 
     @Override
     public void onGetHelpEdlerHouseInformationSuccess(Object mag) {
+        if (helpelderlistbean != null && !helpelderlistbean.isEmpty()) {
+            helpelderlistbean.clear();
+            helpElderHouseRecyAdapter.notifyDataSetChanged();
+        }
+        hasMore = ((HelpElderHouseListBean) mag).getList().isEmpty();
         helpelderlistbean.addAll(((HelpElderHouseListBean) mag).getList());
         helpElderHouseRecyAdapter.notifyDataSetChanged();
     }
@@ -109,4 +164,6 @@ public class ElderHelpHouseActivity extends BaseActivity<ElderHelpHouseContract.
 
 
     }
+
+
 }

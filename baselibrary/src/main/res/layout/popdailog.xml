@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="210dp"
-    android:layout_height="190dp"
+    android:layout_width="270dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     app:cardCornerRadius="10dp">
 
@@ -16,16 +16,17 @@
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="10dp" />
+            android:layout_height="15dp" />
 
         <TextView
+            android:id="@+id/title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="温馨提示"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:textStyle="normal" />
 
         <View
             android:layout_width="wrap_content"
@@ -34,40 +35,50 @@
         <TextView
             android:id="@+id/information_tv"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center"
+            android:layout_height="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:gravity="center|top"
             android:text="详细信息"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="5dp" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/noglay" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="50dp">
 
             <Button
                 android:id="@+id/sure_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/noglay"
-                android:text="确定" />
+                android:background="@null"
+                android:text="确定"
+                android:textColor="@color/blue"
+                android:textSize="19sp" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/glay" />
+                android:background="@color/noglay" />
 
             <Button
                 android:id="@+id/cancel_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/noglay"
-                android:text="取消" />
+                android:background="@null"
+                android:text="取消"
+                android:textColor="@color/blue"
+                android:textSize="19sp" />
         </LinearLayout>
     </LinearLayout>
 

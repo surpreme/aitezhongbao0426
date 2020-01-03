@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.allqr.qrcode.QrCodeActivity;
 import com.aite.mainlibrary.adapter.fragmentAdpter.LessBodyViewPagerApdapter;
 import com.aite.mainlibrary.adapter.fragmentAdpter.ThingBookPagerApdapter;
 import com.aite.mainlibrary.fragment.lessBodyfragment.lessbodybookfragment.LessBodyBookFragment;
@@ -16,6 +17,7 @@ import com.aite.mainlibrary.fragment.lessBodyfragment.lessbodyoveredbooklist.Les
 import com.aite.mainlibrary.fragment.lessBodyfragment.lessbodyunpaybooklist.LessbodyunpaybooklistFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,34 +53,49 @@ public class LessbodybookActivity extends BaseActivity {
     protected void initView() {
         switch (getIntent().getStringExtra("page_type")) {
             case "1":
-                initToolbar("日托订单");
+                initToolbar("日托订单", "核销", v -> {
+                        startActivity(QrCodeActivity.class,"type","unfactbook");
+                });
                 break;
             case "2":
-                initToolbar("培训订单");
+                initToolbar("培训订单", "核销", v -> {
+                    startActivity(QrCodeActivity.class,"type","unfactbook");
+                });
                 break;
             case "3":
-                initToolbar("就业订单");
+                initToolbar("就业订单", "核销", v -> {
+                    startActivity(QrCodeActivity.class,"type","unfactbook");
+                });
                 break;
             case "4":
-                initToolbar("助残订单");
+                initToolbar("助残订单", "核销", v -> {
+                    startActivity(QrCodeActivity.class,"type","unfactbook");
+                });
                 break;
             case "5":
-                initToolbar("其他订单");
+                initToolbar("其他订单", "核销", v -> {
+                    startActivity(QrCodeActivity.class,"type","unfactbook");
+                });
                 break;
-
         }
         initFragment();
     }
 
     private void initFragment() {
-        views = new View[3];
+        views = new View[6];
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         views[0] = layoutInflater.inflate(R.layout.smartlayout_recy_layout, null);
         views[1] = layoutInflater.inflate(R.layout.smartlayout_recy_layout, null);
         views[2] = layoutInflater.inflate(R.layout.smartlayout_recy_layout, null);
+        views[3] = layoutInflater.inflate(R.layout.smartlayout_recy_layout, null);
+        views[4] = layoutInflater.inflate(R.layout.smartlayout_recy_layout, null);
+        views[5] = layoutInflater.inflate(R.layout.smartlayout_recy_layout, null);
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new LessBodyBookFragment());
         fragments.add(new LessbodyunpaybooklistFragment());
+        fragments.add(new LessbodyoveredbooklistFragment());
+        fragments.add(new LessbodyoveredbooklistFragment());
+        fragments.add(new LessbodyoveredbooklistFragment());
         fragments.add(new LessbodyoveredbooklistFragment());
         lessBodyViewPagerApdapter = new LessBodyViewPagerApdapter(this.getSupportFragmentManager(), fragments, getIntent().getStringExtra("page_type"));
         //一次加载3个 防止销毁（解决懒加载的 只加载一次数据的问题） setOffscreenPageLimit
@@ -90,6 +107,7 @@ public class LessbodybookActivity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
+//                    PopwindowUtils.getmInstance().showRecyPopupWindow(context,);
                 }
             }
 

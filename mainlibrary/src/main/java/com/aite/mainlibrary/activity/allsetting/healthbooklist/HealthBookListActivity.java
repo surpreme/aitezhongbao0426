@@ -70,6 +70,8 @@ public class HealthBookListActivity extends BaseActivity<HealthBookListContract.
                 break;
         }
         tvTitleRight.setText("添加");
+        initSmartLayout(true, false);
+        initImgNodata();
         tvTitleRight.setOnClickListener(v ->
                 startActivity(AddHealthBookActivity.class, "type", getIntent().getStringExtra("type")));
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
@@ -81,14 +83,14 @@ public class HealthBookListActivity extends BaseActivity<HealthBookListContract.
                         getmInstance().
                         showdiadlogPopupWindow
                                 (context,
-                                        "您确定要命名为" + datasBeanList.get(Integer.parseInt(position)).getName() + "的记录吗？",
+                                        "您确定要删除命名为" + datasBeanList.get(Integer.parseInt(position)).getName() + "的记录吗？",
                                         v -> {
                                             PopwindowUtils.getmInstance().dismissPopWindow();
                                             mPresenter.deleteInformation(initListHttpParams(
                                                     true,
                                                     new ContentValue("id", datasBeanList.get(Integer.parseInt(position)).getId())));
                                         });
-                ;
+
             }
 
             @Override
@@ -117,8 +119,25 @@ public class HealthBookListActivity extends BaseActivity<HealthBookListContract.
     private HttpParams initParams() {
         HttpParams httpParams = new HttpParams();
         httpParams.put("key", AppConstant.KEY);
+        httpParams.put("curpage", mCurrentPage);
         httpParams.put("type", getIntent().getStringExtra("type"));
         return httpParams;
+    }
+
+    @Override
+    protected void onSmartRefresh() {
+        super.onSmartRefresh();
+        if (datasBeanList != null && !datasBeanList.isEmpty()) {
+            datasBeanList.clear();
+            healthBookRecyAdapter.notifyDataSetChanged();
+        }
+        initDatas();
+    }
+
+    @Override
+    protected void onSmartLoadMore() {
+        super.onSmartLoadMore();
+        initDatas();
     }
 
     @Override
@@ -134,6 +153,11 @@ public class HealthBookListActivity extends BaseActivity<HealthBookListContract.
     @Override
     public void onGetInformationListSuccess(Object msg) {
         if (((HealthListBean) msg).getDatas() != null) {
+            if (mCurrentPage == 1 && ((HealthListBean) msg).getDatas().isEmpty()) {
+                showImgNoData();
+            } else {
+                stopImgNodata();
+            }
             datasBeanList.addAll(((HealthListBean) msg).getDatas());
             healthBookRecyAdapter.notifyDataSetChanged();
         }

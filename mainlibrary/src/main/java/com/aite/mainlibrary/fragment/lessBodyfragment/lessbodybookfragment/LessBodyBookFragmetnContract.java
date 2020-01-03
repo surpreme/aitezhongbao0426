@@ -12,10 +12,15 @@ import com.lzy.okgo.model.HttpParams;
 public class LessBodyBookFragmetnContract {
     interface View extends BaseView {
         void onGetinformationSuccess(Object msg);
+
+        void onCancelinformationSuccess(Object msg);
+
     }
 
     interface Presenter extends BasePresenter<View> {
         void getinformation(HttpParams httpParams);
+
+        void Cancelinformation(HttpParams httpParams);
 
     }
 }

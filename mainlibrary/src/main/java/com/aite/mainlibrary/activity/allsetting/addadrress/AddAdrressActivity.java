@@ -81,6 +81,12 @@ public class AddAdrressActivity extends BaseActivity<AddAdrressContract.View, Ad
 
 
                 });
+                if (getIntent().getStringExtra("area_id") != null)
+                    AREA_ID = getIntent().getStringExtra("area_id");
+                if (getIntent().getStringExtra("city_id") != null)
+                    CITY_ID = getIntent().getStringExtra("city_id");
+                if (getIntent().getStringExtra("address") != null)
+                    ALL_AREA_NAME = getIntent().getStringExtra("address");
                 nameEdit.setText(getIntent().getStringExtra("name"));
                 phoneEdit.setText(getIntent().getStringExtra("phone"));
                 areaTv.setText(getIntent().getStringExtra("address"));
@@ -158,7 +164,7 @@ public class AddAdrressActivity extends BaseActivity<AddAdrressContract.View, Ad
         httpParams.put("address", getEditString(allLactionaddressEdit));
         httpParams.put("true_name", getEditString(nameEdit));
         httpParams.put("mob_phone", getEditString(phoneEdit));
-        httpParams.put("tel_phone", 120);
+        httpParams.put("tel_phone", "");
         httpParams.put("city_id", CITY_ID);
         httpParams.put("area_id", AREA_ID);
         httpParams.put("area_info", ALL_AREA_NAME);

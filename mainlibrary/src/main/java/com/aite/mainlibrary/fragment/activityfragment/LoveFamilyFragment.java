@@ -15,6 +15,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseApp;
 import com.lzy.basemodule.base.BaseFragment;
+import com.lzy.basemodule.webJs.JsInterface;
+import com.lzy.basemodule.webJs.RerashWebView;
 
 import butterknife.BindView;
 
@@ -81,8 +83,8 @@ public class LoveFamilyFragment extends BaseFragment {
     protected void initViews() {
         webView.loadUrl(AppConstant.ZHONGBAOLOVEFAMILYSURL + AppConstant.KEY);
         webView.setWebViewClient(new WebViewClient());
-        initWebView(webView);
-        webView.addJavascriptInterface(new JsInterface(webView), "AndroidWebView");
+        RerashWebView.initWebView(webView);
+        webView.addJavascriptInterface(new JsInterface(webView, getActivity()), "AndroidWebView");
 
         initFragment();
     }

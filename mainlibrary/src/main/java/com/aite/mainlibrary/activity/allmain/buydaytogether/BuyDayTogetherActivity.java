@@ -11,8 +11,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aite.a.activity.MainActivity;
 import com.aite.a.activity.li.activity.ChoiceActivity;
 import com.aite.alipaylibrary.PayAway;
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
+import com.aite.mainlibrary.Mainbean.AlipayOrderIdBean;
 import com.aite.mainlibrary.Mainbean.BuySencondBean;
 import com.aite.mainlibrary.Mainbean.PayHelpServiceSuccessBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
@@ -22,6 +25,7 @@ import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -69,7 +73,10 @@ public class BuyDayTogetherActivity extends BaseActivity<BuyDayTogetherContract.
             @Override
             public void onClick(View v) {
 //                startActivity(PaySettingActivity.class, "goods_id", !isStringEmpty(getIntent().getStringExtra("goods_id")) ? getIntent().getStringExtra("goods_id") : "");
-                if (isEditTextEmpty(iphoneNumberEdit)) return;
+                if (isEditTextEmpty(iphoneNumberEdit)) {
+                    showToast("请输入手机号码", Gravity.TOP);
+                    return;
+                }
                 mPresenter.buyService(initPostAllParams());
             }
         });
@@ -157,6 +164,13 @@ public class BuyDayTogetherActivity extends BaseActivity<BuyDayTogetherContract.
 
     private List<PayListBean.DatasBean> paylist = new ArrayList<>();
 
+    /**
+     * 1  支付宝 alipay
+     * 3  微信   app_wxpay
+     * 99 钱包
+     *
+     * @param msg
+     */
     @Override
     public void onPayListSuccess(Object msg) {
         paylist = ((PayListBean) msg).getDatas();
@@ -166,12 +180,21 @@ public class BuyDayTogetherActivity extends BaseActivity<BuyDayTogetherContract.
         payRadioGroupRecyAdapter.setClickInterface(postion -> {
             LogUtils.d(postion);
             PopwindowUtils.getmInstance().dismissPopWindow();
-            PopwindowUtils.getmInstance().dismissPopWindow();
             if (postion == 99) {
                 mPresenter.PayCollect(initCollectParams());
+            } else {
+                if (postion == 1) {
+                    mPresenter.PayThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("order_id", isStringEmpty(ORDER_ID) ? "" : ORDER_ID),
+                            new ContentValue("payment_code", "alipay")), "alipay");
+                } else if (postion == 3) {
+                    mPresenter.PayThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("order_id", isStringEmpty(ORDER_ID) ? "" : ORDER_ID),
+                            new ContentValue("payment_code", "app_wxpay")), "app_wxpay");
+                }
 
-            } else if (postion == 1) {
-                PayAway.Alipay("fgydfgsxdfgscfgdf", BuyDayTogetherActivity.this, ChoiceActivity.class);
 
             }
 
@@ -190,6 +213,44 @@ public class BuyDayTogetherActivity extends BaseActivity<BuyDayTogetherContract.
             showToast("支付失败", Gravity.TOP);
         }
 
-}
+    }
+
+    /**
+     * [
+     * {
+     * "payment_id": "1",
+     * "payment_code": "alipay",
+     * "payment_name": "支付宝",
+     * "payment_image": "http://zhongbyi.aitecc.com/mall/templates/default/images/payment/alipay_logo.gif"
+     * },
+     * {
+     * "payment_id": "3",
+     * "payment_code": "app_wxpay",
+     * "payment_name": "微信外支付",
+     * "payment_image": "http://zhongbyi.aitecc.com/mall/templates/default/images/payment/app_wxpay_logo.gif"
+     * },
+     * {
+     * "payment_id": 99,
+     * "payment_code": "predeposit",
+     * "payment_name": "钱包",
+     * "payment_image": "http://zhongbyi.aitecc.com/mall/templates/default/images/payment/predeposit_logo.gif"
+     * }
+     * ]
+     *
+     * @param msg
+     */
+    @Override
+    public void onPayThreeElseSuccess(Object msg, String payAway) {
+        if (msg != null) {
+            if (payAway.equals("alipay")) {
+                AlipayOrderIdBean alipayOrderIdBean = (AlipayOrderIdBean) msg;
+                LogUtils.d(alipayOrderIdBean.getPayinfo());
+                PayAway.Alipay(alipayOrderIdBean.getPayinfo(), this, MainActivity.class);
+            } else if (payAway.equals("app_wxpay")) {
+                WeChatPayBackBean weChatPayBackBean = (WeChatPayBackBean) msg;
+                PayAway.WchatPay(weChatPayBackBean, this);
+            }
+        }
+    }
 
 }

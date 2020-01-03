@@ -39,10 +39,10 @@ public class BaseWelcomeActivity extends BaseActivity {
     protected void initView() {
         StatusBarUtils.setTransparent(context);
         initiRecy();
-        if (urls.size() == 0) {
-            startActivity(LoginActivity.class);
-            killThisActvity();
-        }
+//        if (urls.size() == 0) {
+//            startActivity(LoginActivity.class);
+//            killThisActvity();
+//        }
     }
 
     @Override

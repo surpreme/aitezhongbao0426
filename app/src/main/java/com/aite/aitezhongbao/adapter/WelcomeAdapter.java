@@ -52,7 +52,12 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull WelcomeAdapter.ViewHolder holder, final int position) {
-        Glide.with(context).load(mDatas.get(position)).into(holder.welcome_img);
+        if (position == 0) {
+            Glide.with(context).load(R.drawable.welcome11).into(holder.welcome_img);
+        } else if (position == 1) {
+            Glide.with(context).load(R.drawable.welcome22).into(holder.welcome_img);
+        } else
+            Glide.with(context).load(R.drawable.welcome33).into(holder.welcome_img);
         if (position == mDatas.size() - 1) {
             holder.welcome_img.setOnClickListener(new View.OnClickListener() {
                 @Override

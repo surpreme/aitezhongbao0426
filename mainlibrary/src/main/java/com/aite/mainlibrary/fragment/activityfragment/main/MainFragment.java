@@ -3,21 +3,16 @@ package com.aite.mainlibrary.fragment.activityfragment.main;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.airbnb.lottie.LottieAnimationView;
 import com.aite.mainlibrary.Constant.MainUIConstant;
 import com.aite.mainlibrary.Mainbean.MainUiDataBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.aite.mainlibrary.activity.alldoctor.StarDoctorPushActvity;
 import com.aite.mainlibrary.activity.allmain.AddDeviceMainActvity;
 import com.aite.mainlibrary.activity.allmain.device.DeviceListActivity;
 import com.aite.mainlibrary.activity.allmain.elsehelp.ElseHelpActivity;
 import com.aite.mainlibrary.activity.allmain.messager.MessagerActivity;
+import com.aite.mainlibrary.activity.allmain.soundadvice.SoundAdviceActivity;
 import com.aite.mainlibrary.activity.allshopcard.air.AirActivity;
 import com.aite.mainlibrary.activity.allshopcard.daytogether.DayTogetherActivity;
 import com.aite.mainlibrary.activity.allshopcard.helpdoctor.HelpdoctorActivity;
@@ -25,6 +20,7 @@ import com.aite.mainlibrary.activity.allshopcard.helpeat.HelpEatActivity;
 import com.aite.mainlibrary.activity.allshopcard.timebank.TimeBankActivity;
 import com.aite.mainlibrary.adapter.HelpElderRecyAdapter;
 import com.aite.mainlibrary.adapter.RecyMainIconAdapter;
+import com.example.ui.activity.StarDoctorPushActvity;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.adpter.BaseItemDecoration;
 import com.lzy.basemodule.base.BaseFragment;
@@ -40,6 +36,10 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -72,6 +72,7 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
     private HelpElderRecyAdapter helpElderRecyAdapter;
     private RecyMainIconAdapter recyMainIconAdapter;
     private List<MainUiDataBean.PensionAdvsBean> pensionAdvsBeans = new ArrayList<>();
+    private List<MainUiDataBean.ArticleBean> articleBeanList = new ArrayList<>();
     //banner datalist
     private List<String> list_img = new ArrayList<>();
     private List<String> list_title = new ArrayList<>();
@@ -109,7 +110,11 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
             initModel();
 
         });
+        soundTv.setItemOnClickListener((data, position) -> {
+            if (articleBeanList != null && !articleBeanList.isEmpty() && articleBeanList.get(position).getArticle_id() != null)
+                startActivity(SoundAdviceActivity.class, "article_id", articleBeanList.get(position).getArticle_id());
 
+        });
         //banner
         initBanner(banner);
         banner.setIndicatorGravity(BannerConfig.RIGHT)
@@ -134,7 +139,7 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
                     , SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 0)
                     , SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 0)
                     , ContextCompat.getColor(context, R.color.noglay), context
-                    , 4.3f, "7.1:12"));
+                    , 5f, "7.1:12"));
         }
 
         //设置适配器点击监听
@@ -209,10 +214,14 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
         //设置数据 textbanner
         List<String> soundlist = new ArrayList<>();
         if (((MainUiDataBean) msg).getArticle() != null) {
+            if (articleBeanList == null) articleBeanList = new ArrayList<>();
+            if (!articleBeanList.isEmpty()) articleBeanList.clear();
+            articleBeanList.addAll(((MainUiDataBean) msg).getArticle());
             for (int i = 0; i < ((MainUiDataBean) msg).getArticle().size(); i++) {
                 soundlist.add(((MainUiDataBean) msg).getArticle().get(i).getArticle_title());
             }
             soundTv.setDatas(soundlist);
+
         }
 //        mTvBanner.setDatasWithDrawableIcon(mList,drawable,18, Gravity.LEFT);
         if (((MainUiDataBean) msg).getAdv_list() != null || ((MainUiDataBean) msg).getAdv_list().size() > 0) {

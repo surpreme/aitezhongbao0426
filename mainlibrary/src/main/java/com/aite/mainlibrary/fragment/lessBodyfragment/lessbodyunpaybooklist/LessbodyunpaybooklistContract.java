@@ -6,17 +6,21 @@ import com.lzy.okgo.model.HttpParams;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
 public class LessbodyunpaybooklistContract {
     interface View extends BaseView {
         void onGetinformationSuccess(Object msg);
 
+        void onCancelinformationSuccess(Object msg);
+
     }
 
-    interface  Presenter extends BasePresenter<View> {
+    interface Presenter extends BasePresenter<View> {
         void getinformation(HttpParams httpParams);
+
+        void Cancelinformation(HttpParams httpParams);
 
     }
 }

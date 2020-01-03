@@ -15,12 +15,20 @@ public class DayInformationContract {
 
         void onCollectSuccess(Object msg);
 
+        void onFavouriteSuccess(Object msg);
+
+        void onGetGoodAllInformationSuccess(Object msg);
+
     }
 
     interface Presenter extends BasePresenter<View> {
         void onGetInformation(HttpParams httpParams);
 
         void onCollect(HttpParams httpParams);
+
+        void onFavourite(HttpParams httpParams);
+
+        void onGetGoodAllInformation(HttpParams httpParams);
 
     }
 }

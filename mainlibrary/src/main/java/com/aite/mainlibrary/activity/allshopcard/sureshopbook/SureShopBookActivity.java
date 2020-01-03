@@ -13,8 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.aite.a.activity.li.activity.ChoiceActivity;
+import com.aite.a.activity.MainActivity;
 import com.aite.alipaylibrary.PayAway;
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
+import com.aite.mainlibrary.Mainbean.AlipayOrderIdBean;
 import com.aite.mainlibrary.Mainbean.BookInfprmationMorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.MoreAdressInormationBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
@@ -23,21 +25,27 @@ import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.adressfix.AdressFixActivity;
+import com.aite.mainlibrary.activity.allshopcard.shopcard.ShopCardActivity;
 import com.aite.mainlibrary.adapter.EatShopBookRecyAdapter;
 import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import chat.utils.TimeUtil;
 
 
 public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View, SureShopBookPresenter> implements SureShopBookContract.View {
@@ -85,6 +93,8 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
     private SureSendMoneyBean sureSendMoneyBean;
     //订单号
     private String PAY_SN = "";
+    private String EAT_YEAR_TIME = "";
+    private String EAT_HOUR_TIME = "";
 
 
     @Override
@@ -96,6 +106,10 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
     protected void initView() {
         initToolbar("确认订单");
         initRecy();
+        EAT_YEAR_TIME = TimeUtils.getCurrentYYMMDD();
+        EAT_HOUR_TIME = TimeUtils.getCurrentHHMMSS();
+        yearTv.setText(String.format("用餐日期 %s", TimeUtils.getCurrentYYMMDD()));
+        oclockTv.setText(String.format("用餐时间 %s", TimeUtils.getCurrentHHMMSS()));
         mBaserecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         mBaserecyclerView.setAdapter(eatShopBookRecyAdapter = new EatShopBookRecyAdapter(context, goodsListBeans));
         eatShopBookRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
@@ -122,7 +136,17 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
     }
 
     /**
-     * pd_pay	post	整型	可选	0		是否使用预存款支付 1-使用 0-不使用
+     * 参数名字	提交方式	类型	是否必须	默认值	其他	说明	test
+     * key	post	字符串	必须			会员登录key
+     * cart_id	post	字符串	必须			购买参数 立即购买：第一个数字为商品编号，第二个数字为购买数量，用竖线分割。例：232|1 购物车购买：第一个数字为购物车编号，第二个数字为购买数量，用竖线分割。多组用半角逗号分割，例：232|1,110|2 232商品购买1个，110商品购买2个
+     * ifcart	post	字符串	必须			是否来源于购买车下单 1:是 其他否
+     * address_id	post	整型	必须			收货地址编号
+     * vat_hash	post	字符串	必须			发票信息hash，第一步接口提供
+     * offpay_hash	post	字符串	必须			是否支持货到付款hash，通过更换收货地址接口获得
+     * offpay_hash_batch	post	字符串	必须			店铺是否支持货到付款hash，通过更换收货地址接口获得
+     * dining_time	post	字符串	可选			用餐时间 格式:YYYY-mm-dd H:i:s
+     * tableware_num	post	整型	可选			餐具份数
+     * pay_message	post	字符串	可选			买家留言
      *
      * @return
      */
@@ -131,9 +155,9 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
         params.put("key", AppConstant.KEY);
         params.put("cart_id", getIntent().getStringExtra("cart_id"));
         params.put("ifcart", "1");
-        params.put("pd_pay", "1");
-        params.put("pay_name", "online");
-        params.put("pay_message", getEditString(eatAnotherInformationEdit));
+        params.put("tableware_num", isEditTextEmpty(eatFixNumberEdit) ? "1" : getEditString(eatFixNumberEdit));
+        params.put("dining_time", String.format("%s %s", EAT_YEAR_TIME, EAT_HOUR_TIME));
+        params.put("pay_message", isEditTextEmpty(eatAnotherInformationEdit) ? "1" : getEditString(eatAnotherInformationEdit));
         params.put("address_id", !isStringEmpty(ADDRESS_ID) ? ADDRESS_ID : bookInfprmationMorningNoonEatBean.getAddress_info().getAddress_id());
         params.put("vat_hash", bookInfprmationMorningNoonEatBean.getVat_hash());
         if (sureSendMoneyBean != null && sureSendMoneyBean.getOffpay_hash() != null && sureSendMoneyBean.getOffpay_hash_batch() != null) {
@@ -191,16 +215,29 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
 
     }
 
-    @OnClick({R2.id.sure_buy_btn, R2.id.user_information_ll})
+    @OnClick({R2.id.sure_buy_btn, R2.id.user_information_ll, R2.id.year_tv, R2.id.oclock_tv})
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.sure_buy_btn) {
-            if (isStringEmpty(getEditString(eatAnotherInformationEdit))) {
-                return;
-            }
             mPresenter.MakePay(initPayParams());
         } else if (v.getId() == R.id.user_information_ll) {
-            startActivityWithCls(AdressFixActivity.class, BaseConstant.ACTIVITY_RESULT_CODE.REQUEST_CODE_ACTIVITY_RESULT);
+            startActivityWithCls(AdressFixActivity.class,
+                    BaseConstant.ACTIVITY_RESULT_CODE.REQUEST_CODE_ACTIVITY_RESULT,
+                    new ContentValue("JUMP_TYPE", "CHOICE_ADDRESS"));
+        } else if (v.getId() == R.id.year_tv) {
+            initChoiceTimer((date, v1) -> {
+                yearTv.setText(String.format("用餐日期 %s", TimeUtils.stampToDate(date.getTime())));
+                EAT_YEAR_TIME = TimeUtils.stampToDate(date.getTime());
+            }, "用餐日期", false);
+            pvTime.show();
+        } else if (v.getId() == R.id.oclock_tv) {
+            initChoiceHMTimer((date, v12) -> {
+                long time = date.getTime();
+                oclockTv.setText(String.format("用餐时间 %s:%s", TimeUtils.timestampToDateStrHH(time), TimeUtils.timestampToDateStrMM(time)));
+                EAT_HOUR_TIME = String.format("%s:%s:00", TimeUtils.timestampToDateStrHH(time), TimeUtils.timestampToDateStrMM(time));
+
+            }, "用餐时间", false);
+            pvTime.show();
         }
     }
 
@@ -290,13 +327,21 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
             LogUtils.d(postion);
             PopwindowUtils.getmInstance().dismissPopWindow();
             if (postion == 99) {
-                mPresenter.PayCollect(initCollectParams());
-
-            } else if (postion == 1) {
-                PayAway.Alipay("fgydfgsxdfgscfgdf", SureShopBookActivity.this, ChoiceActivity.class);
+                mPresenter.PayFactCollect(initCollectParams());
+            } else {
+                if (postion == 1) {
+                    mPresenter.PayFactThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("pay_sn", isStringEmpty(PAY_SN) ? "" : PAY_SN),
+                            new ContentValue("payment_code", "alipay")), "alipay");
+                } else if (postion == 3) {
+                    mPresenter.PayFactThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("pay_sn", isStringEmpty(PAY_SN) ? "" : PAY_SN),
+                            new ContentValue("payment_code", "app_wxpay")), "app_wxpay");
+                }
 
             }
-
         });
         PopwindowUtils.getmInstance().showPayRecyPopupWindow(context, Gravity.BOTTOM, payRadioGroupRecyAdapter, manager);
     }
@@ -316,7 +361,7 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
     }
 
     @Override
-    public void onPayCollectSuccess(Object msg) {
+    public void onFactPayCollectSuccess(Object msg) {
         if (((TwoSuccessCodeBean) msg).getResult().equals("1") && ((TwoSuccessCodeBean) msg).getMsg().equals("支付成功")) {
             showToast(((TwoSuccessCodeBean) msg).getMsg(), Gravity.TOP);
             onBackPressed();
@@ -325,5 +370,19 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
         }
 
 
+    }
+
+    @Override
+    public void onFactPayThreeElseSuccess(Object msg, String payAway) {
+        if (msg != null) {
+            if (payAway.equals("alipay")) {
+                AlipayOrderIdBean alipayOrderIdBean = (AlipayOrderIdBean) msg;
+                LogUtils.d(alipayOrderIdBean.getPayinfo());
+                PayAway.Alipay(alipayOrderIdBean.getPayinfo(), this, ShopCardActivity.class);
+            } else if (payAway.equals("app_wxpay")) {
+                WeChatPayBackBean weChatPayBackBean = (WeChatPayBackBean) msg;
+                PayAway.WchatPay(weChatPayBackBean, this);
+            }
+        }
     }
 }

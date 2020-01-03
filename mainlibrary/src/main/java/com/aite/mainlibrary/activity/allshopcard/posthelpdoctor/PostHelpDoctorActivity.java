@@ -275,27 +275,21 @@ public class PostHelpDoctorActivity extends BaseActivity<PostHelpDoctorContract.
         }
         if (v.getId() == R.id.time_ll) {
             hideSoftWare();
-            initChoiceTimer(new OnTimeSelectListener() {
-                @Override
-                public void onTimeSelect(Date date, View v) {
-                    timerTv.setText(String.valueOf(TimeUtils.stampToDate(date.getTime())));
-                    LogUtils.d(date.getTime());
-                    mDate = String.valueOf(TimeUtils.stampToDate2(date.getTime()));
-                }
-            }, "选择开始时间", false);
+            initChoiceTimer((date, v1) -> {
+                timerTv.setText(TimeUtils.stampToDate(date.getTime()));
+                LogUtils.d(date.getTime());
+                mDate = TimeUtils.stampToDate2(date.getTime());
+            }, "选择开始时间", true);
             pvTime.show();
 
         }
         if (v.getId() == R.id.end_time_ll) {
             hideSoftWare();
-            initChoiceTimer(new OnTimeSelectListener() {
-                @Override
-                public void onTimeSelect(Date date, View v) {
-                    endTimerTv.setText(String.valueOf(TimeUtils.stampToDate(date.getTime())));
-                    LogUtils.d(date.getTime());
-                    endmDate = String.valueOf(TimeUtils.stampToDate2(date.getTime()));
-                }
-            }, "选择结束时间", false);
+            initChoiceTimer((date, v12) -> {
+                endTimerTv.setText(TimeUtils.stampToDate(date.getTime()));
+                LogUtils.d(date.getTime());
+                endmDate = TimeUtils.stampToDate2(date.getTime());
+            }, "选择结束时间", true);
             pvTime.show();
 
         }

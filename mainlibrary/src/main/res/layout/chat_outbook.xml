@@ -69,6 +69,7 @@
         android:background="@color/noglay" />
 
     <RelativeLayout
+        android:id="@+id/post_img_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_20dp"

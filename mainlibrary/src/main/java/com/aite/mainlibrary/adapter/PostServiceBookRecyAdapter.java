@@ -1,6 +1,9 @@
 package com.aite.mainlibrary.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
+import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 
 
 public class PostServiceBookRecyAdapter extends RecyclerView.Adapter<PostServiceBookRecyAdapter.ViewHolder> {
@@ -140,7 +145,14 @@ public class PostServiceBookRecyAdapter extends RecyclerView.Adapter<PostService
             holder.elderSureTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopwindowUtils.getmInstance().showImgPopupWindow(context, listBean.get(position).getQrcodeimg(), listBean.get(position).getTitle()+"   " + listBean.get(position).getStart_time());
+//                    Bitmap bitmap = QRCodeEncoder.syncEncodeQRCode(
+//                            listBean.get(position).getVr_code(),
+//                            BGAQRCodeUtil.dp2px(context, 150),
+//                            Color.BLACK, Color.WHITE,
+//                            BitmapFactory.decodeResource(context.getResources(), com.lzy.basemodule.R.drawable.logo));
+//                    PopwindowUtils.getmInstance().showQrPopupWindow(context, bitmap, listBean.get(position).getGoods_name() + "   " + orderListBeans.get(position).getAdd_time());
+
+                    PopwindowUtils.getmInstance().showImgPopupWindow(context, listBean.get(position).getQrcodeimg(), listBean.get(position).getTitle() + "   " + listBean.get(position).getStart_time());
                 }
             });
         }

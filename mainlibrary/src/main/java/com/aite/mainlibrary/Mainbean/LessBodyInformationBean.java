@@ -12,13 +12,14 @@ import java.util.List;
  */
 public class LessBodyInformationBean extends ErrorBean implements Serializable {
 
+
     /**
-     * goods_info : {"goods_id":"26","goods_name":"培训专家，1天上王者","goods_price":"1000.00","is_virtual":"1","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png"}
+     * goods_info : {"goods_id":"19","goods_name":"很好看","goods_price":"455.00","is_virtual":"1","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png"}
      * isFavorites : 1
      * isLike : 0
-     * goods_commend_list : [{"page_type":2,"goods_id":"16","goods_name":"技能培训","goods_price":"10000.00","goods_marketprice":"1000000.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg"},{"page_type":2,"goods_id":"26","goods_name":"培训专家，1天上王者","goods_price":"1000.00","goods_marketprice":"1500.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png"},{"page_type":2,"goods_id":"22","goods_name":"教你成大师","goods_price":"10000.00","goods_marketprice":"100000.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281102722142715_240.jpg"}]
-     * evaluate_info : {"good":0,"normal":0,"bad":0,"all":0,"good_percent":100,"normal_percent":0,"bad_percent":0,"good_star":0,"star_average":0}
-     * goods_evaluate_list : []
+     * goods_commend_list : [{"page_type":5,"goods_id":"19","goods_name":"很好看","goods_price":"455.00","goods_marketprice":"475278.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png"},{"page_type":5,"goods_id":"28","goods_name":"专注滴滴打人30年","goods_price":"5000.00","goods_marketprice":"10000.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/12/05/2_06288600197391356_240.png"},{"page_type":5,"goods_id":"25","goods_name":"给点钱吧，不给就面对疾风吧","goods_price":"23423.00","goods_marketprice":"2464324.00","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/12/02/2_06286185934053928_240.jpg"}]
+     * evaluate_info : {"good":0,"normal":1,"bad":0,"all":1,"good_percent":0,"normal_percent":100,"bad_percent":0,"good_star":0,"star_average":3}
+     * goods_evaluate_list : [{"geval_scores_text":"中评","geval_scores":"3","geval_content":"地方","geval_frommembername":"18614079738","geval_member_avatar":"http://zhongbyi.aitecc.com/data/upload/shop/avatar/avatar_7.jpg","geval_addtime":"2019-12-26"}]
      */
 
     private GoodsInfoBean goods_info;
@@ -26,7 +27,7 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
     private int isLike;
     private EvaluateInfoBean evaluate_info;
     private List<GoodsCommendListBean> goods_commend_list;
-    private List<?> goods_evaluate_list;
+    private List<GoodsEvaluateListBean> goods_evaluate_list;
 
     public GoodsInfoBean getGoods_info() {
         return goods_info;
@@ -68,19 +69,19 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
         this.goods_commend_list = goods_commend_list;
     }
 
-    public List<?> getGoods_evaluate_list() {
+    public List<GoodsEvaluateListBean> getGoods_evaluate_list() {
         return goods_evaluate_list;
     }
 
-    public void setGoods_evaluate_list(List<?> goods_evaluate_list) {
+    public void setGoods_evaluate_list(List<GoodsEvaluateListBean> goods_evaluate_list) {
         this.goods_evaluate_list = goods_evaluate_list;
     }
 
     public static class GoodsInfoBean {
         /**
-         * goods_id : 26
-         * goods_name : 培训专家，1天上王者
-         * goods_price : 1000.00
+         * goods_id : 19
+         * goods_name : 很好看
+         * goods_price : 455.00
          * is_virtual : 1
          * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png
          */
@@ -135,14 +136,14 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
     public static class EvaluateInfoBean {
         /**
          * good : 0
-         * normal : 0
+         * normal : 1
          * bad : 0
-         * all : 0
-         * good_percent : 100
-         * normal_percent : 0
+         * all : 1
+         * good_percent : 0
+         * normal_percent : 100
          * bad_percent : 0
          * good_star : 0
-         * star_average : 0
+         * star_average : 3
          */
 
         private int good;
@@ -230,12 +231,12 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
 
     public static class GoodsCommendListBean {
         /**
-         * page_type : 2
-         * goods_id : 16
-         * goods_name : 技能培训
-         * goods_price : 10000.00
-         * goods_marketprice : 1000000.00
-         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg
+         * page_type : 5
+         * goods_id : 19
+         * goods_name : 很好看
+         * goods_price : 455.00
+         * goods_marketprice : 475278.00
+         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/26/2_06281104227287619_240.png
          */
 
         private int page_type;
@@ -291,6 +292,72 @@ public class LessBodyInformationBean extends ErrorBean implements Serializable {
 
         public void setGoods_image_url(String goods_image_url) {
             this.goods_image_url = goods_image_url;
+        }
+    }
+
+    public static class GoodsEvaluateListBean {
+        /**
+         * geval_scores_text : 中评
+         * geval_scores : 3
+         * geval_content : 地方
+         * geval_frommembername : 18614079738
+         * geval_member_avatar : http://zhongbyi.aitecc.com/data/upload/shop/avatar/avatar_7.jpg
+         * geval_addtime : 2019-12-26
+         */
+
+        private String geval_scores_text;
+        private String geval_scores;
+        private String geval_content;
+        private String geval_frommembername;
+        private String geval_member_avatar;
+        private String geval_addtime;
+
+        public String getGeval_scores_text() {
+            return geval_scores_text;
+        }
+
+        public void setGeval_scores_text(String geval_scores_text) {
+            this.geval_scores_text = geval_scores_text;
+        }
+
+        public String getGeval_scores() {
+            return geval_scores;
+        }
+
+        public void setGeval_scores(String geval_scores) {
+            this.geval_scores = geval_scores;
+        }
+
+        public String getGeval_content() {
+            return geval_content;
+        }
+
+        public void setGeval_content(String geval_content) {
+            this.geval_content = geval_content;
+        }
+
+        public String getGeval_frommembername() {
+            return geval_frommembername;
+        }
+
+        public void setGeval_frommembername(String geval_frommembername) {
+            this.geval_frommembername = geval_frommembername;
+        }
+
+        public String getGeval_member_avatar() {
+            return geval_member_avatar;
+        }
+
+        public void setGeval_member_avatar(String geval_member_avatar) {
+            this.geval_member_avatar = geval_member_avatar;
+        }
+
+        public String getGeval_addtime() {
+            return geval_addtime;
+        }
+
+        public void setGeval_addtime(String geval_addtime) {
+            this.geval_addtime = geval_addtime;
         }
     }
 }

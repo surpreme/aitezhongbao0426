@@ -7,7 +7,9 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aite.mainlibrary.Mainbean.HelpDoctorListBean;
 import com.aite.mainlibrary.Mainbean.MineTogetherServiceBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allqr.qrcode.QrCodeActivity;
@@ -17,6 +19,8 @@ import com.aite.mainlibrary.adapter.PostServiceBookRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.bean.ContentValue;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
@@ -31,15 +35,12 @@ import butterknife.BindView;
  */
 
 public class MinePostBookChriendActivity extends BaseActivity<MinePostBookChriendContract.View, MinePostBookChriendPresenter> implements MinePostBookChriendContract.View {
-
-    @BindView(R2.id.recycler_view)
-    RecyclerView recyclerView;
     private PostServiceBookRecyAdapter postServiceBookRecyAdapter;
     private List<MineTogetherServiceBean.ListBean> minelistbean = new ArrayList<>();
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.recy_right_toolbar;
+        return R.layout.smart_recy_right_toolbar;
     }
 
     /**
@@ -50,6 +51,11 @@ public class MinePostBookChriendActivity extends BaseActivity<MinePostBookChrien
      */
     @Override
     protected void initView() {
+        initRecy();
+        //smartlayout
+        initSmartLayout(true);
+        //初始化加载
+        initLoadingAnima();
         if (getIntent().getStringExtra("type").equals("1"))
             initToolbar("时间银行", "核销", new View.OnClickListener() {
                 @Override
@@ -71,18 +77,30 @@ public class MinePostBookChriendActivity extends BaseActivity<MinePostBookChrien
                     startActivity(QrCodeActivity.class, "type", "3");
                 }
             });
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(postServiceBookRecyAdapter = new PostServiceBookRecyAdapter(context, minelistbean));
+        mBaserecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        mBaserecyclerView.setAdapter(postServiceBookRecyAdapter = new PostServiceBookRecyAdapter(context, minelistbean));
         postServiceBookRecyAdapter.setUnUsedInterface(new PostServiceBookRecyAdapter.UnUsedInterface() {
             @Override
             public void onUnUsed(String number) {
+                PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, "您确定要取消此服务吗?", v -> {
+                    if (getIntent().getStringExtra("type").equals("1"))
+                        mPresenter.cancelBook(AppConstant.CANCELTIMEBANKSERVICEURL, initListHttpParams(true, new ContentValue("id", minelistbean.get(Integer.parseInt(number)).getId())));
+                    if (getIntent().getStringExtra("type").equals("2"))
+                        mPresenter.cancelBook(AppConstant.CANCELHELPDOCTORSERVICEURL, initListHttpParams(true, new ContentValue("id", minelistbean.get(Integer.parseInt(number)).getId())));
+                    if (getIntent().getStringExtra("type").equals("3"))
+                        mPresenter.cancelBook(AppConstant.CANCELAIRSERVICEURL, initListHttpParams(true, new ContentValue("id", minelistbean.get(Integer.parseInt(number)).getId())));
+                    PopwindowUtils.getmInstance().dismissPopWindow();
+                    onBackPressed();
+
+                });
+
 
             }
         });
         postServiceBookRecyAdapter.setTalkedUsedInterface(new PostServiceBookRecyAdapter.TalkedUsedInterface() {
             @Override
             public void onTalkedUsed(String number) {
-                startActivity(TalkBookActivity.class,"id",minelistbean.get(Integer.parseInt(number)).getId());
+                startActivity(TalkBookActivity.class, "id", minelistbean.get(Integer.parseInt(number)).getId());
 
             }
         });
@@ -160,8 +178,26 @@ public class MinePostBookChriendActivity extends BaseActivity<MinePostBookChrien
 //        //页面类型 1日托 2培训 3就业 4助残活动 5其他服务  必须
 //        httpParams.put("page_type", getIntent().getStringExtra("type"));
         //当前页码
-        httpParams.put("curpage", 1);
+        httpParams.put("curpage", mCurrentPage);
         return httpParams;
+    }
+
+    @Override
+    protected void onSmartLoadMore() {
+        super.onSmartLoadMore();
+        initDatas();
+
+    }
+
+    @Override
+    protected void onSmartRefresh() {
+        super.onSmartRefresh();
+        if (minelistbean != null) {
+            minelistbean.clear();
+            postServiceBookRecyAdapter.notifyDataSetChanged();
+        }
+        initDatas();
+
     }
 
 
@@ -177,7 +213,26 @@ public class MinePostBookChriendActivity extends BaseActivity<MinePostBookChrien
 
     @Override
     public void onGetListInformationSuccess(Object msg) {
-        minelistbean.addAll(((MineTogetherServiceBean) msg).getList());
-        postServiceBookRecyAdapter.notifyDataSetChanged();
+        if (((MineTogetherServiceBean) msg).getList().isEmpty()) {
+            initNodata();
+        } else {
+            stopLoadingAnim();
+            showMoreRecy();
+            stopNoData();
+            minelistbean.addAll(((MineTogetherServiceBean) msg).getList());
+            postServiceBookRecyAdapter.notifyDataSetChanged();
+            hasMore = ((MineTogetherServiceBean) msg).getIs_nextpage() > 0;
+        }
+//        minelistbean.addAll(((MineTogetherServiceBean) msg).getList());
+//        postServiceBookRecyAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCancelBookSuccess(Object msg) {
+        TwoSuccessCodeBean twoSuccessCodeBean = (TwoSuccessCodeBean) msg;
+        if (twoSuccessCodeBean != null && twoSuccessCodeBean.getResult().equals("1")) {
+            showToast(twoSuccessCodeBean.getMsg());
+        }
+
     }
 }

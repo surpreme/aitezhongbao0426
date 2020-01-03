@@ -72,18 +72,18 @@ public class RadioGroupRecyAdapter extends RecyclerView.Adapter<RadioGroupRecyAd
         holder.tvTitle.setText(listBean.get(position).getNasme());
         holder.ivImg.setVisibility(listBean.get(position).isIsCheck() ? View.VISIBLE : View.GONE);
         holder.tvTitle.setTextColor(context.getResources().getColor(listBean.get(position).isIsCheck() ? R.color.agreen : R.color.black));
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                listBean.get(position).setChecked();
-                clickInterface.getPosition(Integer.valueOf(listBean.get(position).getId()));
-//                clickInterfaceAndString.getPosition();
                 listBean.get(position).setChecked(true);
                 for (int i = 0; i < listBean.size(); i++) {
                     if (i == position) listBean.get(i).setChecked(true);
                     else listBean.get(i).setChecked(false);
                 }
                 notifyDataSetChanged();
+                if (clickInterface != null)
+                    clickInterface.getPosition(Integer.valueOf(listBean.get(position).getId()));
+
             }
 
         });

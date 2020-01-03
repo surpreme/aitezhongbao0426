@@ -46,7 +46,7 @@ public class ChoiceEatPresenter extends BasePresenterImpl<ChoiceEatContract.View
                             return null;
                         } else {
                             JSONObject object = jsonObject.optJSONObject("datas");
-                            Gson gson=new Gson();
+                            Gson gson = new Gson();
                             TypeChoiceUIBean choiceUIBean = gson.fromJson(object.toString(), TypeChoiceUIBean.class);
                             ((Activity) mView.getContext()).runOnUiThread(()
                                     -> mView.getDataSuccess(choiceUIBean));
@@ -73,7 +73,7 @@ public class ChoiceEatPresenter extends BasePresenterImpl<ChoiceEatContract.View
 
     @Override
     public void getScondDatalist(HttpParams httpParams) {
-        OkGo.<BaseData<RecyChoiceUIBean>>post(AppConstant.CHOOCESENCONDLISTURL)
+        OkGo.<BaseData<RecyChoiceUIBean>>get(AppConstant.CHOOCESENCONDLISTURL)
                 .tag(mView.getContext())
                 .params(httpParams)
                 .execute(new AbsCallback<BaseData<RecyChoiceUIBean>>() {

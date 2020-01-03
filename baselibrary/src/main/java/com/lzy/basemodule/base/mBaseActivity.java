@@ -13,13 +13,17 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -322,8 +326,40 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
         }
     }
 
+    private ImageView nodataIv;
+    private ViewGroup mFatherSmarlayoutViewGroup;
+    //1 显示 2不显示
+    private int NODATAIV_STATE = 2;
+
+
+    protected void initImgNodata() {
+        mFatherSmarlayoutViewGroup = findViewById(R.id.all_state_framlayout);
+        nodataIv = new ImageView(context);
+//        mFatherSmarlayoutViewGroup.set
+    }
+
+    protected void showImgNoData() {
+        nodataIv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        nodataIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_nodata_smartlayout));
+        ViewGroup.MarginLayoutParams linearParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.MATCH_PARENT);
+        if (NODATAIV_STATE != 1) {
+            mFatherSmarlayoutViewGroup.addView(nodataIv, linearParams);
+            NODATAIV_STATE = 1;
+        }
+
+    }
+
+    protected void stopImgNodata() {
+        if (nodataIv != null && mFatherSmarlayoutViewGroup != null) {
+            NODATAIV_STATE = 2;
+            mFatherSmarlayoutViewGroup.removeView(nodataIv);
+        }
+    }
+
     protected void stopNoData() {
         nodata_lottieAnimationView.setVisibility(View.GONE);
+        showMoreRecy();
+        stopLoadingAnim();
     }
 
     //初始化banner
@@ -424,11 +460,54 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
      *
      * @param isRefresh
      */
+
+    public void initSmartLayout(boolean isRefresh, boolean isShowLoding) {
+        if (isShowLoding) {
+            initSmartLayout(isRefresh);
+        } else {
+            try {
+                smartRefreshLayout = this.findViewById(R.id.smartlayout);
+                smartRefreshLayout.setEnableAutoLoadMore(isRefresh);
+                smartRefreshLayout.setRefreshHeader(new WaterDropHeader(context));
+                mCurrentPage = 1;
+                smartRefreshLayout.setOnRefreshListener(refreshLayout -> {
+                    mCurrentPage = 1;
+                    onSmartRefresh();
+                    smartRefreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+
+                });
+                smartRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
+                    LogUtils.d("mCurrentPage" + mCurrentPage);
+                    if (!SystemUtil.isNetworkConnected())
+                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                    if (hasMore) {
+                        mCurrentPage++;
+                        onSmartLoadMore();
+                        smartRefreshLayout.finishLoadMore(1000/*,false*/);//传入false表示加载失败
+                    } else {
+                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+
+                    }
+
+                });
+            } catch (Exception e) {
+                LogUtils.e("initSmartLayout-fail" + e + e.getClass());
+            }
+        }
+    }
+
+    /**
+     * 初始化刷新控件
+     * 是否可以上拉加载
+     *
+     * @param isRefresh
+     */
     public void initSmartLayout(boolean isRefresh) {
         try {
             smartRefreshLayout = this.findViewById(R.id.smartlayout);
             smartRefreshLayout.setEnableAutoLoadMore(isRefresh);
             smartRefreshLayout.setRefreshHeader(new WaterDropHeader(context));
+            initLoadingAnima();
             mCurrentPage = 1;
             smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
@@ -447,8 +526,8 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
                         smartRefreshLayout.finishLoadMoreWithNoMoreData();
                     if (hasMore) {
                         mCurrentPage++;
-                        smartRefreshLayout.finishLoadMore(1000/*,false*/);//传入false表示加载失败
                         onSmartLoadMore();
+                        smartRefreshLayout.finishLoadMore(1000/*,false*/);//传入false表示加载失败
                     } else {
                         smartRefreshLayout.finishLoadMoreWithNoMoreData();
 

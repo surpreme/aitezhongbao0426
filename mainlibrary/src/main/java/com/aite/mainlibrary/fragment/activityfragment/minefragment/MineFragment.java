@@ -23,7 +23,9 @@ import com.aite.mainlibrary.activity.allsetting.LessbodybookActivity;
 import com.aite.mainlibrary.activity.allsetting.MinePostBookActivity;
 import com.aite.mainlibrary.activity.allsetting.bookdispute.BookDisputeActivity;
 import com.aite.mainlibrary.activity.allsetting.healthbook.HealthBookActivity;
+import com.aite.mainlibrary.activity.allsetting.helpeatorderbook.HelpEatOrderBookActivity;
 import com.aite.mainlibrary.activity.allsetting.minerural.MineRuralActivity;
+import com.aite.mainlibrary.activity.allsetting.serviceorderbook.ServiceOrderBookActivity;
 import com.aite.mainlibrary.activity.allsetting.setting.SettingActivity;
 import com.aite.mainlibrary.activity.allsetting.thingbook.ThingbookActivity;
 import com.aite.mainlibrary.activity.allsetting.thingsbook.ChiendThingsbookActivity;
@@ -120,25 +122,27 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
                     break;
             }
         });
+        /**
+         *     case 2:
+         *                     startActivity(LessbodybookActivity.class, "page_type", "1");
+         *                     break;
+         *                 case 3:
+         *                     startActivity(LessbodybookActivity.class, "page_type", "2");
+         *                     break;
+         *                 case 4:
+         *                     startActivity(LessbodybookActivity.class, "page_type", "3");
+         *                     break;
+         *                 case 5:
+         *                     startActivity(LessbodybookActivity.class, "page_type", "4");
+         *                     break;
+         */
         bookGridview.setOnItemClickListener((parent, view, position, id) -> {
             switch (position) {
                 case 0:
-                    startActivity(ThingbookActivity.class);
+                    startActivity(ServiceOrderBookActivity.class);
                     break;
                 case 1:
-                    startActivity(LessbodybookActivity.class, "page_type", "5");
-                    break;
-                case 2:
-                    startActivity(LessbodybookActivity.class, "page_type", "1");
-                    break;
-                case 3:
-                    startActivity(LessbodybookActivity.class, "page_type", "2");
-                    break;
-                case 4:
-                    startActivity(LessbodybookActivity.class, "page_type", "3");
-                    break;
-                case 5:
-                    startActivity(LessbodybookActivity.class, "page_type", "4");
+                    startActivity(ThingbookActivity.class);
                     break;
                 default:
                     break;
@@ -196,7 +200,29 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
 
     }
 
-
+    /**
+     * 返回字段	类型	说明
+     * member_info[].member_name	字符串	会员名称
+     * member_info[].nickname	字符串	昵称
+     * member_info[].member_truename	字符串	姓名
+     * member_info[].member_sex	字符串	性别 1男 2女 其它保密
+     * member_info[].member_birthday	字符串	生日
+     * member_info[].member_mobile	字符串	手机号
+     * member_info[].member_email	字符串	邮箱
+     * member_info[].point	字符串	积分数
+     * member_info[].predepoit	字符串	可用预存款
+     * member_info[].member_areainfo	字符串	省市区地址
+     * member_info[].member_avatar	字符串	头像
+     * member_info[].is_allowtalk	整型	是否开启消息推送 1是
+     * member_info[].is_member	整型	是否为会员 身份-会员 1是
+     * member_info[].is_volunteer	整型	是否为义工 身份-义工 1是
+     * member_info[].is_hugong	整型	是否为护工 身份-护工 1是
+     * member_info[].is_doctors	整型	是否为医生 身份-医生 1是
+     * member_info[].is_nursing	整型	是否为养老院 身份-养老院 1是
+     * member_info[].current_identity	整型	用户当前默认身份 1会员 2义工 3护工 4医生
+     *
+     * @param msg
+     */
     @Override
     public void onGetUserInformation(Object msg) {
         if (((UseInformationBean) msg).getMember_info().getMember_avatar() == null) return;

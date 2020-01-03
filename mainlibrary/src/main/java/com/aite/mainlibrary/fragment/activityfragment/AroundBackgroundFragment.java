@@ -18,6 +18,8 @@ import com.aite.mainlibrary.fragment.lovefamilychridren.goodchriendaroundbackgro
 import com.google.android.material.tabs.TabLayout;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseFragment;
+import com.lzy.basemodule.webJs.JsInterface;
+import com.lzy.basemodule.webJs.RerashWebView;
 
 import java.util.ArrayList;
 
@@ -78,8 +80,8 @@ public class AroundBackgroundFragment extends BaseFragment {
         initFragment();
         webview.loadUrl(AppConstant.ZHONGBAONEWSURL + AppConstant.KEY);
         webview.setWebViewClient(new WebViewClient());
-        initWebView(webview);
-        webview.addJavascriptInterface(new JsInterface(webview), "AndroidWebView");
+        RerashWebView.initWebView(webview);
+        webview.addJavascriptInterface(new JsInterface(webview, getActivity()), "AndroidWebView");
     }
 
     @Override

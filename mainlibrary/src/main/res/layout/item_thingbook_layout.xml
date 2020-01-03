@@ -34,11 +34,11 @@
 
                 <ImageView
                     android:id="@+id/icon_iv"
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="right"
                     android:scaleType="fitXY"
-                    app:srcCompat="@mipmap/chat_women" />
+                    app:srcCompat="@color/blue" />
             </androidx.cardview.widget.CardView>
 
 
@@ -65,17 +65,30 @@
                         android:paddingLeft="20dp"
                         android:text="助医服务"
                         android:textColor="@color/black"
-                        android:textSize="17sp" />
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/type_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="0.3"
+                        android:background="@drawable/round_background_yellow"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:text="早餐"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/state_tv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
                         android:gravity="right"
                         android:paddingRight="15dp"
                         android:text="已完成"
                         android:textColor="@color/yelllow"
-                        android:textSize="18sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
 
@@ -85,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
                     android:text="￥100.0"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -143,10 +157,10 @@
                 android:layout_height="26dp"
                 android:layout_marginLeft="@dimen/margin_5dp"
                 android:layout_marginRight="@dimen/margin_5dp"
-                android:background="@drawable/round_background_blue"
+                android:background="@drawable/juxing_background_blue"
                 android:gravity="center"
                 android:text="查看详情"
-                android:textColor="@color/white"
+                android:textColor="@color/blue"
                 android:textSize="@dimen/textSize_13sp" />
 
 
@@ -156,10 +170,10 @@
                 android:layout_height="26dp"
                 android:layout_marginLeft="@dimen/margin_5dp"
                 android:layout_marginRight="@dimen/margin_5dp"
-                android:background="@drawable/round_background_blue"
+                android:background="@drawable/juxing_gray_background"
                 android:gravity="center"
                 android:text="评价"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textSize_13sp" />
 
 
@@ -167,10 +181,10 @@
                 android:id="@+id/cancel_tv"
                 android:layout_width="70dp"
                 android:layout_height="26dp"
-                android:background="@drawable/round_background_blue"
+                android:background="@drawable/juxing_gray_background"
                 android:gravity="center"
                 android:text="取消订单"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/textSize_13sp" />
 
 
@@ -180,10 +194,10 @@
                 android:layout_height="26dp"
                 android:layout_marginLeft="@dimen/margin_5dp"
                 android:layout_marginRight="@dimen/margin_5dp"
-                android:background="@drawable/round_background_blue"
+                android:background="@drawable/juxing_background_blue"
                 android:gravity="center"
                 android:text="去付款"
-                android:textColor="@color/white" />
+                android:textColor="@color/blue" />
 
             <TextView
                 android:id="@+id/start_eat_tv"
@@ -191,10 +205,10 @@
                 android:layout_height="26dp"
                 android:layout_marginLeft="@dimen/margin_5dp"
                 android:layout_marginRight="@dimen/margin_5dp"
-                android:background="@drawable/round_background_blue"
+                android:background="@drawable/juxing_gray_background"
                 android:gravity="center"
                 android:text="核销码"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View

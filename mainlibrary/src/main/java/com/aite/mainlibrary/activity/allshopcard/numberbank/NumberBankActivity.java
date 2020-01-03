@@ -6,12 +6,14 @@ import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.aite.mainlibrary.Mainbean.MorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.NumberBankBean;
 import com.aite.mainlibrary.Mainbean.NumberBankInformationBean;
 import com.aite.mainlibrary.R;
@@ -62,6 +64,7 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
      * 筛选类型 0全部 1活动累计 2交易累计 3全部消耗 4兑换 5过期
      */
     private String[] rulesStrings = {"全部", "活动累计", "交易累计", "兑换", "过期"};
+    private int TYPE = 0;
 
     @Override
     protected int getLayoutResId() {
@@ -77,6 +80,10 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
             }
         });
         initRecy();
+        //smartlayout
+        initSmartLayout(true);
+        //初始化加载
+        initLoadingAnima();
         mBaserecyclerView.setAdapter(numberBankRecyAdapter = new NumberBankRecyAdapter(context, numberBankBean));
         mBaserecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         numberBankRecyAdapter.setOnItemRecyClickInterface(
@@ -116,6 +123,9 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
                 @Override
                 public void getPosition(int postion) {
                     LogUtils.d(postion);
+                    PopwindowUtils.getmInstance().dismissPopWindow();
+                    TYPE = postion;
+                    onSmartRefresh();
                 }
             });
         } else if (v.getId() == R.id.time_shop_btn) {
@@ -141,9 +151,9 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
     private HttpParams initParams() {
         HttpParams params = new HttpParams();
         params.put("key", AppConstant.KEY);
-        params.put("curpage", 1);
+        params.put("curpage", mCurrentPage);
 //        params.put("time", AppConstant.KEY);
-        params.put("type", 0);
+        params.put("type", TYPE);
 
         return params;
     }
@@ -180,14 +190,43 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
     }
 
     @Override
+    protected void onSmartLoadMore() {
+        super.onSmartLoadMore();
+        mPresenter.getInformationList(initParams());
+
+    }
+
+    @Override
+    protected void onSmartRefresh() {
+        super.onSmartRefresh();
+        if (numberBankBean != null) {
+            numberBankBean.clear();
+            numberBankRecyAdapter.notifyDataSetChanged();
+        }
+
+        mPresenter.getInformationList(initParams());
+
+    }
+
+    @Override
     public void onGetChoiceUiSuccess(Object msg) {
 
     }
 
     @Override
     public void onGetInformationListSuccess(Object msg) {
-        numberBankBean.addAll(((NumberBankBean) msg).getList());
-        numberBankRecyAdapter.notifyDataSetChanged();
+        if (((NumberBankBean) msg).getList() != null) {
+            if (((NumberBankBean) msg).getList().isEmpty()) {
+                initNodata();
+            } else {
+                stopNoData();
+                numberBankBean.addAll(((NumberBankBean) msg).getList());
+                numberBankRecyAdapter.notifyDataSetChanged();
+                hasMore = ((NumberBankBean) msg).getIs_nextpage() > 0;
+            }
+
+        }
+
     }
 
 

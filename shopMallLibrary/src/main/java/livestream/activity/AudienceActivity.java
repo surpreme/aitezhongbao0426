@@ -31,18 +31,11 @@ import com.aite.a.parse.NetRun;
 import com.aite.a.view.CircleImageView;
 import com.aiteshangcheng.a.R;
 import com.bumptech.glide.Glide;
-import com.tencent.TIMCallBack;
-import com.tencent.TIMConversation;
-import com.tencent.TIMConversationType;
-import com.tencent.TIMCustomElem;
-import com.tencent.TIMGroupEventListener;
-import com.tencent.TIMGroupManager;
-import com.tencent.TIMGroupTipsElem;
-import com.tencent.TIMGroupTipsType;
-import com.tencent.TIMManager;
-import com.tencent.TIMMessage;
-import com.tencent.TIMTextElem;
-import com.tencent.TIMValueCallBack;
+import com.tencent.imsdk.TIMConversation;
+import com.tencent.imsdk.TIMConversationType;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMMessage;
+import com.tencent.imsdk.TIMValueCallBack;
 import com.tencent.rtmp.ITXLivePlayListener;
 import com.tencent.rtmp.TXLivePlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
@@ -236,28 +229,28 @@ public class AudienceActivity extends Activity implements View.OnClickListener, 
         flvUrl = getIntent().getStringExtra("flvUrl");
         room_id = getIntent().getStringExtra("room_id");
         conversation = TIMManager.getInstance().getConversation(TIMConversationType.Group, room_id);//会话类型：群聊
-        TIMManager.getInstance().setGroupEventListener(new TIMGroupEventListener() {//群事件消息
-            @Override
-            public void onGroupTipsEvent(TIMGroupTipsElem timGroupTipsElem) {
-                Log.i("--------------", "群事件消息 " + timGroupTipsElem.getTipsType());
-                if (timGroupTipsElem.getTipsType() == TIMGroupTipsType.Join) {
-                    //构造一条消息
-                    TIMMessage msg = new TIMMessage();
-                    // xml 协议的自定义消息
-                    String sampleXml = timGroupTipsElem.getOpUser() + " 进入了直播间";
-                    //向 TIMMessage 中添加自定义内容
-                    TIMCustomElem elem = new TIMCustomElem();
-                    elem.setData(sampleXml.getBytes());      //自定义 byte[]
-                    elem.setDesc("Join"); //自定义描述信息
-                    //将 elem 添加到消息
-                    if (msg.addElement(elem) != 0) {
-                        Log.d("-------------", "addElement failed");
-                        return;
-                    }
-                    bullet2Adapter.addMsg(msg);
-                }
-            }
-        });
+//        TIMManager.getInstance().setGroupEventListener(new TIMGroupEventListener() {//群事件消息
+//            @Override
+//            public void onGroupTipsEvent(TIMGroupTipsElem timGroupTipsElem) {
+//                Log.i("--------------", "群事件消息 " + timGroupTipsElem.getTipsType());
+//                if (timGroupTipsElem.getTipsType() == TIMGroupTipsType.Join) {
+//                    //构造一条消息
+//                    TIMMessage msg = new TIMMessage();
+//                    // xml 协议的自定义消息
+//                    String sampleXml = timGroupTipsElem.getOpUser() + " 进入了直播间";
+//                    //向 TIMMessage 中添加自定义内容
+//                    TIMCustomElem elem = new TIMCustomElem();
+//                    elem.setData(sampleXml.getBytes());      //自定义 byte[]
+//                    elem.setDesc("Join"); //自定义描述信息
+//                    //将 elem 添加到消息
+//                    if (msg.addElement(elem) != 0) {
+//                        Log.d("-------------", "addElement failed");
+//                        return;
+//                    }
+//                    bullet2Adapter.addMsg(msg);
+//                }
+//            }
+//        });
         //创建player对象
         mLivePlayer = new TXLivePlayer(this);
         //关键player对象与界面view
@@ -334,19 +327,19 @@ public class AudienceActivity extends Activity implements View.OnClickListener, 
      * 加入弹幕群
      */
     private void joinGroup(String somereason) {
-        TIMGroupManager.getInstance().applyJoinGroup(room_id, somereason, new TIMCallBack() {
-            @java.lang.Override
-            public void onError(int code, String desc) {
-                //接口返回了错误码 code 和错误描述 desc，可用于原因
-                //错误码 code 列表请参见错误码表
-                Log.e("------------", "加群失败  code=" + code + "  desc=" + desc);
-            }
-
-            @java.lang.Override
-            public void onSuccess() {
-                Log.i("------------", "加群成功");
-            }
-        });
+//        TIMGroupManager.getInstance().applyJoinGroup(room_id, somereason, new TIMCallBack() {
+//            @java.lang.Override
+//            public void onError(int code, String desc) {
+//                //接口返回了错误码 code 和错误描述 desc，可用于原因
+//                //错误码 code 列表请参见错误码表
+//                Log.e("------------", "加群失败  code=" + code + "  desc=" + desc);
+//            }
+//
+//            @java.lang.Override
+//            public void onSuccess() {
+//                Log.i("------------", "加群成功");
+//            }
+//        });
     }
 
 
@@ -359,13 +352,13 @@ public class AudienceActivity extends Activity implements View.OnClickListener, 
         //构造一条消息
         TIMMessage msg = new TIMMessage();
         //添加文本内容
-        TIMTextElem elem = new TIMTextElem();
-        elem.setText(txt);
-        //将 Elem 添加到消息
-        if (msg.addElement(elem) != 0) {
-            Log.d("---------------", "添加元素失败");
-            return;
-        }
+//        TIMTextElem elem = new TIMTextElem();
+//        elem.setText(txt);
+//        //将 Elem 添加到消息
+//        if (msg.addElement(elem) != 0) {
+//            Log.d("---------------", "添加元素失败");
+//            return;
+//        }
         if (bullet2Adapter != null) bullet2Adapter.addMsg(msg);
         //发送消息
         conversation.sendMessage(msg, new TIMValueCallBack<TIMMessage>() {//发送消息回调

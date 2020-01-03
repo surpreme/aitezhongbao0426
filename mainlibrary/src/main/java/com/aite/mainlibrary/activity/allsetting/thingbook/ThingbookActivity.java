@@ -8,6 +8,7 @@ import com.aite.mainlibrary.Constant.MainUIConstant;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.ChiendChoiceThingsbookActivity;
+import com.aite.mainlibrary.activity.allsetting.helpeatorderbook.HelpEatOrderBookActivity;
 import com.aite.mainlibrary.activity.allsetting.thingsbook.ChiendThingsbookActivity;
 import com.aite.mainlibrary.adapter.IconHormationRecyAdapter;
 import com.lzy.basemodule.OnClickLstenerInterface;
@@ -31,6 +32,12 @@ public class ThingbookActivity extends BaseActivity<ThingbookContract.View, Thin
         return R.layout.recy_toolbar;
     }
 
+    /**
+     * if (postion == 2)
+     * startActivity(ChiendThingsbookActivity.class, "type", "noon");
+     * if (postion == 3)
+     * startActivity(ChiendChoiceThingsbookActivity.class, "type", "choice");
+     */
     @Override
     protected void initView() {
         initToolbar("助餐订单");
@@ -40,13 +47,10 @@ public class ThingbookActivity extends BaseActivity<ThingbookContract.View, Thin
             @Override
             public void getPosition(int postion) {
                 if (postion == 0)
-                    startActivity(ChiendThingsbookActivity.class, "type", "all");
+                    startActivity(HelpEatOrderBookActivity.class);
                 if (postion == 1)
-                    startActivity(ChiendThingsbookActivity.class, "type", "morning");
-                if (postion == 2)
-                    startActivity(ChiendThingsbookActivity.class, "type", "noon");
-                if (postion == 3)
                     startActivity(ChiendChoiceThingsbookActivity.class, "type", "choice");
+
             }
         });
     }

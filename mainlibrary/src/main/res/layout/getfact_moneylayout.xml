@@ -1,290 +1,412 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <include layout="@layout/toolbar_layout" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/noglay" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="340dp"
-        android:layout_height="340dp"
-        android:layout_gravity="center"
-        android:background="@drawable/juxing_gray_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="10dp"
-            android:text="@string/money"
-            android:textColor="@color/black"
-            android:textSize="23sp"
-            android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:paddingLeft="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingRight="20dp"
-                android:text="￥"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                app:endIconMode="clear_text"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+        <include layout="@layout/toolbar_layout" />
 
         <View
-            android:layout_width="290dp"
-            android:layout_height="0.2dp"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/noglay" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="340dp"
             android:layout_gravity="center"
-            android:background="@color/black"
-            android:paddingLeft="20dp" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="20dp"
-            android:text="支付方式"
-            android:textColor="#ff333333"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:background="@drawable/juxing_gray_background"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="微信支付"
-                android:textColor="#ff333333"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/round_view_glay" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="微信支付"
-                android:textColor="#ff333333"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/round_view_glay" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-
-            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="10dp"
+                android:text="@string/money"
+                android:textColor="@color/black"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="20dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:text="银行卡支付"
-                    android:textColor="#ff333333"
-                    android:textSize="18sp" />
+                    android:layout_gravity="center"
+                    android:paddingRight="20dp"
+                    android:text="￥"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="添加银行卡" />
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    app:endIconMode="clear_text"
+                    app:hintEnabled="false">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="290dp"
+                android:layout_height="0.2dp"
                 android:layout_gravity="center"
-                android:background="@drawable/round_view_green" />
+                android:background="@color/black"
+                android:paddingLeft="20dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="20dp"
+                android:text="支付方式"
+                android:textColor="#ff333333"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="微信支付"
+                    android:textColor="#ff333333"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_view_glay" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="微信支付"
+                    android:textColor="#ff333333"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_view_glay" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="银行卡支付"
+                        android:textColor="#ff333333"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="添加银行卡" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_view_green" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="340dp"
-        android:layout_height="340dp"
-        android:layout_gravity="center"
-        android:background="@drawable/juxing_gray_background"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="10dp"
-            android:text="@string/money"
-            android:textColor="@color/black"
-            android:textSize="23sp"
-            android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:paddingLeft="20dp">
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/juxing_gray_background"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/padding_20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingRight="20dp"
-                android:text="￥"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="10dp"
+                android:text="@string/money"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="23sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                app:endIconMode="clear_text"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/number_get_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="290dp"
-            android:layout_height="0.2dp"
-            android:layout_gravity="center"
-            android:background="@color/black"
-            android:paddingLeft="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:text="@string/littlemoney" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingBottom="20dp"
-            android:text="提现方式"
-            android:textColor="#ff333333"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="20dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:text="银行卡支付"
-                    android:textColor="#ff333333"
-                    android:textSize="18sp" />
+                    android:layout_gravity="center"
+                    android:paddingRight="20dp"
+                    android:text="￥"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="添加银行卡" />
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    app:endIconMode="clear_text"
+                    app:hintEnabled="false">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fact_price_get_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <View
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="290dp"
+                android:layout_height="0.2dp"
                 android:layout_gravity="center"
-                android:background="@drawable/round_view_glay" />
+                android:background="@color/black"
+                android:paddingLeft="20dp" />
+
+            <TextView
+                android:id="@+id/all_money_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/littlemoney" />
+
+            <TextView
+                android:id="@+id/getfact_away_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingBottom="20dp"
+                android:text="提现方式"
+                android:textColor="#ff333333"
+                android:textSize="18sp" />
+            <LinearLayout
+                android:id="@+id/post_money_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/wechat_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="微信"
+                        android:textColor="#ff333333"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/wechat_check"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:button="@drawable/pay_away_chooice_first" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/apay_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:text="支付宝"
+                            android:textColor="#ff333333"
+                            android:textSize="18sp" />
+
+
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/apay_check"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:button="@drawable/pay_away_chooice_first" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/bank_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="银行卡"
+                        android:textColor="#ff333333"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/add_bankcard_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="添加银行卡" />
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/bank_check"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:button="@drawable/pay_away_chooice_first" />
+            </LinearLayout>
+
+
+            <include layout="@layout/recy_layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="银行卡支付"
+                        android:textColor="#ff333333"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="添加银行卡" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_view_glay"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
+
+        <include layout="@layout/bottom_btn" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_30dp" />
     </LinearLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

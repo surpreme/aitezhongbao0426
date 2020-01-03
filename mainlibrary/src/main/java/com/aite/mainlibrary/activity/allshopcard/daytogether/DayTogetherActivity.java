@@ -26,6 +26,7 @@ import com.lzy.basemodule.adpter.BaseItemDecoration;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.SystemUtil;
+import com.lzy.basemodule.view.StatusBarUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
@@ -100,11 +101,15 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
 
             }
         }
+        if (!isStringEmpty(getIntent().getStringExtra("else_list_class")))
+            LIST_CLASS = getIntent().getStringExtra("else_list_class");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         allLessBodyRecyAdapter = new AllLessBodyRecyAdapter(context, goodsListBeans);
         allLessBodyRecyAdapter.setClickInterface(this);
         recyclerView.setAdapter(allLessBodyRecyAdapter);
+        initSmartLayout(true);
+        initImgNodata();
         if (recyclerView.getItemDecorationCount() == 0) {
             recyclerView.addItemDecoration(new BaseItemDecoration(SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 10)
                     , SystemUtil.dip2px(context, 10), SystemUtil.dip2px(context, 0)
@@ -167,7 +172,13 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
 
             }
         });
-        PopwindowUtils.getmInstance().showRecyPopupWindow(context, radioGroupRecyAdapter, manager, fatherLl, new PopupWindow.OnDismissListener() {
+        int tabheight = 0;
+        if (checkDeviceHasNavigationBar(context)) {
+            int bootomkeybroadheight = getNavigationBarHeight(context);
+            tabheight = bootomkeybroadheight + fatherLl.getTop() - fatherLl.getBottom();
+        } else
+            tabheight = fatherLl.getTop() - fatherLl.getBottom();
+        PopwindowUtils.getmInstance().showRecyPopupWindow(context, getScreenHeight() - fatherLl.getBottom() + tabheight + StatusBarUtils.getHeight(context), radioGroupRecyAdapter, manager, fatherLl, new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 resetChoiceIv();
@@ -179,6 +190,23 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
         serviceIv.setImageDrawable(getResources().getDrawable(R.drawable.low));
         allIv.setImageDrawable(getResources().getDrawable(R.drawable.low));
         timeIv.setImageDrawable(getResources().getDrawable(R.drawable.low));
+
+    }
+
+    @Override
+    protected void onSmartLoadMore() {
+        mPresenter.getListMsg(initParams());
+    }
+
+    @Override
+    protected void onSmartRefresh() {
+        super.onSmartRefresh();
+        if (!goodsListBeans.isEmpty()) {
+            goodsListBeans.clear();
+            allLessBodyRecyAdapter.notifyDataSetChanged();
+        }
+        mPresenter.getListMsg(initParams());
+
 
     }
 
@@ -200,7 +228,7 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
         //时长
         httpParams.put("time_id", LIST_TIME);
         //当前页码
-        httpParams.put("curpage", 1);
+        httpParams.put("curpage", mCurrentPage);
         return httpParams;
     }
 
@@ -234,7 +262,9 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
     public void onGetListSuccess(Object msg) {
         goodsListBeans.addAll(((LessDayBean) msg).getGoods_list());
         allLessBodyRecyAdapter.notifyDataSetChanged();
-
+        if (mCurrentPage == 1) if (goodsListBeans.isEmpty()) showImgNoData();
+        else stopImgNodata();
+        hasMore = ((LessDayBean) msg).getGoods_list().isEmpty();
     }
 
     @Override

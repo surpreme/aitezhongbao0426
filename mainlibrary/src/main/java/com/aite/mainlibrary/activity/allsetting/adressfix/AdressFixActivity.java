@@ -1,6 +1,8 @@
 package com.aite.mainlibrary.activity.allsetting.adressfix;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,19 +49,22 @@ public class AdressFixActivity extends BaseActivity<AdressFixContract.View, Adre
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adrressFixRecyAdapter = new AdrressFixRecyAdapter(context, addressListBeans));
         adrressFixRecyAdapter.setOnItemRecyClickInterface(msg -> {
-//                Intent intent = getIntent();
-//                intent.putExtra("address_id", msg);
-//                // 设置返回码和返回携带的数据
-//                setResult(Activity.RESULT_OK, intent);
-//                finish();
+            if (getIntent().getStringExtra("JUMP_TYPE") != null) {
+                if (getIntent().getStringExtra("JUMP_TYPE").equals("CHOICE_ADDRESS")) {
+                    Intent intent = getIntent();
+                    intent.putExtra("address_id", msg);
+                    // 设置返回码和返回携带的数据
+                    setResult(Activity.RESULT_OK, intent);
+                    onBackPressed();
+                }
+            }
         });
         adrressFixRecyAdapter.setOnClickThingInterface(new AdrressFixRecyAdapter.OnClickThingInterface() {
             @Override
-            public void onDelete(String address_id) {
+            public void onDelete(String position) {
                 PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, "您确定要删除此地址吗?", v -> {
-                    mPresenter.dleteAddress(initListHttpParams(true, new ContentValue("address_id", address_id)));
+                    mPresenter.dleteAddress(initListHttpParams(true, new ContentValue("address_id", addressListBeans.get(Integer.parseInt(position)).getAddress_id())));
                     PopwindowUtils.getmInstance().dismissPopWindow();
-                    onBackPressed();
 
                 });
 
@@ -78,6 +83,8 @@ public class AdressFixActivity extends BaseActivity<AdressFixContract.View, Adre
                         new ContentValue("phone", addressListBeans.get(Integer.parseInt(position)).getMob_phone()),
                         new ContentValue("address", addressListBeans.get(Integer.parseInt(position)).getArea_info()),
                         new ContentValue("factaddress", addressListBeans.get(Integer.parseInt(position)).getAddress()),
+                        new ContentValue("city_id", addressListBeans.get(Integer.parseInt(position)).getCity_id()),
+                        new ContentValue("area_id", addressListBeans.get(Integer.parseInt(position)).getArea_id()),
                         new ContentValue("isAlways", addressListBeans.get(Integer.parseInt(position)).getIs_default()));
 
 

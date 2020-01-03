@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -126,13 +127,36 @@ public class TextUtil {
         String format1 = formatter.format(calendar.getTime());
         return format1;
     }
-    public static boolean isNumber(String str){
 
-        String reg = "^[0-9]+(.[0-9]+)?$";
 
-        return str.matches(reg);
 
+    /**
+     * 将List<String>转化为String字符串显示，元素之间用“，”号隔开
+     * @param list 要处理的list
+     * @return 返回 元素之间用“，”号隔开的字符串
+     */
+    public static String ArrayListToString(List<String> list){
+
+        if(list == null || list.size() ==0){
+            return null;
+        }
+
+        boolean isFirst = true;
+        StringBuffer result = new StringBuffer();
+        for (String s : list) {
+            if(isFirst){
+                isFirst = false;
+            }else {
+                result.append(",");
+            }
+            result.append(s);
+        }
+
+        return result.toString();
     }
+
+
+
 
 //    /**
 //     * @param time   动画时间
@@ -146,5 +170,13 @@ public class TextUtil {
 //                .playOn(view);
 //    }
 
+
+    public static boolean isNumber(String str){
+
+        String reg = "^[0-9]+(.[0-9]+)?$";
+
+        return str.matches(reg);
+
+    }
 
 }

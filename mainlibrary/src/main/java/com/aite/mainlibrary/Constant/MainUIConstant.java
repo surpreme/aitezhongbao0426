@@ -36,7 +36,7 @@ public class MainUIConstant {
         };
 
         public static String[] settingTv = {
-                "提现", "充值", "红包", "银行卡"
+                "提现", "充值", "账单明细", "银行卡"
         };
 
     }
@@ -98,16 +98,20 @@ public class MainUIConstant {
 
     }
 
+    /**
+     * R.mipmap.elsesevice,
+     * R.mipmap.bankcard
+     * "全部", "早餐", "午餐", "助餐"
+     */
     public static class MirningNoonbookConstant {
         public static int[] settingImg = {
-                R.mipmap.service,
-                R.mipmap.helpdoctor,
-                R.mipmap.elsesevice,
-                R.mipmap.bankcard
+                R.mipmap.nooneat,
+                R.mipmap.choiceeat,
+
         };
 
         public static String[] settingTv = {
-                "全部", "早餐", "午餐", "助餐"
+                "早午餐", "菜品"
         };
 
     }
@@ -125,23 +129,26 @@ public class MainUIConstant {
         };
 
         public static int[] bookImg = {
-                R.mipmap.eat,
+                R.mipmap.service_order_icon,
+                R.mipmap.eatoder_icon
 //                R.mipmap.helpdoctor,
 
 //                R.mipmap.service,
-                R.mipmap.elsesevice,
-
-                R.drawable.baomu,
-                R.mipmap.learn_work,
-
-                R.drawable.finduser,
-                R.drawable.lessbodything
+//                R.mipmap.elsesevice,
+//
+//                R.drawable.baomu,
+//                R.mipmap.learn_work,
+//
+//                R.drawable.finduser,
+//                R.drawable.lessbodything
 
         };
-        //"助医", "喘息服务",
+        //        "助医", "喘息服务",
+        //        "助餐", "其它服务",
+        //        "日托", "培训", "辅助就业", "助残活动"
         public static String[] bookTv = {
-                "助餐", "其它服务",
-                "日托", "培训", "辅助就业", "助残活动"
+                "服务订单", "助餐订单"
+
         };
 
         public static int[] elseImg = {

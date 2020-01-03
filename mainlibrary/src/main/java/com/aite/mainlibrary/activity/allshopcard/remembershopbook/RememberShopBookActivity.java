@@ -12,8 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.aite.a.activity.MainActivity;
 import com.aite.a.activity.li.activity.ChoiceActivity;
 import com.aite.alipaylibrary.PayAway;
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
+import com.aite.mainlibrary.Mainbean.AlipayOrderIdBean;
 import com.aite.mainlibrary.Mainbean.MoreAdressInormationBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
 import com.aite.mainlibrary.Mainbean.RememberFoodInformationBean;
@@ -27,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -278,9 +282,19 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
                 PopwindowUtils.getmInstance().dismissPopWindow();
                 if (postion == 99) {
                     mPresenter.PayCollect(initCollectParams());
+                } else {
+                    if (postion == 1) {
+                        mPresenter.PayThreeElse(initListHttpParams(
+                                true,
+                                new ContentValue("order_id", isStringEmpty(ORDER_ID) ? "" : ORDER_ID),
+                                new ContentValue("payment_code", "alipay")), "alipay");
+                    } else if (postion == 3) {
+                        mPresenter.PayThreeElse(initListHttpParams(
+                                true,
+                                new ContentValue("order_id", isStringEmpty(ORDER_ID) ? "" : ORDER_ID),
+                                new ContentValue("payment_code", "app_wxpay")), "app_wxpay");
+                    }
 
-                } else if (postion==1) {
-                    PayAway.Alipay("fgydfgsxdfgscfgdf", RememberShopBookActivity.this, ChoiceActivity.class);
 
                 }
 
@@ -316,6 +330,20 @@ public class RememberShopBookActivity extends BaseActivity<RememberShopBookContr
         }
 
 
+    }
+
+    @Override
+    public void onPayThreeElseSuccess(Object msg, String payAway) {
+        if (msg != null) {
+            if (payAway.equals("alipay")) {
+                AlipayOrderIdBean alipayOrderIdBean = (AlipayOrderIdBean) msg;
+                LogUtils.d(alipayOrderIdBean.getPayinfo());
+                PayAway.Alipay(alipayOrderIdBean.getPayinfo(), this, MainActivity.class);
+            } else if (payAway.equals("app_wxpay")) {
+                WeChatPayBackBean weChatPayBackBean = (WeChatPayBackBean) msg;
+                PayAway.WchatPay(weChatPayBackBean, this);
+            }
+        }
     }
 
 

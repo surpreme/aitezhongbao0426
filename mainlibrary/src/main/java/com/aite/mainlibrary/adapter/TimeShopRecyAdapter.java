@@ -82,7 +82,8 @@ public class TimeShopRecyAdapter extends RecyclerView.Adapter<TimeShopRecyAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickInterface.getPosition(position);
+                if (clickInterface != null)
+                    clickInterface.getPosition(position);
             }
         });
     }

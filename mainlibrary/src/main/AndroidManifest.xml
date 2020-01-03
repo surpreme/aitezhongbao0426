@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aite.mainlibrary">
 
+    <application>
+        <activity android:name=".activity.allshopcard.orderdiscuss.OrderDiscussActivity" />
+        <activity android:name=".activity.im.mallchater.MallChaterActivity" />
+        <activity android:name=".activity.im.activity.ChatShowActivity" />
+        <activity android:name=".activity.im.activity.ChatActivity" />
+        <activity android:name=".activity.allsetting.serviceorderbook.ServiceOrderBookActivity" />
+        <activity android:name=".activity.allsetting.helpeatorderbook.HelpEatOrderBookActivity" />
+    </application>
 </manifest>

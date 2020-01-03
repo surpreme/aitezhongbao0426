@@ -35,7 +35,6 @@ import com.aite.a.utils.CommonTools;
 import com.aite.a.utils.lingshi;
 import com.aite.a.view.MyListView;
 import com.aiteshangcheng.a.R;
-import com.aiteshangcheng.a.wxapi.WXPayEntryActivity;
 import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.pay.PayResult;
 import com.bumptech.glide.Glide;
@@ -573,7 +572,7 @@ public class PayListActivity extends BaseActivity implements OnClickListener {
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             if (payListAdapter.getchoose().equals("app_wxpay")) {
-                                Intent intent = new Intent(PayListActivity.this,
+                                /*Intent intent = new Intent(PayListActivity.this,
                                         WXPayEntryActivity.class);
                                 intent.putExtra("goods", goods_name);
                                 intent.putExtra("describe", describe);
@@ -581,7 +580,7 @@ public class PayListActivity extends BaseActivity implements OnClickListener {
                                 intent.putExtra("pay_sn", pay_sn);
                                 intent.putExtra("isvr", isvr);
                                 intent.putExtra("payment_code", payListAdapter.getchoose());
-                                startActivityForResult(intent, 10010);
+                                startActivityForResult(intent, 10010);*/
                             } else if (payListAdapter.getchoose().equals("alipay")) {
                                 //TODO
                                 if (isvr) {

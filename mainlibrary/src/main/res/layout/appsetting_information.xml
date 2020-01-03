@@ -54,6 +54,7 @@
         android:background="@color/noglay" />
 
     <LinearLayout
+        android:id="@+id/clear_cache_ll"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"
@@ -77,6 +78,7 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/cache_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

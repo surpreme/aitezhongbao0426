@@ -123,12 +123,12 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
             Glide.with(context).load(AppConstant.ICON_URL).apply(RequestOptions.circleCropTransform()).into(iconIv);
         if (AppConstant.USERNAME != null)
             userNameTv.setText(AppConstant.USERNAME);
-        mPresenter.getInformation(initKeyParams());
 
     }
 
     @Override
     protected void initResume() {
+        mPresenter.getInformation(initKeyParams());
 
     }
 

@@ -8,6 +8,7 @@ import com.aite.mainlibrary.Constant.MainUIConstant;
 import com.aite.mainlibrary.Mainbean.ElseServiceIconBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.allshopcard.daytogether.DayTogetherActivity;
 import com.aite.mainlibrary.activity.allstep.StepActivity;
 import com.aite.mainlibrary.adapter.ElseServiceUIAdapter;
 import com.lzy.basemodule.OnClickLstenerInterface;
@@ -41,11 +42,11 @@ public class ElseHelpActivity extends BaseActivity<ElseHelpContract.View, ElseHe
         initToolbar("其他服务");
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         recyclerView.setAdapter(elseServiceUIAdapter = new ElseServiceUIAdapter(context, elseServiceIconBeans));
-        elseServiceUIAdapter.setOnClickLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPosition(int postion) {
-                if (postion == elseServiceIconBeans.size() - 1)
-                    startActivity(StepActivity.class);
+        elseServiceUIAdapter.setOnClickLstenerInterface(postion -> {
+            if (postion == elseServiceIconBeans.size() - 1)
+                startActivity(StepActivity.class);
+            else {
+                startActivity(DayTogetherActivity.class, "type", "5", "else_list_class", elseServiceIconBeans.get(postion).getGc_id());
             }
         });
 

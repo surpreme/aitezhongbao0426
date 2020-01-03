@@ -16,6 +16,7 @@ import com.aite.mainlibrary.Mainbean.HelpDoctorBookInformationBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allshopcard.hekpstart.HekpStartActivity;
+import com.aite.mainlibrary.activity.allshopcard.talkbook.TalkBookActivity;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseActivity;
@@ -160,7 +161,7 @@ public class PostInformationBookActivity extends BaseActivity<PostInformationBoo
         mobileTv.setText(String.format("手机号：%s", infoBean.getInfo().getMobile()));
         // case "1":
         //                bottomBtn.setText("待接单");
-        //                break;
+        //                break; 1服务已取消 0待接单 1已接单 2已开始 3已结束 4已评价 -1服务已取消
         switch (infoBean.getInfo().getOrder_status()) {
             case "-1":
                 bottomBtn.setText("服务已取消");
@@ -174,42 +175,21 @@ public class PostInformationBookActivity extends BaseActivity<PostInformationBoo
                 break;
             case "1":
                 bottomBtn.setText("已接单");
-                bottomBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivityWithCls(HekpStartActivity.class, 0
-                                , new ContentValue("tb_id", bundle.getString("tb_id"))
-                                , new ContentValue("URLTYPE", "START")
-                                , new ContentValue("type", getIntent().getStringExtra("type")));
-
-                    }
-                });
+                bottomBtn.setOnClickListener(v -> startActivityWithCls(HekpStartActivity.class, 0
+                        , new ContentValue("tb_id", bundle.getString("tb_id"))
+                        , new ContentValue("URLTYPE", "START")
+                        , new ContentValue("type", getIntent().getStringExtra("type"))));
+                break;
             case "2":
-                bottomBtn.setText("已开始-点击结束");
-                bottomBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivityWithCls(HekpStartActivity.class, 0
-                                , new ContentValue("tb_id", bundle.getString("tb_id"))
-                                , new ContentValue("URLTYPE", "END")
-                                , new ContentValue("type", getIntent().getStringExtra("type")));
-
-                    }
-                });
+                bottomBtn.setText("已开始");
+                bottomBtn.setOnClickListener(v -> startActivityWithCls(HekpStartActivity.class, 0
+                        , new ContentValue("tb_id", bundle.getString("tb_id"))
+                        , new ContentValue("URLTYPE", "END")
+                        , new ContentValue("type", getIntent().getStringExtra("type"))));
                 break;
             case "3":
-                bottomBtn.setText("已结束服务");
-                bottomBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivityWithCls(HekpStartActivity.class, 0
-                                , new ContentValue("tb_id", bundle.getString("tb_id"))
-                                , new ContentValue("URLTYPE", "END")
-                                , new ContentValue("type", getIntent().getStringExtra("type")));
-
-
-                    }
-                });
+                bottomBtn.setText("已结束");
+                bottomBtn.setOnClickListener(v -> startActivity(TalkBookActivity.class, "id", infoBean.getInfo().getId()));
                 break;
             case "4":
                 bottomBtn.setText("已评价");

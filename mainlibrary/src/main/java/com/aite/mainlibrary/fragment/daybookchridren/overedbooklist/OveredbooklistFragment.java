@@ -1,6 +1,7 @@
 package com.aite.mainlibrary.fragment.daybookchridren.overedbooklist;
 
 
+import android.content.Intent;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,11 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.aite.mainlibrary.Mainbean.BookMorningNoonEatBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.activity.allshopcard.bookinformation.BookinformationActivity;
+import com.aite.mainlibrary.activity.allshopcard.chatoutbook.ChatOutBookActivity;
 import com.aite.mainlibrary.adapter.MineHelpEatRecyAdapter;
+import com.blankj.rxbus.RxBus;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseFragment;
 import com.lzy.basemodule.base.BaseLazyFragment;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.mvp.MVPBaseFragment;
 import com.lzy.okgo.model.HttpParams;
 
@@ -27,7 +31,7 @@ import java.util.List;
 public class OveredbooklistFragment extends BaseLazyFragment<OveredbooklistContract.View, OveredbooklistPresenter> implements OveredbooklistContract.View {
     private MineHelpEatRecyAdapter mineHelpEatRecyAdapter;
     private List<BookMorningNoonEatBean.OrderListBean> orderListBeans = new ArrayList<>();
-
+    private String PAGE_TYPE = "0";
 
     @Override
     protected void initModel() {
@@ -38,6 +42,14 @@ public class OveredbooklistFragment extends BaseLazyFragment<OveredbooklistContr
     @Override
     protected void initViews() {
         initMoreRecy();
+        RxBus.getDefault().subscribe(context, "eat", new RxBus.Callback<String>() {
+            @Override
+            public void onEvent(String o) {
+                PAGE_TYPE = o;
+                onSmartRefresh();
+
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mBaserecyclerView.setLayoutManager(linearLayoutManager);
         mineHelpEatRecyAdapter = new MineHelpEatRecyAdapter(context, orderListBeans);
@@ -46,6 +58,30 @@ public class OveredbooklistFragment extends BaseLazyFragment<OveredbooklistContr
             @Override
             public void getPosition(int postion) {
                 startActivity(BookinformationActivity.class, "ORDER_ID", String.valueOf(orderListBeans.get(postion).getOrder_id()));
+            }
+        });
+        mineHelpEatRecyAdapter.setOnInformationInteface(new MineHelpEatRecyAdapter.OnInformationInteface() {
+            @Override
+            public void pay(int position) {
+            }
+
+            @Override
+            public void lookInformation(int position) {
+                startActivity(BookinformationActivity.class, "ORDER_ID", String.valueOf(orderListBeans.get(position).getOrder_id()));
+
+            }
+
+            @Override
+            public void talkTv(int position) {
+                Intent intent = new Intent(context, ChatOutBookActivity.class);
+                intent.putExtra("order_id", orderListBeans.get(position).getOrder_id());
+                context.startActivity(intent);
+            }
+
+            @Override
+            public void cancelTv(int position) {
+
+
             }
         });
         //smartlayout
@@ -93,24 +129,7 @@ public class OveredbooklistFragment extends BaseLazyFragment<OveredbooklistContr
         httpParams.put("key", AppConstant.KEY);
         httpParams.put("curpage", mCurrentPage);
         httpParams.put("state", 3);
-        if (getArguments() != null && getArguments().getString("type") != null) {
-            switch (getArguments().getString("type")) {
-                case "all":
-                    httpParams.put("page_type", 0);
-                    break;
-                case "morning":
-                    httpParams.put("page_type", 1);
-                    break;
-                case "noon":
-                    httpParams.put("page_type", 2);
-                    break;
-                default:
-                    httpParams.put("page_type", 0);
-                    break;
-            }
-        } else {
-            httpParams.put("page_type", 0);
-        }
+        httpParams.put("page_type", PAGE_TYPE);
         return httpParams;
     }
 

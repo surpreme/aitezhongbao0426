@@ -87,6 +87,16 @@ public class ChatOutBookActivity extends BaseActivity<ChatOutBookContract.View, 
         });
     }
 
+    /**
+     * 参数名字	提交方式	类型	是否必须	默认值	其他	说明	test
+     * key	post	字符串	必须			会员登录key
+     * order_id	post	整型	必须			订单id
+     * score	post	整型	必须	1		评分 1优 2良 3差
+     * comment	post	字符串	必须			评语
+     * evaluate_image	post	字符串	必须			图片集合，多个图片用英文逗号隔开
+     *
+     * @return
+     */
     private HttpParams initParams() {
         HttpParams params = new HttpParams();
         params.put("key", AppConstant.KEY);

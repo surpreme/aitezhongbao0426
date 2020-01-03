@@ -22,8 +22,11 @@ public class SureShopBookContract {
         void onAdressMonenySuccess(Object msg);
 
         //使用钱包支付实物订单 这里是助餐自选
-        void onPayCollectSuccess(Object msg);
+        void onFactPayCollectSuccess(Object msg);
 
+
+        //第三方支付
+        void onFactPayThreeElseSuccess(Object msg, String payAway);
 
     }
 
@@ -38,7 +41,9 @@ public class SureShopBookContract {
 
         void getAdressMoneny(HttpParams httpParams);
 
-        void PayCollect(HttpParams httpParams);
+        void PayFactCollect(HttpParams httpParams);
+
+        void PayFactThreeElse(HttpParams httpParams,String payAway);
 
     }
 }

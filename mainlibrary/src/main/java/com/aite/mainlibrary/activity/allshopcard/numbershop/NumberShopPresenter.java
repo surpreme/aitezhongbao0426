@@ -20,10 +20,10 @@ import org.json.JSONObject;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
-public class NumberShopPresenter extends BasePresenterImpl<NumberShopContract.View> implements NumberShopContract.Presenter{
+public class NumberShopPresenter extends BasePresenterImpl<NumberShopContract.View> implements NumberShopContract.Presenter {
 
     @Override
     public void GetShopList(HttpParams httpParams) {
@@ -45,6 +45,45 @@ public class NumberShopPresenter extends BasePresenterImpl<NumberShopContract.Vi
                             TimeShoplistBean timeShoplistBean = gson.fromJson(object.toString(), TimeShoplistBean.class);
                             ((Activity) mView.getContext()).runOnUiThread(()
                                     -> mView.onGetShopListSuccess(timeShoplistBean));
+                        }
+
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<TimeShoplistBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<TimeShoplistBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void replaceThing(HttpParams httpParams) {
+        OkGo.<BaseData<TimeShoplistBean>>get(AppConstant.GET_RAPLACETHINGNUMBERSHOPLISTINFORMATIONURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<TimeShoplistBean>>() {
+                    @Override
+                    public BaseData<TimeShoplistBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                        if (baseData.getDatas().getError() != null) {
+                            mView.showError(baseData.getDatas().getError());
+                            return null;
+                        } else {
+                            JSONObject object = jsonObject.optJSONObject("datas");
+                            String order_id = object.getString("order_id");
+                            ((Activity) mView.getContext()).runOnUiThread(()
+                                    -> mView.onGetShopListSuccess(order_id));
                         }
 
 

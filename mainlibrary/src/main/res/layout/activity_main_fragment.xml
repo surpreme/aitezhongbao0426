@@ -94,30 +94,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="41.5dp"
-                    android:layout_gravity="center|top"
-                    android:background="@drawable/juxing_gray_background"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    app:cardCornerRadius="6dp">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="left|center"
-                        android:src="@mipmap/sound" />
-
-                    <com.superluo.textbannerlibrary.TextBannerView
-                        android:id="@+id/sound_tv"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        app:setDirection="top_to_bottom"
-                        app:setGravity="left"
-                        app:setTypeface="bold"
-                        app:setTextColor="@color/black" />
-                </LinearLayout>
+                        android:layout_height="41.5dp"
+                        android:layout_gravity="center|top"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="left|center"
+                            android:src="@mipmap/sound" />
+
+                        <com.superluo.textbannerlibrary.TextBannerView
+                            android:id="@+id/sound_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            app:setDirection="top_to_bottom"
+                            app:setGravity="left"
+                            app:setSingleLine="true"
+                            app:setTextColor="@color/black" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -137,35 +145,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
-                <LinearLayout
-                    android:id="@+id/device_list_ll"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:layout_gravity="center|top"
-                    android:background="@drawable/juxing_gray_background"
-                    android:gravity="center|left"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    app:cardCornerRadius="6dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:id="@+id/device_list_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center|top"
+                        android:gravity="center|left"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
 
-                        <ImageView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@mipmap/blueya" />
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="83dp"
-                            android:layout_height="wrap_content"
-                            android:text="已连接设备AA"
-                            android:textSize="13sp" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@mipmap/blueya" />
+
+                            <TextView
+                                android:layout_width="83dp"
+                                android:layout_height="wrap_content"
+                                android:text="已连接设备AA"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

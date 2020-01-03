@@ -4,6 +4,7 @@ package com.aite.aitezhongbao.activity.findkey;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -177,7 +178,7 @@ public class FindKeyActivity extends BaseActivity<FindKeyContract.View, FindKeyP
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                showTopToasts(((SureFindPasswordCodeBean) msg).getMsg());
+                showToast(((SureFindPasswordCodeBean) msg).getMsg(), Gravity.TOP);
                 startActivity(LoginActivity.class);
                 finish();
             }

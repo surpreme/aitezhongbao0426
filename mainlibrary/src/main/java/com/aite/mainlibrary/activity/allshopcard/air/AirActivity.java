@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -20,9 +21,10 @@ import com.aite.mainlibrary.adapter.AirServiceRecyAdapter;
 import com.aite.mainlibrary.adapter.RadioGroupRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.view.StatusBarUtils;
 import com.lzy.okgo.model.HttpParams;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -61,6 +63,12 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
     ImageView serviceIv;
     @BindView(R2.id.time_iv)
     ImageView timeIv;
+    @BindView(R2.id.all_tv)
+    TextView allTv;
+    @BindView(R2.id.buy_tv)
+    TextView buyTv;
+    @BindView(R2.id.away_tv)
+    TextView awayTv;
     private AirServiceRecyAdapter airServiceRecyAdapter;
     private List<AirMainListBean.ListBean> airMainListBean = new ArrayList<>();
     //banner datalist
@@ -85,7 +93,6 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
         //smartlayout
         initSmartLayout(true);
         //初始化加载
-        initLoadingAnima();
         banner.setIndicatorGravity(BannerConfig.RIGHT)
                 .setOnBannerListener(this);
 
@@ -167,8 +174,6 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
         if (((AirMainListBean) msg).getList().isEmpty()) {
             initNodata();
         } else {
-            stopLoadingAnim();
-            showMoreRecy();
             stopNoData();
             airMainListBean.addAll(((AirMainListBean) msg).getList());
             airServiceRecyAdapter.notifyDataSetChanged();
@@ -216,6 +221,9 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
             if (typeAirBean == null) return;
             allIv.setImageDrawable(getResources().getDrawable(R.drawable.top));
             RadioGroupRecyAdapter radioGroupRecyAdapter = new RadioGroupRecyAdapter(context, typeAirBean.getArea_list());
+            radioGroupRecyAdapter.setClickInterface(position -> {
+                allTv.setText(String.format("%s", typeAirBean.getArea_list().get(position)));
+            });
             showChoicePop(radioGroupRecyAdapter, "AREA_ID");
         }
         if (v.getId() == R.id.time_ll) {
@@ -238,14 +246,15 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
                 switch (type.toString()) {
                     case "CLASS_ID":
                         CLASS_ID = String.valueOf(postion);
-
+                        buyTv.setText(String.format("%s", typeAirBean.getClass_list().get(postion).getNasme()));
                         break;
                     case "AREA_ID":
                         AREA_ID = String.valueOf(postion);
-
+                        allTv.setText(String.format("%s", typeAirBean.getArea_list().get(postion).getNasme()));
                         break;
                     case "TIME_ID":
                         TIME_ID = String.valueOf(postion);
+                        awayTv.setText(String.format("%s", typeAirBean.getTime_array().get(postion).getNasme()));
 
                         break;
                     default:
@@ -258,7 +267,13 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
                 PopwindowUtils.getmInstance().dismissPopWindow();
             }
         });
-        PopwindowUtils.getmInstance().showRecyPopupWindow(context, radioGroupRecyAdapter, manager, fatherTabLl, new PopupWindow.OnDismissListener() {
+        int tabheight = 0;
+        if (checkDeviceHasNavigationBar(context)) {
+            int bootomkeybroadheight = getNavigationBarHeight(context);
+            tabheight = bootomkeybroadheight + fatherTabLl.getTop() - fatherTabLl.getBottom();
+        } else
+            tabheight = fatherTabLl.getTop() - fatherTabLl.getBottom();
+        PopwindowUtils.getmInstance().showRecyPopupWindow(context, getScreenHeight() - fatherTabLl.getBottom() + tabheight - StatusBarUtils.getHeight(context), radioGroupRecyAdapter, manager, fatherTabLl, new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 resetChoiceIv();
@@ -279,10 +294,4 @@ public class AirActivity extends BaseActivity<AirContract.View, AirPresenter> im
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

@@ -15,6 +15,7 @@ import com.aite.mainlibrary.Constant.MainUIConstant;
 import com.aite.mainlibrary.Mainbean.ElseServiceIconBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.bumptech.glide.Glide;
 import com.lzy.basemodule.OnClickLstenerInterface;
 
 import java.util.List;
@@ -55,8 +56,8 @@ public class ElseServiceUIAdapter extends RecyclerView.Adapter<ElseServiceUIAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-//        Glide.with(context).load(elseServiceIconBeans.get(position).getPic()).into(holder.icon);
-        holder.icon.setImageResource(MainUIConstant.ElseHelpConstant.settingImg[position]);
+        Glide.with(context).load(elseServiceIconBeans.get(position).getPic()).into(holder.icon);
+//        holder.icon.setImageResource(MainUIConstant.ElseHelpConstant.settingImg[position]);
         holder.name.setText(elseServiceIconBeans.get(position).getGc_name());
         holder.fatherLayout.setBackgroundResource(MainUIConstant.ElseHelpConstant.backgrondImg[position]);
         holder.fatherLayout.setOnClickListener(new View.OnClickListener() {

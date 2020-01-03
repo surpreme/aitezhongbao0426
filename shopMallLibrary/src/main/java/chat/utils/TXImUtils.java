@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.aite.a.APPSingleton;
 import com.aite.a.activity.ProductDetailsActivity;
 import com.aite.a.parse.JsonParse;
@@ -29,37 +28,33 @@ import com.aiteshangcheng.a.R;
 import com.bumptech.glide.Glide;
 import com.community.activity.ImagePreview;
 import com.community.utils.ClutterUtils;
-import com.tencent.TIMCallBack;
-import com.tencent.TIMConnListener;
-import com.tencent.TIMConversation;
-import com.tencent.TIMCustomElem;
-import com.tencent.TIMElem;
-import com.tencent.TIMElemType;
-import com.tencent.TIMGroupManager;
-import com.tencent.TIMGroupMemberInfo;
-import com.tencent.TIMImage;
-import com.tencent.TIMImageElem;
-import com.tencent.TIMManager;
-import com.tencent.TIMMessage;
-import com.tencent.TIMMessageListener;
-import com.tencent.TIMSoundElem;
-import com.tencent.TIMTextElem;
-import com.tencent.TIMUser;
-import com.tencent.TIMUserStatusListener;
-import com.tencent.TIMValueCallBack;
-
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMConnListener;
+import com.tencent.imsdk.TIMConversation;
+import com.tencent.imsdk.TIMCustomElem;
+import com.tencent.imsdk.TIMElem;
+import com.tencent.imsdk.TIMElemType;
+import com.tencent.imsdk.TIMGroupManager;
+import com.tencent.imsdk.TIMGroupMemberInfo;
+import com.tencent.imsdk.TIMImage;
+import com.tencent.imsdk.TIMImageElem;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMMessage;
+import com.tencent.imsdk.TIMMessageListener;
+import com.tencent.imsdk.TIMSoundElem;
+import com.tencent.imsdk.TIMTextElem;
+import com.tencent.imsdk.TIMUser;
+import com.tencent.imsdk.TIMUserStatusListener;
+import com.tencent.imsdk.TIMValueCallBack;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-
 import chat.adapter.ChatListAdapter;
 import chat.model.CustomMsgInfo;
 import livestream.adapter.Bullet2Adapter;
-
 import static com.aite.a.base.Mark.ORDER_ADDRESS;
 import static com.aite.a.base.Mark.ORDER_AFFIRM;
 
@@ -80,10 +75,10 @@ public class TXImUtils {
      * 添加消息监听
      */
     public static void initTxim(final Context mcontext) {
-        boolean init = TIMManager.getInstance().init(mcontext);//通讯管理器初始化
-        Log.e("---------------", "初始化" + init);
-        TIMManager.getInstance().setLogPrintEnable(false);//不打印LOG
-        TIMManager.getInstance().disableCrashReport();//禁用 Crash 上报
+//        boolean init = TIMManager.getInstance().init(mcontext);//通讯管理器初始化
+//        Log.e("---------------", "初始化" + init);
+//        TIMManager.getInstance().setLogPrintEnable(false);//不打印LOG
+//        TIMManager.getInstance().disableCrashReport();//禁用 Crash 上报
         TIMManager.getInstance().addMessageListener(new TIMMessageListener() {
             /**
              * 收到新消息回调
@@ -113,39 +108,39 @@ public class TXImUtils {
         });
 
         //设置网络连接监听器，连接建立／断开时回调
-        TIMManager.getInstance().setConnectionListener(new TIMConnListener() {//连接监听器
-            @Override
-            public void onConnected() {//连接建立
-                Log.e("---------------", "连接建立");
-            }
-
-            @Override
-            public void onDisconnected(int code, String desc) {//连接断开
-                //接口返回了错误码 code 和错误描述 desc，可用于定位连接断开原因
-                //错误码 code 含义请参见错误码表
-                Log.e("---------------", "连接断开" + code + "   " + desc);
-            }
-
-            @Override
-            public void onWifiNeedAuth(String s) {
-
-            }
-        });
+//        TIMManager.getInstance().setConnectionListener(new TIMConnListener() {//连接监听器
+//            @Override
+//            public void onConnected() {//连接建立
+//                Log.e("---------------", "连接建立");
+//            }
+//
+//            @Override
+//            public void onDisconnected(int code, String desc) {//连接断开
+//                //接口返回了错误码 code 和错误描述 desc，可用于定位连接断开原因
+//                //错误码 code 含义请参见错误码表
+//                Log.e("---------------", "连接断开" + code + "   " + desc);
+//            }
+//
+//            @Override
+//            public void onWifiNeedAuth(String s) {
+//
+//            }
+//        });
 
         //设置用户状态变更监听器，在回调中进行相应的处理
-        TIMManager.getInstance().setUserStatusListener(new TIMUserStatusListener() {
-            @Override
-            public void onForceOffline() {
-                //被踢下线
-                Log.i("---------------", "被踢下线");
-            }
-
-            @Override
-            public void onUserSigExpired() {
-                //票据过期，需要换票后重新登录
-                Log.i("---------------", "票据过期，需要换票后重新登录");
-            }
-        });
+//        TIMManager.getInstance().setUserStatusListener(new TIMUserStatusListener() {
+//            @Override
+//            public void onForceOffline() {
+//                //被踢下线
+//                Log.i("---------------", "被踢下线");
+//            }
+//
+//            @Override
+//            public void onUserSigExpired() {
+//                //票据过期，需要换票后重新登录
+//                Log.i("---------------", "票据过期，需要换票后重新登录");
+//            }
+//        });
     }
 
     /**
@@ -358,19 +353,19 @@ public class TXImUtils {
         TIMUser user = new TIMUser();
         user.setIdentifier(identifier);
         //发起登录请求
-        TIMManager.getInstance().login(sdkAppId, user, userSig,
-                new TIMCallBack() {//回调接口
-
-                    @Override
-                    public void onSuccess() {//登录成功
-                        Log.d("---------------", "登录成功");
-                    }
-
-                    @Override
-                    public void onError(int code, String desc) {//登录失败
-                        Log.d("---------------", "登录失败. code: " + code + " errmsg: " + desc);
-                    }
-                });
+//        TIMManager.getInstance().login(sdkAppId, user, userSig,
+//                new TIMCallBack() {//回调接口
+//
+//                    @Override
+//                    public void onSuccess() {//登录成功
+//                        Log.d("---------------", "登录成功");
+//                    }
+//
+//                    @Override
+//                    public void onError(int code, String desc) {//登录失败
+//                        Log.d("---------------", "登录失败. code: " + code + " errmsg: " + desc);
+//                    }
+//                });
     }
 
     /**

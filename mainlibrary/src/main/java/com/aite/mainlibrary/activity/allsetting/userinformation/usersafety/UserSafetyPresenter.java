@@ -99,7 +99,7 @@ public class UserSafetyPresenter extends BasePresenterImpl<UserSafetyContract.Vi
 
     @Override
     public void sureALLfindkey(HttpParams httpParams) {
-        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.ALLSUREFINDKEYCODE)
+        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.CHANGEFINDKEYCODE)
                 .tag(mView.getContext())
                 .params(httpParams)
                 .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {

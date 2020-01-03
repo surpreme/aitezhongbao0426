@@ -43,7 +43,7 @@ dependencies {
 // implementation files('libs/glide-full-4.1.1.jar')
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.github.donkingliang:LabelsView:1.4.1'
-    implementation files('libs/bugly_2.4.0_imsdk_release.jar')
+//    implementation files('libs/bugly_2.4.0_imsdk_release.jar')
     implementation project(':baselibrary')
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'

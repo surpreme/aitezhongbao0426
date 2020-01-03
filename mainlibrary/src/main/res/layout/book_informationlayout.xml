@@ -99,6 +99,8 @@
                         android:id="@+id/title_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:paddingLeft="20dp"
                         android:text="助医服务-挂号" />
 
@@ -122,7 +124,7 @@
                             android:layout_gravity="right"
                             android:background="@drawable/juxing_gray_background"
                             android:gravity="center"
-                            android:text="去付款"
+                            android:text="付款"
                             android:textColor="@color/blue"
                             android:textSize="18sp" />
 

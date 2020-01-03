@@ -6,8 +6,9 @@ import java.io.Serializable;
 
 public class UseInformationBean extends ErrorBean implements Serializable {
 
+
     /**
-     * member_info : {"member_id":"7","member_name":"18614079738","member_truename":"你好","member_sex":1,"member_birthday":null,"member_mobile":"18614079738","member_email":"18614079738@139.com","point":"5000","predepoit":"0.00","member_qq":"","member_ww":"","member_areainfo":"北京天津河北","member_provinceid":"1","member_cityid":"2","member_areaid":"3","member_avatar":"http://zhongbyi.aitecc.com/data/upload/shop/avatar/avatar_7.png"}
+     * member_info : {"member_id":"7","member_name":"18614079738","nickname":"","member_truename":"布雫雫","member_sex":1,"member_birthday":"2017-05-21","member_mobile":"18614079738","member_email":"18614079738@139.com","point":"8417","predepoit":"870.19","member_qq":"","member_ww":"","member_areainfo":"北京天津河北","member_provinceid":"1","member_cityid":"2","member_areaid":"3","member_avatar":"http://zhongbyi.aitecc.com/data/upload/shop/avatar/avatar_7.jpg","is_allowtalk":1,"is_member":1,"is_volunteer":1,"is_hugong":1,"is_doctors":0,"is_nursing":0,"current_identity":1}
      */
 
     private MemberInfoBean member_info;
@@ -24,27 +25,36 @@ public class UseInformationBean extends ErrorBean implements Serializable {
         /**
          * member_id : 7
          * member_name : 18614079738
-         * member_truename : 你好
+         * nickname :
+         * member_truename : 布雫雫
          * member_sex : 1
-         * member_birthday : null
+         * member_birthday : 2017-05-21
          * member_mobile : 18614079738
          * member_email : 18614079738@139.com
-         * point : 5000
-         * predepoit : 0.00
+         * point : 8417
+         * predepoit : 870.19
          * member_qq :
          * member_ww :
          * member_areainfo : 北京天津河北
          * member_provinceid : 1
          * member_cityid : 2
          * member_areaid : 3
-         * member_avatar : http://zhongbyi.aitecc.com/data/upload/shop/avatar/avatar_7.png
+         * member_avatar : http://zhongbyi.aitecc.com/data/upload/shop/avatar/avatar_7.jpg
+         * is_allowtalk : 1
+         * is_member : 1
+         * is_volunteer : 1
+         * is_hugong : 1
+         * is_doctors : 0
+         * is_nursing : 0
+         * current_identity : 1
          */
 
         private String member_id;
         private String member_name;
+        private String nickname;
         private String member_truename;
         private int member_sex;
-        private Object member_birthday;
+        private String member_birthday;
         private String member_mobile;
         private String member_email;
         private String point;
@@ -56,6 +66,13 @@ public class UseInformationBean extends ErrorBean implements Serializable {
         private String member_cityid;
         private String member_areaid;
         private String member_avatar;
+        private int is_allowtalk;
+        private int is_member;
+        private int is_volunteer;
+        private int is_hugong;
+        private int is_doctors;
+        private int is_nursing;
+        private int current_identity;
 
         public String getMember_id() {
             return member_id;
@@ -71,6 +88,14 @@ public class UseInformationBean extends ErrorBean implements Serializable {
 
         public void setMember_name(String member_name) {
             this.member_name = member_name;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getMember_truename() {
@@ -89,11 +114,11 @@ public class UseInformationBean extends ErrorBean implements Serializable {
             this.member_sex = member_sex;
         }
 
-        public Object getMember_birthday() {
+        public String getMember_birthday() {
             return member_birthday;
         }
 
-        public void setMember_birthday(Object member_birthday) {
+        public void setMember_birthday(String member_birthday) {
             this.member_birthday = member_birthday;
         }
 
@@ -183,6 +208,62 @@ public class UseInformationBean extends ErrorBean implements Serializable {
 
         public void setMember_avatar(String member_avatar) {
             this.member_avatar = member_avatar;
+        }
+
+        public int getIs_allowtalk() {
+            return is_allowtalk;
+        }
+
+        public void setIs_allowtalk(int is_allowtalk) {
+            this.is_allowtalk = is_allowtalk;
+        }
+
+        public int getIs_member() {
+            return is_member;
+        }
+
+        public void setIs_member(int is_member) {
+            this.is_member = is_member;
+        }
+
+        public int getIs_volunteer() {
+            return is_volunteer;
+        }
+
+        public void setIs_volunteer(int is_volunteer) {
+            this.is_volunteer = is_volunteer;
+        }
+
+        public int getIs_hugong() {
+            return is_hugong;
+        }
+
+        public void setIs_hugong(int is_hugong) {
+            this.is_hugong = is_hugong;
+        }
+
+        public int getIs_doctors() {
+            return is_doctors;
+        }
+
+        public void setIs_doctors(int is_doctors) {
+            this.is_doctors = is_doctors;
+        }
+
+        public int getIs_nursing() {
+            return is_nursing;
+        }
+
+        public void setIs_nursing(int is_nursing) {
+            this.is_nursing = is_nursing;
+        }
+
+        public int getCurrent_identity() {
+            return current_identity;
+        }
+
+        public void setCurrent_identity(int current_identity) {
+            this.current_identity = current_identity;
         }
     }
 }

@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.aite.mainlibrary.Mainbean.TimeShoplistBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.adapter.TimeShopRecyAdapter;
+import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +37,10 @@ public class NumberShopActivity extends BaseActivity<NumberShopContract.View, Nu
         initRecy();
         mBaserecyclerView.setAdapter(timeShopRecyAdapter);
         mBaserecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        timeShopRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPosition(int postion) {
+        timeShopRecyAdapter.setClickInterface(postion -> {
+            mPresenter.replaceThing(initParams(timeShoplistbean.get(postion).getPgoods_id()));
 
-            }
+
         });
     }
 
@@ -47,6 +48,13 @@ public class NumberShopActivity extends BaseActivity<NumberShopContract.View, Nu
     protected void initDatas() {
         mPresenter.GetShopList(initKeyParams());
 
+    }
+
+    private HttpParams initParams(String PGOODS_ID) {
+        HttpParams params = new HttpParams();
+        params.put("key", AppConstant.KEY);
+        params.put("pgoods_id", PGOODS_ID);
+        return params;
     }
 
     @Override
@@ -63,6 +71,15 @@ public class NumberShopActivity extends BaseActivity<NumberShopContract.View, Nu
     public void onGetShopListSuccess(Object msg) {
         timeShoplistbean.addAll(((TimeShoplistBean) msg).getList());
         timeShopRecyAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onReplaceThingSuccess(Object msg) {
+        if ((String) msg != null) {
+            showToast("兑换成功");
+            onBackPressed();
+        }
 
     }
 }

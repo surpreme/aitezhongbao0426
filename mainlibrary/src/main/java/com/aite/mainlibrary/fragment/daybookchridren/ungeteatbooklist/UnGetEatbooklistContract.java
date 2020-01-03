@@ -21,6 +21,9 @@ public class UnGetEatbooklistContract {
 
         //使用钱包支付虚拟订单 这里是助餐自选
         void onPayCollectSuccess(Object msg);
+
+        void onPayThreeElseSuccess(Object msg, String payAway);
+
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -33,5 +36,8 @@ public class UnGetEatbooklistContract {
         void getPayList(HttpParams httpParams);
 
         void PayCollect(HttpParams httpParams);
+
+        void PayThreeElse(HttpParams httpParams, String payAway);
+
     }
 }

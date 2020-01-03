@@ -1,8 +1,6 @@
 package com.aite.mainlibrary.activity.allmoney.moneycart;
 
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,14 +13,14 @@ import com.aite.mainlibrary.Constant.MainUIConstant;
 import com.aite.mainlibrary.Mainbean.MoneyCollectBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
-import com.aite.mainlibrary.activity.allmoney.FactMoneyActivity;
 import com.aite.mainlibrary.activity.allmoney.banker.BankerActivity;
+import com.aite.mainlibrary.activity.allmoney.factmoney.FactMoneyActivity;
+import com.aite.mainlibrary.activity.allmoney.moneybook.MoneyBookActivity;
 import com.aite.mainlibrary.adapter.MoneyCardRecyAdapter;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**
@@ -70,10 +68,13 @@ public class MoneycartActivity extends BaseActivity<MoneycartContract.View, Mone
             public void getPosition(int postion) {
                 switch (postion) {
                     case 0:
+                        startActivity(FactMoneyActivity.class, "titlename", "提现", "away", "fact");
                         break;
                     case 1:
+                        startActivity(FactMoneyActivity.class, "titlename", "充值", "away", "post");
+                        break;
                     case 2:
-                        startActivity(FactMoneyActivity.class);
+                        startActivity(MoneyBookActivity.class);
                         break;
                     case 3:
                         startActivity(BankerActivity.class);
@@ -91,7 +92,7 @@ public class MoneycartActivity extends BaseActivity<MoneycartContract.View, Mone
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) onBackPressed();
         if (v.getId() == R.id.get_factmoney_ll)
-            startActivity(FactMoneyActivity.class);
+            startActivity(FactMoneyActivity.class, "titlename", "提现", "away", "fact");
     }
 
     @Override

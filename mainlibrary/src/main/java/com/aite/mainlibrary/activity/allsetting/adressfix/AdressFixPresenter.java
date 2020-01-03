@@ -82,6 +82,8 @@ public class AdressFixPresenter extends BasePresenterImpl<AdressFixContract.View
                             BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
                             if (baseData.getDatas().getError() != null) {
                                 mView.showError(baseData.getDatas().getError());
+                            } else {
+
                             }
 
                         } catch (Exception e) {

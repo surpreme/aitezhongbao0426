@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_layout" />
+    <include layout="@layout/toolbar_right_layout" />
 
     <View
         android:layout_width="match_parent"
@@ -21,6 +21,7 @@
         android:layout_marginLeft="@dimen/margin_5dp"
         android:layout_marginRight="@dimen/margin_5dp"
         android:background="@color/white"
+        android:visibility="gone"
         app:tabIndicatorColor="@color/blue"
         app:tabSelectedTextColor="@color/blue"
         app:tabTextAppearance="@style/MyTabText"
@@ -39,20 +40,84 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="待发货" />
+            android:text="待核销" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="待收货" />
-
+            android:text="已完成" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="待评价" />
+            android:text="评价" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已取消" />
+
 
     </com.google.android.material.tabs.TabLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/low" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待付款" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待核销" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="已完成" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="评价" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="已取消" />
+    </LinearLayout>
 
 
     <View

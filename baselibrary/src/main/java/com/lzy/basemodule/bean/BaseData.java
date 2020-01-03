@@ -1,5 +1,7 @@
 package com.lzy.basemodule.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 
@@ -16,7 +18,7 @@ public class BaseData<T extends ErrorBean> implements Serializable {
      * message : 用户名密码错误
      * datas :
      */
-
+    @SerializedName(value = "code", alternate = {"error_code"})
     private Object code;
     private T datas;
     private boolean isSuccessed;

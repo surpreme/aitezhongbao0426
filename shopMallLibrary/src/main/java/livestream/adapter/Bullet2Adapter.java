@@ -13,11 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiteshangcheng.a.R;
-import com.tencent.TIMCustomElem;
-import com.tencent.TIMElem;
-import com.tencent.TIMElemType;
-import com.tencent.TIMMessage;
-import com.tencent.TIMTextElem;
+import com.tencent.imsdk.TIMMessage;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -72,28 +68,28 @@ public class Bullet2Adapter extends RecyclerView.Adapter<Bullet2Holder> {
     public void onBindViewHolder(@NonNull Bullet2Holder holder, int position) {
         TIMMessage timMessage = msgs.get(position);
 
-        TIMElem elem = timMessage.getElement(0);
-        //获取当前元素的类型
-        TIMElemType elemType = elem.getType();
-        Log.i("---------------","类型  "+elemType.name());
-        if (elemType == TIMElemType.Text) {
-            TIMTextElem e = (TIMTextElem) elem;
-            String text = e.getText();
-            holder.tv_bullet.setTextColor(Color.WHITE);
-            holder.tv_bullet.setText(timMessage.getSender() + "：" + text);
-        }else if (elemType == TIMElemType.Custom){
-            TIMCustomElem e = (TIMCustomElem) elem;
-            holder.tv_bullet.setTextColor(Color.YELLOW);
-            try {
-                String data = new String(e.getData(), "UTF-8");
-                String desc = e.getDesc();
-                if (desc.equals("Join")){
-                    holder.tv_bullet.setText(data);
-                }
-            } catch (UnsupportedEncodingException e1) {
-                e1.printStackTrace();
-            }
-        }
+//        TIMElem elem = timMessage.getElement(0);
+//        //获取当前元素的类型
+//        TIMElemType elemType = elem.getType();
+//        Log.i("---------------","类型  "+elemType.name());
+//        if (elemType == TIMElemType.Text) {
+//            TIMTextElem e = (TIMTextElem) elem;
+//            String text = e.getText();
+//            holder.tv_bullet.setTextColor(Color.WHITE);
+//            holder.tv_bullet.setText(timMessage.getSender() + "：" + text);
+//        }else if (elemType == TIMElemType.Custom){
+//            TIMCustomElem e = (TIMCustomElem) elem;
+//            holder.tv_bullet.setTextColor(Color.YELLOW);
+//            try {
+//                String data = new String(e.getData(), "UTF-8");
+//                String desc = e.getDesc();
+//                if (desc.equals("Join")){
+//                    holder.tv_bullet.setText(data);
+//                }
+//            } catch (UnsupportedEncodingException e1) {
+//                e1.printStackTrace();
+//            }
+//        }
     }
 
     @Override

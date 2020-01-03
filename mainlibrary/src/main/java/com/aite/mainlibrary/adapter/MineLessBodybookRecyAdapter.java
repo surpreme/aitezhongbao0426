@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 
 public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBodybookRecyAdapter.ViewHolder> {
 
+
     private Context context;
     private LayoutInflater inflater;
     private List<BookLessBodyFamilyBean.OrderListBean> orderListBeans;
@@ -54,7 +55,7 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
         void getStartqrPosition(int position);
     }
 
-    private OnStartEatcodeInterface onStartEatcodeInterface;
+    public OnStartEatcodeInterface onStartEatcodeInterface;
 
     public OnStartEatcodeInterface getOnStartEatcodeInterface() {
         return onStartEatcodeInterface;
@@ -66,6 +67,24 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
 
     public void setClickInterface(OnClickLstenerInterface.OnRecyClickInterface clickInterface) {
         this.clickInterface = clickInterface;
+    }
+
+    public void setOnInformationInteface(OnInformationInteface onInformationInteface) {
+        this.onInformationInteface = onInformationInteface;
+    }
+
+    private OnInformationInteface onInformationInteface;
+
+    public interface OnInformationInteface {
+        void pay(int position);
+
+        void lookInformation(int position);
+
+        void talkTv(int position);
+
+        void cancelTv(int position);
+
+
     }
 
     //    page_total	整型	总页数
@@ -84,6 +103,8 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
 //    datas->order_list[]->if_detail	字符串	是否可以显示详情按钮 1是 0否
 //    datas->order_list[]->is_verify	字符串	是否可以显示取餐码按钮 1可以 0不可
 //    datas->order_list[]->if_evaluation	字符串	是否可以显示评价按钮 1是 0否
+//    datas->order_list[]->page_type	字符串	订单类型 1日托 2培训 3就业 4助残活动 5其他服务
+//    datas->order_list[]->vr_code	字符串	核销码
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(context).load(orderListBeans.get(position).getGoods_image_url()).into(holder.iconIv);
@@ -92,16 +113,40 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
         holder.timeTv.setText(String.format("下单时间%s", orderListBeans.get(position).getAdd_time()));
         holder.stateTv.setText(orderListBeans.get(position).getOrder_state_text());
         holder.talk_tv.setVisibility(orderListBeans.get(position).getIf_evaluation() == 1 ? View.VISIBLE : View.GONE);
+        holder.cancel_tv.setOnClickListener(v -> {
+            if (onInformationInteface != null) onInformationInteface.cancelTv(position);
+        });
+        holder.payTv.setOnClickListener(v -> {
+            if (onInformationInteface != null) onInformationInteface.pay(position);
+        });
+        holder.startEatTv.setOnClickListener(v -> {
+            if (onInformationInteface != null) onInformationInteface.lookInformation(position);
+        });
+
         holder.talk_tv.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatOutBookActivity.class);
             intent.putExtra("order_id", orderListBeans.get(position).getOrder_id());
             context.startActivity(intent);
         });
+        if (orderListBeans.get(position).getPage_type() == 1) {
+            holder.typeTv.setText("日托");
+        } else if (orderListBeans.get(position).getPage_type() == 2) {
+            holder.typeTv.setText("培训");
+        } else if (orderListBeans.get(position).getPage_type() == 3) {
+            holder.typeTv.setText("就业");
+        } else if (orderListBeans.get(position).getPage_type() == 4) {
+            holder.typeTv.setText("助残");
+        } else if (orderListBeans.get(position).getPage_type() == 5) {
+            holder.typeTv.setText("其他服务");
+        }
+        //holder.typeTv.setText(orderListBeans.get(position).getPage_type() == 4);
         holder.cancel_tv.setVisibility(orderListBeans.get(position).getIf_cancel() == 1 ? View.VISIBLE : View.GONE);
         holder.payTv.setVisibility(orderListBeans.get(position).getIf_pay() == 1 ? View.VISIBLE : View.GONE);
         holder.startEatTv.setVisibility(orderListBeans.get(position).getIs_verify() == 1 ? View.VISIBLE : View.GONE);
-        holder.startEatTv.setOnClickListener(v -> onStartEatcodeInterface.getStartqrPosition(position));
-        holder.itemView.setOnClickListener(v -> clickInterface.getPosition(position));
+        holder.itemView.setOnClickListener(v -> {
+            if (clickInterface != null) clickInterface.getPosition(position);
+
+        });
 
 
     }
@@ -111,7 +156,7 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
         return orderListBeans == null ? 0 : orderListBeans.size();
     }
 
-    static
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R2.id.icon_iv)
         ImageView iconIv;
@@ -135,11 +180,12 @@ public class MineLessBodybookRecyAdapter extends RecyclerView.Adapter<MineLessBo
         TextView talk_tv;
         @BindView(R2.id.cancel_tv)
         TextView cancel_tv;
+        @BindView(R2.id.type_tv)
+        TextView typeTv;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

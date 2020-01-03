@@ -6,17 +6,21 @@ import com.lzy.okgo.model.HttpParams;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
 public class MinePostBookChriendContract {
     interface View extends BaseView {
         void onGetListInformationSuccess(Object msg);
-        
+
+        void onCancelBookSuccess(Object msg);
+
     }
 
-    interface  Presenter extends BasePresenter<View> {
-        void getListInformation(String url,HttpParams httpParams);
+    interface Presenter extends BasePresenter<View> {
+        void getListInformation(String url, HttpParams httpParams);
+
+        void cancelBook(String url, HttpParams httpParams);
 
     }
 }

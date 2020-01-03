@@ -14,6 +14,7 @@ import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.okgo.model.HttpParams;
 
@@ -102,6 +103,13 @@ public class QrCodeActivity extends BaseActivity<QrCodeContract.View, QrCodePres
         return httpParams;
     }
 
+    private HttpParams initUnfactBookParams(String VR_CODE) {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("key", AppConstant.KEY);
+        httpParams.put("vr_code", VR_CODE);
+        return httpParams;
+    }
+
     @Override
     public void onScanQRCodeSuccess(String result) {
         LogUtils.d(result);
@@ -109,9 +117,11 @@ public class QrCodeActivity extends BaseActivity<QrCodeContract.View, QrCodePres
 //        String id = uri.getQueryParameter("id");
         showToast("扫码成功", Gravity.TOP);
 //        mPresenter.sureBook(initParams(result));
-        if (!getIntent().getStringExtra("type").equals("watch"))
-            mPresenter.sureBook(initParams(getUrlKey(result, "id")));
-        else mPresenter.BindingDevice(initDeviceParams(getUrlKey(result, "imei")));
+        if (getIntent().getStringExtra("type").equals("watch"))
+            mPresenter.BindingDevice(initDeviceParams(getUrlKey(result, "imei")));
+        else if (getIntent().getStringExtra("type").equals("unfactbook"))
+            mPresenter.sureUnfactBook(initUnfactBookParams(result));
+        else mPresenter.sureBook(initParams(getUrlKey(result, "id")));
 
     }
 
@@ -156,8 +166,26 @@ public class QrCodeActivity extends BaseActivity<QrCodeContract.View, QrCodePres
     }
 
     @Override
+    public void onSureUnfactBookSuccess(Object msg) {
+        if (((TwoSuccessCodeBean) msg).getResult().equals("1") && ((TwoSuccessCodeBean) msg).getMsg().equals("核销成功")) {
+            PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, ((TwoSuccessCodeBean) msg).getMsg(), v -> {
+                onBackPressed();
+            });
+//            LogUtils.d(msg.toString());
+//            onBackPressed();
+        }
+
+    }
+
+    @Override
     public void onBindingDeviceSuccess(Object msg) {
 
     }
 
+    @Override
+    public void showError(String msg) {
+        PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, msg, v -> {
+            onBackPressed();
+        });
+    }
 }

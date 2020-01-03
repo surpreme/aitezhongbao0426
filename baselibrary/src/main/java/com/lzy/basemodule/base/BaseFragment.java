@@ -1,6 +1,8 @@
 package com.lzy.basemodule.base;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,6 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.activitylife.ActivityManager;
+import com.lzy.basemodule.base.androidlife.AppManager;
+import com.lzy.basemodule.bean.BaseDataEtras;
+import com.lzy.basemodule.bean.BeanConvertor;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.R;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -23,12 +30,18 @@ import com.lzy.basemodule.mvp.BaseView;
 import com.lzy.basemodule.util.SystemUtil;
 import com.lzy.basemodule.util.toast.ToastTopUtils;
 import com.lzy.basemodule.util.toast.ToastUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -123,8 +136,20 @@ public abstract class BaseFragment<V extends BaseView, T extends BasePresenterIm
 
     }
 
+    @Override
+    public void showNormal() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
     protected void stopNoData() {
         nodata_lottieAnimationView.setVisibility(View.GONE);
+        showMoreRecy();
+        stopLoadingAnim();
     }
 
     protected void initMoreRecy() {
@@ -240,44 +265,65 @@ public abstract class BaseFragment<V extends BaseView, T extends BasePresenterIm
 
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    protected void initWebView(WebView webView) {
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setUseWideViewPort(true); // 将图片调整到适合webview的大小
-        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        // 缩放操作
-        webSettings.setSupportZoom(true); // 支持缩放，默认为true。是下面那个的前提。
-        webSettings.setBuiltInZoomControls(true); // 设置内置的缩放控件。若为false，则该WebView不可缩放
-        webSettings.setDisplayZoomControls(false); // 隐藏原生的缩放控件
-        webSettings.setLoadsImagesAutomatically(true);  //支持自动加载图片
-    }
-
-    protected class JsInterface {
-        private WebView webView;
-
-        public JsInterface(WebView webView) {
-            this.webView = webView;
-        }
-
-        /**
-         * 返回
-         */
-        @JavascriptInterface
-        public void AppGoBack() {
-            if (webView.canGoBack()) {
-                webView.goBack();
-            } else {
-                getActivity().finish();
-            }
-        }
-    }
 
     @Override
     public void showError(String msg) {
         showToast(msg);
         LogUtils.d("服务器错误信息+++++++" + msg);
+        if (msg.equals("查询不到Token数据") || msg.equals("请登录")) {
+            PopwindowUtils.getmInstance().showDialogPopupWindow(
+                    ActivityManager.getInstance().getCurrentActivity(), "下线通知",
+                    "您的账号在另一台手机登录了该账号，如非本人操作，则密码可能已经泄露，建议修改密码",
+                    "重新登录",
+                    "退出",
+                    v -> {
+                        againLogIn();
+                        PopwindowUtils.getmInstance().dismissPopWindow();
+
+                    }
+                    , v -> {
+                        PopwindowUtils.getmInstance().dismissPopWindow();
+                        Intent intent = new Intent();
+                        intent.setAction("com.aite.aitezhongbao.app.activity.login.LoginActivity");
+                        AppManager.getInstance().killAllActivity();
+                        startActivity(intent);
+                    }
+            );
+        }
+    }
+
+    /**
+     * 重新登录
+     */
+    private void againLogIn() {
+        if (AppConstant.LOGINUSERNUMBER == null) return;
+        if (AppConstant.USERPASSWORD == null) return;
+        HttpParams params = new HttpParams();
+        params.put("username", AppConstant.LOGINUSERNUMBER);
+        params.put("password", AppConstant.USERPASSWORD);
+        params.put("client", AppConstant.CLIENT);
+        OkGo.<BaseDataEtras<BaseLogInBean>>post(AppConstant.LOGINURL)
+                .tag(BaseApp.getContext())
+                .params(params)
+                .execute(new AbsCallback<BaseDataEtras<BaseLogInBean>>() {
+                    @Override
+                    public BaseDataEtras<BaseLogInBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseDataEtras<BaseLogInBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseDataEtras<BaseLogInBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
     }
 
     protected void showToast(String msg) {
@@ -296,11 +342,26 @@ public abstract class BaseFragment<V extends BaseView, T extends BasePresenterIm
             showToast("处理返回键错误 ");
         }
     }
+
+    protected HttpParams initListHttpParams(boolean isusekey, ContentValue... values) {
+        HttpParams httpParams = new HttpParams();
+        if (isusekey) {
+            httpParams.put("key", AppConstant.KEY);
+        }
+        if (values != null && values.length > 0) {
+            for (ContentValue value : values) {
+                value.fillHttpParams(httpParams);
+            }
+        }
+        return httpParams;
+    }
+
     protected HttpParams initKeyParams() {
         HttpParams params = new HttpParams();
         params.put("key", AppConstant.KEY);
         return params;
     }
+
     protected boolean isStringEmpty(String s) {
         return s == null || s.isEmpty();
     }

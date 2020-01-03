@@ -14,6 +14,9 @@ import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.BaseConstant.BaseConstant;
+import com.lzy.basemodule.base.BaseApp;
 import com.lzy.basemodule.base.androidlife.AppManager;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -58,7 +61,7 @@ public class UserSafetyActivity extends BaseActivity<UserSafetyContract.View, Us
         initToolbar("账户安全");
     }
 
-    @OnClick({R2.id.timer_tv,R2.id.sure_btn})
+    @OnClick({R2.id.timer_tv, R2.id.sure_btn})
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.timer_tv) {
@@ -110,12 +113,12 @@ public class UserSafetyActivity extends BaseActivity<UserSafetyContract.View, Us
     }
 
 
-
     private HttpParams initALLMSGParams() {
         HttpParams params = new HttpParams();
         params.put("mobile", getEditString(phoneEdit));
+        params.put("key", AppConstant.KEY);
         params.put("password", getEditString(getPasswordEdit));
-        params.put("password_confirm", getEditString(surePasswordEdit));
+        params.put("confirm_password", getEditString(surePasswordEdit));
         return params;
     }
 

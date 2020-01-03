@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignRight="@+id/user_icon"
                     android:layout_alignBottom="@+id/user_icon"
-                    android:src="@drawable/on_line_icon" />
+                    android:src="@mipmap/on_line_icon" />
             </RelativeLayout>
 
         </LinearLayout>

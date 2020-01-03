@@ -124,7 +124,7 @@
                 android:id="@+id/famlily_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="同事" />
+                android:text="请选择" />
         </LinearLayout>
 
         <ImageView
@@ -196,6 +196,7 @@
         android:paddingRight="20dp"
         android:text="设成默认紧急联系人"
         app:switchMinWidth="60dp"
+        android:trackTint="@color/blue"
         app:thumbTint="@color/blue" />
 
 

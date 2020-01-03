@@ -120,21 +120,26 @@ public class ChangeUserInformationActivity extends BaseActivity<ChangeUserInform
                     else MEMBER_SEX = "2";
                 }
             });
-        } else if (v.getId() == R.id.birthday_ll) {
-            initChoiceTimer(new OnTimeSelectListener() {
-                @Override
-                public void onTimeSelect(Date date, View v) {
-                    birthdayTv.setText(String.valueOf(TimeUtils.stampToDate(date.getTime())));
-                    LogUtils.d(date.getTime());
-                    mDate = String.valueOf(TimeUtils.stampToDate2(date.getTime()));
-                    LogUtils.e(String.valueOf(TimeUtils.getTime(date.getTime())));
-                }
-            }, "选择出生日期", 1920, false);
-            pvTime.show();
         }
 
     }
 
+    /**
+     * else if (v.getId() == R.id.birthday_ll) {
+     * initChoiceTimer(new OnTimeSelectListener() {
+     *
+     * @return
+     * @Override public void onTimeSelect(Date date, View v) {
+     * birthdayTv.setText(String.valueOf(TimeUtils.stampToDate(date.getTime())));
+     * LogUtils.d(date.getTime());
+     * mDate = String.valueOf(TimeUtils.stampToDate2(date.getTime()));
+     * LogUtils.e(String.valueOf(TimeUtils.getTime(date.getTime())));
+     * }
+     * }, "选择出生日期", 1920, false);
+     * pvTime.show();
+     * //        httpParams.put("birthday", isStringEmpty(mDate) ? "" : mDate);
+     * }
+     */
     private HttpParams initParams() {
         HttpParams httpParams = new HttpParams();
         httpParams.put("key", AppConstant.KEY);
@@ -143,13 +148,12 @@ public class ChangeUserInformationActivity extends BaseActivity<ChangeUserInform
 
             for (Uri uri : mSelected) {
                 File file = FileUtils.getFileByUri(context, uri);
-                if (file!= null && file.exists()){
+                if (file != null && file.exists()) {
                     httpParams.put("avator", file);
                 }
             }
         }
         httpParams.put("member_truename", isEditTextEmpty(nameEdit) ? "" : getEditString(nameEdit));
-        httpParams.put("birthday", isStringEmpty(mDate) ? "" : mDate);
         return httpParams;
     }
 
@@ -176,7 +180,6 @@ public class ChangeUserInformationActivity extends BaseActivity<ChangeUserInform
         }
 
     }
-
 
 
 }

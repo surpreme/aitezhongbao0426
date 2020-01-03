@@ -48,5 +48,7 @@ dependencies {
     api project(path: ':shopMallLibrary')
     api project(path: ':baselibrary')
     implementation project(path: ':alipaylibrary')
-//jpush聊天ui
+    implementation project(path: ':glibrary')
+
+
 }

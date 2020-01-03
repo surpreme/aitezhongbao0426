@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/tabll_ll"
@@ -19,6 +18,7 @@
             app:srcCompat="@drawable/back" />
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -51,244 +51,282 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tabll_ll">
+        android:layout_below="@+id/tabll_ll"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
-
-            <ImageView
-                android:id="@+id/goods_iv"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@android:color/holo_blue_bright" />
-
-            <TextView
-                android:id="@+id/goods_price_tv"
+            <LinearLayout
+                android:id="@+id/information_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:text="￥100.00"
-                android:textColor="#fffca613"
-                android:textSize="19sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/goods_information_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="日托服务-照顾老人"
-                android:textColor="#ff333333"
-                android:textSize="15sp" />
+                <ImageView
+                    android:id="@+id/goods_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@android:color/holo_blue_bright" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/noglay" />
+                <TextView
+                    android:id="@+id/goods_price_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="7dp"
+                    android:text="￥100.00"
+                    android:textColor="#fffca613"
+                    android:textSize="19sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center|left"
-                android:paddingLeft="15dp"
-                android:text="详情"
-                android:textColor="@color/black"
-                android:textSize="19sp" />
+                <TextView
+                    android:id="@+id/goods_information_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="10dp"
+                    android:text="日托服务-照顾老人"
+                    android:textColor="#ff333333"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/noglay" />
+            </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/all_information_ll"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:text="详情"
+                    android:textColor="@color/black"
+                    android:textSize="19sp" />
+
+                <WebView
+                    android:id="@+id/all_information_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/talk_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingLeft="15dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/talk_all_number_tv"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="7dp"
-                        android:text="100%共有"
-                        android:textColor="#fffca613"
-                        android:textSize="20sp" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/talk_all_number_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="7dp"
+                            android:text="100%共有"
+                            android:textColor="#fffca613"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="共有0人参与评分"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:text="共有0人参与评分"
-                        android:textSize="13sp" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/talk_good_number_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="好评（100%）"
+                                android:textColor="#ff666666"
+                                android:textSize="13sp" />
+
+                            <ProgressBar
+                                android:id="@+id/all_progressBar"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <!--                            <TextView-->
+                            <!--                                android:layout_width="109dp"-->
+                            <!--                                android:layout_height="18dp"-->
+                            <!--                                android:layout_gravity="center"-->
+                            <!--                                android:layout_weight="1"-->
+                            <!--                                android:background="@color/glay"-->
+                            <!--                                android:paddingLeft="10dp" />-->
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/talk_norm_number_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="中评（100%）"
+                                android:textColor="#ff666666"
+                                android:textSize="13sp" />
+
+                            <ProgressBar
+                                android:id="@+id/center_progressBar"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/talk_bad_number_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="差评（100%）"
+                                android:textColor="#ff666666"
+                                android:textSize="13sp" />
+
+                            <ProgressBar
+                                android:id="@+id/bad_progressBar"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/orderDiscuss_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="15dp">
+                    <TextView
+                        android:id="@+id/talk_all_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.8"
+                        android:background="@drawable/round_background_yellow"
+                        android:gravity="center"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="全部评价(2)"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/talk_good_number_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="共有（100%）"
-                            android:textColor="#ff666666"
-                            android:textSize="13sp" />
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@color/glay"
-                            android:paddingLeft="10dp" />
+                    <TextView
+                        android:id="@+id/talk_good_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.6"
+                        android:background="@mipmap/good_sell_talkback"
+                        android:gravity="center"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:text="好评(2)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
-                    </LinearLayout>
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="15dp">
+                    <TextView
+                        android:id="@+id/talk_norm_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.6"
+                        android:background="@mipmap/good_sell_talkback"
+                        android:gravity="center"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:text="中评(2)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/talk_norm_number_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="中评（100%）"
-                            android:textColor="#ff666666"
-                            android:textSize="13sp" />
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="0dp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@color/glay"
-                            android:paddingLeft="10dp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="15dp">
-
-                        <TextView
-                            android:id="@+id/talk_bad_number_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="共有（100%）"
-                            android:textColor="#ff666666"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@color/glay"
-                            android:paddingLeft="10dp" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/talk_bad_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.6"
+                        android:background="@mipmap/good_sell_talkback"
+                        android:gravity="center"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:text="差评(2)"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/talk_all_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.8"
-                    android:background="@drawable/round_background_yellow"
-                    android:gravity="center"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:text="全部评价(2)"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="0dp" />
-
-                <TextView
-                    android:id="@+id/talk_good_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.6"
-                    android:background="@drawable/round_background_noyellow"
-                    android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:text="好评(2)"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="0dp" />
-
-                <TextView
-                    android:id="@+id/talk_norm_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.6"
-                    android:background="@drawable/round_background_noyellow"
-                    android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:text="中评(2)"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="0dp" />
-
-                <TextView
-                    android:id="@+id/talk_bad_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.6"
-                    android:background="@drawable/round_background_noyellow"
-                    android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:text="差评(2)"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/talkout_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:paddingLeft="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -297,11 +335,13 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/talk_user_icon"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@mipmap/chat_man" />
 
                     <TextView
+                        android:id="@+id/talk_name_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:gravity="center|left"
@@ -311,6 +351,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/talk_state_tv"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:gravity="center|left"
@@ -321,6 +362,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/talk_information_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|left"
@@ -390,11 +432,12 @@
                 android:id="@+id/title_top_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center|left"
+                android:paddingLeft="15dp"
                 android:paddingTop="@dimen/padding_12dp"
                 android:paddingBottom="@dimen/padding_12dp"
-                android:text="--    推荐   --"
-                android:textColor="@color/red" />
+                android:text="推荐"
+                android:textColor="@color/black" />
 
             <View
                 android:layout_width="match_parent"
@@ -484,6 +527,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/good_nice_iv"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/good_gray" />
@@ -492,7 +536,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:text="收藏" />
+                android:text="点赞" />
         </LinearLayout>
 
         <TextView
@@ -507,5 +551,6 @@
             android:textSize="19sp" />
 
     </LinearLayout>
-
 </RelativeLayout>
+
+

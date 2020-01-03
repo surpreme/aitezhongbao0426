@@ -22,6 +22,7 @@ import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.view.StatusBarUtils;
 import com.lzy.okgo.model.HttpParams;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -102,7 +103,8 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
             @Override
             public void getPosition(int postion) {
 //                startActivity(HelpDoctorInformationActivity.class, "TYPEID", helpDoctorlistBean.get(postion).getId());
-                startActivity(BookHelpDoctorInformationActivity.class, "TYPEID", helpDoctorlistBean.get(postion).getId());
+                startActivity(BookHelpDoctorInformationActivity.class,
+                        "TYPEID", helpDoctorlistBean.get(postion).getId(), "activity", "HelpdoctorActivity");
 
             }
         });
@@ -203,7 +205,14 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
                 PopwindowUtils.getmInstance().dismissPopWindow();
             }
         });
-        PopwindowUtils.getmInstance().showRecyPopupWindow(context, radioGroupRecyAdapter, manager, fatherTabLl, new PopupWindow.OnDismissListener() {
+        //- fatherTabLl.getBottom()
+        int tabheight = 0;
+        if (checkDeviceHasNavigationBar(context)) {
+            int bootomkeybroadheight = getNavigationBarHeight(context);
+            tabheight = bootomkeybroadheight + fatherTabLl.getTop() - fatherTabLl.getBottom();
+        } else
+            tabheight = fatherTabLl.getTop() - fatherTabLl.getBottom();
+        PopwindowUtils.getmInstance().showRecyPopupWindow(context, getScreenHeight() - fatherTabLl.getBottom() + tabheight - StatusBarUtils.getHeight(context), radioGroupRecyAdapter, manager, fatherTabLl, new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 resetChoiceIv();
@@ -236,8 +245,6 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
         if (((HelpDoctorListBean) msg).getList().isEmpty()) {
             initNodata();
         } else {
-            stopLoadingAnim();
-            showMoreRecy();
             stopNoData();
             helpDoctorlistBean.addAll(((HelpDoctorListBean) msg).getList());
             helpDoctorRecyAdapter.notifyDataSetChanged();

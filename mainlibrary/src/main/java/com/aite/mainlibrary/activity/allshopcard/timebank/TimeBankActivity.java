@@ -26,6 +26,7 @@ import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
+import com.lzy.basemodule.view.StatusBarUtils;
 import com.lzy.okgo.model.HttpParams;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -208,7 +209,13 @@ public class TimeBankActivity extends BaseActivity<TimeBankContract.View, TimeBa
                 PopwindowUtils.getmInstance().dismissPopWindow();
             }
         });
-        PopwindowUtils.getmInstance().showRecyPopupWindow(context, radioGroupRecyAdapter, manager, fatherTabLl, new PopupWindow.OnDismissListener() {
+        int tabheight = 0;
+        if (checkDeviceHasNavigationBar(context)) {
+            int bootomkeybroadheight = getNavigationBarHeight(context);
+            tabheight = fatherTabLl.getBottom() - bootomkeybroadheight;
+        } else
+            tabheight = fatherTabLl.getBottom();
+        PopwindowUtils.getmInstance().showRecyPopupWindow(context, getScreenHeight() - tabheight - StatusBarUtils.getHeight(context), radioGroupRecyAdapter, manager, fatherTabLl, new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 resetChoiceIv();
@@ -256,8 +263,6 @@ public class TimeBankActivity extends BaseActivity<TimeBankContract.View, TimeBa
                 null || ((TimeBankListBean) msg).getList().isEmpty()) {
             initNodata();
         } else {
-            stopLoadingAnim();
-            showMoreRecy();
             stopNoData();
             timeBankListBean.addAll(((TimeBankListBean) msg).getList());
             timeBankRecyAdapter.notifyDataSetChanged();

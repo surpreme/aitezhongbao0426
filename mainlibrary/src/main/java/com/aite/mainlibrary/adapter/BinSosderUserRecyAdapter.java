@@ -90,29 +90,40 @@ public class BinSosderUserRecyAdapter extends RecyclerView.Adapter<BinSosderUser
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String isDefault = listBean.get(position).getIs_default().equals("1") ? " 默认" : "";
         switch (listBean.get(position).getRelation()) {
             case "1":
-                holder.nameTv.setText(String.format(" %s 父亲  ", listBean.get(position).getRealname()));
+            case "父亲":
+                holder.nameTv.setText(String.format("%s%s", String.format(" %s 父亲  ",
+                        listBean.get(position).getRealname()), isDefault));
                 holder.phoneTv.setText(listBean.get(position).getMobile());
                 Glide.with(context).load(listBean.get(position).getAvatar()).apply(RequestOptions.circleCropTransform()).into(holder.userIconIv);
                 break;
             case "2":
-                holder.nameTv.setText(String.format(" %s 母亲  ", listBean.get(position).getRealname()));
+            case "母亲":
+                holder.nameTv.setText(String.format("%s%s", String.format(" %s 母亲  ",
+                        listBean.get(position).getRealname()), isDefault));
                 holder.phoneTv.setText(listBean.get(position).getMobile());
                 Glide.with(context).load(listBean.get(position).getAvatar()).apply(RequestOptions.circleCropTransform()).into(holder.userIconIv);
                 break;
             case "3":
-                holder.nameTv.setText(String.format(" %s 子女  ", listBean.get(position).getRealname()));
+            case "子女":
+                holder.nameTv.setText(String.format("%s%s", String.format(" %s 子女  ",
+                        listBean.get(position).getRealname()), isDefault));
                 holder.phoneTv.setText(listBean.get(position).getMobile());
                 Glide.with(context).load(listBean.get(position).getAvatar()).apply(RequestOptions.circleCropTransform()).into(holder.userIconIv);
                 break;
             case "4":
-                holder.nameTv.setText(String.format(" %s 爱人  ", listBean.get(position).getRealname()));
+            case "爱人":
+                holder.nameTv.setText(String.format("%s%s", String.format(" %s 爱人  ",
+                        listBean.get(position).getRealname()), isDefault));
                 holder.phoneTv.setText(listBean.get(position).getMobile());
                 Glide.with(context).load(listBean.get(position).getAvatar()).apply(RequestOptions.circleCropTransform()).into(holder.userIconIv);
                 break;
             case "5":
-                holder.nameTv.setText(String.format(" %s 其他  ", listBean.get(position).getRealname()));
+            case "其他":
+                holder.nameTv.setText(String.format("%s%s", String.format(" %s 其他  ",
+                        listBean.get(position).getRealname()), isDefault));
                 holder.phoneTv.setText(listBean.get(position).getMobile());
                 Glide.with(context).load(listBean.get(position).getAvatar()).apply(RequestOptions.circleCropTransform()).into(holder.userIconIv);
                 break;

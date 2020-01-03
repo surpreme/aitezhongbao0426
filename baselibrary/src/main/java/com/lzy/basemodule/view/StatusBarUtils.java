@@ -29,7 +29,7 @@ public class StatusBarUtils {
      * @param context
      * @return
      */
-    private static int getHeight(Context context) {
+    public static int getHeight(Context context) {
         int statusBarHeight = 0;
         /**
          * getIdentifier得到识别码

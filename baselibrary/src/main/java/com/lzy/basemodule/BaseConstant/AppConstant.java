@@ -13,6 +13,24 @@ public class AppConstant {
     public static String MEMBER_ID = null;
     public static String ICON_URL = null;
     public static String PHONENUMBER = null;
+    public static String USERPASSWORD = null;
+    public static String LOGINUSERNUMBER = null;
+
+    /**
+     * 身份
+     * member_info[].is_member	整型	是否为会员 身份-会员 1是
+     * member_info[].is_volunteer	整型	是否为义工 身份-义工 1是
+     * member_info[].is_hugong	整型	是否为护工 身份-护工 1是
+     * member_info[].is_doctors	整型	是否为医生 身份-医生 1是
+     * member_info[].is_nursing	整型	是否为养老院 身份-养老院 1是
+     * member_info[].current_identity	整型	用户当前默认身份 1会员 2义工 3护工 4医生
+     */
+    public static boolean IS_MEMBER = false;
+    public static boolean IS_VOLUNTEER = false;
+    public static boolean IS_HUGONG = false;
+    public static boolean IS_DOCTORS = false;
+    public static boolean IS_NURSING = false;
+    public static int CURRENT_IDENTITY = 0;
 
     private static final String BASEURL = "http://zhongbyi.aitecc.com/mobile/";
     //  获取所有地区数据
@@ -25,6 +43,9 @@ public class AppConstant {
     public static final String SUREFINDKEYCODE = BASEURL + "index.php?act=login&op=check_verification_code";
     //找回密码-提交
     public static final String ALLSUREFINDKEYCODE = BASEURL + "index.php?act=login&op=setting_password";
+
+    //找回密码-提交
+    public static final String CHANGEFINDKEYCODE = BASEURL + "index.php?act=member_security&op=new_modify_pwd";
 
     //注册第一步提交
     public static final String NEWUSERFIRSTURL = BASEURL + "index.php?act=login&op=register";
@@ -43,6 +64,24 @@ public class AppConstant {
     public static final String NOWWECHATLOGINURL = BASEURL + "index.php?act=login&op=APP_wx_register";
     //获取账号设置页信息
     public static final String SETTINGINFORMATIONURL = BASEURL + "index.php?act=member_index&op=getMemberSetting";
+    //获取喇叭文章内容url
+    public static final String GET_READBOOKINFORMATIONURL = BASEURL + "index.php?act=article&op=article_Content_Url";
+    //获取喇叭文章标题
+    public static final String GET_READTITLEBOOKINFORMATIONURL = BASEURL + "index.php?act=article&op=APP_article_show";
+
+
+    /**
+     * im
+     */
+    //系统站内信列表  系统消息
+    public static final String GET_IMSYSTEMMESSAGEINFORMATIONURL = BASEURL + "index.php?act=member_message&op=systemmsg";
+
+    //平台客服账号列表  获取在线客服账号列表
+    public static final String GET_IMSHOPMESSAGEINFORMATIONURL = BASEURL + "index.php?act=index&op=platform_callcenter";
+
+    //获取腾讯im配置信息
+    public static final String GET_IMTENCENTCONFIDINFORMATIONURL = "http://zhongbyi.aitecc.com/plug/index.php?op=getIMUserSig";
+
 
     //APP添加银行卡  保存银行卡
     public static final String ADDSAVEBANKINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_add_bank";
@@ -50,10 +89,25 @@ public class AppConstant {
     public static final String DELETESAVEBANKINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_del_bank";
     //APP我的银行卡接口  获取我的银行卡信息列表
     public static final String BANKLISTINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_My_bank";
+    // APP提现页接口 获取展示提现页信息
+    public static final String GET_FACTMONEYLISTINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_get_money";
+    // APP提现页接口 保存申请提现内容
+    public static final String POST_SURETOBANKFACTMONEYLISTINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_save_money";
+    // APP账单明细 获取会员账单明细
+    public static final String GET_HOSTORYLISTMONEYLISTINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=yck_list";
+    // APP充值页接口 获取展示充值页信息
+    public static final String POST_POSTAPPFACTMONEYLISTINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=getPaymentList";
+    // APP充值页接口 获取展示充值页信息
+    public static final String POST_LOSEPOSTAPPFACTMONEYLISTINFORMATIONURL = BASEURL + "index.php?act=predeposit&op=app_recharge_add";
+    // APP-虚拟订单支付 第三方  残疾之家等
+    public static final String GET_UNFACTORDERPAYTHREEAPPFACTMONEYLISTINFORMATIONURL = BASEURL + "index.php?act=member_payment&op=app_vr_pay";
+
+    // APP-实物订单支付 第三方  助餐(自选)等
+    public static final String GET_FACTORDERPAYTHREEAPPFACTMONEYLISTINFORMATIONURL = BASEURL + "index.php?act=member_payment&op=app_pay";
 
     //获取支付方式 注：如果使用钱包支付 则单独调用对应钱包支付提交接口
     public static final String PAYAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_payment&op=APP_getPaymentList";
-    //购物车、直接购买第二步:保存订单入库，产生订单号，开始选择支付方式
+    //购物车、直接购买第二步:保存订单入库，产生订单号，开始选择支付方式  index.php?act=member_buy&op=meal_buy_step2
     public static final String PAYMORNINGMEALAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_buy&op=meal_buy_step2";
     //钱包-实物订单支付 助餐自选 实体订单
     public static final String PAYCOLLECTMORNINGMEALAWYGETINFORMATIONURL = BASEURL + "index.php?act=member_payment&op=predeposit_pay";
@@ -125,6 +179,8 @@ public class AppConstant {
      */
     //订单评价 虚拟
     public static final String NOFACTTALKINFORMATIONFACTBOOKURL = BASEURL + "index.php?act=member_vr_order&op=add_vr_evaluate";
+    //订单评价 评价服务 时间银行、助医、喘息三大板块
+    public static final String POST_HELPELDERTALKINFORMATIONFACTBOOKURL = BASEURL + "index.php?act=member_timebank&op=my_evaluate_all";
     //订单详情 实体订单
     public static final String INFORMATIONFACTBOOKURL = BASEURL + "index.php?act=member_order&op=order_list";
 
@@ -140,6 +196,12 @@ public class AppConstant {
     public static final String TIMEBANKSERVICEMAINUIURL = BASEURL + "index.php?act=timebank&op=list";
     //时间银行 服务申请接口
     public static final String POSTTIMEBANKSERVICEURL = BASEURL + "index.php?act=timebank&op=apply";
+    //时间银行 我发布的服务-服务取消接口 post
+    public static final String CANCELTIMEBANKSERVICEURL = BASEURL + "index.php?act=member_timebank&op=my_cancel";
+    //助医 我发布的服务-服务取消接口 post
+    public static final String CANCELHELPDOCTORSERVICEURL = BASEURL + "index.php?act=member_doctor_help&op=my_cancel";
+    //喘息 我发布的服务-服务取消接口 post
+    public static final String CANCELAIRSERVICEURL = BASEURL + "index.php?act=member_respite&op=my_cancel";
     //时间银行获取服务分类
     public static final String GETBANKSERVICETYPEURL = BASEURL + "index.php?act=timebank&op=class";
     // index.php?act=timebank&op=detail
@@ -148,12 +210,16 @@ public class AppConstant {
     //时间银行 服务接单
     public static final String STARTHELPTIMEBANKURL = BASEURL + "index.php?act=timebank&op=order";
     //
+    //积分转增接口
+    public static final String POST_SENDOTHERSNUMBERBANKINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=points_increase";
     //获取积分银行页信息
     public static final String NUMBERBANKINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=index";
     //获取积分银行  获取会员积分记录
     public static final String AGOGETNUMBERBANKINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=points_log_list";
-    //获取积分礼品
+    //获取积分礼品列表
     public static final String NUMBERSHOPLISTINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=points_goods_list";
+    //积分银行 提交兑换礼品接口
+    public static final String GET_RAPLACETHINGNUMBERSHOPLISTINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=points_goods_list";
     //获取积分规则页信息 直接返回H5内容
     public static final String RULESNUMBERINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=rule";
     //
@@ -174,6 +240,8 @@ public class AppConstant {
     public static final String STARTAIRINSERVICEURL = BASEURL + "index.php?act=respite&op=order";
     //核销码接口 时间银行-喘息 助医
     public static final String SUREBOOKSERVICETIMEBANKURL = BASEURL + "index.php?act=member_timebank&op=verify";
+    //核销码接口 虚拟订单
+    public static final String POST_SUREUNFACTBOOKSERVICETIMEBANKURL = BASEURL + "index.php?act=member_vr_order&op=order_verify";
     //购物车 添加
     public static final String ADDSHOPCARDURL = BASEURL + "index.php?act=member_cart&op=app_cart_add";
 
@@ -273,15 +341,25 @@ public class AppConstant {
     public static final String ALLLESSBODYLISTURL = BASEURL + "index.php?act=goods&op=dhome_goods_list";
     //APP残疾之家 APP残疾之家商品详情
     public static final String INFORMATIONALLLESSBODYLISTURL = BASEURL + "index.php?act=goods&op=dhome_goods_detail";
+    //APP残疾之家 APP残疾之家商品详情   商品详细内容链接 url
+    public static final String GET_GOODBODYINFORMATIONALLLESSBODYLISTURL = BASEURL + "index.php?act=goods&op=goods_body_url";
     //APP残疾之家 APP残疾之家商品收藏
     public static final String COLLECTLLESSBODYLISTURL = BASEURL + "index.php?act=goods&op=favoritesgoods";
+    //APP残疾之家 商品点赞操作接口 取消点赞和添加点赞
+    public static final String FAVOURITELLESSBODYLISTURL = BASEURL + "index.php?act=goods&op=Likegoods";
     //APP残疾之家——订单列表
     public static String BOOKINFORMATIONLISTMINELISTURL = BASEURL + "index.php?act=member_vr_order&op=dhome_order_list";
+    //APP残疾之家——取消订单接口
+    public static String POST_CANCELBOOKINFORMATIONLISTMINELISTURL = BASEURL + "index.php?act=member_vr_order&op=order_cancel";
     //APP残疾之家—— 虚拟商品购买第二步，设置接收手机号页面
     public static String BUYSECONDINFORMATIONLISTMINELISTURL = BASEURL + "index.php?act=member_vr_buy&op=buy_step2";
     //APP残疾之家—— 虚拟订单第三步，产生订单
     public static String OVERBUYINFORMATIONLISTMINELISTURL = BASEURL + "index.php?act=member_vr_buy&op=buy_step3";
-    //  index.php?act=member_timebank&op=order_start
+    //APP残疾之家——  商品评论信息页
+    public static String GET_DISCUSSODERINFORMATIONLISTMINELISTURL = BASEURL + "index.php?act=goods&op=goods_evaluate";
+
+    //系统消息 3天之内的
+    public static String GET_SYSTEMTODAYINFORMATIONLISTMINELISTURL = BASEURL + "index.php?act=member_message&op=newssystemmsg";
 
     //我参与的服务-服务开始接口
     public static String STARTSERVICEPOSTIMNGURL = BASEURL + "index.php?act=member_timebank&op=order_start";

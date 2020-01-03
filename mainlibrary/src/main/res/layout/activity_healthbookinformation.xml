@@ -1,71 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_layout" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/noglay" />
-
-    <TextView
-        android:id="@+id/information_tv"
-        android:layout_width="match_parent"
-        android:layout_height="240dp" />
-
-    <TextView
-        android:id="@+id/time_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:text="患病时间：2019-06-30" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:layout_marginBottom="@dimen/margin_20dp"
-        android:text="病例图片"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_5dp"
-        android:layout_marginRight="@dimen/margin_5dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_first"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:layout_marginRight="@dimen/margin_5dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY" />
 
-        <ImageView
-            android:id="@+id/img_two"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:layout_marginRight="@dimen/margin_5dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY" />
+        <include layout="@layout/toolbar_layout" />
 
-        <ImageView
-            android:id="@+id/img_three"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/noglay" />
+
+        <TextView
+            android:id="@+id/information_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="时间，是物质的运动、变化的持续性、顺序性的表现，包含时刻和时段两个概念。时间是人类用以描述物质运动过程或事件发生过程的一个参数，确定时间，是靠不受外界影响的物质周期变化的规律。以地球自转为基础的时间计量系统称为世界时系统。日、月、年、世纪的时间计量属天文学中的历法范畴。以地球自转运动为基础的时间单位称为“日”，以月球绕地球公转运动为基础的时间单位称为“月”，以地球绕太阳公转运动为基础的时间单位称为“年”。 [1]
+时间是物理学中的七个基本物理量(长度m，时间s，质量kg，热力学温度K(开)，电流单位A（安），光强度cd(坎德拉)，物质的量mol(摩尔)）之一，符号为t。在国际单位制（SI）中，时间的基本单位是秒，符号s，在2018年11月16日召开的第26届国际度量衡大会对秒的定义：未受干扰的铯-133的原子基态的两个超精细能阶间跃迁对应辐射的9,192,631,770个周期的持续时间（Δvcs）。这个定义提到的铯原子必须在绝对零度时是静止的，而且在地面上的环境是零磁场。在这样的情况下被定义的秒，与天文学上的历书时所定义的秒是等效的。生活中常用的时间单位还有：毫秒ms、分min、小时h、日（天）d、月m、年y等。
+现代宇宙学理论认为，宇宙大爆炸“之前”没有时间可言。“永远向前”指时间的增量总是正数。时间表达物体的生灭排列。“时间”简称“时”。时间就是物质的运动和能量的传递。"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_20dp"
+            android:text="患病时间：2019-06-30" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginBottom="@dimen/margin_20dp"
+            android:text="病例图片"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_5dp"
-            android:layout_marginRight="@dimen/margin_5dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY" />
+            android:layout_marginRight="@dimen/margin_5dp">
+
+            <ImageView
+                android:id="@+id/img_first"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/img_two"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/img_three"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -13,10 +13,14 @@ public class NumberShopContract {
     interface View extends BaseView {
         void onGetShopListSuccess(Object msg);
 
+        void onReplaceThingSuccess(Object msg);
+
     }
 
     interface Presenter extends BasePresenter<View> {
         void GetShopList(HttpParams httpParams);
+
+        void replaceThing(HttpParams httpParams);
 
     }
 }

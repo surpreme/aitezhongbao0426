@@ -82,7 +82,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/love" />
+                            android:src="@mipmap/redlove" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                     android:layout_height="55dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginBottom="@dimen/margin_25dp"
+                    android:layout_marginBottom="@dimen/margin_30dp"
                     android:background="#0f1e3f"
                     android:scaleType="fitXY"
                     android:src="@drawable/loveline" />

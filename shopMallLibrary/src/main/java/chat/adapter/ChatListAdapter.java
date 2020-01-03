@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.aiteshangcheng.a.R;
 import com.bumptech.glide.Glide;
 import com.community.utils.ClutterUtils;
-import com.tencent.TIMMessage;
+import com.tencent.imsdk.TIMMessage;
 
 import java.util.List;
 

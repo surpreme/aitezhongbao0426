@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,11 +46,8 @@ import q.rorbin.badgeview.QBadgeView;
  */
 
 public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, ChoiceEatPresenter> implements ChoiceEatContract.View, OnBannerListener {
-
     @BindView(R2.id.type_recy)
     RecyclerView typeRecy;
-    @BindView(R2.id.buy_recy)
-    RecyclerView buyRecy;
     @BindView(R2.id.shopcard_ll)
     RelativeLayout shopcardLl;
     @BindView(R2.id.add_shopcar_btn)
@@ -71,6 +69,7 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
     private List<String> list_title = new ArrayList<>();
     private Badge badge;
     private List<ShopCardlistBean.CartListBean> mCartListBean = new ArrayList<>();
+    private String SECONDID = "";
 
     @Override
     protected int getLayoutResId() {
@@ -84,36 +83,36 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
         addShopcarBtn.setOnClickListener(this);
         //banner
         initBanner(banner);
+        initRecy();
+        initSmartLayout(true, false);
+        initImgNodata();
         banner.setIndicatorGravity(BannerConfig.RIGHT)
                 .setOnBannerListener(this);
         shopcardImg = findViewById(R.id.shopcard_img);
         badge = new QBadgeView(this).bindTarget(shopcardImg).setBadgeText("15").setBadgeBackgroundColor(getResources().getColor(R.color.red));
         badge.setBadgeTextSize(30, false);
         badge.setGravityOffset(2, 5, false);
-        badge.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-            @Override
-            public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+        badge.setOnDragStateChangedListener((dragState, badge, targetView) -> {
 
-            }
         });
         //1
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         typeRecy.setLayoutManager(linearLayoutManager);
         choiceEatTypeRecyAdapter = new ChoiceEatTypeRecyAdapter(context, listClassBeans);
         typeRecy.setAdapter(choiceEatTypeRecyAdapter);
-        choiceEatTypeRecyAdapter.setLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPosition(int postion) {
-                goodsListBeanList.clear();
-                choiceEatRecyAdapter.notifyDataSetChanged();
-                mPresenter.getScondDatalist(initScondParams(String.valueOf(postion)));
+        choiceEatTypeRecyAdapter.setLstenerInterface(postion -> {
+            goodsListBeanList.clear();
+            SECONDID = String.valueOf(postion);
+            mCurrentPage = 1;
+            choiceEatRecyAdapter.notifyDataSetChanged();
+            if (!isStringEmpty(SECONDID))
+                mPresenter.getScondDatalist(initScondParams());
 
-            }
         });
 
         //2
         LinearLayoutManager sencondlinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        buyRecy.setLayoutManager(sencondlinearLayoutManager);
+        mBaserecyclerView.setLayoutManager(sencondlinearLayoutManager);
         choiceEatRecyAdapter = new ChoiceEatRecyAdapter(context, goodsListBeanList);
         choiceEatRecyAdapter.setLstenerInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
             @Override
@@ -122,7 +121,7 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
 
             }
         });
-        buyRecy.setAdapter(choiceEatRecyAdapter);
+        mBaserecyclerView.setAdapter(choiceEatRecyAdapter);
 
     }
 
@@ -151,10 +150,10 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
         return httpParams;
     }
 
-    private HttpParams initScondParams(String id) {
+    private HttpParams initScondParams() {
         HttpParams httpParams = new HttpParams();
-        httpParams.put("gc_id", id);
-        httpParams.put("curpage", 1);
+        httpParams.put("gc_id", SECONDID);
+        httpParams.put("curpage", mCurrentPage);
         httpParams.put("key", AppConstant.KEY);
         return httpParams;
     }
@@ -166,6 +165,26 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
             startActivity(ShopCardActivity.class);
         }
 
+    }
+
+    @Override
+    protected void onSmartRefresh() {
+        super.onSmartRefresh();
+        if (goodsListBeanList == null) goodsListBeanList = new ArrayList<>();
+        if (!goodsListBeanList.isEmpty()) {
+            goodsListBeanList.clear();
+            choiceEatRecyAdapter.notifyDataSetChanged();
+        }
+        if (!isStringEmpty(SECONDID))
+            mPresenter.getScondDatalist(initScondParams());
+    }
+
+    @Override
+    protected void onSmartLoadMore() {
+        super.onSmartLoadMore();
+        if (goodsListBeanList == null) goodsListBeanList = new ArrayList<>();
+        if (!isStringEmpty(SECONDID))
+            mPresenter.getScondDatalist(initScondParams());
     }
 
     @Override
@@ -191,7 +210,9 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
         listClassBeans.get(0).setChecked(true);
         choiceEatTypeRecyAdapter.notifyDataSetChanged();
         if (((TypeChoiceUIBean) msg).getList_class().get(0) != null) {
-            mPresenter.getScondDatalist(initScondParams(((TypeChoiceUIBean) msg).getList_class().get(0).getId()));
+            SECONDID = ((TypeChoiceUIBean) msg).getList_class().get(0).getId();
+            if (!isStringEmpty(SECONDID))
+                mPresenter.getScondDatalist(initScondParams());
         }
         if (((TypeChoiceUIBean) msg).getAdv_list() != null || ((TypeChoiceUIBean) msg).getAdv_list().size() > 0) {
             for (TypeChoiceUIBean.AdvListBean advListBean : ((TypeChoiceUIBean) msg).getAdv_list()) {
@@ -209,13 +230,20 @@ public class ChoiceEatActivity extends BaseActivity<ChoiceEatContract.View, Choi
 
     @Override
     public void getScondDataSuccess(Object msg) {
-        goodsListBeanList.addAll(((RecyChoiceUIBean) msg).getGoods_list());
-        choiceEatRecyAdapter.notifyDataSetChanged();
+        if (mCurrentPage == 1 && ((RecyChoiceUIBean) msg).getGoods_list().isEmpty())
+            showImgNoData();
+        else {
+            goodsListBeanList.addAll(((RecyChoiceUIBean) msg).getGoods_list());
+            choiceEatRecyAdapter.notifyDataSetChanged();
+            if (!goodsListBeanList.isEmpty())
+                stopImgNodata();
+        }
+
     }
 
     @Override
     public void addShopCardSuccesss(Object msg) {
-        if (((String) msg).equals("1")) {
+        if (msg.equals("1")) {
             showToast("添加成功", Gravity.TOP);
             mPresenter.getShopCard(initTypeParams());
             LogUtils.d(msg);

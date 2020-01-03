@@ -53,7 +53,7 @@ public class PostHelpDoctorTypeRecyAdapter extends RecyclerView.Adapter<PostHelp
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.text.setText(classBeans.get(position).getClass_name());
-        holder.itemView.setAlpha(0.8f);
+//        holder.itemView.setAlpha(0.8f);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

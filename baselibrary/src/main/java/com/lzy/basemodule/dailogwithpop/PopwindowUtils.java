@@ -3,6 +3,8 @@ package com.lzy.basemodule.dailogwithpop;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -29,9 +31,14 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.R;
+import com.lzy.basemodule.screen.ScreenUtils;
 import com.lzy.basemodule.view.PickerView;
 
 import java.util.List;
+
+import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
+import cn.bingoogolapple.qrcode.zbar.ZBarView;
+import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 
 public class PopwindowUtils {
     private static PopwindowUtils mInstance;
@@ -41,14 +48,17 @@ public class PopwindowUtils {
     private static final int newuertogtherinformaionlayoutid = R.layout.together_infomation_pop;
     private static final int errorlayoutid = R.layout.error_toast;
     private static final int recylayoutid = R.layout.recy_layout;
+    private static final int withaphlarecylayoutid = R.layout.pop_recy_layout;
     private static final int threeRecylayoutid = R.layout.three_choice;
     private static final int chioceGenderlayoutid = R.layout.choice_gender;
     private static final int bootomrecylayoutid = R.layout.choice_bottom;
     private static final int qrcodelayoutid = R.layout.pop_img;
+    private static final int qrcode2layoutid = R.layout.pop_qr;
     private static final int payawylayoutid = R.layout.pop_pay_awy;
     private static final int choicethreerecylayoutid = R.layout.choice_three_recy;
     private static final int popdailoglayoutid = R.layout.popdailog;
     private static final int popwechatchoicenewslayoutid = R.layout.wechat_pop_newsuser;
+    private static final int bottom_recyandcanceLayout = R.layout.base_bottom_recyandcancel_pop;
 
     public static PopwindowUtils getmInstance() {
         if (mInstance == null) {
@@ -82,10 +92,30 @@ public class PopwindowUtils {
 
     }
 
+    public void showQrPopupWindow(final Context context, Bitmap bitmap, String information) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(qrcodelayoutid, null);
+        setBackGroundAlpha(0.6f, context);
+        popupWindow = new PopupWindow(view, 800, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        ImageView qrcode_bar = view.findViewById(R.id.qrcode_iv);
+        qrcode_bar.setImageBitmap(bitmap);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        TextView information_tv = view.findViewById(R.id.information_tv);
+        information_tv.setText(information);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setBackGroundAlpha(1.0f, context);
+            }
+        });
+
+    }
+
     public void showImgPopupWindow(final Context context, String url, String information) {
         @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(qrcodelayoutid, null);
         setBackGroundAlpha(0.6f, context);
-        popupWindow = new PopupWindow(view, 1000, 700, false);
+        popupWindow = new PopupWindow(view, 800, LinearLayout.LayoutParams.WRAP_CONTENT, false);
         ImageView qrcode_iv = view.findViewById(R.id.qrcode_iv);
         Glide.with(context).load(url).into(qrcode_iv);
         popupWindow.setOutsideTouchable(true);
@@ -278,6 +308,9 @@ public class PopwindowUtils {
         popupWindow.setContentView(view);
 //        popupWindow.showAsDropDown(ui, 0, 0);
         popupWindow.showAtLocation(view, grivaty, 0, 10);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        }
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -286,6 +319,46 @@ public class PopwindowUtils {
             }
         });
 
+    }
+
+    public void showDialogPopupWindow(final Context context, String titles, String information, String sureStr, String cancelStr, View.OnClickListener listenersure, View.OnClickListener listenercancel) {
+        @SuppressLint("InflateParams")
+        View view = LayoutInflater.from(context).inflate(popdailoglayoutid, null);
+        ScreenUtils.setBackGroundAlpha(0.6f, context);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        final TextView title_tv = view.findViewById(R.id.title_tv);
+        final TextView information_tv = view.findViewById(R.id.information_tv);
+        final Button sure_btn = view.findViewById(R.id.sure_btn);
+        final Button cancel_btn = view.findViewById(R.id.cancel_btn);
+        information_tv.setLines(3);
+        view.setAlpha(0.9f);
+        if (isStringUnEmpty(titles)) title_tv.setText(titles);
+        if (isStringUnEmpty(sureStr)) sure_btn.setText(sureStr);
+        if (isStringUnEmpty(cancelStr)) cancel_btn.setText(cancelStr);
+        information_tv.setText(information);
+        sure_btn.setOnClickListener(listenersure);
+        if (listenercancel == null) {
+            cancel_btn.setOnClickListener(v -> {
+                ScreenUtils.setBackGroundAlpha(1.0f, context);
+                dismissPopWindow();
+            });
+        } else {
+            cancel_btn.setOnClickListener(listenercancel);
+        }
+
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(() -> {
+            ScreenUtils.setBackGroundAlpha(1.0f, context);
+            dismissPopWindow();
+        });
+
+    }
+
+    private boolean isStringUnEmpty(String str) {
+        return str != null && !str.equals("") && !str.equals("null");
     }
 
     public void showdiadlogPopupWindow(final Context context, String information, View.OnClickListener listener) {
@@ -324,6 +397,7 @@ public class PopwindowUtils {
         popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
         final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         popupWindow.setFocusable(true);
+        view.setBackgroundColor(context.getResources().getColor(R.color.white));
 
         //图片设置透明度
 //        recyclerView.setAlpha(0.4f);
@@ -343,22 +417,44 @@ public class PopwindowUtils {
 
     }
 
-    public void showRecyPopupWindow(final Context context, RecyclerView.Adapter recyadpater, LinearLayoutManager linearLayoutManager, View ui, PopupWindow.OnDismissListener onDismissListeners) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(recylayoutid, null);
-        setBackGroundAlpha(1.0f, context);
+    public void showBottomRecyAndCancelPopupWindow(final Context context, RecyclerView.Adapter adapter, LinearLayoutManager linearLayoutManager) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(bottom_recyandcanceLayout, null);
+        ScreenUtils.setBackGroundAlpha(0.5f, context);
         popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        RecyclerView recycler_view = view.findViewById(R.id.recycler_view);
+        TextView cancel_tv = view.findViewById(R.id.cancel_tv);
+        cancel_tv.setOnClickListener(v -> popupWindow.dismiss());
+        recycler_view.setAdapter(adapter);
+        recycler_view.setLayoutManager(linearLayoutManager);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        popupWindow.setOnDismissListener(() -> ScreenUtils.setBackGroundAlpha(1.0f, context));
+
+    }
+
+    public void showRecyPopupWindow(final Context context, int height, RecyclerView.Adapter recyadpater, LinearLayoutManager linearLayoutManager, View ui, PopupWindow.OnDismissListener onDismissListeners) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(withaphlarecylayoutid, null);
+        setBackGroundAlpha(1.0f, context);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, height, false);
         final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         popupWindow.setFocusable(true);
-
+        View background_layout = view.findViewById(R.id.background_layout);
+        background_layout.setAlpha(0.7f);
+        recyclerView.setBackgroundColor(context.getResources().getColor(R.color.white));
         //图片设置透明度
 //        recyclerView.setAlpha(0.4f);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyadpater);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupWindow.setOutsideTouchable(false);
+        background_layout.setOnClickListener(v -> {
+            dismissPopWindow();
+            ScreenUtils.setBackGroundAlpha(1.0f, context);
+        });
+//        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         popupWindow.setContentView(view);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            popupWindow.showAsDropDown(ui, 0, 0, Gravity.CENTER);
+            popupWindow.showAsDropDown(ui, 0, 0, Gravity.BOTTOM);
         }
         popupWindow.setOnDismissListener(onDismissListeners);
     }
@@ -489,7 +585,7 @@ public class PopwindowUtils {
     }
 
     public void dismissPopWindow() {
-        if (popupWindow != null)
+        if (popupWindow != null && popupWindow.isShowing())
             popupWindow.dismiss();
     }
 

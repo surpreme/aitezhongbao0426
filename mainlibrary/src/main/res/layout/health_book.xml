@@ -33,7 +33,7 @@
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:paddingRight="15dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                         android:paddingRight="15dp"
                         android:text="疾病史"
                         android:textColor="@color/black"
-                        android:textSize="17sp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -141,7 +141,7 @@
                         android:paddingRight="15dp"
                         android:text="医疗笔记"
                         android:textColor="@color/black"
-                        android:textSize="17sp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -183,7 +183,7 @@
                         android:paddingRight="15dp"
                         android:text="过敏反应"
                         android:textColor="@color/black"
-                        android:textSize="17sp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -225,7 +225,7 @@
                         android:paddingRight="15dp"
                         android:text="药物使用"
                         android:textColor="@color/black"
-                        android:textSize="17sp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -245,10 +245,17 @@
                 android:layout_height="1dp"
                 android:background="@color/noglay" />
 
-            <View
+            <TextView
+                android:id="@+id/send_body_tv"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/noglay" />
+                android:layout_height="50dp"
+                android:gravity="center|left"
+                android:paddingLeft="20dp"
+                android:paddingRight="15dp"
+                android:text="是否器官捐赠者：否"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/send_body_switch"
@@ -259,9 +266,14 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:text="是否捐赠器官者：否"
+                android:visibility="gone"
                 app:switchMinWidth="60dp"
                 app:thumbTint="@color/oranger" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/noglay" />
 
             <LinearLayout
                 android:layout_width="match_parent"

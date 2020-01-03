@@ -1,9 +1,11 @@
 package com.lzy.basemodule.base;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Debug;
 import android.util.Config;
 
@@ -13,6 +15,7 @@ import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.BuildConfig;
 import com.lzy.basemodule.R;
+import com.lzy.basemodule.activitylife.ActivityManager;
 import com.lzy.basemodule.crash.CrashHandler;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -23,6 +26,11 @@ import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
+import com.tencent.imsdk.TIMSdkConfig;
+import com.tencent.qcloud.tim.uikit.TUIKit;
+import com.tencent.qcloud.tim.uikit.config.CustomFaceConfig;
+import com.tencent.qcloud.tim.uikit.config.GeneralConfig;
+import com.tencent.qcloud.tim.uikit.config.TUIKitConfigs;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -44,12 +52,17 @@ import static java.net.Proxy.NO_PROXY;
 
 public class BaseApp extends Application {
     protected static Context context;
+    private static BaseApp instance;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
         init();
+    }
+
+    public static BaseApp instance() {
+        return instance;
     }
 
     private void initOkGo() {
@@ -157,11 +170,61 @@ public class BaseApp extends Application {
 
     private void init() {
         context = this;
+        instance = this;
         CrashHandler.init(new CrashHandler(getApplicationContext()));
         BGASwipeBackHelper.init(this, null);
 //        initOkGo();
         initYouMen();
+        initActvityManager();
+        initIM();
+    }
 
+    private void initIM() {
+        // 配置 Config，请按需配置
+        TUIKitConfigs configs = TUIKit.getConfigs();
+        configs.setSdkConfig(new TIMSdkConfig(BaseConstant.IM.SDKAPPID));
+        configs.setCustomFaceConfig(new CustomFaceConfig());
+        configs.setGeneralConfig(new GeneralConfig());
+        TUIKit.init(this, BaseConstant.IM.SDKAPPID, configs);
+    }
+
+    private void initActvityManager() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                ActivityManager.getInstance().setCurrentActivity(activity);
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
     }
 
     private void initYouMen() {

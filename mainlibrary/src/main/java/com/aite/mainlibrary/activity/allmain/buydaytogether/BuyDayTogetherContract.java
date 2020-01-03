@@ -18,6 +18,8 @@ public class BuyDayTogetherContract {
         void onPayListSuccess(Object msg);
 
         void onPayCollectSuccess(Object msg);
+
+        void onPayThreeElseSuccess(Object msg,String payAway);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -28,6 +30,8 @@ public class BuyDayTogetherContract {
         void getPayList(HttpParams httpParams);
 
         void PayCollect(HttpParams httpParams);
+
+        void PayThreeElse(HttpParams httpParams, String payAway);
 
     }
 }

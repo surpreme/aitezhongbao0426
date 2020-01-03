@@ -17,7 +17,7 @@ import com.aite.aitezhongbao.activity.newuser.NewUserActivity;
 import com.aite.aitezhongbao.activity.newusermsg.NewusermsgActivity;
 import com.aite.aitezhongbao.activity.usertype.UserTypeActivity;
 import com.aite.aitezhongbao.bean.LogInBean;
-import com.aite.alipaylibrary.wechat.wxapi.WechatUtils;
+import com.aite.alipaylibrary.wechat.wxapi.ThreeElseLogInUtils;
 import com.aite.mainlibrary.Mainbean.ThreeSuccessCodeBean;
 import com.google.android.material.textfield.TextInputEditText;
 import com.lzy.basemodule.BaseConstant.AppConstant;
@@ -76,6 +76,8 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
                     return;
                 }
                 mPresenter.login(isStringEmpty(UNIONID) ? initParams() : initwechatbinderuserParams(UNIONID));
+                AppConstant.USERPASSWORD = getEditString(keyGetEdit);
+                AppConstant.LOGINUSERNUMBER = getEditString(numberGetEdit);
                 showLoading();
                 break;
             case R.id.new_user_tv:
@@ -93,14 +95,11 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
     }
 
     public void weiXinLogin() {
-        WechatUtils.authorization(SHARE_MEDIA.WEIXIN, this, new WechatUtils.WechatInformationInterface() {
-            @Override
-            public void ongetMsg(Map<String, String> map) {
-                mPresenter.weChatLogin(initWeChatLoginParams(map.get("unionid")));
-                UNIONID = map.get("unionid");
-                NICKNAME = map.get("name");
-                HEADIMGURL = map.get("iconurl");
-            }
+        ThreeElseLogInUtils.authorization(SHARE_MEDIA.WEIXIN, this, map -> {
+            mPresenter.weChatLogin(initWeChatLoginParams(map.get("unionid")));
+            UNIONID = map.get("unionid");
+            NICKNAME = map.get("name");
+            HEADIMGURL = map.get("iconurl");
         });
     }
 
@@ -170,10 +169,17 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
 //        runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
-        AppConstant.KEY = ((LogInBean) msg).getDatas().getKey();
-        AppConstant.USERNAME = ((LogInBean) msg).getDatas().getUsername();
-        AppConstant.FRIEND_VALID = ((LogInBean) msg).getDatas().getConfig().getFriend_valid();
-        AppConstant.MEMBER_ID = ((LogInBean) msg).getDatas().getConfig().getMember_id();
+        AppConstant.KEY = ((LogInBean) msg).getKey();
+        AppConstant.USERNAME = ((LogInBean) msg).getUsername();
+        AppConstant.FRIEND_VALID = ((LogInBean) msg).getConfig().getFriend_valid();
+        AppConstant.MEMBER_ID = ((LogInBean) msg).getConfig().getMember_id();
+
+        AppConstant.IS_MEMBER = ((LogInBean) msg).getIs_member().equals("1");
+        AppConstant.IS_VOLUNTEER = ((LogInBean) msg).getIs_volunteer().equals("1");
+        AppConstant.IS_HUGONG = ((LogInBean) msg).getIs_hugong().equals("1");
+        AppConstant.IS_DOCTORS = ((LogInBean) msg).getIs_doctors().equals("1");
+        AppConstant.IS_NURSING = ((LogInBean) msg).getIs_nursing().equals("1");
+        AppConstant.CURRENT_IDENTITY = Integer.parseInt(((LogInBean) msg).getCurrent_identity());
         dimissLoading();
         startActivity(MainActivity.class);
         finish();

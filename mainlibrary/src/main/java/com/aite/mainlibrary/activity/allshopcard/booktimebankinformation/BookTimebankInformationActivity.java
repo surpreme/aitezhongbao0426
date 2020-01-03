@@ -12,6 +12,7 @@ import com.aite.mainlibrary.Mainbean.HelpDoctorInformationBean;
 import com.aite.mainlibrary.Mainbean.StateCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.allshopcard.hekpstart.HekpStartActivity;
 import com.bumptech.glide.Glide;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseActivity;
@@ -54,11 +55,19 @@ public class BookTimebankInformationActivity extends BaseActivity<BookTimebankIn
         initBottomBtn("接单", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String url = "";
+                if (getIntent().getStringExtra("activity").equals("TimeBankActivity")) {
+                    url = AppConstant.STARTHELPTIMEBANKURL;
+                } else if (getIntent().getStringExtra("activity").equals("AirActivity")) {
+                    url = AppConstant.STARTAIRINSERVICEURL;
+                }else {
+                    url = AppConstant.STARTHELPDOCTORNEEDURL;
+
+                }
                 mPresenter.StartService(initParams(),
-                        getIntent().getStringExtra("activity")
-                                .equals("TimeBankActivity")
-                                ? AppConstant.STARTHELPTIMEBANKURL : AppConstant.STARTAIRINSERVICEURL);
-//                startActivity(HekpStartActivity.class, "HELPID", getIntent().getStringExtra("TYPEID"));
+                        url);
+//                startActivity(HekpStartActivity.class, "URLTYPE", "START");
+//                startActivity(HekpStartActivity.class, "URLTYPE", "START", "tb_id", getIntent().getStringExtra("TYPEID"));
 
             }
         });
@@ -77,9 +86,9 @@ public class BookTimebankInformationActivity extends BaseActivity<BookTimebankIn
         mPresenter.getInformation(
                 initParams(),
                 getIntent()
-                .getStringExtra("activity")
-                .equals("TimeBankActivity")
-                ? AppConstant.BOOKINFORMATIONTIMEBANKURL : AppConstant.INFORMATIONAIRINSERVICEURL);
+                        .getStringExtra("activity")
+                        .equals("TimeBankActivity")
+                        ? AppConstant.BOOKINFORMATIONTIMEBANKURL : AppConstant.INFORMATIONAIRINSERVICEURL);
 
     }
 

@@ -53,7 +53,7 @@ public class HelpEatHouseTypeRecyAdapter extends RecyclerView.Adapter<HelpEatHou
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.text.setText(classBeans.get(position).getStore_name());
-        holder.itemView.setAlpha(0.8f);
+//        holder.itemView.setAlpha(0.8f);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

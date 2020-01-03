@@ -1,24 +1,34 @@
 package com.aite.mainlibrary.fragment.daybookchridren.daybooklist;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.aite.a.activity.MainActivity;
 import com.aite.a.activity.li.activity.ChoiceActivity;
 import com.aite.alipaylibrary.PayAway;
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
+import com.aite.mainlibrary.Mainbean.AlipayOrderIdBean;
 import com.aite.mainlibrary.Mainbean.BookMorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
 import com.aite.mainlibrary.Mainbean.QrBookMorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.activity.allshopcard.bookinformation.BookinformationActivity;
+import com.aite.mainlibrary.activity.allshopcard.chatoutbook.ChatOutBookActivity;
 import com.aite.mainlibrary.adapter.MineHelpEatRecyAdapter;
 import com.aite.mainlibrary.adapter.MineLessBodybookRecyAdapter;
 import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
+import com.blankj.rxbus.RxBus;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseLazyFragment;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -27,6 +37,9 @@ import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
+import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 
 /**
  * MVPPlugin
@@ -37,6 +50,7 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
     private MineHelpEatRecyAdapter mineHelpEatRecyAdapter;
     private List<BookMorningNoonEatBean.OrderListBean> orderListBeans = new ArrayList<>();
     private String ORDER_ID = "";
+    private String PAGE_TYPE = "0";
 
 
     @Override
@@ -49,10 +63,19 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
     @Override
     protected void initViews() {
         initMoreRecy();
+        RxBus.getDefault().subscribe(context, "eat", new RxBus.Callback<String>() {
+            @Override
+            public void onEvent(String o) {
+                PAGE_TYPE = o;
+                onSmartRefresh();
+
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mBaserecyclerView.setLayoutManager(linearLayoutManager);
         mineHelpEatRecyAdapter = new MineHelpEatRecyAdapter(context, orderListBeans);
-        mineHelpEatRecyAdapter.setClickInterface(postion -> startActivity(BookinformationActivity.class, "ORDER_ID", String.valueOf(orderListBeans.get(postion).getOrder_id())));
+        mineHelpEatRecyAdapter.setClickInterface(postion ->
+                startActivity(BookinformationActivity.class, "ORDER_ID", String.valueOf(orderListBeans.get(postion).getOrder_id())));
         mineHelpEatRecyAdapter.setOnInformationInteface(new MineHelpEatRecyAdapter.OnInformationInteface() {
             @Override
             public void pay(int position) {
@@ -62,14 +85,16 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
 
             @Override
             public void lookInformation(int position) {
-                ORDER_ID = String.valueOf(orderListBeans.get(position).getOrder_id());
+                startActivity(BookinformationActivity.class, "ORDER_ID", String.valueOf(orderListBeans.get(position).getOrder_id()));
 
             }
 
             @Override
             public void talkTv(int position) {
                 ORDER_ID = String.valueOf(orderListBeans.get(position).getOrder_id());
-
+                Intent intent = new Intent(context, ChatOutBookActivity.class);
+                intent.putExtra("order_id", orderListBeans.get(position).getOrder_id());
+                context.startActivity(intent);
             }
 
             @Override
@@ -141,31 +166,32 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
      * startActivity(ChiendThingsbookActivity.class, "type", "noon");
      * if (postion == 3)
      * startActivity(ChiendThingsbookActivity.class, "type", "choice");
+     * <p>
+     * if (getArguments() != null && getArguments().getString("type") != null) {
+     * switch (getArguments().getString("type")) {
+     * case "all":
+     * break;
+     * case "morning":
+     * httpParams.put("page_type", 1);
+     * break;
+     * case "noon":
+     * httpParams.put("page_type", 2);
+     * break;
+     * default:
+     * httpParams.put("page_type", 0);
+     * break;
+     * }
+     * } else {
+     * httpParams.put("page_type", 0);
+     * <p>
+     * }
      */
     private HttpParams initEatParams() {
         HttpParams httpParams = new HttpParams();
         httpParams.put("key", AppConstant.KEY);
         httpParams.put("curpage", mCurrentPage);
         httpParams.put("state", getArguments().getString("state"));
-        if (getArguments() != null && getArguments().getString("type") != null) {
-            switch (getArguments().getString("type")) {
-                case "all":
-                    httpParams.put("page_type", 0);
-                    break;
-                case "morning":
-                    httpParams.put("page_type", 1);
-                    break;
-                case "noon":
-                    httpParams.put("page_type", 2);
-                    break;
-                default:
-                    httpParams.put("page_type", 0);
-                    break;
-            }
-        } else {
-            httpParams.put("page_type", 0);
-
-        }
+        httpParams.put("page_type", PAGE_TYPE);
         return httpParams;
     }
 
@@ -192,8 +218,6 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
         if (((BookMorningNoonEatBean) msg).getOrder_list().isEmpty()) {
             initNodata();
         } else {
-            stopLoadingAnim();
-            showMoreRecy();
             stopNoData();
             orderListBeans.addAll(((BookMorningNoonEatBean) msg).getOrder_list());
             mineHelpEatRecyAdapter.notifyDataSetChanged();
@@ -204,9 +228,17 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
     }
 
     @Override
-    public void onGetStartEatQrinformationSuccess(Object msg, int postion) {
-        if (((QrBookMorningNoonEatBean) msg).getQrcodeimg() != null)
-            PopwindowUtils.getmInstance().showImgPopupWindow(context, ((QrBookMorningNoonEatBean) msg).getQrcodeimg(), orderListBeans.get(postion).getGoods_name() + "   " + orderListBeans.get(postion).getAdd_time());
+    public void onGetStartEatQrinformationSuccess(Object msg, int position) {
+        if (((QrBookMorningNoonEatBean) msg).getQrcodeimg() != null) {
+            Bitmap bitmap = QRCodeEncoder.syncEncodeQRCode(
+                    orderListBeans.get(position).getVr_code(),
+                    BGAQRCodeUtil.dp2px(context, 150),
+                    Color.BLACK, Color.WHITE,
+                    BitmapFactory.decodeResource(context.getResources(), com.lzy.basemodule.R.drawable.logo));
+            PopwindowUtils.getmInstance().showQrPopupWindow(context, bitmap, orderListBeans.get(position).getGoods_name() + "   " + orderListBeans.get(position).getAdd_time());
+
+        }
+//        PopwindowUtils.getmInstance().showImgPopupWindow(context, ((QrBookMorningNoonEatBean) msg).getQrcodeimg(), orderListBeans.get(postion).getGoods_name() + "   " + orderListBeans.get(postion).getAdd_time());
 
     }
 
@@ -234,21 +266,28 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
         if (paylist == null || paylist.isEmpty()) return;
         PayRadioGroupRecyAdapter payRadioGroupRecyAdapter = new PayRadioGroupRecyAdapter(context, paylist);
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        payRadioGroupRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {
-            @Override
-            public void getPosition(int postion) {
-                LogUtils.d(postion);
-                PopwindowUtils.getmInstance().dismissPopWindow();
-                PopwindowUtils.getmInstance().dismissPopWindow();
-                if (postion == 99) {
-                    mPresenter.PayCollect(initCollectParams());
-
-                } else if (postion == 1) {
-                    PayAway.Alipay("fgydfgsxdfgscfgdf", getActivity(), ChoiceActivity.class);
-
+        payRadioGroupRecyAdapter.setClickInterface(postion -> {
+            LogUtils.d(postion);
+            PopwindowUtils.getmInstance().dismissPopWindow();
+            PopwindowUtils.getmInstance().dismissPopWindow();
+            if (postion == 99) {
+                mPresenter.PayCollect(initCollectParams());
+            } else {
+                if (postion == 1) {
+                    mPresenter.PayThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("order_id", isStringEmpty(ORDER_ID) ? "" : ORDER_ID),
+                            new ContentValue("payment_code", "alipay")), "alipay");
+                } else if (postion == 3) {
+                    mPresenter.PayThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("order_id", isStringEmpty(ORDER_ID) ? "" : ORDER_ID),
+                            new ContentValue("payment_code", "app_wxpay")), "app_wxpay");
                 }
 
+
             }
+
         });
         PopwindowUtils.getmInstance().showPayRecyPopupWindow(context, Gravity.BOTTOM, payRadioGroupRecyAdapter, manager);
 
@@ -280,6 +319,20 @@ public class DaybooklistFragment extends BaseLazyFragment<DaybooklistContract.Vi
         }
 
 
+    }
+
+    @Override
+    public void onPayThreeElseSuccess(Object msg, String payAway) {
+        if (msg != null) {
+            if (payAway.equals("alipay")) {
+                AlipayOrderIdBean alipayOrderIdBean = (AlipayOrderIdBean) msg;
+                LogUtils.d(alipayOrderIdBean.getPayinfo());
+                PayAway.Alipay(alipayOrderIdBean.getPayinfo(), getActivity(), MainActivity.class);
+            } else if (payAway.equals("app_wxpay")) {
+                WeChatPayBackBean weChatPayBackBean = (WeChatPayBackBean) msg;
+                PayAway.WchatPay(weChatPayBackBean, getContext());
+            }
+        }
     }
 
     @Override

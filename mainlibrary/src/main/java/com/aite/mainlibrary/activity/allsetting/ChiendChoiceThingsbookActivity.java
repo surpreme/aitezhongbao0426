@@ -35,7 +35,7 @@ public class ChiendChoiceThingsbookActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.thingbook_layout;
+        return R.layout.activity_choice_eatorder;
     }
 
     @Override

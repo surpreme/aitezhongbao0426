@@ -2,9 +2,10 @@ package com.aite.mainlibrary.activity.allshopcard.sureshopbook;
 
 import android.app.Activity;
 
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
+import com.aite.mainlibrary.Mainbean.AlipayOrderIdBean;
 import com.aite.mainlibrary.Mainbean.BookInfprmationMorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.MoreAdressInormationBean;
-import com.aite.mainlibrary.Mainbean.MorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.PayListBean;
 import com.aite.mainlibrary.Mainbean.SureSendMoneyBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
@@ -233,7 +234,7 @@ public class SureShopBookPresenter extends BasePresenterImpl<SureShopBookContrac
     }
 
     @Override
-    public void PayCollect(HttpParams httpParams) {
+    public void PayFactCollect(HttpParams httpParams) {
         OkGo.<BaseData<TwoSuccessCodeBean>>get(AppConstant.PAYCOLLECTMORNINGMEALAWYGETINFORMATIONURL)
                 .tag(mView.getContext())
                 .params(httpParams)
@@ -251,10 +252,10 @@ public class SureShopBookPresenter extends BasePresenterImpl<SureShopBookContrac
                         } catch (Exception e) {
                         }
                         JSONObject object = jsonObject.optJSONObject("datas");
-                        Gson gson=new Gson();
-                        TwoSuccessCodeBean twoSuccessCodeBean=gson.fromJson(object.toString(),TwoSuccessCodeBean.class);
+                        Gson gson = new Gson();
+                        TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
                         ((Activity) mView.getContext()).runOnUiThread(()
-                                -> mView.onPayCollectSuccess(twoSuccessCodeBean));
+                                -> mView.onFactPayCollectSuccess(twoSuccessCodeBean));
 
                         return null;
                     }
@@ -272,5 +273,56 @@ public class SureShopBookPresenter extends BasePresenterImpl<SureShopBookContrac
                     }
                 });
 
+    }
+
+    @Override
+    public void PayFactThreeElse(HttpParams httpParams, String payAway) {
+        OkGo.<BaseData<AlipayOrderIdBean>>get(AppConstant.GET_FACTORDERPAYTHREEAPPFACTMONEYLISTINFORMATIONURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<AlipayOrderIdBean>>() {
+                    @Override
+                    public BaseData<AlipayOrderIdBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                mView.showError(baseData.getDatas().getError());
+                            } else {
+                                JSONObject object = jsonObject.optJSONObject("datas");
+                                Gson gson = new Gson();
+                                if (payAway.equals("alipay")) {
+                                    AlipayOrderIdBean alipayOrderIdBean = gson.fromJson(object.toString(), AlipayOrderIdBean.class);
+                                    ((Activity) mView.getContext()).runOnUiThread(()
+                                            -> mView.onFactPayThreeElseSuccess(alipayOrderIdBean, "alipay"));
+                                } else if (payAway.equals("app_wxpay")) {
+                                    WeChatPayBackBean weChatPayBackBean = gson.fromJson(object.toString(), WeChatPayBackBean.class);
+                                    ((Activity) mView.getContext()).runOnUiThread(()
+                                            -> mView.onFactPayThreeElseSuccess(weChatPayBackBean, "app_wxpay"));
+
+                                }
+
+                            }
+
+                        } catch (Exception e) {
+                            LogUtils.e(e);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<AlipayOrderIdBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<AlipayOrderIdBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
     }
 }

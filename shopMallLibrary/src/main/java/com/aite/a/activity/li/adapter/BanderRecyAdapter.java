@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.aite.a.activity.GoodsListActivity;
 import com.aite.a.activity.li.bean.BrandBean;
 import com.aiteshangcheng.a.R;
-import com.weixin.paydemo.Constants;
 
 import java.util.ArrayList;
 import java.util.List;

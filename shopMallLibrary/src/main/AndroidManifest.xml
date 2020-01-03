@@ -710,7 +710,7 @@
         <activity
             android:name="hotel.HotelDatailsActivity"
             android:screenOrientation="portrait" /> <!-- 微信支付 -->
-        <activity
+        <!--<activity
             android:name="com.aiteshangcheng.a.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
@@ -722,7 +722,7 @@
 
                 <data android:scheme="wxc8d6770ec7bde16a" />
             </intent-filter>
-        </activity>
+        </activity>-->
         <activity
             android:name="com.aiteshangcheng.a.wxapi.WXEntryActivity2"
             android:exported="true"

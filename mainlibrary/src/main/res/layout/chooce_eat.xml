@@ -24,14 +24,36 @@
             android:id="@+id/type_recy"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.7"
+            android:layout_weight="0.2"
             android:background="@color/noglay" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/buy_recy"
+        <include
+            layout="@layout/smartlayout_father_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5" />
+            android:layout_weight="0.7" />
+
+        <!--        <com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+        <!--            android:id="@+id/smartlayout"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent">-->
+
+        <!--            <FrameLayout-->
+        <!--                android:id="@+id/all_state_framlayout"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent">-->
+
+        <!--                <androidx.recyclerview.widget.RecyclerView-->
+        <!--                    android:id="@+id/buy_recy"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent" />-->
+
+        <!--            </FrameLayout>-->
+
+
+        <!--        </com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <RelativeLayout

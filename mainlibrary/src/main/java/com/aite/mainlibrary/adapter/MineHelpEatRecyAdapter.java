@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 
 public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecyAdapter.ViewHolder> {
 
+
     private Context context;
     private LayoutInflater inflater;
     private List<BookMorningNoonEatBean.OrderListBean> orderListBeans;
@@ -94,6 +95,7 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
 //    datas->order_list[]->goods_image_url	字符串	商品图片
 //    datas->order_list[]->add_time	字符串	下单时间
 //    datas->order_list[]->order_state_text	字符串	订单状态文字
+//    datas->order_list[]->gc_id	字符串	类型 14早餐 15午餐
 //    datas->order_list[]->if_cancel	字符串	是否显示取消按钮 1是 0否
 //    datas->order_list[]->if_pay	字符串	是否可以显示支付按钮 1是 0否
 //    datas->order_list[]->if_detail	字符串	是否可以显示详情按钮 1是 0否
@@ -108,12 +110,15 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
         holder.stateTv.setText(orderListBeans.get(position).getOrder_state_text());
         holder.cancelTv.setVisibility(orderListBeans.get(position).getIf_cancel() == 1 ? View.VISIBLE : View.GONE);
         holder.cancelTv.setOnClickListener(v -> onInformationInteface.cancelTv(position));
+        if (orderListBeans.get(position).getGc_id() != null && !orderListBeans.get(position).getGc_id().equals(""))
+            holder.typeTv.setText(orderListBeans.get(position).getGc_id().equals("14") ? "早餐" : "午餐");
         holder.talkTv.setVisibility(orderListBeans.get(position).getIf_evaluation() == 1 ? View.VISIBLE : View.GONE);
         holder.talkTv.setOnClickListener(v -> {
-            onInformationInteface.talkTv(position);
-            Intent intent = new Intent(context, ChatOutBookActivity.class);
-            intent.putExtra("order_id", orderListBeans.get(position).getOrder_id());
-            context.startActivity(intent);
+            if (onInformationInteface != null)
+                onInformationInteface.talkTv(position);
+//            Intent intent = new Intent(context, ChatOutBookActivity.class);
+//            intent.putExtra("order_id", orderListBeans.get(position).getOrder_id());
+//            context.startActivity(intent);
         });
         holder.payTv.setVisibility(orderListBeans.get(position).getIf_pay() == 1 ? View.VISIBLE : View.GONE);
         holder.payTv.setOnClickListener(v -> onInformationInteface.pay(position));
@@ -156,6 +161,8 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
         TextView payTv;
         @BindView(R2.id.start_eat_tv)
         TextView startEatTv;
+        @BindView(R2.id.type_tv)
+        TextView typeTv;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

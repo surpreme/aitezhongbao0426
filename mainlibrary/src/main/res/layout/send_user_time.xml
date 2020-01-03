@@ -19,7 +19,7 @@
         android:layout_height="40dp"
         android:layout_margin="@dimen/margin_10dp"
         android:background="@drawable/juxing_gray_background"
-        android:hint="转增账号"
+        android:hint="转增账号名称"
         android:paddingLeft="@dimen/padding_15dp"
         android:textSize="@dimen/textSize_15sp" />
 
@@ -28,9 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="@dimen/margin_10dp"
-        android:inputType="number"
         android:background="@drawable/juxing_gray_background"
         android:hint="转增数量"
+        android:inputType="number"
         android:paddingLeft="@dimen/padding_15dp"
         android:textSize="@dimen/textSize_15sp" />
 

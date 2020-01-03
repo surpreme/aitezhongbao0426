@@ -8,5 +8,5 @@
 
     <include layout="@layout/toolbar_right_layout" />
 
-    <include layout="@layout/recy_layout" />
+    <include layout="@layout/smartlayout_father_layout" />
 </LinearLayout>

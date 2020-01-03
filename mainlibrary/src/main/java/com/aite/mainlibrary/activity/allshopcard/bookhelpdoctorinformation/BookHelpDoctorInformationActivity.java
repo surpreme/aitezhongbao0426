@@ -52,13 +52,7 @@ public class BookHelpDoctorInformationActivity extends BaseActivity<BookHelpDoct
     @Override
     protected void initView() {
         initToolbar("服务详情");
-        initBottomBtn("开始服务", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.StartService(initParams());
-
-            }
-        });
+        initBottomBtn("接单", v -> mPresenter.StartService(initParams()));
 
     }
 
@@ -109,7 +103,7 @@ public class BookHelpDoctorInformationActivity extends BaseActivity<BookHelpDoct
     @Override
     public void onStartServiceSuccess(Object msg) {
         if (((StateCodeBean) msg).getResult().equals("1")) {
-            startActivity(HekpStartActivity.class, "HELPID", getIntent().getStringExtra("TYPEID"));
+//            startActivity(HekpStartActivity.class, "URLTYPE", "START", "tb_id", getIntent().getStringExtra("TYPEID"));
             showToast(((StateCodeBean) msg).getMsg(), Gravity.TOP);
 //            onBackPressed();
         }

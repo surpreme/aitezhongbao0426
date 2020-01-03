@@ -51,7 +51,8 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 //                            JSONObject registejson = jsonObject.optJSONObject("register_step");
 //                            JSONObject keyjson = jsonObject.optJSONObject("key");
 //                            LogUtils.d(registejson.toString() + "------" + keyjson.toString());
-                            LogInBean logInBean = BeanConvertor.convertBean(jsonObject.toString(), LogInBean.class);
+                            JSONObject datas = jsonObject.optJSONObject("datas");
+                            LogInBean logInBean = BeanConvertor.convertBean(datas.toString(), LogInBean.class);
                             ((Activity) mView.getContext()).runOnUiThread(()
                                     -> mView.logInSuccess(logInBean));
 

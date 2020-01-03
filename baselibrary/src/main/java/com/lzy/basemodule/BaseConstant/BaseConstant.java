@@ -17,6 +17,11 @@ public class BaseConstant {
 
     }
 
+    public static class IM {
+        public static final int SDKAPPID = 1400301991;
+
+    }
+
     public class RESULT_CODE {
         //选择照片
         public static final int REQUEST_CODE_CHOOSE_IMAGE_CLIP = 18715;
@@ -52,6 +57,7 @@ public class BaseConstant {
         public static final String APP_SECRET = "55a05f880182902f6e135b628d1bc8d9";
         public static final String SCOPE = "snsapi_userinfo";
         public static final String STATE = "wechat_sdk_demo_test";
+        public static final String CHAT_INFO = "chatInfo";
 
     }
 

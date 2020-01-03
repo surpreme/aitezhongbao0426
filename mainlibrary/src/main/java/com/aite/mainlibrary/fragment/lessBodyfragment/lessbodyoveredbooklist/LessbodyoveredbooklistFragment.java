@@ -98,7 +98,7 @@ public class LessbodyoveredbooklistFragment extends BaseFragment<Lessbodyoveredb
         HttpParams httpParams = new HttpParams();
         httpParams.put("key", AppConstant.KEY);
         httpParams.put("curpage", mCurrentPage);
-        httpParams.put("state", 3);
+        httpParams.put("state", getArguments().getString("position"));
         httpParams.put("page_type", PAGE_TYPE);
         return httpParams;
     }

@@ -62,6 +62,11 @@ public class MoneyCardRecyAdapter extends RecyclerView.Adapter<MoneyCardRecyAdap
                         holder.informationTv.setText(moneyCollectBean.getCash_info().getPdc_amount());
                     if (moneyCollectBean.getCash_info().getPdc_payment_time() != null)
                         holder.timeTv.setText(moneyCollectBean.getCash_info().getPdc_payment_time());
+                }else {
+                    holder.priceTv.setText("");
+                    holder.informationTv.setText("");
+                    holder.informationTv.setVisibility(View.GONE);
+                    holder.timeTv.setVisibility(View.GONE);
                 }
             } else if (position == 1) {
                 if (moneyCollectBean.getRecharge_info() != null) {
@@ -71,6 +76,11 @@ public class MoneyCardRecyAdapter extends RecyclerView.Adapter<MoneyCardRecyAdap
                         holder.informationTv.setText(moneyCollectBean.getRecharge_info().getPdc_amount());
                     if (moneyCollectBean.getRecharge_info().getPdc_payment_time() != null)
                         holder.timeTv.setText(moneyCollectBean.getRecharge_info().getPdc_payment_time());
+                }else {
+                    holder.priceTv.setText("");
+                    holder.informationTv.setText("");
+                    holder.informationTv.setVisibility(View.GONE);
+                    holder.timeTv.setVisibility(View.GONE);
                 }
             } else if (position == 2) {
                 if (moneyCollectBean.getLog_info() != null) {
@@ -80,6 +90,11 @@ public class MoneyCardRecyAdapter extends RecyclerView.Adapter<MoneyCardRecyAdap
                         holder.informationTv.setText(moneyCollectBean.getLog_info().getLg_desc());
                     if (moneyCollectBean.getLog_info().getLg_add_time() != null)
                         holder.timeTv.setText(moneyCollectBean.getLog_info().getLg_add_time());
+                }else {
+                    holder.priceTv.setText("");
+                    holder.informationTv.setText("");
+                    holder.informationTv.setVisibility(View.GONE);
+                    holder.timeTv.setVisibility(View.GONE);
                 }
             } else {
                 holder.priceTv.setText("");

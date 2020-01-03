@@ -1,11 +1,13 @@
 package com.lzy.basemodule.base;
 
+import com.lzy.basemodule.bean.ErrorBean;
+
 /**
  * 网络请求返回的数据，按格式统一包装成 BaseResponse 类
  * Created by Administrator on 2018/9/15.
  */
 
-public class BaseResponse<T> {
+public class BaseResponse<T extends ErrorBean> {
 
     private int code = -1;
     private String errorMsg;
