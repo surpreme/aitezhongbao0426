@@ -77,8 +77,8 @@ public class MessagerActivity extends BaseActivity<MessagerContract.View, Messag
 
     @Override
     public void onGetSystemMsgSuccess(Object msg) {
-        SystemMsgBean systemMsgBean=(SystemMsgBean)msg;
-        if (systemMsgBean.getMessage_array()!=null){
+        SystemMsgBean systemMsgBean = (SystemMsgBean) msg;
+        if (systemMsgBean.getMessage_array() != null) {
             syStemMsgAdapter.appendData(systemMsgBean.getMessage_array());
         }
 

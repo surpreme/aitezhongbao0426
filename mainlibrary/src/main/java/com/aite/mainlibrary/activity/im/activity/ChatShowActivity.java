@@ -15,7 +15,8 @@ import com.lzy.basemodule.view.StatusBarUtils;
 
 import butterknife.BindView;
 
-public class ChatShowActivity extends BaseActivity {
+public class
+ChatShowActivity extends BaseActivity {
     @BindView(R2.id.fragment_group)
     FrameLayout fragmentGroup;
 
