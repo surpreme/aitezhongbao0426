@@ -3,17 +3,17 @@ package com.aite.mainlibrary.activity.allshopcard.numberbank;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.aite.mainlibrary.Mainbean.MorningNoonEatBean;
 import com.aite.mainlibrary.Mainbean.NumberBankBean;
 import com.aite.mainlibrary.Mainbean.NumberBankInformationBean;
 import com.aite.mainlibrary.R;
@@ -24,17 +24,21 @@ import com.aite.mainlibrary.activity.allshopcard.timebankrules.TimeBankRulesActi
 import com.aite.mainlibrary.adapter.NumberBankRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
-import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
+import com.lzy.basemodule.adpter.BaseOneRecyAdapter;
+import com.lzy.basemodule.adpter.BaseTwoRecyAdapter;
 import com.lzy.basemodule.adpter.TextViewBaseRecyAdapter;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.TimeUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -58,6 +62,16 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
     LinearLayout fatherLl;
     @BindView(R2.id.time_shop_btn)
     Button timeShopBtn;
+    @BindView(R2.id.all_tv)
+    TextView allTv;
+    @BindView(R2.id.away_tv)
+    TextView awayTv;
+    @BindView(R2.id.year_recy)
+    RecyclerView yearRecy;
+    @BindView(R2.id.monday_recy)
+    RecyclerView mondayRecy;
+    @BindView(R2.id.time_pop_ll)
+    LinearLayout timePopLl;
     private NumberBankRecyAdapter numberBankRecyAdapter;
     private List<NumberBankBean.ListBean> numberBankBean = new ArrayList<>();
     /**
@@ -65,6 +79,12 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
      */
     private String[] rulesStrings = {"全部", "活动累计", "交易累计", "兑换", "过期"};
     private int TYPE = 0;
+    private String CHOICE_DATE = "";
+    private BaseOneRecyAdapter baseOneRecyAdapter;
+    private BaseTwoRecyAdapter baseTwoRecyAdapter;
+    private List<String> yearList = new ArrayList<>();
+    private List<String> mondayList = new ArrayList<>();
+    private String yearString = "";
 
     @Override
     protected int getLayoutResId() {
@@ -80,6 +100,7 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
             }
         });
         initRecy();
+        initTimePop();
         //smartlayout
         initSmartLayout(true);
         //初始化加载
@@ -97,6 +118,45 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
 
     }
 
+    @SuppressLint("DefaultLocale")
+    private void initTimePop() {
+        timePopLl.setVisibility(View.GONE);
+        Date date = new Date(System.currentTimeMillis());
+        int year = TimeUtils.getYearByDate(date);
+        allTv.setText(String.format("%d年%d月", year, TimeUtils.getMonthByDate(date)));
+        for (int i = 2018; i <= year; i++) {
+            yearList.add(String.valueOf(i));
+            LogUtils.e(i);
+        }
+        initMondayList();
+        yearRecy.setAdapter(baseOneRecyAdapter = new BaseOneRecyAdapter(context, yearList));
+        yearRecy.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        baseOneRecyAdapter.notifyDataSetChanged();
+        baseOneRecyAdapter.setClickInterface(position -> {
+            baseTwoRecyAdapter.clearDatas();
+            baseOneRecyAdapter.refreshSelected(position);
+            baseTwoRecyAdapter.refreshSelected(0);
+            yearString = yearList.get(position);
+            if (clearMondayList()) {
+                initMondayList();
+                baseTwoRecyAdapter.notifyDataSetChanged();
+            }
+
+        });
+        mondayRecy.setAdapter(baseTwoRecyAdapter = new BaseTwoRecyAdapter(context, mondayList));
+        mondayRecy.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        baseTwoRecyAdapter.notifyDataSetChanged();
+        baseTwoRecyAdapter.setClickInterface(position -> {
+            baseTwoRecyAdapter.refreshSelected(position);
+            timePopLl.setVisibility(View.GONE);
+            allTv.setText(String.format("%s年%s月", yearString, mondayList.get(position)));
+
+        });
+    }
+
+    /**
+     * @param v
+     */
     //1	http://zhongbyi.aitecc.com/mobile/index.php?act=member_timebank_point&op=points_goods_list&class_id=1&curpage=1&key=1954d4e5e8636c34fae3ff408235c9c9
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @OnClick({R2.id.send_time_btn, R2.id.all_ll, R2.id.away_ll, R2.id.time_shop_btn})
@@ -104,16 +164,8 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
     public void onClick(View v) {
         if (v.getId() == R.id.send_time_btn) startActivity(SendTimeBankActivity.class);
         else if (v.getId() == R.id.all_ll) {
-            List<String> yearlist = new ArrayList<>();
-            for (int i = Integer.parseInt(TimeUtils.getCurrentYY()); i < 2050; i++) {
-                yearlist.add(i + "年");
-            }
-            List<String> mondaylist = new ArrayList<>();
-            for (int i = 1; i < 12; i++) {
-                mondaylist.add(i + "月");
-            }
+            timePopLl.setVisibility(View.VISIBLE);
 
-            PopwindowUtils.getmInstance().showThreeRecyPopupWindow(context, yearlist, mondaylist, fatherLl);
 
         } else if (v.getId() == R.id.away_ll) {
             TextViewBaseRecyAdapter textViewBaseRecyAdapter = new TextViewBaseRecyAdapter(context, rulesStrings);
@@ -125,6 +177,7 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
                     LogUtils.d(postion);
                     PopwindowUtils.getmInstance().dismissPopWindow();
                     TYPE = postion;
+                    awayTv.setText(rulesStrings[postion]);
                     onSmartRefresh();
                 }
             });
@@ -141,6 +194,21 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
 
     }
 
+    private int initMondayList() {
+        for (int i = 1; i <= 12; i++) {
+            mondayList.add(String.valueOf(i));
+        }
+        return mondayList.size();
+
+    }
+
+    private boolean clearMondayList() {
+        if (mondayList != null) {
+            if (!mondayList.isEmpty()) mondayList.clear();
+        } else mondayList = new ArrayList<>();
+        return mondayList.isEmpty();
+    }
+
     /**
      * \
      * 筛选类型 0全部 1活动累计 2交易累计 3全部消耗 4兑换 5过期
@@ -152,7 +220,8 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
         HttpParams params = new HttpParams();
         params.put("key", AppConstant.KEY);
         params.put("curpage", mCurrentPage);
-//        params.put("time", AppConstant.KEY);
+        if (CHOICE_DATE != null && !CHOICE_DATE.equals(""))
+            params.put("time", CHOICE_DATE);
         params.put("type", TYPE);
 
         return params;
@@ -230,4 +299,10 @@ public class NumberBankActivity extends BaseActivity<NumberBankContract.View, Nu
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

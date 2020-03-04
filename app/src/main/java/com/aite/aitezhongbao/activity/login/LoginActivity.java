@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.aite.aitezhongbao.MainActivity;
 import com.aite.aitezhongbao.R;
 import com.aite.aitezhongbao.activity.findkey.FindKeyActivity;
@@ -21,15 +19,14 @@ import com.aite.alipaylibrary.wechat.wxapi.ThreeElseLogInUtils;
 import com.aite.mainlibrary.Mainbean.ThreeSuccessCodeBean;
 import com.google.android.material.textfield.TextInputEditText;
 import com.lzy.basemodule.BaseConstant.AppConstant;
-import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.util.SystemUtil;
 import com.lzy.okgo.model.HttpParams;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import java.util.Map;
-
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -166,9 +163,6 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
 
     @Override
     public void logInSuccess(Object msg) {
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
         AppConstant.KEY = ((LogInBean) msg).getKey();
         AppConstant.USERNAME = ((LogInBean) msg).getUsername();
         AppConstant.FRIEND_VALID = ((LogInBean) msg).getConfig().getFriend_valid();
@@ -179,12 +173,11 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
         AppConstant.IS_HUGONG = ((LogInBean) msg).getIs_hugong().equals("1");
         AppConstant.IS_DOCTORS = ((LogInBean) msg).getIs_doctors().equals("1");
         AppConstant.IS_NURSING = ((LogInBean) msg).getIs_nursing().equals("1");
-        AppConstant.CURRENT_IDENTITY = Integer.parseInt(((LogInBean) msg).getCurrent_identity());
+      //  AppConstant.CURRENT_IDENTITY = Integer.parseInt(((LogInBean) msg).getCurrent_identity());
         dimissLoading();
+        //startActivity(RoleActivity.class);
         startActivity(MainActivity.class);
         finish();
-//            }
-//        });
 
 
     }
@@ -226,8 +219,6 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
                     startActivity(UserTypeActivity.class, "key", key);
             }
         });
-
-
     }
 
     @Override

@@ -1,25 +1,35 @@
 package com.aite.mainlibrary.fragment.choiceEatbook.chirendchoiceeat;
 
 
+import android.view.Gravity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.aite.alipaylibrary.PayAway;
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
+import com.aite.mainlibrary.Mainbean.AlipayOrderIdBean;
 import com.aite.mainlibrary.Mainbean.ChioceEatBookListBean;
+import com.aite.mainlibrary.Mainbean.PayListBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.activity.allshopcard.bookchoiceeatinformation.BookChoiceEatinformationActivity;
+import com.aite.mainlibrary.activity.allshopcard.shopcard.ShopCardActivity;
+import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
 import com.aite.mainlibrary.adapter.moreitem.MoreItemRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseLazyFragment;
+import com.lzy.basemodule.bean.ContentValue;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
+import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.okgo.model.HttpParams;
+
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * MVPPlugin
- * 邮箱 784787081@qq.com
- */
 
 public class ChirendChoiceEatFragment extends BaseLazyFragment<ChirendChoiceEatContract.View, ChirendChoiceEatPresenter> implements ChirendChoiceEatContract.View {
 
     private MoreItemRecyAdapter moreItemRecyAdapter;
+    private String PAY_SN = "";
     private List<ChioceEatBookListBean.DatasBean.OrderGroupListBean.OrderListBean> orderListBeans = new ArrayList<>();
 
     @Override
@@ -45,7 +55,13 @@ public class ChirendChoiceEatFragment extends BaseLazyFragment<ChirendChoiceEatC
         params.put("key", AppConstant.KEY);
         params.put("curpage", mCurrentPage);
         params.put("order_module", 1);
-        params.put("type", getArguments().getString("state"));
+        try {
+            int ste = Integer.valueOf(getArguments().getString("state"));
+            params.put("type", ste);
+
+        } catch (Exception e) {
+            LogUtils.e("转换出错" + e);
+        }
         return params;
     }
 
@@ -63,7 +79,7 @@ public class ChirendChoiceEatFragment extends BaseLazyFragment<ChirendChoiceEatC
             orderListBeans.clear();
             moreItemRecyAdapter.notifyDataSetChanged();
         }
-
+        mCurrentPage = 1;
         mPresenter.getBookList(initParams());
 
     }
@@ -81,6 +97,20 @@ public class ChirendChoiceEatFragment extends BaseLazyFragment<ChirendChoiceEatC
         mBaserecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         moreItemRecyAdapter.setOnclickInterface(position ->
                 startActivity(BookChoiceEatinformationActivity.class, "order_id", orderListBeans.get(position).getOrder_id()));
+        moreItemRecyAdapter.setOnThingClickInterface(msg -> {
+            PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, "取消后不可恢复", v -> {
+                mPresenter.cancleOrder(initListHttpParams(true, new ContentValue("order_id", msg)));
+                PopwindowUtils.getmInstance().dismissPopWindow();
+
+            });
+
+        });
+        moreItemRecyAdapter.setOnPayclickInterface(postion -> {
+            PAY_SN = orderListBeans.get(postion).getPay_sn();
+//            startActivity(BookChoiceEatinformationActivity.class, "order_id", orderListBeans.get(postion).getOrder_id());
+            mPresenter.getPayList(initKeyParams());
+
+        });
         //smartlayout
         initSmartLayout(true);
         //初始化加载
@@ -119,5 +149,87 @@ public class ChirendChoiceEatFragment extends BaseLazyFragment<ChirendChoiceEatC
 
         }
 
+    }
+
+    @Override
+    public void onCancleOrderSuccess(Object msg) {
+        if (msg.toString().equals("1")) {
+            showToast("取消成功", Gravity.TOP);
+            onSmartRefresh();
+        }
+
+    }
+    @Override
+    public void onPayOrderSuccess(Object msg) {
+
+    }
+
+    private List<PayListBean.DatasBean> paylist = new ArrayList<>();
+
+    @Override
+    public void onPayListSuccess(Object msg) {
+        paylist = ((PayListBean) msg).getDatas();
+        if (paylist == null || paylist.isEmpty()) return;
+        PayRadioGroupRecyAdapter payRadioGroupRecyAdapter = new PayRadioGroupRecyAdapter(context, paylist);
+        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        payRadioGroupRecyAdapter.setClickInterface(postion -> {
+            LogUtils.d(postion);
+            PopwindowUtils.getmInstance().dismissPopWindow();
+            if (postion == 5) {
+                mPresenter.PayFactCollect(initCollectParams());
+            } else {
+                if (postion == 1) {
+                    mPresenter.PayFactThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("pay_sn", isStringEmpty(PAY_SN) ? "" : PAY_SN),
+                            new ContentValue("payment_code", "alipay")), "alipay");
+                } else if (postion == 3) {
+                    mPresenter.PayFactThreeElse(initListHttpParams(
+                            true,
+                            new ContentValue("pay_sn", isStringEmpty(PAY_SN) ? "" : PAY_SN),
+                            new ContentValue("payment_code", "app_wxpay")), "app_wxpay");
+                }
+
+            }
+        });
+        PopwindowUtils.getmInstance().showPayRecyPopupWindow(context, Gravity.BOTTOM, payRadioGroupRecyAdapter, manager);
+    }
+
+    @Override
+    public void onFactPayCollectSuccess(Object msg) {
+        if (((TwoSuccessCodeBean) msg).getResult().equals("1") && ((TwoSuccessCodeBean) msg).getMsg().equals("支付成功")) {
+            showToast(((TwoSuccessCodeBean) msg).getMsg(), Gravity.TOP);
+            onBackPressed();
+        } else {
+            showToast("支付失败", Gravity.TOP);
+        }
+    }
+
+    /**
+     * key	get	字符串	必须			会员登录key
+     * pay_sn	get	字符串	必须			订单交易编号
+     *
+     * @return
+     */
+    private HttpParams initCollectParams() {
+        HttpParams params = new HttpParams();
+        params.put("key", AppConstant.KEY);
+        if (!isStringEmpty(PAY_SN))
+            params.put("pay_sn", PAY_SN);
+        return params;
+    }
+
+    @Override
+    public void onFactPayThreeElseSuccess(Object msg, String payAway) {
+        if (msg != null) {
+            if (payAway.equals("alipay")) {
+                AlipayOrderIdBean alipayOrderIdBean = (AlipayOrderIdBean) msg;
+                LogUtils.d(alipayOrderIdBean.getPayinfo());
+                PayAway.Alipay(alipayOrderIdBean.getPayinfo(), getActivity(), ShopCardActivity.class);
+            } else if (payAway.equals("app_wxpay")) {
+                WeChatPayBackBean weChatPayBackBean = (WeChatPayBackBean) msg;
+                PayAway.WchatPay(weChatPayBackBean, getActivity());
+            }
+        }
     }
 }

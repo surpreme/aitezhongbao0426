@@ -3,14 +3,17 @@ package com.aite.mainlibrary.Mainbean;
 import com.lzy.basemodule.bean.ErrorBean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UnFactSureBookBean extends ErrorBean implements Serializable {
 
     /**
-     * order_info : {"order_id":"96","order_sn":"850628721399249007","store_id":"2","store_name":"艾特技术","buyer_id":"7","buyer_name":"18614079738","buyer_phone":"18617079728","add_time":"1575377399","payment_code":"","payment_time":"0","trade_no":null,"close_time":"0","close_reason":null,"finnshed_time":null,"order_amount":"23423.00","goods_points_offset":"0","order_points_offset":"0","order_costamount":"23.00","refund_amount":"0.00","rcb_amount":"0.00","pd_amount":"0.00","order_state":"10","refund_state":"0","buyer_msg":null,"delete_state":"0","goods_id":"25","goods_name":"给点钱吧，不给就面对疾风吧","goods_price":"23423.00","goods_num":"1","goods_image":"2019/12/02/2_06286185934053928.jpg","commis_rate":"200","gc_id":"17","gc_id2":"9","vr_indate":"1702742399","vr_send_times":"0","vr_invalid_refund":"0","order_promotion_type":"0","promotions_id":"0","order_from":"2","evaluation_state":"0","evaluation_time":"0","use_state":"0","first_comm":"0.00","second_comm":"0.00","three_comm":"0.00","is_visit_comm":"0","is_Independent_comm":"0","comm_rule":null,"is_buy_apply":"0","meal_info":false,"order_shipping_fee":"0.00","order_state_text":"待付款","payment_name":"","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/12/02/2_06286185934053928_240.jpg","is_delete":1,"store_qq":"3471084914","store_phone":"13557659027"}
+     * order_info : {"order_id":"571","order_sn":"480631832509219007","store_id":"2","store_name":"艾特技术","buyer_id":"7","buyer_name":"18614079738","buyer_phone":"18614079738","add_time":"1578488509","payment_code":"","payment_time":"0","trade_no":null,"close_time":"0","close_reason":null,"finnshed_time":null,"order_amount":"10000.00","goods_points_offset":"0","order_points_offset":"0","order_costamount":"1000.00","refund_amount":"0.00","rcb_amount":"0.00","pd_amount":"0.00","order_state":"10","refund_state":"0","buyer_msg":null,"delete_state":"0","goods_id":"16","goods_name":"技能培训","goods_price":"10000.00","goods_num":"1","goods_image":"2019/11/22/2_06277498241227640.jpg","commis_rate":"200","gc_id":"20","gc_id2":"6","vr_indate":"1829059199","vr_send_times":"0","vr_invalid_refund":"0","order_promotion_type":"0","promotions_id":"0","order_from":"2","evaluation_state":"0","evaluation_time":"0","use_state":"0","first_comm":"0.00","second_comm":"0.00","three_comm":"0.00","is_visit_comm":"0","is_Independent_comm":"0","comm_rule":null,"is_buy_apply":"0","meal_info":false,"order_shipping_fee":"0.00","order_state_text":"待付款","payment_name":"","goods_image_url":"http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg","is_delete":1,"store_qq":"3471084914","store_phone":"13557659027"}
+     * store_member_info : []
      */
 
     private OrderInfoBean order_info;
+    private List<?> store_member_info;
 
     public OrderInfoBean getOrder_info() {
         return order_info;
@@ -20,26 +23,34 @@ public class UnFactSureBookBean extends ErrorBean implements Serializable {
         this.order_info = order_info;
     }
 
+    public List<?> getStore_member_info() {
+        return store_member_info;
+    }
+
+    public void setStore_member_info(List<?> store_member_info) {
+        this.store_member_info = store_member_info;
+    }
+
     public static class OrderInfoBean {
         /**
-         * order_id : 96
-         * order_sn : 850628721399249007
+         * order_id : 571
+         * order_sn : 480631832509219007
          * store_id : 2
          * store_name : 艾特技术
          * buyer_id : 7
          * buyer_name : 18614079738
-         * buyer_phone : 18617079728
-         * add_time : 1575377399
+         * buyer_phone : 18614079738
+         * add_time : 1578488509
          * payment_code :
          * payment_time : 0
          * trade_no : null
          * close_time : 0
          * close_reason : null
          * finnshed_time : null
-         * order_amount : 23423.00
+         * order_amount : 10000.00
          * goods_points_offset : 0
          * order_points_offset : 0
-         * order_costamount : 23.00
+         * order_costamount : 1000.00
          * refund_amount : 0.00
          * rcb_amount : 0.00
          * pd_amount : 0.00
@@ -47,15 +58,15 @@ public class UnFactSureBookBean extends ErrorBean implements Serializable {
          * refund_state : 0
          * buyer_msg : null
          * delete_state : 0
-         * goods_id : 25
-         * goods_name : 给点钱吧，不给就面对疾风吧
-         * goods_price : 23423.00
+         * goods_id : 16
+         * goods_name : 技能培训
+         * goods_price : 10000.00
          * goods_num : 1
-         * goods_image : 2019/12/02/2_06286185934053928.jpg
+         * goods_image : 2019/11/22/2_06277498241227640.jpg
          * commis_rate : 200
-         * gc_id : 17
-         * gc_id2 : 9
-         * vr_indate : 1702742399
+         * gc_id : 20
+         * gc_id2 : 6
+         * vr_indate : 1829059199
          * vr_send_times : 0
          * vr_invalid_refund : 0
          * order_promotion_type : 0
@@ -75,7 +86,7 @@ public class UnFactSureBookBean extends ErrorBean implements Serializable {
          * order_shipping_fee : 0.00
          * order_state_text : 待付款
          * payment_name :
-         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/12/02/2_06286185934053928_240.jpg
+         * goods_image_url : http://zhongbyi.aitecc.com/data/upload/shop/store/goods/2/2019/11/22/2_06277498241227640_240.jpg
          * is_delete : 1
          * store_qq : 3471084914
          * store_phone : 13557659027

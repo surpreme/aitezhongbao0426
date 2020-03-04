@@ -22,6 +22,7 @@ import com.aite.a.parse.NetRun;
 import com.aite.a.view.CircleImageView;
 import com.aite.a.view.MyGridView;
 import com.aiteshangcheng.a.R;
+import com.bumptech.glide.Glide;
 import com.lidroid.xutils.BitmapUtils;
 
 import java.util.ArrayList;
@@ -284,6 +285,7 @@ public class Myevaluation extends BaseActivity implements OnClickListener {
                 new ViewHolder(convertView);
             }
             ViewHolder holder = (ViewHolder) convertView.getTag();
+            Glide.with(convertView).load(geval_image.get(position)).into(holder.iv_img);
             bitmapUtils.display(holder.iv_img, geval_image.get(position));
             return convertView;
         }

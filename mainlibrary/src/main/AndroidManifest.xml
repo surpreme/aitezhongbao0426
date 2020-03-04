@@ -8,5 +8,14 @@
         <activity android:name=".activity.im.activity.ChatActivity" />
         <activity android:name=".activity.allsetting.serviceorderbook.ServiceOrderBookActivity" />
         <activity android:name=".activity.allsetting.helpeatorderbook.HelpEatOrderBookActivity" />
+        <activity android:name=".activity.allsetting.editSosUser.EditSosUserActivity" />
+        <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.allmoney.moneybook2.MoneyBookActivitys" />
+        <activity android:name=".activity.allsetting.feedback.FeedbackActivity" />
+        <activity android:name=".activity.allsetting.aboutus.AboutUsActivity" />
+        <activity android:name=".activity.im.activity.MessageActivity" />
+        <activity android:name=".activity.image.BaseImageActivity" />
+        <activity android:name=".activity.allsetting.minepost.MinepostActivity" />
+        <activity android:name=".activity.allsetting.uu.minepost.MinePostBookActivity2" />
     </application>
 </manifest>

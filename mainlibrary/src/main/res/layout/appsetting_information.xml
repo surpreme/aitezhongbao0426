@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
 
         <LinearLayout
@@ -101,6 +102,7 @@
         android:background="@color/noglay" />
 
     <LinearLayout
+        android:id="@+id/feedback_ll"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"
@@ -151,6 +153,7 @@
         android:background="@color/noglay" />
 
     <LinearLayout
+        android:id="@+id/about_us_ll"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"
@@ -201,6 +204,7 @@
         android:background="@color/noglay" />
 
     <LinearLayout
+        android:id="@+id/update_ll"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"

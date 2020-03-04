@@ -51,7 +51,7 @@ public class BaseGaodeAmapView {
         });
     }
 
-    public static void setupLocationStyle(AMap aMap) {
+    public static void setupLocationStyle(AMap aMap,Boolean isShowSupportZoomControlsBtn) {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         // 默认模式，连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动，1秒1次定位
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
@@ -59,6 +59,8 @@ public class BaseGaodeAmapView {
         myLocationStyle.interval(1000);
         // 设置定位蓝点的Style
         aMap.setMyLocationStyle(myLocationStyle);
+        aMap.getUiSettings().setZoomControlsEnabled(isShowSupportZoomControlsBtn);
+
     }
 
 }

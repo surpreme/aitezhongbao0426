@@ -37,10 +37,10 @@ public class MyShiGuangZhou extends View {
 				attrs, R.styleable.RoundImageView);
 		if (obtainStyledAttributes != null) {
 			number = obtainStyledAttributes.getInt(
-					R.styleable.RoundImageView_number, 3);
+					R.styleable.RoundImageView_number, 5);
 			progress = obtainStyledAttributes.getInt(
-					R.styleable.RoundImageView_progress, 1);
-			radiuss = obtainStyledAttributes.getInt(R.styleable.RoundImageView_radiuss, 20);
+					R.styleable.RoundImageView_progress, 3);
+			radiuss = obtainStyledAttributes.getInt(R.styleable.RoundImageView_radiuss, 30);
 		}
 		System.out.println("----------------------" + number + "    "
 				+ progress + "    "+radiuss+"    " + kuandu + "    " + gaodu);

@@ -15,6 +15,7 @@ import com.aite.mainlibrary.activity.allsetting.addbookdispute.AddBookDisputeAct
 import com.aite.mainlibrary.adapter.ChoiceEatsBookInformationRecyAdapter;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.bean.ContentValue;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.CallUtils;
 import com.lzy.basemodule.util.TextEmptyUtils;
@@ -53,6 +54,15 @@ public class BookChoiceEatinformationActivity extends BaseActivity<BookChoiceEat
     LinearLayout callLl;
     @BindView(R2.id.book_dispute_tv)
     TextView bookDisputeTv;
+    @BindView(R2.id.book_eat_time_tv)
+    TextView bookEatTimeTv;
+    @BindView(R2.id.pay_away_tv)
+    TextView payAwayTv;
+    @BindView(R2.id.delete_order_tv)
+    TextView deleteOrderTv;
+    @BindView(R2.id.pay_order_tv)
+    TextView payOrderTv;
+    private String mOrderId = "";
     private ChoiceEatsBookInformationRecyAdapter choiceEatsBookInformationRecyAdapter;
     private List<ChioceEatBookinformationBean.OrderInfoBean.ExtendOrderGoodsBean> extendOrderGoodsBeans = new ArrayList<>();
     private String STOTERPHONENUMBER = "";
@@ -158,6 +168,8 @@ public class BookChoiceEatinformationActivity extends BaseActivity<BookChoiceEat
     public void onGetInformationSuccess(Object msg) {
         chioceEatBookinformationBean = (ChioceEatBookinformationBean) msg;
         if (chioceEatBookinformationBean == null) return;
+        if (chioceEatBookinformationBean.getOrder_info().getOrder_id() != null)
+            mOrderId = chioceEatBookinformationBean.getOrder_info().getOrder_id();
         if (chioceEatBookinformationBean.getOrder_info().getState_desc() != null)
             bookStateTv.setText(TextEmptyUtils.getText(chioceEatBookinformationBean.getOrder_info().getState_desc()));
         if (chioceEatBookinformationBean.getOrder_info().getOrder_amount() != null)
@@ -165,11 +177,13 @@ public class BookChoiceEatinformationActivity extends BaseActivity<BookChoiceEat
         if (chioceEatBookinformationBean.getOrder_info().getOrder_sn() != null)
             bookNumberTv.setText(String.format("订单编号:%s", chioceEatBookinformationBean.getOrder_info().getOrder_sn()));
         if (chioceEatBookinformationBean.getOrder_info().getPayment_name() != null || chioceEatBookinformationBean.getOrder_info().getPay_sn() != null)
-            payNumberTv.setText(String.format("%s交易号:%s",
-                    chioceEatBookinformationBean.getOrder_info().getPayment_name(),
+            payNumberTv.setText(String.format("第三方交易号:%s",
                     chioceEatBookinformationBean.getOrder_info().getPay_sn()));
         try {
-            timeCreateTv.setText(TimeUtils.stampToDatemm2(Long.parseLong(chioceEatBookinformationBean.getOrder_info().getAdd_time())));
+            if (chioceEatBookinformationBean.getOrder_info().getPayment_name() != null)
+                payAwayTv.setText(chioceEatBookinformationBean.getOrder_info().getPayment_name());
+            timeCreateTv.setText(String.format("支付时间：%s", TimeUtils.stampToDatemm2(Long.parseLong(chioceEatBookinformationBean.getOrder_info().getPayment_time()))));
+            bookEatTimeTv.setText(String.format("用餐时间：%s", TimeUtils.stampToDatemm2(Long.parseLong(chioceEatBookinformationBean.getOrder_info().getAdd_time()))));
         } catch (Exception e) {
             LogUtils.d(e);
         }
@@ -185,4 +199,26 @@ public class BookChoiceEatinformationActivity extends BaseActivity<BookChoiceEat
         }
     }
 
+    @Override
+    public void onCancleOrderSuccess(Object msg) {
+        showToast("取消成功");
+        onBackPressed();
+
+
+    }
+
+
+    @OnClick({R2.id.delete_order_tv, R2.id.pay_order_tv})
+    public void onViewClicked(View view) {
+        int id = view.getId();
+        if (id == R.id.delete_order_tv) {
+            PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, "取消后不可恢复", v -> {
+                mPresenter.cancleOrder(initListHttpParams(true, new ContentValue("order_id", mOrderId)));
+                PopwindowUtils.getmInstance().dismissPopWindow();
+
+            });
+        } else if (id == R.id.pay_order_tv) {
+
+        }
+    }
 }

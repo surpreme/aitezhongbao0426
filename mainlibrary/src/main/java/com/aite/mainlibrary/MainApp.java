@@ -15,11 +15,12 @@ public class MainApp {
             mContext = appContext.getApplicationContext();
 
         }
-    }
 
+    }
 
 
     public static Context getAppContext() {
         return mContext;
     }
+
 }

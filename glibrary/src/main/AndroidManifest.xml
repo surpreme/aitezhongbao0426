@@ -1,5 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.glibrary">
 
-    <application />
+    <application >
+        <activity android:name="com.example.ui.activity.ConsultActivity" />
+        <activity android:name="com.example.ui.activity.OrderListActivity" />
+        <activity android:name="com.example.ui.activity.ApplyForVolunteerActivity" />
+        <activity android:name="com.example.ui.activity.VolunteerProjectListActivity" />
+        <activity android:name="com.example.ui.activity.VolunteerOrganizeListActivity" />
+        <activity android:name="com.example.ui.activity.AmapSelectionActivity" />
+        <activity android:name="com.example.ui.activity.AmapSelectionsActivity" />
+
+        <service android:name="com.example.servicer.ImCountdownService" />
+    </application>
 </manifest>

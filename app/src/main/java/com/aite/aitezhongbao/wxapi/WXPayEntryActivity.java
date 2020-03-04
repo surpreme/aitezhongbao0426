@@ -3,12 +3,8 @@ package com.aite.aitezhongbao.wxapi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.aite.a.utils.SPUtils;
-import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.example.event.PayMessageEvent;
 import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.activitylife.ActivityManager;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
@@ -20,6 +16,8 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @Auther: liziyang
@@ -63,15 +61,17 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-
             View.OnClickListener dismissPopOnClickListener = v -> {
                 PopwindowUtils.getmInstance().dismissPopWindow();
             };
+
+            EventBus.getDefault().post(new PayMessageEvent(resp.errCode, 1));
             if (resp.errCode == 0) {
                 // TODO: 2019/7/8 0008  支付成功 微信通知
 //                Toast.makeText(this, "微信-支付成功", Toast.LENGTH_LONG).show();
                 PopwindowUtils.getmInstance().showdiadlogPopupWindow(ActivityManager.getInstance().getCurrentActivity(), "支付成功", dismissPopOnClickListener);
             } else if (resp.errCode == -2) {
+
                 // TODO: 2019/7/8 0008    支付用户取消
 //                Toast.makeText(this, "微信-用户取消支付", Toast.LENGTH_LONG).show();
                 PopwindowUtils.getmInstance().showdiadlogPopupWindow(ActivityManager.getInstance().getCurrentActivity(), "用户取消支付", dismissPopOnClickListener);
@@ -81,7 +81,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                 PopwindowUtils.getmInstance().showdiadlogPopupWindow(ActivityManager.getInstance().getCurrentActivity(), "支付失败", dismissPopOnClickListener);
             }
             finish();
-
         }
     }
 

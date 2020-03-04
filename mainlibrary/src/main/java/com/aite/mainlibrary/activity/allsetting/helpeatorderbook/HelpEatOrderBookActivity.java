@@ -31,6 +31,7 @@ import com.aite.mainlibrary.activity.allqr.qrcode.QrCodeActivity;
 import com.aite.mainlibrary.activity.allshopcard.bookinformation.BookinformationActivity;
 import com.aite.mainlibrary.activity.allshopcard.chatoutbook.ChatOutBookActivity;
 import com.aite.mainlibrary.adapter.MineHelpEatRecyAdapter;
+import com.aite.mainlibrary.adapter.MineLessBodybookRecyAdapter;
 import com.aite.mainlibrary.adapter.PayRadioGroupRecyAdapter;
 import com.aite.mainlibrary.adapter.RadioGroupRecyAdapter;
 import com.google.gson.Gson;
@@ -148,7 +149,13 @@ public class HelpEatOrderBookActivity extends BaseActivity<HelpEatOrderBookContr
 
             }
         });
+        mineHelpEatRecyAdapter.setOnStartEatcodeInterface(new MineLessBodybookRecyAdapter.OnStartEatcodeInterface() {
+            @Override
+            public void getStartqrPosition(int position) {
+                mPresenter.getStartEatQrinformation(initParams(orderListBeans.get(position).getOrder_id()), position);
 
+            }
+        });
     }
 
     private HttpParams initParams(String order_id) {

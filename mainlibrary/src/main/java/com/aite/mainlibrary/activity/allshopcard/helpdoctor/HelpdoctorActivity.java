@@ -18,6 +18,7 @@ import com.aite.mainlibrary.adapter.HelpDoctorRecyAdapter;
 import com.aite.mainlibrary.adapter.RadioGroupRecyAdapter;
 import com.blankj.rxbus.RxBus;
 import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.BaseConstant.BaseConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.basemodule.base.BaseActivity;
@@ -90,6 +91,9 @@ public class HelpdoctorActivity extends BaseActivity<HelpdoctorContract.View, He
         initBanner(banner);
         banner.setIndicatorGravity(BannerConfig.RIGHT)
                 .setOnBannerListener(this);
+        if (AppConstant.CURRENT_IDENTITY != 1) {
+            floatimg.setVisibility(View.GONE);
+        }
         RxBus.getDefault().subscribe(context, "helpDoctorChange", new RxBus.Callback<String>() {
             @Override
             public void onEvent(String o) {

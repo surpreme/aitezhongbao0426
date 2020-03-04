@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <include layout="@layout/toolbar_right_layout" />
+    <include layout="@layout/toolbar_right_glayout" />
 
     <View
         android:layout_width="match_parent"
@@ -19,7 +19,8 @@
         android:scrollbars="none">
 
         <LinearLayout
-
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -327,7 +328,7 @@
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="@dimen/dp_12"
-                android:background="@drawable/but_bg1"
+                android:background="@drawable/g_but_bg1"
                 android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="15sp" />

@@ -53,8 +53,10 @@
 
                     <TextView
                         android:id="@+id/tv_price"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
                         android:text="0.00"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -77,8 +79,10 @@
 
                     <TextView
                         android:id="@+id/tv_money"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
                         android:text="0.00"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -100,8 +104,10 @@
 
                     <TextView
                         android:id="@+id/tv_integral"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
                         android:text="0"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -126,6 +132,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
+                        android:gravity="center"
+                        android:ellipsize="end"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
@@ -139,6 +147,7 @@
 
             </LinearLayout>
         </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/ll_zj"
             android:layout_width="match_parent"
@@ -194,10 +203,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/distribution_withdrawals"
-                android:paddingBottom="7dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:paddingTop="7dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="7dp"
                 android:text="@string/distribution_center4"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -216,8 +225,8 @@
                 android:layout_marginTop="10dp"
                 android:horizontalSpacing="1dp"
                 android:numColumns="3"
-                android:paddingBottom="10dp"
                 android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:verticalSpacing="20dp"></com.aite.a.view.MyGridView>
         </LinearLayout>
     </LinearLayout>

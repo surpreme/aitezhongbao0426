@@ -83,7 +83,7 @@
                 android:lines="1"
                 android:ellipsize="end"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/tv_need"

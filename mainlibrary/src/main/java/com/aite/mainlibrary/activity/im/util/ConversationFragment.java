@@ -134,7 +134,6 @@ public class ConversationFragment extends BaseFragment {
                                 @Override
                                 public void onSuccess(Response<BaseData<IMAccountInfo>> response) {
                                     LogUtils.d("onSuccess");
-
                                 }
                             });
                 }))

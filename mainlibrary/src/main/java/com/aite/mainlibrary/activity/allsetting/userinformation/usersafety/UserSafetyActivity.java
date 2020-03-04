@@ -59,6 +59,11 @@ public class UserSafetyActivity extends BaseActivity<UserSafetyContract.View, Us
     @Override
     protected void initView() {
         initToolbar("账户安全");
+        if (!AppConstant.PHONENUMBER.equals("null") || !AppConstant.PHONENUMBER.equals("")) {
+            phoneEdit.setText(AppConstant.PHONENUMBER);
+            phoneEdit.setFocusable(false);
+            phoneEdit.setFocusableInTouchMode(false);
+        }
     }
 
     @OnClick({R2.id.timer_tv, R2.id.sure_btn})

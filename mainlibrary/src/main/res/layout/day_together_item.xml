@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="1dp"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:orientation="vertical">
 
 
         <ImageView
@@ -48,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="right"
+                android:layout_marginLeft="15dp"
                 android:maxLines="1"
                 android:text="服务商品" />
         </LinearLayout>

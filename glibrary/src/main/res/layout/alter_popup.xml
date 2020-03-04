@@ -24,11 +24,15 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/bg1_edit"
         android:hint="咨询时长"
+        android:inputType="number"
+        android:maxLines="1"
         android:padding="@dimen/dp_10"
         android:textColor="#999999"
         android:textSize="@dimen/text13" />
 
     <EditText
+        android:maxLines="1"
+        android:inputType="numberDecimal"
         android:id="@+id/et_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +52,7 @@
         android:layout_marginLeft="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_30"
-        android:background="@drawable/but_bg1"
+        android:background="@drawable/g_but_bg1"
         android:gravity="center"
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"

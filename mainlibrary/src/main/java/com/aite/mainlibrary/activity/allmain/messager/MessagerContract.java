@@ -13,11 +13,13 @@ import com.lzy.okgo.model.HttpParams;
 public class MessagerContract {
     interface View extends BaseView {
         void onGetSystemMsgSuccess(Object msg);
+        void  onGetIMChatListSuccess(Object msg);
 
     }
 
     interface Presenter extends BasePresenter<View> {
         void onGetSystemMsg(HttpParams httpParams);
+        void  onGetIMChatList(HttpParams httpParams);
 
     }
 }

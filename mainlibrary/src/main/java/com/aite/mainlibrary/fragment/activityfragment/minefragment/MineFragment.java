@@ -2,12 +2,12 @@ package com.aite.mainlibrary.fragment.activityfragment.minefragment;
 
 
 import android.content.Intent;
-import android.text.TextUtils;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,25 +19,36 @@ import com.aite.mainlibrary.activity.allmain.AddDeviceMainActvity;
 import com.aite.mainlibrary.activity.allmain.device.DeviceListActivity;
 import com.aite.mainlibrary.activity.allmain.messager.MessagerActivity;
 import com.aite.mainlibrary.activity.allmoney.moneycart.MoneycartActivity;
-import com.aite.mainlibrary.activity.allsetting.LessbodybookActivity;
 import com.aite.mainlibrary.activity.allsetting.MinePostBookActivity;
 import com.aite.mainlibrary.activity.allsetting.bookdispute.BookDisputeActivity;
 import com.aite.mainlibrary.activity.allsetting.healthbook.HealthBookActivity;
-import com.aite.mainlibrary.activity.allsetting.helpeatorderbook.HelpEatOrderBookActivity;
 import com.aite.mainlibrary.activity.allsetting.minerural.MineRuralActivity;
 import com.aite.mainlibrary.activity.allsetting.serviceorderbook.ServiceOrderBookActivity;
 import com.aite.mainlibrary.activity.allsetting.setting.SettingActivity;
 import com.aite.mainlibrary.activity.allsetting.thingbook.ThingbookActivity;
-import com.aite.mainlibrary.activity.allsetting.thingsbook.ChiendThingsbookActivity;
 import com.aite.mainlibrary.activity.allsetting.userinformation.UserInformationActivity;
+import com.aite.mainlibrary.activity.allsetting.uu.minepost.MinePostBookActivity2;
+import com.aite.mainlibrary.activity.im.activity.MessageActivity;
 import com.aite.mainlibrary.adapter.GridViewIconAdapter;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.event.ChangeRoleEvent;
+import com.example.ui.activity.AddDoctrInfoActivity;
+import com.example.ui.activity.ApplyForVolunteerActivity;
+import com.example.ui.activity.ConsultActivity;
+import com.example.ui.activity.OrderListActivity;
+import com.example.ui.activity.VolunteerProjectListActivity;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseFragment;
 import com.lzy.basemodule.logcat.LogUtils;
-import com.lzy.basemodule.util.TextUtil;
 import com.lzy.okgo.model.HttpParams;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.text.ParseException;
 
 import butterknife.BindView;
 
@@ -47,6 +58,9 @@ import butterknife.BindView;
  */
 
 public class MineFragment extends BaseFragment<MineContract.View, MinePresenter> implements MineContract.View {
+
+
+
     @BindView(R2.id.toolbar)
     RelativeLayout toolbar;
     @BindView(R2.id.setting_gridview)
@@ -68,11 +82,39 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
     @BindView(R2.id.message_iv)
     ImageView messageIv;
 
+    @BindView(R2.id.ll_vip)
+    LinearLayout mLlVip;
+
+
+    @BindView(R2.id.ll_doctor)
+    LinearLayout mLlDoctor;
+    @BindView(R2.id.gv_apply)
+    GridView mGvApply;
+    @BindView(R2.id.gv_else)
+    GridView mGvElse;
+
+
+    /**
+     * 角色更改通知
+     *
+     * @param event
+     * @throws ParseException
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void messageEventBus(ChangeRoleEvent event) {
+        initViews();
+    }
+
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_mine_fragment;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         mPresenter.getUserInformation(initParams());
-
     }
 
     @Override
@@ -88,12 +130,121 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
 
     @Override
     protected void initViews() {
-        fixFriendsBtn.setOnClickListener(this);
+
+        messageIv.setOnClickListener(this);
         settingImg.setOnClickListener(this);
         userIcon.setOnClickListener(this);
-        messageIv.setOnClickListener(this);
         userPhoneNumberTv.setOnClickListener(this);
+        fixFriendsBtn.setOnClickListener(this);
 
+
+        mLlVip.setVisibility(AppConstant.CURRENT_IDENTITY == 1 ? View.VISIBLE : View.GONE);
+        mLlDoctor.setVisibility(AppConstant.CURRENT_IDENTITY == 2 || AppConstant.CURRENT_IDENTITY == 4 ? View.VISIBLE : View.GONE);
+        switch (AppConstant.CURRENT_IDENTITY) {
+            case 1:
+                initVipView();
+                break;
+            case 2:
+                initDoctorView();
+                break;
+            case 4:
+                initVolunteerView();
+        }
+
+    }
+
+    private void initVolunteerView() {
+        //应用
+        mGvApply.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.mVolunteerApplyImg, MainUIConstant.MineConstant.mVolunteerApplyTv));
+        //其他
+        mGvElse.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.mVolunteerElseImg, MainUIConstant.MineConstant.mVolunteerElseTv));
+
+        mGvApply.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    //订单 OrderListActivity
+                    startActivity(MinePostBookActivity2.class, "COMETYPE", "MINEGETBOOKACTIVITY");
+                    break;
+                case 1:
+                    //我的活动
+                    startActivity(VolunteerProjectListActivity.class);
+                    break;
+                case 2:
+                    //社区
+                    startActivity(MineRuralActivity.class);
+                    break;
+                case 3:
+                    //义工资料
+                    startActivity(ApplyForVolunteerActivity.class);
+                    break;
+            }
+        });
+
+
+        mGvElse.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    //钱包
+                    startActivity(MoneycartActivity.class);
+                    break;
+            }
+        });
+    }
+
+    /**
+     * 初始化 医生布局
+     */
+    private void initDoctorView() {
+        //应用
+        mGvApply.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.mDoctorApplyImg, MainUIConstant.MineConstant.mDoctorApplyTv));
+        //其他
+        mGvElse.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.mDoctorElseImg, MainUIConstant.MineConstant.mDoctorElseTv));
+
+        mGvApply.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    //订单 OrderListActivity
+                    startActivity(OrderListActivity.class);
+                    break;
+                case 1:
+                    //医生资料
+                    startActivity(AddDoctrInfoActivity.class,"edit","index.php?act=doctor_extend&op=edit");
+                    break;
+                case 2:
+                    //咨询列表  todo
+                    startActivity(MessageActivity.class);
+                    break;
+                case 3:
+                    //评论反馈 todo
+                    break;
+            }
+        });
+
+
+        mGvElse.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    //钱包
+                    startActivity(MoneycartActivity.class);
+                    break;
+                case 1:
+                    //咨询设置
+                    startActivity(ConsultActivity.class, "mDoctorId", AppConstant.DOCTORID);
+                    break;
+
+            }
+        });
+
+
+    }
+
+    /**
+     * 初始化 会员布局
+     * case 1:
+     * startActivity(MinePostBookActivity.class, "COMETYPE", "MINEGETBOOKACTIVITY");
+     * break;
+     */
+    private void initVipView() {
         settingGridview.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.settingImg, MainUIConstant.MineConstant.settingTv));
         bookGridview.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.bookImg, MainUIConstant.MineConstant.bookTv));
         elseGridview.setAdapter(new GridViewIconAdapter(context, MainUIConstant.MineConstant.elseImg, MainUIConstant.MineConstant.elseTv));
@@ -103,13 +254,11 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
                 case 0:
                     startActivity(DeviceListActivity.class);
                     break;
+
                 case 1:
-                    startActivity(MinePostBookActivity.class, "COMETYPE", "MINEGETBOOKACTIVITY");
-                    break;
-                case 2:
                     startActivity(MineRuralActivity.class);
                     break;
-                case 3:
+                case 2:
 //                        startActivity(MineCollectActivity.class);
                     Intent intent7 = new Intent(getContext(), com.aite.a.activity.FavoriteListFargmentActivity.class);
                     intent7.putExtra("i", 1);
@@ -144,6 +293,8 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
                 case 1:
                     startActivity(ThingbookActivity.class);
                     break;
+                case 2:
+                    startActivity(OrderListActivity.class);
                 default:
                     break;
             }
@@ -166,7 +317,7 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
                     startActivity(HealthBookActivity.class);
                     break;
                 case 2:
-                    startActivity(MinePostBookActivity.class, "COMETYPE", "MINEPOSTBOOKACTIVITY");
+                    startActivity(MinePostBookActivity2.class, "COMETYPE", "MINEPOSTBOOKACTIVITY");
                     break;
                 case 3:
                     startActivity(BookDisputeActivity.class);
@@ -177,11 +328,6 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
             }
         });
 
-    }
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_mine_fragment;
     }
 
 
@@ -231,12 +377,32 @@ public class MineFragment extends BaseFragment<MineContract.View, MinePresenter>
         if (((UseInformationBean) msg).getMember_info().getMember_mobile() != null)
             AppConstant.PHONENUMBER = ((UseInformationBean) msg).getMember_info().getMember_mobile();
         if (((UseInformationBean) msg).getMember_info().getMember_avatar() != null)
-            Glide.with(context).load(((UseInformationBean) msg).getMember_info().getMember_avatar()).apply(RequestOptions.circleCropTransform()).into(userIcon);
+            Glide
+                    .with(context)
+                    .load(((UseInformationBean) msg)
+                    .getMember_info().getMember_avatar())
+                    .apply(RequestOptions.circleCropTransform())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
+                    .skipMemoryCache(true) // 不使用内存缓存
+                    .into(userIcon);
         if (((UseInformationBean) msg).getMember_info().getMember_truename() != null) {
             AppConstant.USERNAME = ((UseInformationBean) msg).getMember_info().getMember_truename();
             userPhoneNumberTv.setText(((UseInformationBean) msg).getMember_info().getMember_truename());
         }
+    }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //反注册
+        EventBus.getDefault().unregister(this);
     }
 
 

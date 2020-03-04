@@ -38,6 +38,26 @@ public class BaseGaodeAmap {
     }
 
     /**
+     * 启动单次客户端定位
+     */
+    public static void startSingleLocation(AMapLocationClient locationClientSingle, AMapLocationListener locationSingleListener, Context context) {
+        if (null == locationClientSingle) {
+            locationClientSingle = new AMapLocationClient(context);
+        }
+
+        AMapLocationClientOption locationClientOption = new AMapLocationClientOption();
+        //使用单次定位
+        locationClientOption.setOnceLocation(true);
+        // 地址信息
+        locationClientOption.setNeedAddress(true);
+        locationClientOption.setLocationCacheEnable(false);
+        locationClientSingle.setLocationOption(locationClientOption);
+        if (locationSingleListener != null)
+            locationClientSingle.setLocationListener(locationSingleListener);
+        locationClientSingle.startLocation();
+    }
+
+    /**
      * 停止单次客户端
      */
     void stopSingleLocation(AMapLocationClient locationClientSingle) {
@@ -60,6 +80,24 @@ public class BaseGaodeAmap {
         locationClientOption.setNeedAddress(true);
         locationClientContinue.setLocationOption(locationClientOption);
         locationClientContinue.setLocationListener(locationContinueListener);
+        locationClientContinue.startLocation();
+    }
+
+    /**
+     * 启动连续客户端定位
+     */
+    public static void startContinueLocation(AMapLocationClient locationClientContinue, AMapLocationListener locationContinueListener, Context context) {
+        if (null == locationClientContinue) {
+            locationClientContinue = new AMapLocationClient(context);
+        }
+
+        //使用连续的定位方式  默认连续
+        AMapLocationClientOption locationClientOption = new AMapLocationClientOption();
+        // 地址信息
+        locationClientOption.setNeedAddress(true);
+        locationClientContinue.setLocationOption(locationClientOption);
+        if (locationContinueListener != null)
+            locationClientContinue.setLocationListener(locationContinueListener);
         locationClientContinue.startLocation();
     }
 

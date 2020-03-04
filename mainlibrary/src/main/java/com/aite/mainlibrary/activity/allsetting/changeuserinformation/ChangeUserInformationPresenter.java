@@ -3,6 +3,8 @@ package com.aite.mainlibrary.activity.allsetting.changeuserinformation;
 import android.app.Activity;
 
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
 import com.lzy.basemodule.bean.BeanConvertor;
@@ -25,12 +27,12 @@ public class ChangeUserInformationPresenter extends BasePresenterImpl<ChangeUser
 
     @Override
     public void postInformation(HttpParams httpParams) {
-        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.POSTPEPPLEINFORMATIONURL)
+        OkGo.<BaseData<ChangeUserInformationBean>>post(AppConstant.POSTPEPPLEINFORMATIONURL)
                 .tag(mView.getContext())
                 .params(httpParams)
-                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                .execute(new AbsCallback<BaseData<ChangeUserInformationBean>>() {
                     @Override
-                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                    public BaseData<ChangeUserInformationBean> convertResponse(okhttp3.Response response) throws Throwable {
                         LogUtils.d(response.request());
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
@@ -47,13 +49,13 @@ public class ChangeUserInformationPresenter extends BasePresenterImpl<ChangeUser
                     }
 
                     @Override
-                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                    public void onStart(Request<BaseData<ChangeUserInformationBean>, ? extends Request> request) {
                         LogUtils.d("onStart");
 
                     }
 
                     @Override
-                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
+                    public void onSuccess(Response<BaseData<ChangeUserInformationBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }

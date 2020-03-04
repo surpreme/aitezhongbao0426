@@ -10,11 +10,11 @@ import com.lzy.okgo.model.HttpParams;
  */
 
 public class BookDisputeContract {
-    interface View extends BaseView {
+     interface View extends BaseView {
 
     }
 
-    interface Presenter extends BasePresenter<View> {
+     interface Presenter extends BasePresenter<View> {
 
     }
 }

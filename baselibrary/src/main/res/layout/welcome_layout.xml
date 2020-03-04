@@ -4,10 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
- <androidx.recyclerview.widget.RecyclerView
-     android:id="@+id/recycler_view"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="160dp"
+        android:background="@drawable/round_background_blue"
+        android:text="开始您的奇妙之旅"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:id="@+id/current_layout"
@@ -15,7 +28,7 @@
         android:layout_height="20dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="0dp" />
+        android:orientation="horizontal" />
 </RelativeLayout>

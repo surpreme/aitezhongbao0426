@@ -255,6 +255,17 @@ public class TimeUtils {
 
     /*
      * 将时间戳转换为时间
+     */
+    public static String stampToDate1(long timeMillis) {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
+
+        Date date = new Date(timeMillis);
+        return simpleDateFormat.format(date);
+    }
+
+    /*
+     * 将时间戳转换为时间
      * 秒 timeMillis
      */
     public static String stampToDate2(long timeMillis) {
@@ -289,9 +300,7 @@ public class TimeUtils {
         Calendar cal = Calendar.getInstance();
 
         cal.setTime(date);
-
         return cal.get(Calendar.YEAR);
-
     }
 
     /**
@@ -307,7 +316,7 @@ public class TimeUtils {
 
         cal.setTime(date);
 
-        return cal.get(Calendar.MONTH);
+        return cal.get(Calendar.MONTH)+1;
 
     }
 

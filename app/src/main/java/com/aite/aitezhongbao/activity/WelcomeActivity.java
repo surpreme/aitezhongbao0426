@@ -25,24 +25,13 @@ import butterknife.BindView;
 
 public class WelcomeActivity extends BaseWelcomeActivity {
     @Override
+    protected void startYourActivity() {
+        startActivity(LoginActivity.class);
+
+    }
+
+    @Override
     protected void initDatas() {
-//        NetRun netRun = new NetRun(context);
-//        netRun.OnFirstWelcome(new RequestCallBack<String>() {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo) {
-//                WelcomeBean welcomeBean = BeanConvertor.convertBean(responseInfo.result, WelcomeBean.class);
-//                for (int i = 0; welcomeBean.getDatas().getUpload_images().size() > i; i++)
-//                    urls.add(welcomeBean.getDatas().getUpload_images().get(i).getImg_path());
-//                LogUtils.d(responseInfo.result);
-//                welcomeAdapter.notifyDataSetChanged();
-//                initCurrentLogo(1);
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException e, String s) {
-//
-//            }
-//        });
         urls.add(String.valueOf(R.drawable.welcome11));
         urls.add(String.valueOf(R.drawable.welcome22));
         urls.add(String.valueOf(R.drawable.welcome33));

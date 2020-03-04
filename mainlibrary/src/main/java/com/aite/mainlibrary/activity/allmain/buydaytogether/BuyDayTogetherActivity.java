@@ -180,7 +180,7 @@ public class BuyDayTogetherActivity extends BaseActivity<BuyDayTogetherContract.
         payRadioGroupRecyAdapter.setClickInterface(postion -> {
             LogUtils.d(postion);
             PopwindowUtils.getmInstance().dismissPopWindow();
-            if (postion == 99) {
+            if (postion == 5) {
                 mPresenter.PayCollect(initCollectParams());
             } else {
                 if (postion == 1) {

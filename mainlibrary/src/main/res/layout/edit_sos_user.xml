@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.aite.mainlibrary.R" />
+
+        <variable
+            name="viewModel"
+            type="com.aite.mainlibrary.activity.allsetting.editSosUser.EditSosUserViewModel" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/top_bar_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:padding="3dp"
+                app:srcCompat="@drawable/back"
+                binding:onClickCommand="@{viewModel.backOnClick}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{viewModel.titleTv}"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_title_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_24"
+                android:paddingRight="@dimen/dp_24"
+                android:text="保存"
+                android:textSize="17sp"
+                binding:onClickCommand="@{viewModel.overingCommitOnClick}" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/topbar_bottom_line"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/noglay"
+            app:layout_constraintTop_toBottomOf="@id/top_bar_ll" />
+
+        <TextView
+            android:id="@+id/user_icon_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:text="头像"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/user_icon"
+            app:layout_constraintTop_toBottomOf="@id/topbar_bottom_line"
+            app:layout_constraintVertical_weight="1" />
+
+        <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintLeft_toRightOf="@id/user_icon_title_tv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topbar_bottom_line"
+            app:src="@mipmap/chat_man"
+            binding:onClickCommand="@{viewModel.ChoiceImageOnClick}"
+            binding:imageUrl="@{viewModel.userIconUrl}" />
+        <!--        binding:placeholderRes="@{R.mipmap.chat_man}"-->
+        <!--        binding:url="@{viewModel.userIconUrl}"-->
+
+        <View
+            android:id="@+id/user_icon_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/noglay"
+            app:layout_constraintTop_toBottomOf="@id/user_icon_title_tv" />
+
+        <TextView
+            android:id="@+id/user_name_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:text="姓名"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/user_name_edit"
+            app:layout_constraintTop_toBottomOf="@id/user_icon_title_tv" />
+
+        <EditText
+            android:id="@+id/user_name_edit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.userNameTv}"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/user_name_title_tv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_icon_line"
+            app:layout_constraintVertical_weight="1" />
+
+        <View
+            android:id="@+id/user_name_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/noglay"
+            app:layout_constraintTop_toBottomOf="@id/user_name_edit" />
+
+        <TextView
+            android:id="@+id/user_type_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center|left"
+            android:text="关系"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/choice_tips_tv"
+            app:layout_constraintTop_toBottomOf="@id/user_name_line"
+            app:layout_constraintVertical_weight="1" />
+
+        <TextView
+            android:id="@+id/choice_tips_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.userTypeTv}"
+            app:layout_constraintBottom_toBottomOf="@id/user_type_title_tv"
+            app:layout_constraintRight_toLeftOf="@id/go_black_iv"
+            app:layout_constraintTop_toBottomOf="@id/user_name_line"
+            app:layout_constraintTop_toTopOf="@id/user_type_title_tv" />
+
+        <ImageView
+            android:id="@+id/go_black_iv"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:src="@drawable/go_black"
+            app:layout_constraintBottom_toBottomOf="@id/user_type_title_tv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_name_line"
+            app:layout_constraintTop_toTopOf="@id/user_type_title_tv" />
+
+        <View
+            android:id="@+id/user_type_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/noglay"
+            app:layout_constraintTop_toBottomOf="@id/user_type_title_tv" />
+
+        <TextView
+            android:id="@+id/user_phone_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center|left"
+            android:text="手机号码"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_type_line" />
+
+        <EditText
+            android:id="@+id/user_phone_edit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:hint="请输入手机号码"
+            android:inputType="phone"
+            android:text="@={viewModel.userPhoneTv}"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/user_phone_title_tv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_type_line"
+            app:layout_constraintVertical_weight="1" />
+
+        <View
+            android:id="@+id/user_phone_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/noglay"
+            app:layout_constraintTop_toBottomOf="@id/user_phone_edit" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/isDefault_switch"
+            style="?switchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:checked="@{viewModel.setDefaultChecked}"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="设成默认紧急联系人"
+            android:trackTint="@color/blue"
+            app:layout_constraintTop_toBottomOf="@id/user_phone_line"
+            app:switchMinWidth="60dp"
+            app:thumbTint="@color/blue" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -47,7 +47,7 @@ dependencies {
     implementation project(':baselibrary')
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
-    api 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     //多选相册
     implementation 'com.yanzhenjie:album:2.1.2'

@@ -3,7 +3,6 @@ package com.aite.mainlibrary.activity.allshopcard.dayinformation;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -42,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -109,6 +107,10 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
     LinearLayout orderDiscussLl;
     @BindView(R2.id.good_nice_iv)
     ImageView goodNiceIv;
+    @BindView(R2.id.collect_ll)
+    LinearLayout collectLl;
+    @BindView(R2.id.goods_ll)
+    LinearLayout goodsLl;
     private LessBodyGoodListRecyAdapter lessBodyGoodListRecyAdapter;
     private List<LessBodyInformationBean.GoodsCommendListBean> goodsCommendListBeans = new ArrayList<>();
 
@@ -187,7 +189,7 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
 
     }
 
-    @OnClick({R2.id.buy_service_tv, R2.id.iv_back, R2.id.collect_iv, R2.id.orderDiscuss_ll, R2.id.talkout_ll, R2.id.good_nice_iv})
+    @OnClick({R2.id.buy_service_tv, R2.id.iv_back, R2.id.collect_ll, R2.id.orderDiscuss_ll, R2.id.talkout_ll, R2.id.goods_ll})
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_back) {
@@ -196,11 +198,11 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
             LogUtils.d("goods_id", !isStringEmpty(getIntent().getStringExtra("goods_id")) ? getIntent().getStringExtra("goods_id") : "");
             startActivity(BuyDayTogetherActivity.class, "goods_id",
                     !isStringEmpty(getIntent().getStringExtra("goods_id")) ? getIntent().getStringExtra("goods_id") : "");
-        } else if (v.getId() == R.id.collect_iv) {
+        } else if (v.getId() == R.id.collect_ll) {
             mPresenter.onCollect(initParams());
         } else if (v.getId() == R.id.orderDiscuss_ll || v.getId() == R.id.talkout_ll) {
             startActivityWithCls(OrderDiscussActivity.class, 0, new ContentValue("goods_id", getIntent().getStringExtra("goods_id")));
-        } else if (v.getId() == R.id.good_nice_iv) {
+        } else if (v.getId() == R.id.goods_ll) {
             mPresenter.onFavourite(initParams());
         }
     }
@@ -234,7 +236,7 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
     @Override
     public void onGetInformationSuccess(Object msg) {
         LessBodyInformationBean lessBodyInformationBean = ((LessBodyInformationBean) msg);
-        collectIv.setImageDrawable(getDrawable((lessBodyInformationBean.getIsFavorites() == 1 ? R.drawable.ic_collect_full : R.drawable.collect_red)));
+        collectIv.setImageDrawable(getDrawable((lessBodyInformationBean.getIsFavorites() == 1 ? R.drawable.ic_collect_full : R.drawable.collect_doctor_red)));
         goodNiceIv.setImageDrawable(getDrawable((lessBodyInformationBean.getIsLike() == 1 ? R.drawable.good_nice : R.drawable.good_gray)));
         Glide.with(context).load(lessBodyInformationBean.getGoods_info().getGoods_image_url()).into(goodsIv);
         goodsInformationTv.setText(lessBodyInformationBean.getGoods_info().getGoods_name());
@@ -283,7 +285,7 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
         }
         if (((TwoSuccessCodeBean) msg).getResult().equals("1") && ((TwoSuccessCodeBean) msg).getMsg().equals("取消收藏成功")) {
             showToast(((TwoSuccessCodeBean) msg).getMsg());
-            collectIv.setImageDrawable(getDrawable(R.drawable.collect_red));
+            collectIv.setImageDrawable(getDrawable(R.drawable.collect_doctor_red));
         }
 
     }
@@ -313,6 +315,5 @@ public class DayInformationActivity extends BaseActivity<DayInformationContract.
         }
 
     }
-
 
 }

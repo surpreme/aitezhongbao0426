@@ -43,6 +43,12 @@ public class HelpElderHouseRecyAdapter extends RecyclerView.Adapter<HelpElderHou
 
     private OnClickLstenerInterface.OnRecyClickInterface clickInterface;
 
+    public void setOnItemRecyClickInterface(OnClickLstenerInterface.OnItemRecyClickInterface onItemRecyClickInterface) {
+        this.onItemRecyClickInterface = onItemRecyClickInterface;
+    }
+
+    private OnClickLstenerInterface.OnItemRecyClickInterface onItemRecyClickInterface;
+
     public OnClickLstenerInterface.OnRecyClickInterface getClickInterface() {
         return clickInterface;
     }
@@ -75,6 +81,9 @@ public class HelpElderHouseRecyAdapter extends RecyclerView.Adapter<HelpElderHou
             public void onClick(View v) {
                 clickInterface.getPosition(position);
             }
+        });
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemRecyClickInterface != null) onItemRecyClickInterface.getPosition(position);
         });
 
     }

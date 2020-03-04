@@ -190,10 +190,72 @@ public class DoctorInfoBean {
     private String is_nursing;
     private String nursing_store_id;
     private String current_identity;
+
+    private String consult_price = "";
+    private String consult_time = "";
+
+    private String p_consult_price = "";
+    private String p_consult_time = "";
+
+
     private int evaluate_count;
     private int collection_count;
+
+    public String getIs_collection() {
+        return is_collection;
+    }
+
+    public void setIs_collection(String is_collection) {
+        this.is_collection = is_collection;
+    }
+
+    private String is_collection;
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    private String longitude;
     private List<String> work_address;
     private List<String> adept;
+
+    public String getConsult_price() {
+        return consult_price;
+    }
+
+    public void setConsult_price(String consult_price) {
+        this.consult_price = consult_price;
+    }
+
+    public String getConsult_time() {
+        return consult_time;
+    }
+
+    public void setConsult_time(String consult_time) {
+        this.consult_time = consult_time;
+    }
+
+    public String getP_consult_price() {
+        return p_consult_price;
+    }
+
+    public void setP_consult_price(String p_consult_price) {
+        this.p_consult_price = p_consult_price;
+    }
+
+    public String getP_consult_time() {
+        return p_consult_time;
+    }
+
+
+    public void setP_consult_time(String p_consult_time) {
+        this.p_consult_time = p_consult_time;
+    }
+
 
     public String getDoctor_id() {
         return doctor_id;

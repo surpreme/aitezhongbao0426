@@ -195,9 +195,9 @@ public class EditBindingActivity extends BaseActivity implements View.OnClickLis
         if (v.getId() == R.id._iv_back) {
             finish();
         } else if (v.getId() == R.id.tv_type) {
-            if (menu != null) {
-                showpopu(menu);
-            }
+//            if (menu != null) {
+//                showpopu(menu);
+//            }
         } else if (v.getId() == R.id.tv_code) {
             if (typeid == 0) {
                 netRun.SendVerifycode("mobile");

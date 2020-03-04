@@ -172,14 +172,23 @@ public class UserTypeActivity extends BaseActivity<UserTypeContract.View, UserTy
 
     }
 
+    /**
+     * params.put("is_member", Checkmsg(peopleChex));
+     * 强制选择会员角色
+     *
+     * @return
+     */
     private HttpParams initParams() {
         HttpParams params = new HttpParams();
-        params.put("is_member", Checkmsg(peopleChex));
+        params.put("is_member", "1");
         params.put("is_hugong", Checkmsg(girldoctorChex));
         params.put("is_doctors", Checkmsg(doctorChex));
         params.put("is_volunteer", Checkmsg(workerChex));
-        if (!mSelected.isEmpty())
-            params.put("doctor_license_z", FileUtils.getFileByUri(context, mSelected.get(0)));
+        if (!mSelected.isEmpty() ){
+            if ( FileUtils.getFileByUri(context, mSelected.get(0)).exists()){
+                params.put("doctor_license_z", FileUtils.getFileByUri(context, mSelected.get(0)));
+            }
+        }
         if (!mSelected3.isEmpty())
             params.put("doctor_license_f", FileUtils.getFileByUri(context, mSelected3.get(0)));
         if (!mSelected2.isEmpty())

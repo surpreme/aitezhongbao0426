@@ -27,6 +27,10 @@ public class BaseData<T extends ErrorBean> implements Serializable {
         return getCode().toString().equals("200");
     }
 
+    public boolean isFailed() {
+        return !getCode().toString().equals("200");
+    }
+
     public void setSuccessed(boolean successed) {
         isSuccessed = successed;
     }

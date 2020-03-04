@@ -153,9 +153,14 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.add_shopcar_btn) {
-            if (senduserPriceTv.getText().equals("结算(0)"))
+            if (senduserPriceTv.getText().equals("结算(0)")) {
+                showToast("请选择商品");
                 return;
-            if (cartListBeans.isEmpty()) return;
+            }
+            if (cartListBeans.isEmpty()) {
+                showToast("请选择商品");
+                return;
+            }
             startActivity(SureShopBookActivity.class, "cart_id", surePay(cartListBeans));
 
         }
@@ -355,7 +360,11 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
 
     @Override
     public void onShopCardListSuccess(Object msg) {
-        if (!cartListBeans.isEmpty()) cartListBeans.clear();
+        if (!cartListBeans.isEmpty()) {
+            cartListBeans.clear();
+            allPriceTv.setText("合计:0.00");
+            senduserPriceTv.setText("结算(" + 0 + ")");
+        }
         cartListBeans.addAll(((ShopCardlistBean) msg).getCart_list());
         shopcatAdapter.notifyDataSetChanged();
     }
@@ -364,7 +373,7 @@ public class ShopCardActivity extends BaseActivity<ShopCardContract.View, ShopCa
     public void ondeleteShopCardItemSuccess(Object msg) {
         LogUtils.d(msg);
         shopcatAdapter.clearData();
-        initDatas();
+        initResume();
 
 
     }

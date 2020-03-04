@@ -11,26 +11,30 @@ public class AppConstant {
     public static String USERNAME = null;
     public static String FRIEND_VALID = null;
     public static String MEMBER_ID = null;
-    public static String ICON_URL = null;
+    public static String ICON_URL = "";
     public static String PHONENUMBER = null;
     public static String USERPASSWORD = null;
     public static String LOGINUSERNUMBER = null;
+    public static String DOCTORID = null;
+
+
 
     /**
      * 身份
-     * member_info[].is_member	整型	是否为会员 身份-会员 1是
-     * member_info[].is_volunteer	整型	是否为义工 身份-义工 1是
-     * member_info[].is_hugong	整型	是否为护工 身份-护工 1是
-     * member_info[].is_doctors	整型	是否为医生 身份-医生 1是
-     * member_info[].is_nursing	整型	是否为养老院 身份-养老院 1是
-     * member_info[].current_identity	整型	用户当前默认身份 1会员 2义工 3护工 4医生
+     * member_info[].IS_MEMBER	整型	是否为会员 身份-会员 1是
+     * member_info[].IS_VOLUNTEER	整型	是否为义工 身份-义工 1是
+     * member_info[].IS_HUGONG	整型	是否为护工 身份-护工 1是
+     * member_info[].IS_DOCTORS	整型	是否为医生 身份-医生 1是
+     * member_info[].IS_NURSING	整型	是否为养老院 身份-养老院 1是
+     * member_info[].CURRENT_IDENTITY	整型	用户当前默认身份 1会员 2医生 3护工 4义工
      */
     public static boolean IS_MEMBER = false;
     public static boolean IS_VOLUNTEER = false;
     public static boolean IS_HUGONG = false;
     public static boolean IS_DOCTORS = false;
     public static boolean IS_NURSING = false;
-    public static int CURRENT_IDENTITY = 0;
+    public static int CURRENT_IDENTITY = 1;
+    public static String DOCTOR_ID = "";
 
     private static final String BASEURL = "http://zhongbyi.aitecc.com/mobile/";
     //  获取所有地区数据
@@ -68,6 +72,11 @@ public class AppConstant {
     public static final String GET_READBOOKINFORMATIONURL = BASEURL + "index.php?act=article&op=article_Content_Url";
     //获取喇叭文章标题
     public static final String GET_READTITLEBOOKINFORMATIONURL = BASEURL + "index.php?act=article&op=APP_article_show";
+
+    //APP-安卓版本号 版本更新
+    public static final String GET_UPDATE_VERSION_URL = BASEURL + "index.php?act=index&op=android_version";
+    // 设置 反馈类型列表
+    public static final String GET_SETTING_FEED_TYPE_URL = BASEURL + "index.php?act=member_feedback&op=feedback_typelist";
 
 
     /**
@@ -183,6 +192,8 @@ public class AppConstant {
     public static final String POST_HELPELDERTALKINFORMATIONFACTBOOKURL = BASEURL + "index.php?act=member_timebank&op=my_evaluate_all";
     //订单详情 实体订单
     public static final String INFORMATIONFACTBOOKURL = BASEURL + "index.php?act=member_order&op=order_list";
+    //订单详情 取消订单
+    public static final String POST_CANCEL_FACT_ORDER_URL = BASEURL + "index.php?act=member_order&op=order_cancel";
 
     //订单详情 虚拟订单
     public static final String INFORMATIONUNFACTBOOKURL = BASEURL + "index.php?act=member_vr_order&op=order_detail";
@@ -219,7 +230,7 @@ public class AppConstant {
     //获取积分礼品列表
     public static final String NUMBERSHOPLISTINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=points_goods_list";
     //积分银行 提交兑换礼品接口
-    public static final String GET_RAPLACETHINGNUMBERSHOPLISTINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=points_goods_list";
+    public static final String GET_RAPLACETHINGNUMBERSHOPLISTINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=points_goods_order";
     //获取积分规则页信息 直接返回H5内容
     public static final String RULESNUMBERINFORMATIONURL = BASEURL + "index.php?act=member_timebank_point&op=rule";
     //
@@ -387,7 +398,7 @@ public class AppConstant {
             + "index.php?act=cms&op=article_show";
 
     // * 我的社区 发布列表页信息
-    public static String MINECOLLECTPOSTLIST = AITEURL + "index.php?act=member_circle&op=Release_list";
+    public static String MINECOLLECTPOSTLIST = BASEURL + "index.php?act=member_circle&op=Release_list";
     // index.php?act=member_circle&op=Release_list
 
 

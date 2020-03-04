@@ -4,16 +4,13 @@ package com.aite.mainlibrary.activity.allmain.elsehelp;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aite.mainlibrary.Constant.MainUIConstant;
 import com.aite.mainlibrary.Mainbean.ElseServiceIconBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allshopcard.daytogether.DayTogetherActivity;
-import com.aite.mainlibrary.activity.allstep.StepActivity;
+import com.aite.mainlibrary.activity.allstep.vipStep.StepActivity;
 import com.aite.mainlibrary.adapter.ElseServiceUIAdapter;
-import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
-import com.lzy.basemodule.mvp.MVPBaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

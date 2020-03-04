@@ -191,9 +191,16 @@ public class ConsultingActivity extends BaseActivity implements OnClickListener 
                     tv_xztype.setText(zxleix.mct_name);
                     tv_ts.setVisibility(View.VISIBLE);
                     String mct_introduce = zxleix.mct_introduce;
-                    String replace = mct_introduce.replace("&lt;/p&gt;", "\n");
-                    String replace3 = replace.replace("&lt;p&gt;", "");
-                    tv_ts.setText(replace3);
+                    String replace = mct_introduce.replaceAll("&lt;p&gt;", "");
+                    String replace2 = replace.replaceAll(" ", "");
+                    String replaces = replace2.replaceAll("/n", "");
+                    String replace3 = replaces.replace("&lt;/p&gt;", "");
+//                    tv_ts.setText(replace3);
+                    if (zxleix.mct_name.equals("商品咨询"))
+                        tv_ts.setText("请写明商品链接，或平台货号。如果您对商品规格、介绍等有疑问，可以在商品详情页“购买咨询”处发起咨询，会得到及时专业的回复。");
+                    if (zxleix.mct_name.equals("订单咨询"))
+                        tv_ts.setText("请写明要咨询的订单编号。如需处理交易中产生的纠纷，请选择投诉。");
+//                    tv_ts.setText(mct_introduce);
                 }
             });
         }

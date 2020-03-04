@@ -10,6 +10,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.lzy.basemodule.R;
+import com.lzy.basemodule.util.DensityUtil;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,15 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.lzy.basemodule.R;
-import com.lzy.basemodule.util.SystemUtil;
-
-/**
- * @Auther: valy
- * @datetime: 2019-11-23
- * @desc:
- */
 public class BaseItemDecoration extends RecyclerView.ItemDecoration {
+///noglay
+
 
     /**
      * 分割线高度
@@ -117,7 +114,7 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
      * @see #mDividerColor 划线颜色 #E6E6E6
      */
     public BaseItemDecoration(Context context) {
-        this(SystemUtil.dp2px(context, 1)
+        this(DensityUtil.dp2px(context, 1)
                 , 0, 0, 0, 0, 0
                 , context.getResources().getColor(R.color.noglay), context
                 , 1, null);
@@ -169,13 +166,25 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
      * @param ratio
      */
     public BaseItemDecoration(Context mContext, String ratio) {
-        this(0, SystemUtil.dp2px(mContext, 8)
+        this(0, DensityUtil.dp2px(mContext, 8)
                 , 0, 0, 0, 0
                 , 0, mContext
                 , 1, ratio);
     }
 
-
+    /**
+     *
+     * @param mDivider
+     * @param mSpace
+     * @param mRowFirstSpace
+     * @param mColumnFirstSpace
+     * @param mRowEndSpace
+     * @param mColumnEndSpace
+     * @param mDividerColor
+     * @param mContext
+     * @param mSpanCount
+     * @param ratio
+     */
     public BaseItemDecoration(int mDivider, int mSpace, int mRowFirstSpace, int mColumnFirstSpace, int mRowEndSpace, int mColumnEndSpace
             , int mDividerColor, Context mContext, float mSpanCount, String ratio) {
         this.mDivider = mDivider;
@@ -247,7 +256,7 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
             }
             if (((LinearLayoutManager) parent.getLayoutManager()).getOrientation() == RecyclerView.HORIZONTAL) {
                 try {
-                        getMaxDividerWidth(view, parent);
+                    getMaxDividerWidth(view, parent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -360,17 +369,18 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
                     rect.left = 0;
                     rect.right = parent.getMeasuredWidth();
                     rect.top = child.getBottom() + (mSpace + mDivider) / 2;
-                    rect.bottom = rect.top + mDivider;
+                    rect.bottom = rect.top + (mSpace + mDivider) / 2;
 
                     if (i == itemCount - 1 && ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition() == itemCount - 1) {
                         if (hasBottomDivider) {
                             c.drawRect(rect, mDividerPaint);
                         }
                     } else if (i != itemCount - 1) {
-                        doRule(i, rect);
-                        c.drawRect(rect, mDividerPaint);
+                        if (doRule(((RecyclerView.LayoutParams) child.getLayoutParams()).getViewLayoutPosition(), rect)) {
+                            c.drawRect(rect, mDividerPaint);
+                        }
                     }
-                    drawText(i, c, child);
+                    drawText(((RecyclerView.LayoutParams) child.getLayoutParams()).getViewLayoutPosition(), c, child);
                 }
             } else if (((LinearLayoutManager) layoutManager).getOrientation() == RecyclerView.HORIZONTAL) {
                 for (int i = 0; i < itemCount; i++) {
@@ -406,8 +416,8 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
     }
 
-    protected void doRule(int i, Rect rect) {
-
+    protected boolean doRule(int i, Rect rect) {
+        return true;
     }
 
     @Override

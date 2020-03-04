@@ -4,18 +4,19 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT" />
-        </compositeConfiguration>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/alipaylibrary" />
+            <option value="$PROJECT_DIR$/amaplibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselibrary" />
+            <option value="$PROJECT_DIR$/devicelibrary" />
+            <option value="$PROJECT_DIR$/glibrary" />
             <option value="$PROJECT_DIR$/mainlibrary" />
-            <option value="$PROJECT_DIR$/testlibrary" />
+            <option value="$PROJECT_DIR$/shopMallLibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -2,6 +2,7 @@ package com.example.ui.view;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,10 +23,24 @@ public class AlterPopup extends CenterPopupView {
     private onSubmitClickListener listener;
     private EditText mEtTime;
     private EditText mEtPric;
+    private String mTime;
+    private String mPric;
 
+    //添加 1   修改2
+    public int mType;
 
     public void setListener(onSubmitClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setType(int type) {
+        mType = type;
+        Log.d("todo", "setType:2222222222222 ");
+    }
+
+    public void setData(String time, String price) {
+        mTime = time;
+        mPric = price;
     }
 
     public interface onSubmitClickListener {
@@ -70,16 +85,33 @@ public class AlterPopup extends CenterPopupView {
         mTvSubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String time = mEtTime.getText().toString();
-                String pric = mEtPric.getText().toString();
-                if (!TextUtils.isEmpty(time) && !TextUtils.isEmpty(pric)) {
-                    listener.onSubmitClick(time, pric);
+                mTime = mEtTime.getText().toString();
+                mPric = mEtPric.getText().toString();
+                if (!TextUtils.isEmpty(mTime) && !TextUtils.isEmpty(mPric)) {
+                    listener.onSubmitClick(mTime, mPric);
                     dismiss(); // 关闭弹窗
                 }
             }
         });
-
-
     }
 
+
+    @Override
+    protected void onShow() {
+
+        if (mType == 2) {
+            mEtTime.setText(mTime);
+            mEtTime.setSelection(mTime.length());
+            mEtPric.setText(mPric);
+            mEtPric.setSelection(mPric.length());
+        }
+        super.onShow();
+    }
+
+    @Override
+    protected void onDismiss() {
+        mEtTime.setText("");
+        mEtPric.setText("");
+        super.onDismiss();
+    }
 }

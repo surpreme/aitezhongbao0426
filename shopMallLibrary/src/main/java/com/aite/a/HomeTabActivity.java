@@ -97,6 +97,7 @@ public class HomeTabActivity extends TabActivity implements Mark {
         initView();
         int inputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
         getWindow().setSoftInputMode(inputMode);
+        if(getIntent().getStringExtra("userKey")!=null)Mark.State.UserKey=getIntent().getStringExtra("userKey");
     }
 
     private void findViewById() {

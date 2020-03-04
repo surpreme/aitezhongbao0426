@@ -170,7 +170,7 @@ public class StarDoctorPushActvity extends GBaseActivity<StarDoctorPushPresenter
             @Override
             public void onItemClick(int position) {
                 String doctor_id = mAdapter.getDataList().get(position).getDoctor_id();
-                toActivity(DoctorInfoActivity.class,"doctorId",doctor_id);
+                toActivity(DoctorInfoActivity.class, "doctorId", doctor_id, "type", "2");
             }
 
             @Override
@@ -202,8 +202,6 @@ public class StarDoctorPushActvity extends GBaseActivity<StarDoctorPushPresenter
                         mRefreshLayout.finishRefresh();
                         mRefreshLayout.resetNoMoreData();
                     }
-
-
                 }, 500);
             }
         });
@@ -353,8 +351,8 @@ public class StarDoctorPushActvity extends GBaseActivity<StarDoctorPushPresenter
                 mScreenPopup = new ScreenPopup(mContext, mLabelList);
                 mScreenPopup.setOnCompleteListener(this);
                 new XPopup.Builder(mContext)
-                        .dismissOnTouchOutside(false)
                         .atView(view)
+                        .dismissOnTouchOutside(false)
                         .asCustom(mScreenPopup)
                         .show();
             }

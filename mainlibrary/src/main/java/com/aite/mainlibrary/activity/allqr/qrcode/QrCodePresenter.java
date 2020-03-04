@@ -5,8 +5,11 @@ import android.app.Activity;
 import com.aite.mainlibrary.Mainbean.SettingAddressListBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
+import com.lzy.basemodule.bean.BaseDataEtras;
+import com.lzy.basemodule.bean.BaseDataX;
 import com.lzy.basemodule.bean.BeanConvertor;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.mvp.BasePresenterImpl;
@@ -72,42 +75,44 @@ public class QrCodePresenter extends BasePresenterImpl<QrCodeContract.View> impl
 
     @Override
     public void sureBook(HttpParams httpParams) {
-        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.SUREBOOKSERVICETIMEBANKURL)
+        OkGo.<BaseDataEtras<TwoSuccessCodeBean>>post(AppConstant.SUREBOOKSERVICETIMEBANKURL)
                 .tag(mView.getContext())
                 .params(httpParams)
-                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                .execute(new AbsCallback<BaseDataEtras<TwoSuccessCodeBean>>() {
                     @Override
-                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                    public BaseDataEtras<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
                         LogUtils.d(response.request());
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        try {
-                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
-                            if (baseData.getDatas().getError() != null) {
-                                mView.showError(baseData.getDatas().getError());
-                            }else {
-                                JSONObject object = jsonObject.optJSONObject("datas");
+                        String code = jsonObject.optString("code");
+                        JSONObject object = jsonObject.optJSONObject("datas");
+                        if (code.equals("200")) {
 //                        String dataresult = object.optString("msg");
-                                Gson gson = new Gson();
-                                TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
+                            Gson gson = new Gson();
+                            TwoSuccessCodeBean twoSuccessCodeBean = gson.fromJson(object.toString(), TwoSuccessCodeBean.class);
+                            if (twoSuccessCodeBean.getError() == null) {
                                 ((Activity) mView.getContext()).runOnUiThread(()
-                                        -> mView.onSureSuccess(twoSuccessCodeBean));
+                                        -> mView.onSureSuccess("200"));
                             }
-
-                        } catch (Exception e) {
-                            LogUtils.e(e);
+                        } else {
+                            BaseDataEtras baseDataEtras = BeanConvertor.convertBean(jsonObject.toString(), BaseDataEtras.class);
+                            if (baseDataEtras != null)
+                                if (baseDataEtras.getDatas() != null)
+                                    if (baseDataEtras.getDatas().getError() != null) {
+                                        mView.showError(baseDataEtras.getDatas().getError());
+                                    }
                         }
 
                         return null;
                     }
 
                     @Override
-                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                    public void onStart(Request<BaseDataEtras<TwoSuccessCodeBean>, ? extends Request> request) {
                         LogUtils.d("onStart");
 
                     }
 
                     @Override
-                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
+                    public void onSuccess(Response<BaseDataEtras<TwoSuccessCodeBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }
@@ -129,7 +134,7 @@ public class QrCodePresenter extends BasePresenterImpl<QrCodeContract.View> impl
                             BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
                             if (baseData.getDatas().getError() != null) {
                                 mView.showError(baseData.getDatas().getError());
-                            }else {
+                            } else {
                                 JSONObject object = jsonObject.optJSONObject("datas");
 //                        String dataresult = object.optString("msg");
                                 Gson gson = new Gson();

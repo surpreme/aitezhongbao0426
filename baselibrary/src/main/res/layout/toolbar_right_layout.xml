@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="首页"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -35,7 +35,7 @@
             android:layout_centerInParent="true"
             android:layout_marginRight="23dp"
             android:gravity="center"
-            android:text="深圳"
+            android:text=""
             android:textSize="17sp" />
 
     </RelativeLayout>

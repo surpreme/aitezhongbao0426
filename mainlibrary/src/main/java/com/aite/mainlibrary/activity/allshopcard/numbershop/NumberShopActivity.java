@@ -9,6 +9,7 @@ import com.aite.mainlibrary.adapter.TimeShopRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
 import com.lzy.okgo.model.HttpParams;
 
 import java.util.ArrayList;
@@ -38,7 +39,10 @@ public class NumberShopActivity extends BaseActivity<NumberShopContract.View, Nu
         mBaserecyclerView.setAdapter(timeShopRecyAdapter);
         mBaserecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         timeShopRecyAdapter.setClickInterface(postion -> {
-            mPresenter.replaceThing(initParams(timeShoplistbean.get(postion).getPgoods_id()));
+            PopwindowUtils.getmInstance().showdiadlogPopupWindow(context, "您确认要兑换此物品吗?", v -> {
+                mPresenter.replaceThing(initParams(timeShoplistbean.get(postion).getPgoods_id()));
+                PopwindowUtils.getmInstance().dismissPopWindow();
+            });
 
 
         });

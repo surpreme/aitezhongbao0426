@@ -59,7 +59,7 @@ public class DistrictUtils {
      */
     public void showDialogCity() {
         mShowDialogCity = new Dialog(mContext, R.style.ShareDialogStyle);
-        View inflate = View.inflate(mContext, R.layout.city_dialog, null);
+        View inflate = View.inflate(mContext, R.layout.city1_dialog, null);
         AddressSelector addressSelector = (AddressSelector) inflate.findViewById(R.id.address);
         //设置属性
         addressSelector.setTabAmount(3);

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.aite.mainlibrary.R" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.aite.mainlibrary.activity.allmoney.moneybook2.ActivityMoneyBookViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:padding="3dp"
+                app:srcCompat="@drawable/back"
+                binding:onClickCommand="@{viewModel.onBackOnClick}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@={viewModel.titleString}"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+        <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartlayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_ll"
+            binding:autoRefresh="@{viewModel.autoRefresh}"
+            binding:hasMore="@{viewModel.isHasMore}"
+            binding:onLoadMoreListener="@{viewModel.onLoadMoreListener}"
+            binding:onRefreshListener="@{viewModel.onRefreshListener}"
+            binding:refreshFooter="@{viewModel.classicsFooter}"
+            binding:refreshHeader="@{viewModel.waterDropHeader}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/money_book_recy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                binding:adapter="@{adapter}"
+                binding:itemBinding="@{viewModel.itemBinding}"
+                binding:items="@{viewModel.orderItemList}"
+                binding:layoutManager="@{LayoutManagers.linear()}" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -4,20 +4,19 @@ import android.content.Context;
 
 /**
  * MVPPlugin
- * 邮箱 784787081@qq.com
+ *  邮箱 784787081@qq.com
  */
 
 public interface BaseView {
-    Context getContext();
+     Context getContext();
 
-    void showLoading();
+     void showLoading();
 
-    void dimissLoading();
+     void dimissLoading();
 
-    void showError(String msg);
+     void showError(String msg);
 
-    void showEmpty();
+     void showEmpty();
 
-    void showNormal();
-
+     void showNormal();
 }

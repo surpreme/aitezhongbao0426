@@ -98,10 +98,15 @@
 
         <TextView
             android:id="@+id/tv_goodsname"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_price2"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_toLeftOf="@+id/ll_share"
             android:ellipsize="end"
             android:lines="2"

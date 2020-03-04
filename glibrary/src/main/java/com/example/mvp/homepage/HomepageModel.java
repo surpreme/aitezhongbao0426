@@ -15,4 +15,9 @@ public class HomepageModel implements HomepageContract.Model {
     public Observable<BaseBean<DoctorInfoBean>> getDoctorInfo(String key, String doctor_id) {
         return RetrofitClient.getInstance().getApi().getDoctorInfo(key, doctor_id);
     }
+
+    @Override
+    public Observable<BaseBean<DoctorInfoBean>> getDoctorInfo1(String key, String member_id) {
+        return RetrofitClient.getInstance().getApi().getDoctorInfo1(key, member_id);
+    }
 }

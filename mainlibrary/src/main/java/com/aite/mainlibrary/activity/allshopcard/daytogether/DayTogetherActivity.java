@@ -108,13 +108,13 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
         allLessBodyRecyAdapter = new AllLessBodyRecyAdapter(context, goodsListBeans);
         allLessBodyRecyAdapter.setClickInterface(this);
         recyclerView.setAdapter(allLessBodyRecyAdapter);
-        initSmartLayout(true);
+        initSmartLayout(true, false);
         initImgNodata();
         if (recyclerView.getItemDecorationCount() == 0) {
-            recyclerView.addItemDecoration(new BaseItemDecoration(SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 10)
+            recyclerView.addItemDecoration(new BaseItemDecoration(SystemUtil.dip2px(context, 10), SystemUtil.dip2px(context, 10)
                     , SystemUtil.dip2px(context, 10), SystemUtil.dip2px(context, 0)
                     , SystemUtil.dip2px(context, 10), SystemUtil.dip2px(context, 0)
-                    , ContextCompat.getColor(context, R.color.noglay), context
+                    , ContextCompat.getColor(context, R.color.white), context
                     , 2f, "7.1:12"));
         }
     }
@@ -166,6 +166,7 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
                 }
                 goodsListBeans.clear();
                 radioGroupRecyAdapter.notifyDataSetChanged();
+                mCurrentPage = 1;
                 mPresenter.getListMsg(initParams());
                 PopwindowUtils.getmInstance().dismissPopWindow();
 
@@ -205,6 +206,7 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
             goodsListBeans.clear();
             allLessBodyRecyAdapter.notifyDataSetChanged();
         }
+        mCurrentPage = 1;
         mPresenter.getListMsg(initParams());
 
 
@@ -260,10 +262,10 @@ public class DayTogetherActivity extends BaseActivity<DayTogetherContract.View, 
 
     @Override
     public void onGetListSuccess(Object msg) {
+        if (mCurrentPage == 1) if (((LessDayBean) msg).getGoods_list().isEmpty()) showImgNoData();
+        else stopImgNodata();
         goodsListBeans.addAll(((LessDayBean) msg).getGoods_list());
         allLessBodyRecyAdapter.notifyDataSetChanged();
-        if (mCurrentPage == 1) if (goodsListBeans.isEmpty()) showImgNoData();
-        else stopImgNodata();
         hasMore = ((LessDayBean) msg).getGoods_list().isEmpty();
     }
 

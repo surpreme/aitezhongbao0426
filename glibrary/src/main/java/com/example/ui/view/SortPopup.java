@@ -80,10 +80,14 @@ public class SortPopup extends PartShadowPopupView {
     }
 
 
-   public interface onClickSortListener {
+    public interface onClickSortListener {
         void getSortData(String text, int position);
     }
 
+    @Override
+    public BasePopupView show() {
+        return super.show();
+    }
 }
 
 

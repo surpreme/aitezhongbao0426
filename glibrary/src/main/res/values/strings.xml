@@ -6,6 +6,9 @@
 
     <string name="western_medicine">西医</string>
 
+    <string name="g_hour_minute">%d小时%d分钟</string>
 
+    <string name="g_hour">%d小时</string>
 
+    <string name="g_minute">%d分钟</string>
 </resources>

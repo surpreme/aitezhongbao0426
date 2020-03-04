@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aite.a.activity.li.activity.topuppays.TopupPaysActivity;
 import com.aite.a.base.BaseActivity;
 import com.aite.a.model.RechargeableCardInfo;
 import com.aite.a.model.TopUpInfo;
@@ -27,6 +30,8 @@ import com.aite.a.view.CustomScrollView;
 import com.aite.a.view.CustomScrollView.OnScrollListener;
 import com.aite.a.view.MyListView;
 import com.aiteshangcheng.a.R;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
+import com.lzy.basemodule.util.CashierInputFilter;
 
 /**
  * 在线充值
@@ -38,7 +43,7 @@ public class OnlineTopUpActivity extends BaseActivity implements
     private TextView tv_tab1, tv_tab2, tv_tab3, tv_tab4, tv_zxsubmit, _tv_name,
             tv_remaining, tv_freeze, tv_search, norecord, tv_remaining2,
             tv_freeze2, tv_ts;
-    private EditText ed_je;
+    private EditText ed_je, ed_je2;
     private ImageView _iv_back;
     private NetRun netRun;
     private TopUpInfo topUpInfo;
@@ -118,11 +123,14 @@ public class OnlineTopUpActivity extends BaseActivity implements
                     if (msg.obj != null) {
                         String str = (String) msg.obj;
                         if (str.equals("1")) {
-                            Toast.makeText(OnlineTopUpActivity.this, getString(R.string.systembusy),
-                                    Toast.LENGTH_SHORT).show();
-                            ed_je.setText("");
+                            PopwindowUtils.getmInstance().showdiadlogPopupWindow(OnlineTopUpActivity.this, "充值成功", v -> {
+                                ed_je.setText("");
+                                onBackPressed();
+                            });
+//                            Toast.makeText(OnlineTopUpActivity.this,"操作成功",
+//                                    Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(OnlineTopUpActivity.this, str,
+                            Toast.makeText(OnlineTopUpActivity.this, "充值失败",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -147,6 +155,7 @@ public class OnlineTopUpActivity extends BaseActivity implements
         _tv_name = (TextView) findViewById(R.id._tv_name);
         tv_zxsubmit = (TextView) findViewById(R.id.tv_zxsubmit);
         ed_je = (EditText) findViewById(R.id.ed_je);
+        ed_je2 = (EditText) findViewById(R.id.ed_je2);
         _iv_back = (ImageView) findViewById(R.id._iv_back);
         tv_remaining = (TextView) findViewById(R.id.tv_remaining);
         tv_freeze = (TextView) findViewById(R.id.tv_freeze);
@@ -176,6 +185,8 @@ public class OnlineTopUpActivity extends BaseActivity implements
 
     @Override
     protected void initView() {
+        InputFilter[] filters = {new CashierInputFilter()};
+        ed_je.setFilters(filters); //设置金额输入的过滤器，保证只能输入金额类型
         netRun = new NetRun(this, handler);
         _tv_name.setText(getString(R.string.app_name));
         initData();
@@ -208,12 +219,12 @@ public class OnlineTopUpActivity extends BaseActivity implements
                 netRun.OnlineTopup(ed_je.getText().toString());
             } else {
                 // 充值卡
-                if (TextUtils.isEmpty(ed_je.getText().toString())) {
+                if (TextUtils.isEmpty(ed_je2.getText().toString())) {
                     Toast.makeText(OnlineTopUpActivity.this, getString(R.string.member_centre31),
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                netRun.Cardtopup(ed_je.getText().toString());
+                netRun.Cardtopup(ed_je2.getText().toString());
             }
         } else if (v.getId() == R.id.tv_tab1) {
             isonline = true;
@@ -222,6 +233,8 @@ public class OnlineTopUpActivity extends BaseActivity implements
             ll_pager2.setVisibility(View.GONE);
             ll_pager3.setVisibility(View.GONE);
             tv_tab1.setBackgroundColor(Color.WHITE);
+            ed_je2.setVisibility(View.GONE);
+            ed_je.setVisibility(View.VISIBLE);
             tv_tab2.setBackgroundResource(R.drawable.gray_solid);
             tv_tab3.setBackgroundResource(R.drawable.gray_solid);
             tv_tab4.setBackgroundResource(R.drawable.gray_solid);
@@ -247,6 +260,8 @@ public class OnlineTopUpActivity extends BaseActivity implements
         } else if (v.getId() == R.id.tv_tab4) {
             isonline = false;
             tv_ts.setText(getString(R.string.member_centre33));
+            ed_je2.setVisibility(View.VISIBLE);
+            ed_je.setVisibility(View.GONE);
             ll_pager1.setVisibility(View.VISIBLE);
             ll_pager2.setVisibility(View.GONE);
             ll_pager3.setVisibility(View.GONE);
@@ -404,8 +419,10 @@ public class OnlineTopUpActivity extends BaseActivity implements
                     // 支付
                     if (list2.pdr_payment_state.equals("0")) {
                         Intent intent2 = new Intent(OnlineTopUpActivity.this,
-                                TopupPayActivity.class);
+                                TopupPaysActivity.class);
                         intent2.putExtra("pay_sn", list2.pdr_sn);
+                        intent2.putExtra("Parcel_Number", list2.pdr_sn);
+                        intent2.putExtra("Money_Price", list2.pdr_amount);
                         startActivity(intent2);
                     } else {
                         Toast.makeText(OnlineTopUpActivity.this, getString(R.string.m_paid), Toast.LENGTH_SHORT).show();

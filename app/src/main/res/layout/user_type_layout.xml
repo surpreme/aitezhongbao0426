@@ -81,7 +81,13 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:button="@drawable/check_state"
-                        android:checked="true" />
+                        android:checked="true"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@mipmap/select"/>
 
                 </LinearLayout>
 

@@ -19,7 +19,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="173dp">
+                android:layout_height="153dp">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -55,6 +55,8 @@
                         android:id="@+id/user_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxWidth="100dp"
+                        android:maxHeight="100dp"
                         app:srcCompat="@mipmap/user_logo" />
 
                     <TextView
@@ -81,111 +83,20 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/main_chat" />
+                        app:srcCompat="@mipmap/main_chat" />
                 </LinearLayout>
 
 
             </RelativeLayout>
 
-            <GridView
-                android:id="@+id/setting_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:numColumns="4"
-                android:padding="20dp"
-                android:scrollbars="none" />
+            <!--会员 布局-->
+            <include layout="@layout/item_mine_vip" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/glay" />
+            <!--医生 布局-->
+            <include layout="@layout/item_mine_doctor" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:text="我的订单"
-                    android:textColor="#ff333333"
-                    android:textSize="17sp" />
-
-                <GridView
-                    android:id="@+id/book_gridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:numColumns="4"
-                    android:padding="10dp"
-                    android:scrollbars="none" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/glay" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:text="我的应用"
-                    android:textColor="#ff333333"
-                    android:textSize="17sp" />
-
-                <GridView
-                    android:id="@+id/else_gridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:numColumns="4"
-                    android:padding="10dp"
-                    android:scrollbars="none" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/glay" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:text="设备绑定"
-                    android:textColor="#ff333333"
-                    android:textSize="17sp" />
-
-                <GridView
-                    android:id="@+id/device_gridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:numColumns="4"
-                    android:padding="10dp"
-                    android:scrollbars="none" />
-            </LinearLayout>
+            <!--会员 end-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,6 +119,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-    >
 
 </LinearLayout>

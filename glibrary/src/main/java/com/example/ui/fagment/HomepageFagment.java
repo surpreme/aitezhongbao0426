@@ -1,15 +1,21 @@
 package com.example.ui.fagment;
 
+import android.content.Intent;
+import android.location.Location;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aite.amaplibrary.fragment.BaseAmapSelectionsActivity;
+import com.example.base.OnClickRecyclerViewListener;
 import com.example.bean.BaseBean;
 import com.example.bean.DoctorInfoBean;
+import com.example.bean.DoctorWorkAdressBean;
 import com.example.mvp.homepage.HomepageContract;
 import com.example.mvp.homepage.HomepagePresenter;
+import com.example.ui.activity.AmapSelectionsActivity;
 import com.example.ui.activity.DoctorInfoActivity;
 import com.example.ui.adapter.CommentListAdapter;
 import com.example.ui.adapter.HospitalListsAdapter;
@@ -18,7 +24,13 @@ import com.example.glibrary.R;
 import com.example.glibrary.R2;
 import com.example.ui.view.FlowLayout;
 import com.example.Utils.TextUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.base.BaseGaoDeLocationViewActivity;
+import com.lzy.basemodule.bean.BeanConvertor;
+import com.lzy.basemodule.bean.ContentValue;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.uber.autodispose.AutoDisposeConverter;
 
@@ -27,6 +39,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 
 //import com.aite.mainlibrary.R;
@@ -57,11 +70,15 @@ public class HomepageFagment extends GBaseFragment<HomepagePresenter> implements
 
     private String mDoctorId;
 
+    private String mMemberId;
+
     private String mKey;
 
     private HospitalListsAdapter mAdapter;
 
     private CommentListAdapter mCommentListAdapter;
+    private int mType;
+    private List<DoctorWorkAdressBean> mDoctorWorkAdressBeanList;
 
 
     @Override
@@ -71,19 +88,59 @@ public class HomepageFagment extends GBaseFragment<HomepagePresenter> implements
 
     @Override
     public void initOthers() {
-
         mPresenter = new HomepagePresenter();
         mPresenter.attachView(this);
-
 
         mAdapter = new HospitalListsAdapter(mContext);
         mRecyView1.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mRecyView1.setNestedScrollingEnabled(false);
         mRecyView1.setAdapter(mAdapter);
+        mAdapter.setOnRecyclerViewListener(new OnClickRecyclerViewListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (mDoctorWorkAdressBeanList.get(position).getLocation() != null) {
+                    String[] location = mDoctorWorkAdressBeanList.get(position).getLocation().split(",");
+                    Intent intent = new Intent(getActivity(), BaseGaoDeLocationViewActivity.class);
+                    intent.putExtra("title", mDoctorWorkAdressBeanList.get(position).getTitle());
+                    intent.putExtra("latitude", location[0]);
+                    intent.putExtra("longitude", location[1]);
+                    startActivity(intent);
+//                    startActivityWithCls(
+//                            BaseGaoDeLocationViewActivity.class,
+//                            0,
+//                            new ContentValue("title", mDoctorWorkAdressBeanList.get(position).getTitle()),
+//                            new ContentValue("latitude",location[0]),
+//                            new ContentValue("longitude", location[1])
+//                    );
+                }
 
-        mDoctorId = ((DoctorInfoActivity) mActivity).mDoctorId;
+//                toActivity(Location.class);
+            }
+
+            @Override
+            public boolean onItemLongClick(int position) {
+                return false;
+            }
+        });
         mKey = AppConstant.KEY;
-        mPresenter.getDoctorInfo(mKey, mDoctorId);
+
+        assert getParentFragment() != null;
+
+        // todo mType 处理
+        try {
+            mType = ((DoctorInfoActivity) mActivity).mType;
+        } catch (Exception e) {
+            mType = ((DoctorInfoFragment) getParentFragment()).mType;
+        }
+
+
+        if (mType == 1) {
+            mMemberId = AppConstant.MEMBER_ID;
+            mPresenter.getDoctorInfo1(mKey, mMemberId);
+        } else {
+            mDoctorId = ((DoctorInfoActivity) mActivity).mDoctorId;
+            mPresenter.getDoctorInfo(mKey, mDoctorId);
+        }
 
         List<String> data = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -123,8 +180,19 @@ public class HomepageFagment extends GBaseFragment<HomepagePresenter> implements
 
     private void initView(BaseBean<DoctorInfoBean> bean) {
         //地址
-        List<String> adept = bean.getDatas().getWork_address();
-        mAdapter.appendData(adept);
+        if (bean.getDatas().getLongitude() != null && !bean.getDatas().getLongitude().equals("null")) {
+            List<String> adept = new ArrayList<>();
+            mDoctorWorkAdressBeanList = new Gson().fromJson(bean.getDatas().getLongitude(), new TypeToken<List<DoctorWorkAdressBean>>() {
+            }.getType());
+            for (int i = 0; i < mDoctorWorkAdressBeanList.size(); i++) {
+                DoctorWorkAdressBean doctorWorkAdressBean = mDoctorWorkAdressBeanList.get(i);
+                adept.add(doctorWorkAdressBean.getTitle());
+            }
+            mAdapter.appendData(adept);
+
+        }
+
+//           =bean.getDatas().getWork_address();
 
         //医生介绍
         mTvIntroduce.setText(bean.getDatas().getIntroduce());

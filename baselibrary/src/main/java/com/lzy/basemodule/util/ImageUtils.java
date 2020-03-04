@@ -1,10 +1,13 @@
 package com.lzy.basemodule.util;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
@@ -43,11 +46,69 @@ public class ImageUtils {
         // outputX outputY 是裁剪图片宽高
         intent.putExtra("outputX", 150);
         intent.putExtra("outputY", 150);
+        /**
+         * 上述方法中，裁剪后的图片通过Intent的putExtra("return-data",true)方法进行传递，miui系统问题就出在这里，return-data的方式只适用于小图，miui系统默认的裁剪图片可能裁剪得过大，或对return-data分配的资源不足，造成return-data失败。
+         * ————————————————
+         */
         intent.putExtra("return-data", true);
         activity.startActivityForResult(intent, BaseConstant.RESULT_CODE.REQUEST_CODE_CHOOSE_IMAGE_CLIP);
     }
 
-    public static void saveBitmap(Context context,Bitmap bitmap, String name) {
+    public static void zoomPhoto(File inputFile, File outputFile,Activity activity) {
+        File parentFile = outputFile.getParentFile();
+        if (!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setDataAndType(getImageContentUri(activity, inputFile), "image/*");
+        } else {
+            intent.setDataAndType(Uri.fromFile(inputFile), "image/*");
+        }
+        intent.putExtra("crop", "true");
+
+        //设置剪裁图片宽高比
+        intent.putExtra("mAspectX", 1);
+        intent.putExtra("mAspectY", 1);
+
+        //设置剪裁图片大小
+        intent.putExtra("mOutputX", 200);
+        intent.putExtra("mOutputY", 200);
+
+        //  是否返回uri
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        activity.startActivityForResult(intent,  BaseConstant.RESULT_CODE.REQUEST_CODE_CHOOSE_IMAGE_CLIP);
+    }
+    /**
+     * 安卓7.0裁剪根据文件路径获取uri
+     */
+    private static Uri getImageContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media._ID},
+                MediaStore.Images.Media.DATA + "=?  ",
+                new String[]{filePath}, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor
+                    .getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
+    public static void saveBitmap(Context context, Bitmap bitmap, String name) {
         File file = new File(Environment.getExternalStorageDirectory() + "/" + name + ".png");
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -71,7 +132,6 @@ public class ImageUtils {
         intent.setData(uri);
         context.sendBroadcast(intent);
         LogUtils.e("保存bitmp--成功");
-
 
 
     }

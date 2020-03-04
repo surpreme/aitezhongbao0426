@@ -1,6 +1,7 @@
 package com.aite.mainlibrary.activity.allshopcard.orderdiscuss;
 
 
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
@@ -63,12 +64,11 @@ public class OrderDiscussActivity extends BaseSmartLayoutActivity<OrderDiscussCo
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void ClearState() {
-        talkAllTv.setBackground(getDrawable(R.mipmap.good_sell_talkback));
-        talkGoodTv.setBackground(getDrawable(R.mipmap.good_sell_talkback));
-        talkNormTv.setBackground(getDrawable(R.mipmap.good_sell_talkback));
-        talkBadTv.setBackground(getDrawable(R.mipmap.good_sell_talkback));
+        talkAllTv.setBackgroundColor(Color.parseColor("#FDDFA7"));
+        talkGoodTv.setBackgroundColor(Color.parseColor("#FDDFA7"));
+        talkNormTv.setBackgroundColor(Color.parseColor("#FDDFA7"));
+        talkBadTv.setBackgroundColor(Color.parseColor("#FDDFA7"));
 
     }
 
@@ -82,28 +82,28 @@ public class OrderDiscussActivity extends BaseSmartLayoutActivity<OrderDiscussCo
             mCurrentPage = 1;
             initDatas();
             ClearState();
-            talkAllTv.setBackground(getDrawable(R.drawable.round_background_yellow));
+            talkAllTv.setBackgroundColor(Color.parseColor("#FCA613"));
         } else if (v.getId() == R.id.talk_goods_tv) {
             type = "1";
             clearDatas();
             mCurrentPage = 1;
             initDatas();
             ClearState();
-            talkGoodTv.setBackground(getDrawable(R.drawable.round_background_yellow));
+            talkGoodTv.setBackgroundColor(Color.parseColor("#FCA613"));
         } else if (v.getId() == R.id.talk_norm_tv) {
             type = "2";
             clearDatas();
             mCurrentPage = 1;
             initDatas();
             ClearState();
-            talkNormTv.setBackground(getDrawable(R.drawable.round_background_yellow));
+            talkNormTv.setBackgroundColor(Color.parseColor("#FCA613"));
         } else if (v.getId() == R.id.talk_bad_tv) {
             type = "3";
             clearDatas();
             mCurrentPage = 1;
             initDatas();
             ClearState();
-            talkBadTv.setBackground(getDrawable(R.drawable.round_background_yellow));
+            talkBadTv.setBackgroundColor(Color.parseColor("#FCA613"));
         }
 
     }
@@ -127,7 +127,7 @@ public class OrderDiscussActivity extends BaseSmartLayoutActivity<OrderDiscussCo
     @Override
     public void onGetDiscussSuccess(OrderDiscussBean orderDiscussBean, boolean isHaveMore) {
         talkAllTv.setText(String.format("全部(%d)", orderDiscussBean.getGoods_evaluate_info().getAll()));
-        talkBadTv.setText(String.format("差评(%d）", orderDiscussBean.getGoods_evaluate_info().getBad()));
+        talkBadTv.setText(String.format("差评(%d)", orderDiscussBean.getGoods_evaluate_info().getBad()));
         talkGoodTv.setText(String.format("好评(%d)", orderDiscussBean.getGoods_evaluate_info().getGood()));
         talkNormTv.setText(String.format("中评(%d)", orderDiscussBean.getGoods_evaluate_info().getNormal()));
         hasMore = isHaveMore;

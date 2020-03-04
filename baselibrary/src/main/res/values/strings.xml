@@ -1,7 +1,11 @@
 <resources>
     <string name="baseUrl">http://zhongbyi.aitecc.com</string>
 
+    <string name="image_behavior">com.lzy.basemodule.adpter.ImageFollowBehavior</string>
+
     <string name="search_hint">请输入疾病、医生、科室、医院</string>
 
+    <string name="search_hint1">输入关键字搜索（如环保、地铁等）</string>
 
+    <string name="search_hint2">输入搜索关键字</string>
 </resources>

@@ -7,19 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.Utils.TextUtil;
 import com.example.base.BaseRecyclerViewAdapter;
 import com.example.bean.DoctorListBean;
 import com.example.glibrary.R;
 import com.example.glibrary.R2;
-import com.example.Utils.TextUtil;
-import com.lzy.okgo.request.GetRequest;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -76,7 +75,13 @@ public class DoctorListAdapter extends BaseRecyclerViewAdapter<DoctorListBean.Da
 
         @Override
         protected void bindView(DoctorListBean.DatasBean datasBean) {
-            //
+
+            String member_avatar = datasBean.getMember_avatar();
+            Glide.with(mContext).load(member_avatar)
+                    .placeholder(R.drawable.head)//图片加载出来前，显示的图片
+                    .error(R.drawable.head)//图片加载失败后，显示的图片
+                    .into(mIvIcon);
+
             mTvName.setText(datasBean.getMember_truename());
 
             // professional_types
@@ -89,7 +94,6 @@ public class DoctorListAdapter extends BaseRecyclerViewAdapter<DoctorListBean.Da
             } else {
                 mTvHospital.setVisibility(View.GONE);
             }
-
             //坐诊医院 todo
             mTvSite.setText("");
 
@@ -106,10 +110,10 @@ public class DoctorListAdapter extends BaseRecyclerViewAdapter<DoctorListBean.Da
             mTvConsultNum.setText(TextUtil.highlight(mContext, "咨询量" + datasBean.getConsult_count(), datasBean.getConsult_count(), "#FFB400", 0, 0));
 
             //咨询量
-            mTvSubscribeNum.setText(TextUtil.highlight(mContext, "预约量 null", " null", "#FFB400", 0, 0));
+            mTvSubscribeNum.setText(TextUtil.highlight(mContext, "预约量 99+", " 99+", "#FFB400", 0, 0));
 
             //回复
-            mTvReplyNum.setText(TextUtil.highlight(mContext, "回复速度 null", " null", "#FFB400", 0, 0));
+            mTvReplyNum.setText(TextUtil.highlight(mContext, "回复速度 9.9", " 9.9", "#FFB400", 0, 0));
         }
 
     }

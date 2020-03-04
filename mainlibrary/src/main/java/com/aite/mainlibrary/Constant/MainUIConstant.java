@@ -27,16 +27,18 @@ public class MainUIConstant {
 
     }
 
+    //   R.drawable.fact_money,
+//  "提现",
     public static class MoneycartActivityConstant {
         public static int[] settingImg = {
-                R.drawable.fact_money,
+
                 R.drawable.nofact_money,
                 R.drawable.redcard,
                 R.mipmap.bankcard,
         };
 
         public static String[] settingTv = {
-                "提现", "充值", "账单明细", "银行卡"
+                "充值", "账单明细", "银行卡"
         };
 
     }
@@ -106,7 +108,7 @@ public class MainUIConstant {
     public static class MirningNoonbookConstant {
         public static int[] settingImg = {
                 R.mipmap.nooneat,
-                R.mipmap.choiceeat,
+                R.drawable.choiceeat2,
 
         };
 
@@ -116,21 +118,26 @@ public class MainUIConstant {
 
     }
 
+    /**
+     * R.mipmap.house,
+     * "参与的活动",
+     */
     public static class MineConstant {
         public static int[] settingImg = {
                 R.mipmap.mine_device,
                 R.mipmap.activity,
-                R.mipmap.house,
+
                 R.mipmap.collect,
         };
 
         public static String[] settingTv = {
-                "我的设备", "参与的活动", "我的社区", "我的收藏"
+                "我的设备", "我的社区", "我的收藏"
         };
 
         public static int[] bookImg = {
                 R.mipmap.service_order_icon,
-                R.mipmap.eatoder_icon
+                R.mipmap.eatoder_icon,
+                R.mipmap.consult_icon
 //                R.mipmap.helpdoctor,
 
 //                R.mipmap.service,
@@ -147,8 +154,7 @@ public class MainUIConstant {
         //        "助餐", "其它服务",
         //        "日托", "培训", "辅助就业", "助残活动"
         public static String[] bookTv = {
-                "服务订单", "助餐订单"
-
+                "服务订单", "助餐订单", "咨询订单"
         };
 
         public static int[] elseImg = {
@@ -166,5 +172,55 @@ public class MainUIConstant {
         public static String[] deviceTv = {
                 "添加设备"
         };
+
+
+        /*---------医生 ---------*/
+        public static String[] mDoctorApplyTv = {
+                "全部订单", "医生资料","咨询列表"
+        };
+
+
+        public static int[] mDoctorApplyImg = {
+                R.mipmap.doctor_icon1,
+                R.mipmap.doctor_icon2,
+                R.mipmap.doctor_icon3,
+//                R.mipmap.doctor_icon4,
+        };
+
+
+        public static String[] mDoctorElseTv = {
+                "我的钱包", "咨询设置",
+        };
+
+
+        public static int[] mDoctorElseImg = {
+                R.mipmap.doctor_icon5,
+                R.mipmap.doctor_icon6,
+        };
+
+        /*===========义工==========*/
+        public static String[] mVolunteerApplyTv = {
+                "全部订单", "我的活动", "我的社区", "义工资料"
+        };
+
+
+        public static int[] mVolunteerApplyImg = {
+
+                R.mipmap.volunteer_icon1,
+                R.mipmap.volunteer_icon2,
+                R.mipmap.volunteer_icon3,
+                R.mipmap.volunteer_icon4,
+        };
+
+
+        public static String[] mVolunteerElseTv = {
+                "我的钱包",
+        };
+
+
+        public static int[] mVolunteerElseImg = {
+                R.mipmap.doctor_icon5,
+        };
+
     }
 }

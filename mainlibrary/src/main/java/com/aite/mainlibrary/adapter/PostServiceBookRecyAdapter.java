@@ -53,17 +53,17 @@ public class PostServiceBookRecyAdapter extends RecyclerView.Adapter<PostService
     private TalkedUsedInterface talkedUsedInterface;
     private UnUsedInterface unUsedInterface;
 
-    public TalkedUsedInterface getTalkedUsedInterface() {
-        return talkedUsedInterface;
+    public void setWriteOffInterface(WriteOffInterface writeOffInterface) {
+        this.writeOffInterface = writeOffInterface;
     }
+
+    private WriteOffInterface writeOffInterface;
+
 
     public void setTalkedUsedInterface(TalkedUsedInterface talkedUsedInterface) {
         this.talkedUsedInterface = talkedUsedInterface;
     }
 
-    public UnUsedInterface getUnUsedInterface() {
-        return unUsedInterface;
-    }
 
     public void setUnUsedInterface(UnUsedInterface unUsedInterface) {
         this.unUsedInterface = unUsedInterface;
@@ -119,12 +119,19 @@ public class PostServiceBookRecyAdapter extends RecyclerView.Adapter<PostService
 
         holder.titleTv.setText(listBean.get(position).getTitle());
         Glide.with(context).load(listBean.get(position).getMemebr_avatar()).into(holder.icon);
-        if (listBean.get(position).getStatus().equals("1"))
+        if (listBean.get(position).getStatus().equals("-1"))
+            holder.isOveringTv.setText("服务已取消");
+        else if (listBean.get(position).getStatus().equals("0"))
+            holder.isOveringTv.setText("待接单");
+        else if (listBean.get(position).getStatus().equals("1"))
             holder.isOveringTv.setText("已接单");
         else if (listBean.get(position).getStatus().equals("2"))
-            holder.isOveringTv.setText("参与中");
+            holder.isOveringTv.setText("已开始");
         else if (listBean.get(position).getStatus().equals("3"))
-            holder.isOveringTv.setText("已完成");
+            holder.isOveringTv.setText("已结束");
+        else if (listBean.get(position).getStatus().equals("4"))
+            holder.isOveringTv.setText("已评价");
+        holder.timeTv.setText(listBean.get(position).getStart_time());
         holder.elderSureTv.setVisibility(listBean.get(position).getIsverify() == 1 ? View.VISIBLE : View.GONE);
         holder.unusedTv.setVisibility(listBean.get(position).getIs_cancel() == 1 ? View.VISIBLE : View.GONE);
         holder.talkGoodsTv.setVisibility(listBean.get(position).getIs_evaluate() == 1 ? View.VISIBLE : View.GONE);
@@ -151,8 +158,9 @@ public class PostServiceBookRecyAdapter extends RecyclerView.Adapter<PostService
 //                            Color.BLACK, Color.WHITE,
 //                            BitmapFactory.decodeResource(context.getResources(), com.lzy.basemodule.R.drawable.logo));
 //                    PopwindowUtils.getmInstance().showQrPopupWindow(context, bitmap, listBean.get(position).getGoods_name() + "   " + orderListBeans.get(position).getAdd_time());
-
-                    PopwindowUtils.getmInstance().showImgPopupWindow(context, listBean.get(position).getQrcodeimg(), listBean.get(position).getTitle() + "   " + listBean.get(position).getStart_time());
+                    if (writeOffInterface != null) {
+                        writeOffInterface.writeOff(listBean.get(position).getQrcodeimg(), listBean.get(position).getTitle() + "   " + listBean.get(position).getStart_time());
+                    }
                 }
             });
         }
@@ -207,5 +215,9 @@ public class PostServiceBookRecyAdapter extends RecyclerView.Adapter<PostService
 
     public interface UnUsedInterface {
         void onUnUsed(String number);
+    }
+
+    public interface WriteOffInterface {
+        void writeOff(String qrUrl, String tilte);
     }
 }

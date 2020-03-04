@@ -16,9 +16,11 @@ public class BaseConstant {
         public static final String PATH_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "lzy" + File.separator + "GeekNews";
 
     }
-
+    //im聊天倒计时
+    public static long IM_COUNTDOWN_TIME = 0;
     public static class IM {
         public static final int SDKAPPID = 1400301991;
+
 
     }
 
@@ -32,6 +34,10 @@ public class BaseConstant {
         public static final int REQUEST_CODE_CHOOSE_IMAGE_FOUR = 12548;
         //拍照
         public static final int REQUEST_CAMERA = 18500;
+        //广播
+        public static final String BROADCAST_REQUEST = "com.aiTeIMDoctor.timeDown.running.cn";
+        //广播销毁
+        public static final String OVER_BROADCAST_REQUEST = "com.aiTeIMDoctor.timeDown.overing.cn";
 
 
     }

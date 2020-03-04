@@ -25,7 +25,7 @@ public class HomepagePresenter extends GBasePresenter<HomepageContract.View> imp
         if (!isViewAttached()) {
             return;
         }
-       // mView.showLoading();
+        // mView.showLoading();
         mModel.getDoctorInfo(key, doctor_id)
                 .compose(RxScheduler.<BaseBean<DoctorInfoBean>>Obs_io_main())
                 .as(mView.<BaseBean<DoctorInfoBean>>bindAutoDispose())
@@ -33,15 +33,39 @@ public class HomepagePresenter extends GBasePresenter<HomepageContract.View> imp
                     @Override
                     public void accept(BaseBean<DoctorInfoBean> bean) throws Exception {
                         mView.getDoctorInfo(bean);
-                //        mView.hideLoading();
+                        //        mView.hideLoading();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         mView.onError(throwable);
-              //          mView.hideLoading();
+                        //          mView.hideLoading();
                     }
                 });
 
+    }
+
+    @Override
+    public void getDoctorInfo1(String key, String member_id) {
+        if (!isViewAttached()) {
+            return;
+        }
+
+        mModel.getDoctorInfo1(key, member_id)
+                .compose(RxScheduler.<BaseBean<DoctorInfoBean>>Obs_io_main())
+                .as(mView.<BaseBean<DoctorInfoBean>>bindAutoDispose())
+                .subscribe(new Consumer<BaseBean<DoctorInfoBean>>() {
+                    @Override
+                    public void accept(BaseBean<DoctorInfoBean> bean) throws Exception {
+                        mView.getDoctorInfo(bean);
+                        //        mView.hideLoading();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        //          mView.hideLoading();
+                    }
+                });
     }
 }

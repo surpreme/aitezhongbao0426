@@ -10,7 +10,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,25 +25,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="50dp"
                 android:gravity="center|left"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/time" />
 
                 <TextView
                     android:id="@+id/book_state_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingLeft="15dp"
-                    android:text="待付款"
+                    android:paddingLeft="10dp"
+                    android:text="订单已完成"
                     android:textColor="#ff333333"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <View
@@ -53,10 +49,25 @@
             <TextView
                 android:id="@+id/book_information_tv"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="50dp"
                 android:gravity="center|left"
                 android:paddingLeft="15dp"
-                android:text="王嘉尔    16611111111"
+                android:text="王一一  16659595959"
+                android:textColor="#ff333333"
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/glay" />
+
+            <TextView
+                android:id="@+id/book_eat_time_tv"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center|left"
+                android:paddingLeft="15dp"
+                android:text="用餐日期:"
                 android:textColor="#ff333333"
                 android:textSize="17sp" />
 
@@ -67,12 +78,18 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:gravity="center|left"
+                android:layout_height="30dp"
+                android:gravity="bottom|left"
+                android:layout_marginBottom="15dp"
                 android:paddingLeft="15dp"
-                android:text="服务详情"
-                android:textColor="#ff333333"
-                android:textSize="17sp" />
+                android:text="菜品详情"
+                android:textColor="@color/blue"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/noglay" />
 
             <include layout="@layout/recy_layout" />
 
@@ -88,6 +105,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/noglay" />
 
             <TextView
@@ -96,8 +114,13 @@
                 android:gravity="center|left"
                 android:paddingLeft="15dp"
                 android:text="订单信息"
-                android:textColor="#ff333333"
+                android:textColor="@color/blue"
                 android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/noglay" />
 
             <TextView
                 android:id="@+id/book_number_tv"
@@ -105,19 +128,14 @@
                 android:layout_height="40dp"
                 android:gravity="center|left"
                 android:paddingLeft="15dp"
-                android:text="订单编号：251515151321"
+                android:text="订单编号："
                 android:textColor="#ff333333"
                 android:textSize="17sp" />
 
-            <TextView
-                android:id="@+id/pay_number_tv"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center|left"
-                android:paddingLeft="15dp"
-                android:text="支付宝交易号：251515151321"
-                android:textColor="#ff333333"
-                android:textSize="17sp" />
+                android:layout_height="0.1dp"
+                android:background="@color/noglay" />
 
             <TextView
                 android:id="@+id/time_create_tv"
@@ -125,9 +143,44 @@
                 android:layout_height="40dp"
                 android:gravity="center|left"
                 android:paddingLeft="15dp"
-                android:text="创建时间：251515151321"
+                android:text="下单时间："
                 android:textColor="#ff333333"
                 android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/noglay" />
+
+            <TextView
+                android:id="@+id/pay_away_tv"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center|left"
+                android:paddingLeft="15dp"
+                android:text="支付方式："
+                android:textColor="#ff333333"
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/noglay" />
+
+            <TextView
+                android:id="@+id/pay_number_tv"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center|left"
+                android:paddingLeft="15dp"
+                android:text="第三方支付交易号："
+                android:textColor="#ff333333"
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/noglay" />
 
             <TextView
                 android:id="@+id/book_dispute_tv"
@@ -140,9 +193,15 @@
                 android:textSize="15sp"
                 android:visibility="gone" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/noglay" />
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:layout_height="70dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/message_ll"
@@ -194,6 +253,35 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:gravity="center|right"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/delete_order_tv"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:background="@drawable/juxing_gray_background"
+            android:gravity="center"
+            android:text="取消订单"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/pay_order_tv"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/juxing_gray_background"
+            android:gravity="center"
+            android:text="去付款"
+            android:textColor="@color/orange"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

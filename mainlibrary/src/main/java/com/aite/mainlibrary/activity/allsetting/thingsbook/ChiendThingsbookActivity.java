@@ -123,7 +123,6 @@ public class ChiendThingsbookActivity extends BaseActivity<ThingsbookContract.Vi
 
     @Override
     protected void initResume() {
-
     }
 
     @Override

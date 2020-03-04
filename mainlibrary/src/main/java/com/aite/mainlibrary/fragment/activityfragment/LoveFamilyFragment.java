@@ -1,7 +1,9 @@
 package com.aite.mainlibrary.fragment.activityfragment;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -11,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.adapter.fragmentAdpter.BackgroundViewPagerApdapter;
+import com.blankj.rxbus.RxBus;
 import com.google.android.material.tabs.TabLayout;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseApp;
@@ -82,10 +85,24 @@ public class LoveFamilyFragment extends BaseFragment {
     @Override
     protected void initViews() {
         webView.loadUrl(AppConstant.ZHONGBAOLOVEFAMILYSURL + AppConstant.KEY);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if (url.startsWith("http://zhongbyi.aitecc.com/wap/index.php?act=circle&comefrom=APP") || url.startsWith("http://zhongbyi.aitecc.com/wap/index.php?act=news&comefrom=APP")) {
+                    RxBus.getDefault().post("show", "ISSHOWHIDETABLL");
+                } else {
+                    RxBus.getDefault().post("hide", "ISSHOWHIDETABLL");
+                }
+            }
+        });
         RerashWebView.initWebView(webView);
         webView.addJavascriptInterface(new JsInterface(webView, getActivity()), "AndroidWebView");
-
         initFragment();
     }
 

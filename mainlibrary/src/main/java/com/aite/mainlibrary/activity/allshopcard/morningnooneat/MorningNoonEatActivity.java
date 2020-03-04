@@ -108,7 +108,8 @@ public class MorningNoonEatActivity extends BaseActivity<MorningNoonEatContract.
                 stopNoData();
                 goodsListBeanList.addAll(((MorningNoonEatBean) msg).getGoods_list());
                 morningNoonEatRecyAdapter.notifyDataSetChanged();
-                hasMore = ((MorningNoonEatBean) msg).getStatus() > 0;
+//                hasMore = ((MorningNoonEatBean) msg).getStatus() > 0;
+                hasMore = ((MorningNoonEatBean) msg).getGoods_list().isEmpty();
             }
 
         }

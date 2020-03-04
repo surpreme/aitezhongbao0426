@@ -16,9 +16,11 @@ import com.aite.mainlibrary.Mainbean.ChioceEatBookListBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.bumptech.glide.Glide;
+import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.util.TimeUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,19 @@ public class MoreItemRecyAdapter extends RecyclerView.Adapter<MoreItemRecyAdapte
         this.onclickInterface = onclickInterface;
     }
 
+    private OnClickLstenerInterface.OnThingClickInterface onThingClickInterface;
+
+    public void setOnThingClickInterface(OnClickLstenerInterface.OnThingClickInterface onThingClickInterface) {
+        this.onThingClickInterface = onThingClickInterface;
+    }
+
     private OnclickInterface onclickInterface;
+
+    public void setOnPayclickInterface(OnPayclickInterface onPayclickInterface) {
+        this.onPayclickInterface = onPayclickInterface;
+    }
+
+    private OnPayclickInterface onPayclickInterface;
 
     public LayoutInflater getInflater() {
         return inflater;
@@ -115,6 +129,14 @@ public class MoreItemRecyAdapter extends RecyclerView.Adapter<MoreItemRecyAdapte
         holder.booknumber_tv.setText(String.format("订单号:%s", mDatas.get(position).getOrder_sn()));
         holder.timeTv.setText(TimeUtils.stampToDatemm2(Long.parseLong(mDatas.get(position).getAdd_time())));
         holder.cancelTv.setVisibility(mDatas.get(position).isIf_cancel() ? View.VISIBLE : View.GONE);
+        holder.cancelTv.setOnClickListener(v -> {
+            if (onThingClickInterface != null)
+                onThingClickInterface.getString(mDatas.get(position).getOrder_id());
+
+        });
+        holder.payTv.setOnClickListener(v -> {
+            if (onPayclickInterface != null) onPayclickInterface.pay(position);
+        });
         try {
             int opsds = 0;
             double price = 0.00;
@@ -123,7 +145,7 @@ public class MoreItemRecyAdapter extends RecyclerView.Adapter<MoreItemRecyAdapte
                 price += Double.valueOf(mDatas.get(position).getExtend_order_goods().get(i).getGoods_price());
             }
             holder.informationTv.setText(String.format("共计%d件商品", opsds));
-            holder.priceTv.setText(String.format("￥ %s", price));
+            holder.priceTv.setText(String.format("￥ %s", haveTwoDouble(price)));
         } catch (Exception e) {
             LogUtils.e(e + "转换出错");
         }
@@ -140,6 +162,20 @@ public class MoreItemRecyAdapter extends RecyclerView.Adapter<MoreItemRecyAdapte
                 onclickInterface.getPostion(position);
         });
 
+    }
+
+    /**
+     * 转换字符为小数后两位
+     * 格式化，区小数后两位
+     */
+    private String haveTwoDouble(double d) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        try {
+            return df.format(d);
+        } catch (Exception e) {
+            LogUtils.e(d);
+            return "";
+        }
     }
 
     @Override
@@ -183,6 +219,10 @@ public class MoreItemRecyAdapter extends RecyclerView.Adapter<MoreItemRecyAdapte
 
     public interface OnclickInterface {
         void getPostion(int postion);
+    }
+
+    public interface OnPayclickInterface {
+        void pay(int postion);
     }
 
     public class SencondChridenRecyAdapter extends RecyclerView.Adapter<SencondChridenRecyAdapter.ViewHolder> {

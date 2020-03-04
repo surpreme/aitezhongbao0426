@@ -16,4 +16,8 @@ public class OnClickLstenerInterface {
     public interface OnThingClickInterface {
         void getString(String msg);
     }
+
+    public interface OnThingClickInterfaces {
+        void getPosition(int position);
+    }
 }

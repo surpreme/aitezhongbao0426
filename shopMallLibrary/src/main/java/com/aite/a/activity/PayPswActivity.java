@@ -24,11 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aite.a.base.BaseActivity;
-import com.aite.a.model.CodeUtils;
 import com.aite.a.parse.NetRun;
 import com.aite.a.utils.CommonTools;
 import com.aiteshangcheng.a.R;
 import com.lidroid.xutils.BitmapUtils;
+import com.lzy.basemodule.util.CodeUtils;
+
+import org.apache.http.annotation.ThreadSafe;
 
 /**
  * 支付密码
@@ -135,14 +137,8 @@ public class PayPswActivity extends BaseActivity implements OnClickListener {
     protected void initView() {
         _tv_name.setText(getString(R.string.order_reminder39));
         netRun = new NetRun(this, handler);
-
-
-        instance = CodeUtils.getInstance();
-        Bitmap createBitmap = instance.createBitmap();
-        iv_validation.setImageBitmap(createBitmap);
         initData();
     }
-
     @Override
     protected void initData() {
         netRun.PayPsw2("modify_paypwd");
@@ -150,6 +146,16 @@ public class PayPswActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void ReGetData() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        instance = CodeUtils.getInstance();
+        Bitmap bitmap = instance.createBitmap();
+        iv_validation.setImageBitmap(bitmap);
+
 
     }
 

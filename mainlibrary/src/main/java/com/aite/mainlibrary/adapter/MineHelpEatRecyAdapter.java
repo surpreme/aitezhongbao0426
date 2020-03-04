@@ -125,7 +125,10 @@ public class MineHelpEatRecyAdapter extends RecyclerView.Adapter<MineHelpEatRecy
         holder.lookInformationTv.setVisibility(orderListBeans.get(position).getIf_detail() == 1 ? View.VISIBLE : View.GONE);
         holder.lookInformationTv.setOnClickListener(v -> onInformationInteface.lookInformation(position));
         holder.startEatTv.setVisibility(orderListBeans.get(position).getIs_verify() == 1 ? View.VISIBLE : View.GONE);
-        holder.startEatTv.setOnClickListener(v -> onStartEatcodeInterface.getStartqrPosition(position));
+        holder.startEatTv.setOnClickListener(v -> {
+            if (onStartEatcodeInterface != null)
+                onStartEatcodeInterface.getStartqrPosition(position);
+        });
         holder.itemView.setOnClickListener(v -> clickInterface.getPosition(position));
 
 

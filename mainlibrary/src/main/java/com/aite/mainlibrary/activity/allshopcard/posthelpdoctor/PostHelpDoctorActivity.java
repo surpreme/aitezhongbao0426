@@ -143,6 +143,7 @@ public class PostHelpDoctorActivity extends BaseActivity<PostHelpDoctorContract.
         HttpParams httpParams = new HttpParams();
         httpParams.put("key", AppConstant.KEY);
         httpParams.put("title", getEditString(titleEdit));
+        httpParams.put("realname", getEditString(nameEdit));
         //医院名称
         httpParams.put("doctor_name", getEditString(hostoryRoomEdit));
         //科室

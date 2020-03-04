@@ -201,8 +201,9 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenterIm
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ToastTopUtils toastUtil = new ToastTopUtils();
-                toastUtil.Short(context, msg).setGravity(Gravity.TOP).setToastBackground(Color.WHITE, R.drawable.toast_radius).show();
+//                ToastTopUtils toastUtil = new ToastTopUtils();
+//                toastUtil.Short(context, msg).setGravity(Gravity.TOP).setToastBackground(Color.WHITE, R.drawable.toast_radius).show();
+                ToastUtils.showToast(context, msg);
 
 
             }
@@ -213,8 +214,9 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenterIm
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ToastTopUtils toastUtil = new ToastTopUtils();
-                toastUtil.Short(context, msg).setGravity(gravity).show();
+//                ToastTopUtils toastUtil = new ToastTopUtils();
+//                toastUtil.Short(context, msg).setGravity(gravity).show();
+                ToastUtils.showToast(context, msg);
 
 
             }

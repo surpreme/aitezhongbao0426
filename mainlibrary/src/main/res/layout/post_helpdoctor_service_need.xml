@@ -72,6 +72,11 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -109,7 +114,10 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -147,7 +155,10 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:id="@+id/time_ll"
                     android:layout_width="match_parent"
@@ -174,7 +185,10 @@
                         android:textSize="@dimen/textSize_16sp" />
 
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:id="@+id/end_time_ll"
                     android:layout_width="match_parent"
@@ -201,7 +215,10 @@
                         android:textSize="@dimen/textSize_16sp" />
 
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -239,7 +256,10 @@
                             android:src="@mipmap/down" />
                     </LinearLayout>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -353,7 +373,10 @@
                 <!--                        android:src="@mipmap/down" />-->
 
                 <!--                </LinearLayout>-->
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -392,7 +415,10 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:id="@+id/service_type_ll"
                     android:layout_width="match_parent"
@@ -426,7 +452,10 @@
                         android:src="@mipmap/down" />
 
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -465,6 +494,10 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/noglay" />
             </LinearLayout>
 
             <View

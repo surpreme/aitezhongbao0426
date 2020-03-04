@@ -16,6 +16,7 @@ import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allmoney.banker.BankerActivity;
 import com.aite.mainlibrary.activity.allmoney.factmoney.FactMoneyActivity;
 import com.aite.mainlibrary.activity.allmoney.moneybook.MoneyBookActivity;
+import com.aite.mainlibrary.activity.allmoney.moneybook2.MoneyBookActivitys;
 import com.aite.mainlibrary.adapter.MoneyCardRecyAdapter;
 import com.lzy.basemodule.OnClickLstenerInterface;
 import com.lzy.basemodule.base.BaseActivity;
@@ -68,15 +69,14 @@ public class MoneycartActivity extends BaseActivity<MoneycartContract.View, Mone
             public void getPosition(int postion) {
                 switch (postion) {
                     case 0:
-                        startActivity(FactMoneyActivity.class, "titlename", "提现", "away", "fact");
-                        break;
-                    case 1:
+//                        startActivity(FactMoneyActivity.class, "titlename", "提现", "away", "fact");
                         startActivity(FactMoneyActivity.class, "titlename", "充值", "away", "post");
                         break;
-                    case 2:
-                        startActivity(MoneyBookActivity.class);
+                    case 1:
+//                        startActivity(MoneyBookActivity.class);
+                        startActivity(MoneyBookActivitys.class);
                         break;
-                    case 3:
+                    case 2:
                         startActivity(BankerActivity.class);
                         break;
                     default:

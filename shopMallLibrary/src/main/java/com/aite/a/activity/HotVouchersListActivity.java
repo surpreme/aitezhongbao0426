@@ -292,12 +292,13 @@ public class HotVouchersListActivity extends BaseActivity implements
                     .get(position);
 
             holder.tv_shop_name.setText(voucherlist2.voucher_t_storename);
-            holder.tv_cost.setText("￥" + voucherlist2.voucher_t_price);
+            holder.tv_cost.setText(  voucherlist2.voucher_t_price);
+//            holder.tv_cost.setText("￥" + voucherlist2.voucher_t_price);
             holder.tv_statement.setText(getString(R.string.evaluation_tips16) + voucherlist2.voucher_t_limit
                     + getString(R.string.evaluation_tips17));
             holder.tv_valid_time.setText(getString(R.string.evaluation_tips18)
                     + TimeStamp2Date(voucherlist2.voucher_t_end_date,
-                    "yyyy-MM-dd HH:mm"));
+                    "yyyy-MM-dd"));
             // holder.tv_need.setText("需要" + voucherlist2.voucher_t_points +
             // "积分");
 //			holder.ll_item.setText(getString(R.string.exchange));

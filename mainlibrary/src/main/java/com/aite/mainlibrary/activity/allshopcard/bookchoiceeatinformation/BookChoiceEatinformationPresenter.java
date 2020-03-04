@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.aite.mainlibrary.Mainbean.ChioceEatBookinformationBean;
 import com.aite.mainlibrary.Mainbean.HelpDoctorInformationBean;
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.google.gson.Gson;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.bean.BaseData;
@@ -59,6 +60,45 @@ public class BookChoiceEatinformationPresenter extends BasePresenterImpl<BookCho
 
                     @Override
                     public void onSuccess(Response<BaseData<ChioceEatBookinformationBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void cancleOrder(HttpParams httpParams) {
+        OkGo.<BaseData<TwoSuccessCodeBean>>post(AppConstant.POST_CANCEL_FACT_ORDER_URL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<TwoSuccessCodeBean>>() {
+                    @Override
+                    public BaseData<TwoSuccessCodeBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null)
+                                mView.showError(baseData.getDatas().getError());
+                            return null;
+                        } catch (Exception e) {
+                            LogUtils.d(e);
+                        }
+
+                        String object = jsonObject.optString("datas");
+                        ((Activity) mView.getContext()).runOnUiThread(()
+                                -> mView.onCancleOrderSuccess(object.toString()));
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<TwoSuccessCodeBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<TwoSuccessCodeBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }

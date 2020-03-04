@@ -67,7 +67,6 @@ public class ScreenPopup extends PartShadowPopupView {
     protected int getImplLayoutId() {
         return R.layout.popup_screen;
     }
-
     @Override
     protected void onCreate() {
         super.onCreate();

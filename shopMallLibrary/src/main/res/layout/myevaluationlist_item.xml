@@ -103,6 +103,8 @@
             android:numColumns="5"
             android:visibility="gone"
             android:listSelector="@color/transparent"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"
             >
         </com.aite.a.view.MyGridView>
     </RelativeLayout>

@@ -6,11 +6,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.aite.a.activity.li.bean.ShopMsgBean;
 import com.aite.a.activity.li.util.LogUtils;
 import com.aite.a.adapter.Cart2Adapter;
 import com.aite.a.adapter.CartAdapter.ViewHolder;
 import com.aite.a.base.Mark;
 import com.aite.a.model.CartListInfo;
+import com.aite.a.utils.BeanConvertor;
 import com.aite.a.utils.CommonTools;
 import com.aite.a.utils.Sqlutls;
 import com.lidroid.xutils.HttpUtils;
@@ -20,6 +22,8 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.BaseConstant.BaseConstant;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -1569,9 +1573,29 @@ public class NetRun implements Mark {
                                     .length() : end;
                             Log.i("----------------", " 商品详情 " + veryLongString.substring(start, end));
                         }
-                        handler.sendMessage(handler.obtainMessage(
-                                goods_details_id, JsonParse
-                                        .getProductDetails(responseInfo.result)));
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseInfo.result.toString());
+                            JSONObject object = jsonObject.optJSONObject("datas");
+                            if (object == null) return;
+                            String error = object.optString("error");
+                            if (error != null) {
+                                if (!error.equals("")) {
+                                    handler.sendMessage(handler
+                                            .obtainMessage(goods_details_err, error));
+                                } else {
+                                    handler.sendMessage(handler.obtainMessage(
+                                            goods_details_id, JsonParse
+                                                    .getProductDetails(responseInfo.result)));
+                                }
+                            } else {
+                                handler.sendMessage(handler.obtainMessage(
+                                        goods_details_id, JsonParse
+                                                .getProductDetails(responseInfo.result)));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override
@@ -1891,6 +1915,8 @@ public class NetRun implements Mark {
                 new RequestCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
+                        ShopMsgBean shopMsgBean = BeanConvertor.convertBean(responseInfo.result, ShopMsgBean.class);
+                        if (shopMsgBean == null || shopMsgBean.getDatas() == null) return;
                         handler.sendMessage(handler.obtainMessage(
                                 store_detils_id,
                                 JsonParse.getStoreDetils(responseInfo.result)));
@@ -1996,6 +2022,8 @@ public class NetRun implements Mark {
         if (!order_state.equals("0"))
             params.addBodyParameter("type", order_state);
         params.addQueryStringParameter("curpage", curpage);
+        params.addBodyParameter("lang_type", "zh_cn");
+        params.addBodyParameter("pagesize", "15");
         params.addBodyParameter("key", State.UserKey);
         httpUtils.send(HttpMethod.POST, order_list, params,
                 new RequestCallBack<String>() {
@@ -4776,7 +4804,7 @@ public class NetRun implements Mark {
                                String msg_type) {
         httpUtils = new HttpUtils();
         params = new RequestParams();
-        params.addBodyParameter("key", State.UserKey);
+        params.addBodyParameter("key", AppConstant.KEY);
         params.addBodyParameter("msg_content", msg_content);
         params.addBodyParameter("to_member_name", to_member_name);
         params.addBodyParameter("msg_type", msg_type);
@@ -4785,9 +4813,30 @@ public class NetRun implements Mark {
 
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
-                        handler.sendMessage(handler.obtainMessage(
-                                send_webmessage_id, JsonParse
-                                        .getSendWebmessage(responseInfo.result)));
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseInfo.result.toString());
+                            JSONObject object = jsonObject.optJSONObject("datas");
+                            if (object == null) return;
+                            String error = object.optString("error");
+                            if (error != null) {
+                                if (!error.equals("")) {
+                                    handler.sendMessage(handler
+                                            .obtainMessage(send_webmessage_err, error));
+                                } else {
+                                    handler.sendMessage(handler.obtainMessage(
+                                            send_webmessage_id, JsonParse
+                                                    .getSendWebmessage(responseInfo.result)));
+                                }
+                            } else {
+                                handler.sendMessage(handler.obtainMessage(
+                                        send_webmessage_id, JsonParse
+                                                .getSendWebmessage(responseInfo.result)));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                         System.out.println("---------发送站内信 "
                                 + responseInfo.result);
                     }
@@ -5449,24 +5498,74 @@ public class NetRun implements Mark {
 
     /**
      * 在线充值明细
+     * params = new RequestParams();
+     * httpUtils = new HttpUtils();
+     * params.addQueryStringParameter("key", State.UserKey);
+     * params.addQueryStringParameter("pay_sn", pay_sn);
+     * httpUtils.configCurrentHttpCacheExpiry(1000); // 设置缓存
+     * System.out.println("----------------- 充值支付   " + topup_pay + "&key="
+     * + State.UserKey + "&pay_sn=" + pay_sn);
+     * httpUtils.send(HttpMethod.GET, topup_pay, params,
+     * new RequestCallBack<String>() {
+     *
+     * @Override public void onFailure(HttpException arg0, String arg1) {
+     * handler.sendMessage(handler
+     * .obtainMessage(topup_pay_err));
+     * }
+     * @Override public void onSuccess(ResponseInfo<String> arg0) {
+     * Log.i("----------------", "充值支付 " + arg0.result);
+     * handler.sendMessage(handler
+     * .obtainMessage(topup_pay_id, JsonParse
+     * .getRedPackageDatailsInfo(arg0.result)));
+     * }
+     * });
      */
     public void YYTopUp(String curpage, String pdr_sn) {
         params = new RequestParams();
         httpUtils = new HttpUtils(1000);
-        params.addBodyParameter("key", State.UserKey);
-        params.addBodyParameter("curpage", curpage);
-        params.addBodyParameter("pagesize", "1000");
-        params.addBodyParameter("pdr_sn", pdr_sn);
-        httpUtils.send(HttpMethod.POST, topup_info, params,
+        if (pdr_sn != null && !pdr_sn.equals("")) {
+            if (!pdr_sn.equals("null")) {
+                params.addQueryStringParameter("key", State.UserKey);
+                params.addQueryStringParameter("pdr_sn", pdr_sn);
+            }
+
+        } else {
+            params.addQueryStringParameter("key", State.UserKey);
+            params.addQueryStringParameter("curpage", curpage);
+            params.addQueryStringParameter("pagesize", "1000");
+        }
+
+
+        httpUtils.send(HttpMethod.GET, topup_info, params,
                 new RequestCallBack<String>() {
 
                     @Override
                     public void onSuccess(ResponseInfo<String> arg0) {
                         System.out.println("-------------------充值明细   "
                                 + arg0.result.toString());
-                        handler.sendMessage(handler.obtainMessage(
-                                topup_info_id,
-                                JsonParse.getTopUpInfo(arg0.result)));
+                        try {
+                            JSONObject jsonObject = new JSONObject(arg0.result.toString());
+                            JSONObject object = jsonObject.optJSONObject("datas");
+                            if (object == null) return;
+                            String error = object.optString("error");
+                            if (error != null) {
+                                if (!error.equals("")) {
+                                    handler.sendMessage(handler
+                                            .obtainMessage(goods_details_err, error));
+                                } else {
+                                    handler.sendMessage(handler.obtainMessage(
+                                            topup_info_id,
+                                            JsonParse.getTopUpInfo(arg0.result)));
+                                }
+                            } else {
+                                handler.sendMessage(handler.obtainMessage(
+                                        topup_info_id,
+                                        JsonParse.getTopUpInfo(arg0.result)));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override
@@ -10714,6 +10813,7 @@ public class NetRun implements Mark {
         httpUtils = new HttpUtils();
         params.addBodyParameter("pay_sn", order_del);
         params.addBodyParameter("key", State.UserKey);
+        params.addBodyParameter("payment_code", "zh");
         httpUtils.send(HttpMethod.POST, orderdetails2, params,
                 new RequestCallBack<String>() {
 

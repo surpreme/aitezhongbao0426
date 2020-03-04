@@ -16,21 +16,18 @@ import com.lzy.okgo.request.base.Request;
 
 import org.json.JSONObject;
 
-/**
- * MVPPlugin
- *  邮箱 784787081@qq.com
- */
 
-public class MineRuralPresenter extends BasePresenterImpl<MineRuralContract.View> implements MineRuralContract.Presenter{
+
+public class MineRuralPresenter extends BasePresenterImpl<MineRuralContract.View> implements MineRuralContract.Presenter {
 
     @Override
     public void GetMineList(HttpParams httpParams) {
-        OkGo.<BaseData<AirMainListBean>>get(AppConstant.MINECOLLECTPOSTLIST)
+        OkGo.<BaseData<MineRuralPushListBean>>get(AppConstant.MINECOLLECTPOSTLIST)
                 .tag(mView.getContext())
                 .params(httpParams)
-                .execute(new AbsCallback<BaseData<AirMainListBean>>() {
+                .execute(new AbsCallback<BaseData<MineRuralPushListBean>>() {
                     @Override
-                    public BaseData<AirMainListBean> convertResponse(okhttp3.Response response) throws Throwable {
+                    public BaseData<MineRuralPushListBean> convertResponse(okhttp3.Response response) throws Throwable {
                         LogUtils.d(response.request());
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
@@ -39,9 +36,9 @@ public class MineRuralPresenter extends BasePresenterImpl<MineRuralContract.View
                             return null;
                         } else {
                             JSONObject object = jsonObject.optJSONObject("datas");
-                            AirMainListBean airMainListBean = BeanConvertor.convertBean(object.toString(), AirMainListBean.class);
+                            MineRuralPushListBean mineRuralPushListBean = BeanConvertor.convertBean(object.toString(), MineRuralPushListBean.class);
                             ((Activity) mView.getContext()).runOnUiThread(()
-                                    -> mView.onGetMineListSuccess(airMainListBean));
+                                    -> mView.onGetMineListSuccess(mineRuralPushListBean));
                         }
 
 
@@ -49,13 +46,13 @@ public class MineRuralPresenter extends BasePresenterImpl<MineRuralContract.View
                     }
 
                     @Override
-                    public void onStart(Request<BaseData<AirMainListBean>, ? extends Request> request) {
+                    public void onStart(Request<BaseData<MineRuralPushListBean>, ? extends Request> request) {
                         LogUtils.d("onStart");
 
                     }
 
                     @Override
-                    public void onSuccess(Response<BaseData<AirMainListBean>> response) {
+                    public void onSuccess(Response<BaseData<MineRuralPushListBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }

@@ -85,8 +85,8 @@ public class IdentityActivity extends BaseActivity implements OnClickListener {
 							tv_present.setVisibility(View.GONE);
 						}
 						if (identityInfo.member_auth_info.mobile != null) {
-							ed_zsname
-									.setText(identityInfo.member_auth_info.mobile);
+							ed_zsname.setText(identityInfo.member_auth_info.mobile);
+							ed_zsname.setEnabled(false);
 						}
 
 						if (identityInfo.member_auth_info.id_card_img != null) {
@@ -223,6 +223,11 @@ public class IdentityActivity extends BaseActivity implements OnClickListener {
 			String string = ed_zsname.getText().toString();
 			if (TextUtils.isEmpty(string)) {
 				Toast.makeText(IdentityActivity.this, getString(R.string.type_in_phone_regist),
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (business_license_img==null||id_card_img==null){
+				Toast.makeText(IdentityActivity.this, "请检查证件信息",
 						Toast.LENGTH_SHORT).show();
 				return;
 			}

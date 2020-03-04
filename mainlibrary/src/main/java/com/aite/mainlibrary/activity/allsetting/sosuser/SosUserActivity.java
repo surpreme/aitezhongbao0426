@@ -11,6 +11,7 @@ import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.addsosuser.AddSosUserActivity;
+import com.aite.mainlibrary.activity.allsetting.editSosUser.EditSosUserActivity;
 import com.aite.mainlibrary.adapter.BinSosderUserRecyAdapter;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
@@ -62,6 +63,7 @@ public class SosUserActivity extends BaseActivity<SosUserContract.View, SosUserP
 
             @Override
             public void onedit(String position) {
+                startActivity(EditSosUserActivity.class, "id", binderSosUserListBeans.get(Integer.parseInt(position)).getId());
 
             }
         });
@@ -87,7 +89,6 @@ public class SosUserActivity extends BaseActivity<SosUserContract.View, SosUserP
 
     @Override
     protected void initResume() {
-
     }
 
     @Override

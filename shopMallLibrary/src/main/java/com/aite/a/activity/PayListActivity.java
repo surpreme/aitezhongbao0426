@@ -1,6 +1,7 @@
 package com.aite.a.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,11 +35,25 @@ import com.aite.a.parse.NetRun;
 import com.aite.a.utils.CommonTools;
 import com.aite.a.utils.lingshi;
 import com.aite.a.view.MyListView;
+import com.aite.alipaylibrary.PayAway;
+import com.aite.alipaylibrary.bean.WeChatPayBackBean;
 import com.aiteshangcheng.a.R;
 import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.pay.PayResult;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
+import com.lzy.basemodule.BaseConstant.AppConstant;
+import com.lzy.basemodule.bean.BaseData;
+import com.lzy.basemodule.bean.BeanConvertor;
+import com.lzy.basemodule.util.toast.ToastUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.AbsCallback;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -572,15 +587,20 @@ public class PayListActivity extends BaseActivity implements OnClickListener {
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             if (payListAdapter.getchoose().equals("app_wxpay")) {
-                                /*Intent intent = new Intent(PayListActivity.this,
-                                        WXPayEntryActivity.class);
+                                if (isvr) {
+                                    initVrOrder(pay_sn, payListAdapter.getchoose());
+                                } else {
+                                    initFactOrder(pay_sn, payListAdapter.getchoose());
+
+                                }
+                                Intent intent = new Intent();//PayListActivity.this,WXPayEntryActivity.class
                                 intent.putExtra("goods", goods_name);
                                 intent.putExtra("describe", describe);
                                 intent.putExtra("price", price);
                                 intent.putExtra("pay_sn", pay_sn);
                                 intent.putExtra("isvr", isvr);
                                 intent.putExtra("payment_code", payListAdapter.getchoose());
-                                startActivityForResult(intent, 10010);*/
+//                                startActivityForResult(intent, 10010);
                             } else if (payListAdapter.getchoose().equals("alipay")) {
                                 //TODO
                                 if (isvr) {
@@ -662,6 +682,103 @@ public class PayListActivity extends BaseActivity implements OnClickListener {
 //                builder2.show();
 //                break;
 //        }
+    }
+
+    /**
+     * get 虚拟订单支付
+     *
+     * @param order_id
+     * @param payment_code
+     */
+    private void initVrOrder(String order_id, String payment_code) {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("order_id", order_id);
+        httpParams.put("payment_code", payment_code);
+        httpParams.put("key", AppConstant.KEY);
+        OkGo.<BaseData<WeChatPayBackBean>>get(AppConstant.GET_UNFACTORDERPAYTHREEAPPFACTMONEYLISTINFORMATIONURL)
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<WeChatPayBackBean>>() {
+                    @Override
+                    public BaseData<WeChatPayBackBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                ToastUtils.showToast(PayListActivity.this, baseData.getDatas().getError());
+                            } else {
+                                JSONObject object = jsonObject.optJSONObject("datas");
+                                Gson gson = new Gson();
+                                WeChatPayBackBean weChatPayBackBean = gson.fromJson(object.toString(), WeChatPayBackBean.class);
+                                PayAway.WchatPay(weChatPayBackBean, PayListActivity.this);
+
+                            }
+
+                        } catch (Exception e) {
+                            LogUtils.e(e);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<WeChatPayBackBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<WeChatPayBackBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+
+    }
+
+    private void initFactOrder(String pay_sn, String payment_code) {
+        HttpParams httpParams = new HttpParams();
+        httpParams.put("pay_sn", pay_sn);
+        httpParams.put("payment_code", payment_code);
+        httpParams.put("key", AppConstant.KEY);
+        OkGo.<BaseData<WeChatPayBackBean>>get(AppConstant.GET_FACTORDERPAYTHREEAPPFACTMONEYLISTINFORMATIONURL)
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<WeChatPayBackBean>>() {
+                    @Override
+                    public BaseData<WeChatPayBackBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        com.lzy.basemodule.logcat.LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        try {
+                            BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                            if (baseData.getDatas().getError() != null) {
+                                ToastUtils.showToast(PayListActivity.this, baseData.getDatas().getError());
+                            } else {
+                                JSONObject object = jsonObject.optJSONObject("datas");
+                                Gson gson = new Gson();
+                                WeChatPayBackBean weChatPayBackBean = gson.fromJson(object.toString(), WeChatPayBackBean.class);
+                                PayAway.WchatPay(weChatPayBackBean, PayListActivity.this);
+
+                            }
+
+                        } catch (Exception e) {
+                            com.lzy.basemodule.logcat.LogUtils.e(e);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<WeChatPayBackBean>, ? extends Request> request) {
+                        com.lzy.basemodule.logcat.LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<WeChatPayBackBean>> response) {
+                        com.lzy.basemodule.logcat.LogUtils.d("onSuccess");
+
+                    }
+                });
     }
 
     @Override

@@ -326,7 +326,7 @@ public class SureShopBookActivity extends BaseActivity<SureShopBookContract.View
         payRadioGroupRecyAdapter.setClickInterface(postion -> {
             LogUtils.d(postion);
             PopwindowUtils.getmInstance().dismissPopWindow();
-            if (postion == 99) {
+            if (postion == 5) {
                 mPresenter.PayFactCollect(initCollectParams());
             } else {
                 if (postion == 1) {

@@ -1,6 +1,8 @@
 package com.aite.mainlibrary.activity.allsetting.elderhelphouse;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -73,6 +75,20 @@ public class ElderHelpHouseActivity extends BaseActivity<ElderHelpHouseContract.
                 mPresenter.getHelpEdlerHouseInformation(initSearchParams(s.toString()));
 
 
+            }
+        });
+        helpElderHouseRecyAdapter.setOnItemRecyClickInterface(new OnClickLstenerInterface.OnItemRecyClickInterface() {
+            @Override
+            public void getPosition(int position) {
+                if (getIntent().getStringExtra("JUMP_TYPE")!=null){
+                    if (getIntent().getStringExtra("JUMP_TYPE").equals("CHOICE_ADDRESS")){
+                        Intent intent = getIntent();
+                        intent.putExtra("address_house", helpelderlistbean.get(position).getStore_name());
+                        // 设置返回码和返回携带的数据
+                        setResult(Activity.RESULT_OK, intent);
+                        onBackPressed();
+                    }
+                }
             }
         });
         helpElderHouseRecyAdapter.setClickInterface(new OnClickLstenerInterface.OnRecyClickInterface() {

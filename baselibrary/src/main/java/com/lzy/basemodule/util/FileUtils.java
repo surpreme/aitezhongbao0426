@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -25,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
@@ -61,6 +65,7 @@ public class FileUtils {
         return "";
     }
 
+
     /**
      * 以下为直接从assets读取代码
      * 读流 一行一行读
@@ -96,9 +101,12 @@ public class FileUtils {
         }
         return "";
     }
-    /** 保存方法 */
+
+    /**
+     * 保存方法
+     */
     public static void saveBitmap(Bitmap bitmap) {
-        File  file = new File(Environment.getExternalStorageDirectory() + "/StartImg.png");
+        File file = new File(Environment.getExternalStorageDirectory() + "/StartImg.png");
         if (file.exists()) {
             file.delete();
         }
@@ -116,6 +124,7 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
+
     // 将字符串写入到文本文件中
     private void writeTxtToFile(String strcontent, String filePath, String fileName) {
         //生成文件夹之后，再生成文件，不然会出错

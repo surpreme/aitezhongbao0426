@@ -15,6 +15,7 @@ import com.example.glibrary.R2;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -63,14 +64,20 @@ public class ConsultAdapter extends BaseRecyclerViewAdapter<ConsultBean> {
             int imageResId = getImageResId(consultBean.getPic());
             Glide.with(mContext).load(imageResId).into(mIvIcon);
 
-            mTvType.setText(consultBean.getType());
-            mTvContent.setText(consultBean.getConsultTime());
-
-            mTvPrice.setText(consultBean.getPrice());
+            if (!consultBean.getType().equals("null"))
+                mTvType.setText(consultBean.getType());
+            if (!consultBean.getConsultTime().equals("null"))
+                mTvContent.setText(consultBean.getConsultTime());
+            if (!consultBean.getPrice().equals("null")){
+                if (!consultBean.getPrice().equals("null/null")){
+                    mTvPrice.setText(consultBean.getPrice());
+                }
+            }
         }
 
         /**
          * 获取mipmap包下的图片Id
+         *
          * @param imageNumber
          * @return
          */

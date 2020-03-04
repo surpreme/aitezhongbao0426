@@ -13,14 +13,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.Utils.ProgressDialog;
+import com.lzy.basemodule.bean.ContentValue;
 import com.lzy.basemodule.logcat.LogUtils;
 import com.lzy.basemodule.view.StatusBarUtils;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.lang.reflect.Field;
+import java.util.Calendar;
+import java.util.Date;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +42,7 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
  * 创建时间 2019/12/23 11:46
  * 描述:
  */
-public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatActivity implements BaseView,BGASwipeBackHelper.Delegate {
+public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatActivity implements BaseView, BGASwipeBackHelper.Delegate {
 
     protected Context mContext;
     protected Activity mActivity;
@@ -42,9 +52,16 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
 
 
     @Override
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
+
+        //EventBus
+        if (isRegisterEventBus()) {
+            EventBus.getDefault().register(this);
+        }
+
         statusBarColor();
         if (setLayoutId() != 0) {
             setContentView(setLayoutId());
@@ -62,6 +79,11 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
             e.printStackTrace();
         }
     }
+
+    protected boolean isRegisterEventBus() {
+        return false;
+    }
+
 
     public void initToolbar(String title) {
         try {
@@ -104,7 +126,9 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
             }
         }
     }
+
     public static Toast mToast = null;
+
     protected void toast(final String msg) {
         if (mToast == null) {
             mToast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
@@ -119,14 +143,7 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
     }
 
 
-    /**
-     * 跳转页面
-     *
-     * @param clz 所跳转的目的Activity类
-     */
-    public void startActivity(Class<?> clz) {
-        startActivity(new Intent(this, clz));
-    }
+
 
 
     @Override
@@ -135,13 +152,15 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
             mPresenter.detachView();
         }
         super.onDestroy();
+        //EventBus
+        EventBus.getDefault().unregister(this);
     }
 
-    public void showLoading(){
+    public void showLoading() {
         ProgressDialog.getInstance().show(mContext);
     }
 
-    public void hideLoading(){
+    public void hideLoading() {
         ProgressDialog.getInstance().dismiss();
     }
 
@@ -170,14 +189,10 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
     }
 
 
-
-
-
-
     /**
      * 跳转页面
      *
-     * @param clz    所跳转的目的Activity类
+     * @param clz 所跳转的目的Activity类
      */
     protected void toActivity(Class<?> clz) {
         Intent intent = new Intent(mContext, clz);
@@ -197,10 +212,53 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
         intent.putExtra(tag, extra);
         startActivity(intent);
     }
+    /**
+     * 跳转页面
+     *
+     * @param cls 所跳转的目的Activity类
+     */
+    protected void startActivityWithCls(Class cls, int requestCode, ContentValue... values) {
+        Intent intent = new Intent(this, cls);
+
+        if (values != null && values.length > 0) {
+            for (ContentValue value : values) {
+                value.fillIntent(intent);
+            }
+        }
+
+        if (requestCode > 0) {
+            startActivityForResult(intent, requestCode);
+        } else {
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * 跳转页面
+     *
+     * @param clz 所跳转的目的Activity类
+     */
+    public void startActivity(Class<?> clz) {
+        startActivity(new Intent(this, clz));
+    }
+
+
+    /**
+     * 跳转页面
+     *
+     * @param clz 所跳转的目的Activity类
+     */
+    public void toActivity(Class<?> clz, String tag1, String extra1, String tag2, String extra2) {
+        Intent intent = new Intent(this, clz);
+        intent.putExtra(tag1, extra1);
+        intent.putExtra(tag2, extra2);
+        startActivity(intent);
+    }
 
 
     /**
      * 绑定生命周期 防止MVP内存泄漏
+     *
      * @param <T>
      * @return
      */
@@ -208,7 +266,6 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
         return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider
                 .from(getLifecycle(), Lifecycle.Event.ON_DESTROY));
     }
-
 
 
     @Override
@@ -240,5 +297,6 @@ public abstract class GBaseActivity<T extends GBasePresenter> extends AppCompatA
         }
         mSwipeBackHelper.backward();
     }
+
 
 }

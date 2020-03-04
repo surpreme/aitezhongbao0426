@@ -35,6 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="20dp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="助医陪伴老人"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

@@ -9,9 +9,10 @@ import com.lzy.okgo.model.HttpParams;
  * 邮箱 784787081@qq.com
  */
 
+
 public class MineRuralContract {
     interface View extends BaseView {
-        void onGetMineListSuccess(Object msg);
+        void onGetMineListSuccess(MineRuralPushListBean mineRuralPushListBean);
 
     }
 

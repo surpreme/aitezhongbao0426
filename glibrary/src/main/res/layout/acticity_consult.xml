@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_right_layout" />
+    <include layout="@layout/toolbar_right_glayout" />
 
     <View
         android:layout_width="match_parent"
@@ -54,40 +54,44 @@
         android:layout_marginTop="@dimen/dp_8"
         android:background="@color/noglay" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30分钟"
-            android:textColor="@color/text1"
-            android:textSize="@dimen/text15" />
-
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="50元"
-            android:textColor="@color/text1"
-            android:textSize="@dimen/text15" />
+    <include layout="@layout/smart_refresh_layout" />
 
 
-        <TextView
-            android:id="@+id/tv_alter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="修改"
-            android:textColor="@color/text1"
-            android:textSize="@dimen/text15" />
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:padding="12dp"-->
+<!--        android:visibility="gone">-->
 
-    </RelativeLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/tv_time"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="30分钟"-->
+<!--            android:textColor="@color/text1"-->
+<!--            android:textSize="@dimen/text15" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_price"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:text="50元"-->
+<!--            android:textColor="@color/text1"-->
+<!--            android:textSize="@dimen/text15" />-->
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_alter"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:text="修改"-->
+<!--            android:textColor="@color/text1"-->
+<!--            android:textSize="@dimen/text15" />-->
+
+<!--    </RelativeLayout>-->
 
 
 </LinearLayout>

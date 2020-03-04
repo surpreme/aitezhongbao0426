@@ -1047,7 +1047,11 @@ public class JsonParse {
         Orderdetails orderdetails = new Orderdetails();
         try {
             JSONObject object = new JSONObject(result);
-            JSONObject datas = object.getJSONObject("goods_list");
+            JSONObject datas = object.getJSONObject("datas");
+//            JSONObject order_list = datas.getJSONObject("order_list");
+
+
+//            JSONObject datas = object.getJSONObject("goods_list");
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<Orderdetails>() {
             }.getType();
@@ -1204,11 +1208,13 @@ public class JsonParse {
     public static StoreInfoo getStoreDetils(String result) {
 //        StoreInfoo storeInfo=new StoreInfoo();
         ShopMsgBean shopMsgBean = BeanConvertor.convertBean(result, ShopMsgBean.class);
-        StoreInfoo  storeInfo = new StoreInfoo(shopMsgBean.getDatas().getStore_avatar(),
+        assert shopMsgBean != null;
+        assert shopMsgBean.getDatas() != null;
+        return new StoreInfoo(shopMsgBean.getDatas().getStore_avatar(),
                 shopMsgBean.getDatas().getStore_banner(),
                 shopMsgBean.getDatas().getStore_id(),
                 shopMsgBean.getDatas().getStore_name(),
-               "",  "", "", "",
+                "", "", "", "",
                 "", "", "", "", "",
                 "", "", "",
                 "", "", shopMsgBean.getDatas().getFavorites_count(),
@@ -1270,7 +1276,6 @@ public class JsonParse {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        return storeInfo;
     }
 
     /**

@@ -12,10 +12,13 @@ import com.lzy.okgo.model.HttpParams;
 public class BookChoiceEatinformationContract {
     interface View extends BaseView {
         void onGetInformationSuccess(Object msg);
+        void onCancleOrderSuccess(Object msg);
+
     }
 
     interface Presenter extends BasePresenter<View> {
         void getInformations(HttpParams httpParams);
+        void cancleOrder(HttpParams httpParams);
 
     }
 }

@@ -207,7 +207,6 @@
                             android:gravity="right|center"
                             android:hint="请输入身份证号"
                             android:maxEms="25"
-                            android:maxLength="18"
                             android:maxLines="1"
                             android:textColor="@color/black"
                             android:textSize="13sp" />

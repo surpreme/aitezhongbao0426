@@ -19,7 +19,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter {
 
     protected ArrayList<T> mDataList = new ArrayList<>();
 
-    private OnClickRecyclerViewListener mOnRecyclerViewListener;
+    protected OnClickRecyclerViewListener mOnRecyclerViewListener;
 
     //更新数据
     public void updateData(@NonNull List<T> dataList) {

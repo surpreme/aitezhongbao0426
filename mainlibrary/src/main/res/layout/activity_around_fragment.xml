@@ -6,15 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:background="@color/white"
-        android:gravity="center"
-        android:text="爱家"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textSize_18sp" />
+
 
     <View
         android:layout_width="match_parent"

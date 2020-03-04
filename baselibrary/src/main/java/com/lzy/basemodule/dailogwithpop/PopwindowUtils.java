@@ -57,8 +57,11 @@ public class PopwindowUtils {
     private static final int payawylayoutid = R.layout.pop_pay_awy;
     private static final int choicethreerecylayoutid = R.layout.choice_three_recy;
     private static final int popdailoglayoutid = R.layout.popdailog;
+    private static final int popchoiceqrtypelayoutid = R.layout.popqrunfact_service;
+    private static final int popsuredailoglayoutid = R.layout.popsuredailog;
     private static final int popwechatchoicenewslayoutid = R.layout.wechat_pop_newsuser;
     private static final int bottom_recyandcanceLayout = R.layout.base_bottom_recyandcancel_pop;
+    private static final int lookImagelayoutid = R.layout.base_look_image_pop;
 
     public static PopwindowUtils getmInstance() {
         if (mInstance == null) {
@@ -89,6 +92,47 @@ public class PopwindowUtils {
                 lottieAnimationView.cancelAnimation();  //取消
             }
         });
+
+    }
+
+    public void showLookImagePopupWindow(final Context context, Bitmap bitmap) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(lookImagelayoutid, null);
+        ScreenUtils.setBackGroundAlpha(0.5f, context);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        ImageView show_iv = view.findViewById(R.id.show_iv);
+        ImageView close_iv = view.findViewById(R.id.close_iv);
+        show_iv.setImageBitmap(bitmap);
+        close_iv.setOnClickListener(v -> popupWindow.dismiss());
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(() -> ScreenUtils.setBackGroundAlpha(1.0f, context));
+
+    }
+
+    public void showLookImagePopupWindow(final Context context, OnClickLstenerInterface.OnThingClickInterfaces onClickListener) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(popchoiceqrtypelayoutid, null);
+        ScreenUtils.setBackGroundAlpha(0.5f, context);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        TextView timebank_tv = view.findViewById(R.id.timebank_tv);
+        TextView helpdoctor_tv = view.findViewById(R.id.helpdoctor_tv);
+        TextView breath_tv = view.findViewById(R.id.breath_tv);
+        timebank_tv.setOnClickListener(v -> {
+            onClickListener.getPosition(1);
+
+        });
+        helpdoctor_tv.setOnClickListener(v -> {
+            onClickListener.getPosition(2);
+
+        });
+        breath_tv.setOnClickListener(v -> {
+            onClickListener.getPosition(3);
+
+        });
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(() -> ScreenUtils.setBackGroundAlpha(1.0f, context));
 
     }
 
@@ -129,6 +173,20 @@ public class PopwindowUtils {
                 setBackGroundAlpha(1.0f, context);
             }
         });
+
+    }
+
+    public void showImgPopupWindow(final Context context, String url, String information, PopupWindow.OnDismissListener onDismissListener) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(qrcodelayoutid, null);
+        popupWindow = new PopupWindow(view, 800, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        ImageView qrcode_iv = view.findViewById(R.id.qrcode_iv);
+        Glide.with(context).load(url).into(qrcode_iv);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        TextView information_tv = view.findViewById(R.id.information_tv);
+        information_tv.setText(information);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(onDismissListener);
 
     }
 
@@ -200,6 +258,12 @@ public class PopwindowUtils {
             @Override
             public void onSelect(View view, String selected) {
                 dayPick.setDataList(mondaylist);
+
+            }
+        });
+        dayPick.setOnSelectListener(new PickerView.OnSelectListener() {
+            @Override
+            public void onSelect(View view, String selected) {
 
             }
         });
@@ -346,6 +410,31 @@ public class PopwindowUtils {
             cancel_btn.setOnClickListener(listenercancel);
         }
 
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setContentView(view);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popupWindow.setOnDismissListener(() -> {
+            ScreenUtils.setBackGroundAlpha(1.0f, context);
+            dismissPopWindow();
+        });
+
+    }
+
+    public void showSureDialogPopupWindow(final Context context, String titles, String information, String sureStr, View.OnClickListener listenersure) {
+        @SuppressLint("InflateParams")
+        View view = LayoutInflater.from(context).inflate(popsuredailoglayoutid, null);
+        ScreenUtils.setBackGroundAlpha(0.6f, context);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        final TextView title_tv = view.findViewById(R.id.title_tv);
+        final TextView information_tv = view.findViewById(R.id.information_tv);
+        final Button sure_btn = view.findViewById(R.id.sure_btn);
+        information_tv.setLines(3);
+        view.setAlpha(0.9f);
+        if (isStringUnEmpty(titles)) title_tv.setText(titles);
+        if (isStringUnEmpty(sureStr)) sure_btn.setText(sureStr);
+        information_tv.setText(information);
+        sure_btn.setOnClickListener(listenersure);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setContentView(view);
@@ -513,6 +602,7 @@ public class PopwindowUtils {
 
     }
 
+    @SuppressLint("WrongConstant")
     public void showErrorPopupWindow(final Activity activity, String errormsg) {
         @SuppressLint("InflateParams") View view = LayoutInflater.from(activity).inflate(errorlayoutid, null);
         setBackGroundAlpha(0.6f, activity);
@@ -525,6 +615,10 @@ public class PopwindowUtils {
 //        lottieAnimationView.playAnimation();   //播放
         popupWindow.setOutsideTouchable(true);
         popupWindow.setContentView(view);
+        //防止PopupWindow被软件盘挡住
+        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         popupWindow.showAtLocation(view, Gravity.TOP, 0, 0);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override

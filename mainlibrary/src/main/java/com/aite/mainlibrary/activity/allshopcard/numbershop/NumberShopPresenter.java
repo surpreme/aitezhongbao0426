@@ -83,7 +83,7 @@ public class NumberShopPresenter extends BasePresenterImpl<NumberShopContract.Vi
                             JSONObject object = jsonObject.optJSONObject("datas");
                             String order_id = object.getString("order_id");
                             ((Activity) mView.getContext()).runOnUiThread(()
-                                    -> mView.onGetShopListSuccess(order_id));
+                                    -> mView.onReplaceThingSuccess(order_id));
                         }
 
 

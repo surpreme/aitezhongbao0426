@@ -46,6 +46,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.lidroid.xutils.BitmapUtils;
+import com.lzy.basemodule.BaseConstant.AppConstant;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -738,11 +739,11 @@ public class CustomHomeActivity extends BaseActivity implements OnClickListener 
             }
         } else if (data.name.equals(this.getString(R.string.sundrying))) {//晒单
             Intent fxintent = new Intent(this, WebActivity.class);
-            fxintent.putExtra("url", "http://aitecc.com/wap/index.php?act=weifaxian");
+            fxintent.putExtra("url", "http://zhongbyi.aitecc.com/wap/index.php?act=weifaxian");
             this.startActivity(fxintent);
         } else if (data.name.equals(this.getString(R.string.hotspot))) {//热点
             Intent rdintent = new Intent(this, WebActivity.class);
-            rdintent.putExtra("url", "http://aitecc.com/wap/index.php?act=news");
+            rdintent.putExtra("url", "http://zhongbyi.aitecc.com/wap/index.php?act=news&key=" + AppConstant.KEY);
             this.startActivity(rdintent);
         } else if (data.name.equals(this.getString(R.string.integrall))) {//积分
             if (State.UserKey == null) {

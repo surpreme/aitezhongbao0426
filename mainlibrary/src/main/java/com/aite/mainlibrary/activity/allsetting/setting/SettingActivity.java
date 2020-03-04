@@ -20,6 +20,7 @@ import com.aite.mainlibrary.activity.allsetting.sosuser.SosUserActivity;
 import com.aite.mainlibrary.activity.allsetting.userinformation.UserInformationActivity;
 import com.aite.mainlibrary.activity.allsetting.userinformation.usersafety.UserSafetyActivity;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.androidlife.AppManager;
@@ -70,6 +71,9 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
     @BindView(R2.id.sos_user_tv)
     TextView sosUserTv;
 
+    @BindView(R2.id.ll_switch_roles)
+    LinearLayout mLlSwitchRoles;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.setting_layout;
@@ -88,6 +92,7 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
         addressLl.setOnClickListener(this);
         appSettingLl.setOnClickListener(this);
         elderHelpHouseLl.setOnClickListener(this);
+        mLlSwitchRoles.setOnClickListener(this);
     }
 
     /**
@@ -107,12 +112,20 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
         if (v.getId() == R.id.address_ll) startActivity(AdressFixActivity.class);
         if (v.getId() == R.id.app_setting_ll) startActivity(AppSettingInformationActivity.class);
         if (v.getId() == R.id.elder_helpHouse_ll) startActivity(ElderHelpHouseActivity.class);
+        //R2.id.ll_switch_roles
+        if (v.getId() == R.id.ll_switch_roles) {
+            Intent intent = new Intent();
+            intent.setClassName(getContext(), "com.aite.aitezhongbao.activity.role.RoleActivity");
+            startActivity(intent);
+            //com.aite.aitezhongbao.app.activity.role.RoleActivity
+        }
 
 
         if (v.getId() == R.id.exit_login_btn) {
             Intent intent = new Intent();
             intent.setAction("com.aite.aitezhongbao.app.activity.login.LoginActivity");
             AppManager.getInstance().killAllActivity();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }
@@ -120,7 +133,8 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
     @Override
     protected void initDatas() {
         if (AppConstant.ICON_URL != null)
-            Glide.with(context).load(AppConstant.ICON_URL).apply(RequestOptions.circleCropTransform()).into(iconIv);
+            Glide.with(context).load(AppConstant.ICON_URL).diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
+                    .skipMemoryCache(true).apply(RequestOptions.circleCropTransform()).into(iconIv);
         if (AppConstant.USERNAME != null)
             userNameTv.setText(AppConstant.USERNAME);
 

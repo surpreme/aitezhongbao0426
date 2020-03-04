@@ -15,8 +15,7 @@ import com.lzy.basemodule.view.StatusBarUtils;
 
 import butterknife.BindView;
 
-public class
-ChatShowActivity extends BaseActivity {
+public class ChatShowActivity extends BaseActivity {
     @BindView(R2.id.fragment_group)
     FrameLayout fragmentGroup;
 
@@ -37,8 +36,9 @@ ChatShowActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initToolbar("聊天");
+        initToolbar("在线客服");
         StatusBarUtils.setColor(this, getResources().getColor(R.color.white));
+
         getFragmentManager().beginTransaction().replace(R.id.fragment_group, getFragment()).commitAllowingStateLoss();
     }
 

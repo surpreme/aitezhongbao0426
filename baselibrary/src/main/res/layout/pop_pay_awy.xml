@@ -34,19 +34,23 @@
 
             <ImageView
                 android:id="@+id/close_iv"
-                android:layout_width="20dp"
-                android:layout_height="13dp"
-                android:src="@drawable/close" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/close"
+                android:tint="@color/black" />
         </LinearLayout>
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <View
             android:layout_width="match_parent"

@@ -1,6 +1,8 @@
 package com.aite.mainlibrary.activity.allmain.messager;
 
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -9,15 +11,19 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.aite.mainlibrary.Constant.MainUIConstant;
+import com.aite.mainlibrary.Mainbean.MallChaterBean;
 import com.aite.mainlibrary.Mainbean.SystemMsgBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
+import com.aite.mainlibrary.activity.im.activity.ChatShowActivity;
+import com.aite.mainlibrary.activity.im.fragment.ChaterDailogFragment;
 import com.aite.mainlibrary.activity.im.mallchater.MallChaterActivity;
 import com.aite.mainlibrary.activity.im.systemmsg.SyStemMsgActivity;
 import com.aite.mainlibrary.adapter.GridViewIconAdapter;
 import com.aite.mainlibrary.adapter.SyStemMsgAdapter;
 import com.lzy.basemodule.base.BaseActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +55,7 @@ public class MessagerActivity extends BaseActivity<MessagerContract.View, Messag
             if (position == 2) {
                 startActivity(SyStemMsgActivity.class);
             } else if (position == 1) {
-                startActivity(MallChaterActivity.class);
+                mPresenter.onGetIMChatList(initKeyParams());
             }
 
         });
@@ -82,5 +88,19 @@ public class MessagerActivity extends BaseActivity<MessagerContract.View, Messag
             syStemMsgAdapter.appendData(systemMsgBean.getMessage_array());
         }
 
+    }
+
+    @Override
+    public void onGetIMChatListSuccess(Object msg) {
+        MallChaterBean mallChaterBean = (MallChaterBean) msg;
+//        mallChaterRecyAdapter.appendData(mallChaterBean.getPlatform_callcenter());
+//        Intent intent = new Intent(this, ChatShowActivity.class);
+//        intent.putExtra("server", (Serializable) mallChaterBean.getPlatform_callcenter());
+        ChaterDailogFragment chaterDailogFragment=new ChaterDailogFragment();
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("server", (Serializable) mallChaterBean.getPlatform_callcenter());
+        chaterDailogFragment.setArguments(bundle);
+        chaterDailogFragment.show(getSupportFragmentManager(),"imchatdalog");
+//        startActivity(intent);
     }
 }

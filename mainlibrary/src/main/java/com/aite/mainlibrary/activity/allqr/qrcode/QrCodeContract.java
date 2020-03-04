@@ -1,5 +1,6 @@
 package com.aite.mainlibrary.activity.allqr.qrcode;
 
+import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
 import com.lzy.basemodule.mvp.BasePresenter;
 import com.lzy.basemodule.mvp.BaseView;
 import com.lzy.okgo.model.HttpParams;
@@ -11,7 +12,7 @@ import com.lzy.okgo.model.HttpParams;
 
 public class QrCodeContract {
     interface View extends BaseView {
-        void onSureSuccess(Object msg);
+        void onSureSuccess(String msg);
         void onSureUnfactBookSuccess(Object msg);
         void onBindingDeviceSuccess(Object msg);
 

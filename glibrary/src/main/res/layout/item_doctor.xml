@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:padding="@dimen/dp_12"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_12">
 
 
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="@color/yelllow" />
+            android:layout_height="44dp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,32 +48,27 @@
                     android:textSize="@dimen/text13" />
             </LinearLayout>
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/tv_hospital"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_5"
-                android:background="@drawable/doctor_bg">
-
-                <TextView
-                    android:id="@+id/tv_hospital"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dp_4"
-                    android:paddingTop="5dp"
-                    android:paddingRight="@dimen/dp_4"
-                    android:paddingBottom="5dp"
-                    android:textColor="#00BFBF"
-                    android:textSize="@dimen/dp_12" />
-
-            </LinearLayout>
+                android:background="@drawable/doctor_bg"
+                android:paddingLeft="@dimen/dp_4"
+                android:paddingTop="5dp"
+                android:paddingRight="@dimen/dp_4"
+                android:paddingBottom="5dp"
+                android:textColor="#00BFBF"
+                android:textSize="@dimen/text12" />
 
             <TextView
                 android:id="@+id/tv_site"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_5"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:text="坐诊医院：广州中医药大学固生堂深圳罗湖..."
                 android:textColor="@color/text1"
                 android:textSize="@dimen/text16" />
@@ -84,8 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_12"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:text="擅长：儿童过敏性疾病（过敏性咳嗽、慢性腹..."
                 android:textColor="@color/glaytxt"
                 android:textSize="@dimen/text13" />
@@ -97,40 +92,40 @@
 
 
                 <TextView
-                    android:maxLines="1"
                     android:id="@+id/tv_grade"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:textColor="@color/glaytxt"
                     android:textSize="@dimen/text12" />
 
                 <TextView
-                    android:maxLines="1"
                     android:id="@+id/tv_subscribe_num"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:textColor="@color/glaytxt"
                     android:textSize="@dimen/text12" />
 
 
                 <TextView
-                    android:maxLines="1"
                     android:id="@+id/tv_consult_num"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:textColor="@color/glaytxt"
                     android:textSize="@dimen/text12" />
 
 
                 <TextView
-                    android:maxLines="1"
                     android:id="@+id/tv_reply_num"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:textColor="@color/glaytxt"
                     android:textSize="@dimen/text12" />
 
@@ -142,9 +137,9 @@
     </LinearLayout>
 
     <View
-        android:background="@color/noglay"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="@color/noglay" />
 
 </LinearLayout>
 

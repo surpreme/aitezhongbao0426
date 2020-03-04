@@ -190,9 +190,9 @@ public class HealthBookActivity extends BaseActivity<HealthBookContract.View, He
     @Override
     public void onGetInformationListSuccess(Object msg) {
         if (msg.toString().isEmpty()) return;
-        highEdit.setHint(String.format("身高：%s cm", getJsonToString(((HealthbookMainBean) msg).getMember_height())));
-        heightEdit.setHint(String.format("体重：%s kg", getJsonToString(((HealthbookMainBean) msg).getMember_weight())));
-        xueTypeEdit.setHint(String.format("血型：%s 型", getJsonToString(((HealthbookMainBean) msg).getMember_blood_types())));
+        highEdit.setHint(String.format("：%s cm", getJsonToString(((HealthbookMainBean) msg).getMember_height())));
+        heightEdit.setHint(String.format("：%s kg", getJsonToString(((HealthbookMainBean) msg).getMember_weight())));
+        xueTypeEdit.setHint(String.format("：%s 型", getJsonToString(((HealthbookMainBean) msg).getMember_blood_types())));
 //        weightTv.setText(String.format("体重：%s", ((HealthbookMainBean) msg).getMember_weight()) == null ? "未知" : ((HealthbookMainBean) msg).getMember_weight().toString());
 //        xueTypeTv.setText(String.format("血型：%s", ((HealthbookMainBean) msg).getMember_blood_types()) == null ? "未知" : ((HealthbookMainBean) msg).getMember_blood_types().toString());
         sendBodyTv.setText(String.format("是否捐赠器官者: %s", ((HealthbookMainBean) msg).getIs_organ_donor().equals("1") ? "是" : "否"));

@@ -11,7 +11,9 @@ import com.aite.mainlibrary.Mainbean.UseInformationBean;
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.R2;
 import com.aite.mainlibrary.activity.allsetting.changeuserinformation.ChangeUserInformationActivity;
+import com.aite.mainlibrary.activity.image.BaseImageActivity;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseActivity;
@@ -19,6 +21,7 @@ import com.lzy.okgo.model.HttpParams;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -55,7 +58,7 @@ public class UserInformationActivity extends BaseActivity<UserInformationContrac
 
             }
         });
-        userIcon.setOnClickListener(this);
+        userIconLl.setOnClickListener(this);
     }
 
     private HttpParams initParams() {
@@ -64,9 +67,11 @@ public class UserInformationActivity extends BaseActivity<UserInformationContrac
         return httpParams;
     }
 
+    @OnClick({R2.id.user_icon_ll})
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.user_icon_ll)
+            startActivity(BaseImageActivity.class, "imageUrl", AppConstant.ICON_URL);
     }
 
     @Override
@@ -89,11 +94,15 @@ public class UserInformationActivity extends BaseActivity<UserInformationContrac
     @Override
     public void onGetUserInformation(Object msg) {
         if (((UseInformationBean) msg).getMember_info().getMember_avatar() == null) return;
-        Glide.with(context).load(((UseInformationBean) msg).getMember_info().getMember_avatar()).apply(RequestOptions.circleCropTransform()).into(userIcon);
+        Glide.with(context)
+                .load(((UseInformationBean) msg).getMember_info().getMember_avatar())
+                .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
+                .skipMemoryCache(true).apply(RequestOptions.circleCropTransform()).into(userIcon);
         userNameTv.setText(((UseInformationBean) msg).getMember_info().getMember_truename());
         usernumberTv.setText(((UseInformationBean) msg).getMember_info().getMember_mobile());
         genderTv.setText(((UseInformationBean) msg).getMember_info().getMember_sex() == 1 ? "男" : "女");
-        birthdayTv.setText(String.valueOf(((UseInformationBean) msg).getMember_info().getMember_birthday()));
+        if (((UseInformationBean) msg).getMember_info().getMember_birthday() != null && !String.valueOf(((UseInformationBean) msg).getMember_info().getMember_birthday()).equals("null"))
+            birthdayTv.setText(String.valueOf(((UseInformationBean) msg).getMember_info().getMember_birthday()));
 
 
     }

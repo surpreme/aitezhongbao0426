@@ -1,26 +1,34 @@
 apply plugin: 'com.android.library'
-
+def config = rootProject.ext.android
 android {
+    Properties props = new Properties()
+    props.load(new FileInputStream(rootProject.file("signing.properties")))
     signingConfigs {
-        release {
-            storeFile file('/Users/valy/aitezhongbao')
-            storePassword 'aite8899'
-            keyAlias = 'androidx.key'
-            keyPassword 'aite8899'
+        //signing.properties 文件名
+        release {//发布版本的签名配置
+            storeFile file(props['KEYSTORE_FILE'])
+            keyAlias props['KEY_ALIAS']
+            storePassword props['KEYSTORE_PWD']
+            keyPassword props['KEY_PWD']
+        }
+        debug {//调试版本的签名配置
+            storeFile file(props['DEBUG_KEYSTORE'])
+            keyAlias props['DEBUG_ALIAS']
+            storePassword props['DEBUG_KEYSTORE_PWD']
+            keyPassword props['DEBUG_KEY_PWD']
         }
     }
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    //config.gradle 文件名
+    compileSdkVersion config.compileSdkVersion
+    buildToolsVersion config.buildToolsVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -45,7 +53,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

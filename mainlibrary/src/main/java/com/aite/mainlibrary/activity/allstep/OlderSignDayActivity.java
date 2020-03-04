@@ -1,4 +1,4 @@
-package com.aite.mainlibrary.activity;
+package com.aite.mainlibrary.activity.allstep;
 
 import android.os.Bundle;
 import android.view.View;
@@ -51,10 +51,5 @@ public class OlderSignDayActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

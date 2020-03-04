@@ -56,15 +56,17 @@ public class MoneyCardRecyAdapter extends RecyclerView.Adapter<MoneyCardRecyAdap
         if (moneyCollectBean != null) {
             if (position == 0) {
                 if (moneyCollectBean.getCash_info() != null) {
-                    if (moneyCollectBean.getCash_info().getBank_name() != null)
+                    if (!isNull(moneyCollectBean.getCash_info().getBank_name()))
                         holder.priceTv.setText(moneyCollectBean.getCash_info().getBank_name());
-                    if (moneyCollectBean.getCash_info().getPdc_amount() != null)
+                    else holder.priceTv.setVisibility(View.GONE);
+                    if (!isNull(moneyCollectBean.getCash_info().getPdc_amount()))
                         holder.informationTv.setText(moneyCollectBean.getCash_info().getPdc_amount());
-                    if (moneyCollectBean.getCash_info().getPdc_payment_time() != null)
+                    else holder.informationTv.setVisibility(View.GONE);
+                    if (!isNull(moneyCollectBean.getCash_info().getPdc_payment_time()))
                         holder.timeTv.setText(moneyCollectBean.getCash_info().getPdc_payment_time());
-                }else {
-                    holder.priceTv.setText("");
-                    holder.informationTv.setText("");
+                    else holder.timeTv.setVisibility(View.GONE);
+                } else {
+                    holder.priceTv.setVisibility(View.GONE);
                     holder.informationTv.setVisibility(View.GONE);
                     holder.timeTv.setVisibility(View.GONE);
                 }
@@ -72,13 +74,16 @@ public class MoneyCardRecyAdapter extends RecyclerView.Adapter<MoneyCardRecyAdap
                 if (moneyCollectBean.getRecharge_info() != null) {
                     if (moneyCollectBean.getRecharge_info().getPdr_payment_name() != null)
                         holder.priceTv.setText(moneyCollectBean.getRecharge_info().getPdr_payment_name());
+                    else holder.priceTv.setVisibility(View.GONE);
                     if (moneyCollectBean.getRecharge_info().getPdc_amount() != null)
                         holder.informationTv.setText(moneyCollectBean.getRecharge_info().getPdc_amount());
+                    else holder.informationTv.setVisibility(View.GONE);
                     if (moneyCollectBean.getRecharge_info().getPdc_payment_time() != null)
                         holder.timeTv.setText(moneyCollectBean.getRecharge_info().getPdc_payment_time());
-                }else {
-                    holder.priceTv.setText("");
-                    holder.informationTv.setText("");
+                    else holder.timeTv.setVisibility(View.GONE);
+                } else {
+                    holder.priceTv.setVisibility(View.GONE);
+                    holder.informationTv.setVisibility(View.GONE);
                     holder.informationTv.setVisibility(View.GONE);
                     holder.timeTv.setVisibility(View.GONE);
                 }
@@ -86,19 +91,23 @@ public class MoneyCardRecyAdapter extends RecyclerView.Adapter<MoneyCardRecyAdap
                 if (moneyCollectBean.getLog_info() != null) {
                     if (moneyCollectBean.getLog_info().getLg_av_amount() != null)
                         holder.priceTv.setText(moneyCollectBean.getLog_info().getLg_av_amount());
+                    else holder.priceTv.setText(View.GONE);
                     if (moneyCollectBean.getLog_info().getLg_desc() != null)
                         holder.informationTv.setText(moneyCollectBean.getLog_info().getLg_desc());
+                    else holder.informationTv.setVisibility(View.GONE);
                     if (moneyCollectBean.getLog_info().getLg_add_time() != null)
                         holder.timeTv.setText(moneyCollectBean.getLog_info().getLg_add_time());
-                }else {
-                    holder.priceTv.setText("");
-                    holder.informationTv.setText("");
+                    else holder.timeTv.setVisibility(View.GONE);
+
+                } else {
+                    holder.priceTv.setVisibility(View.GONE);
+                    holder.informationTv.setVisibility(View.GONE);
                     holder.informationTv.setVisibility(View.GONE);
                     holder.timeTv.setVisibility(View.GONE);
                 }
             } else {
-                holder.priceTv.setText("");
-                holder.informationTv.setText("");
+                holder.priceTv.setVisibility(View.GONE);
+                holder.informationTv.setVisibility(View.GONE);
                 holder.informationTv.setVisibility(View.GONE);
                 holder.timeTv.setVisibility(View.GONE);
             }
@@ -122,6 +131,10 @@ public class MoneyCardRecyAdapter extends RecyclerView.Adapter<MoneyCardRecyAdap
     @Override
     public int getItemCount() {
         return names == null ? 0 : names.length;
+    }
+
+    private boolean isNull(String s) {
+        return s == null || s.equals("") || s.equals("null") || s.equals(" ");
     }
 
     static

@@ -228,6 +228,34 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
 
     }
 
+    protected TimePickerView initChoiceTimer(OnTimeSelectListener listener, String title, boolean isStartCurrentTime, boolean isEndCurrentTime, boolean isYear, boolean isHM) {
+        Calendar currDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        if (isStartCurrentTime)
+            startDate.setTime(new Date(System.currentTimeMillis()));
+        else startDate.set(2010, 1, 1);
+        if (isEndCurrentTime)
+            endDate.setTime(new Date(System.currentTimeMillis()));
+        else
+            endDate.set(2050, 11, 31);
+        pvTime = new TimePickerBuilder(this, listener)
+                .setType(new boolean[]{true, true, isYear, isHM, isHM, false})// 默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
+                .setTitleColor(0xFFF9731E)//标题文字颜色
+                .setSubmitColor(0xFFF9731E)//确定按钮文字颜色
+                .setCancelColor(0xFFF9731E)//取消按钮文字颜色
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setTitleText(title)
+//                .isDialog(true)//是否显示为对话框样式
+                .build();
+        return pvTime;
+
+    }
+
     protected TimePickerView initChoiceTimer(OnTimeSelectListener listener, String title, int year, boolean isHM) {
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
@@ -544,7 +572,6 @@ public abstract class mBaseActivity<V extends BaseView, T extends BasePresenterI
 
     protected String getEditString(EditText editText) {
         if (isEditTextEmpty(editText)) {
-            ToastUtils.showToast(context, "请检查输入的信息");
             return "";
         }
         try {

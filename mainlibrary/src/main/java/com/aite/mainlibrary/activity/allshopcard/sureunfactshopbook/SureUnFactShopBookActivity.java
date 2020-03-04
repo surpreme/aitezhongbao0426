@@ -71,6 +71,7 @@ public class SureUnFactShopBookActivity extends BaseActivity<SureUnFactShopBookC
     @BindView(R2.id.call_ll)
     LinearLayout callLl;
     private String STOTERPHONENUMBER = "";
+    private boolean SHOPMESSSAGE = false;
     //订单号
     private String ORDER_ID = "";
 
@@ -124,7 +125,7 @@ public class SureUnFactShopBookActivity extends BaseActivity<SureUnFactShopBookC
 
     }
 
-    @OnClick({R2.id.call_ll, R2.id.hide_book_go_tv})
+    @OnClick({R2.id.call_ll, R2.id.hide_book_go_tv, R2.id.message_ll})
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.call_ll) {
@@ -135,6 +136,10 @@ public class SureUnFactShopBookActivity extends BaseActivity<SureUnFactShopBookC
         } else if (v.getId() == R.id.hide_book_go_tv) {
 
             mPresenter.getPayList(initKeyParams());
+        } else if (v.getId() == R.id.message_ll) {
+            if (!SHOPMESSSAGE) {
+                showToast("暂无服务商");
+            }
         }
 
     }
@@ -183,6 +188,7 @@ public class SureUnFactShopBookActivity extends BaseActivity<SureUnFactShopBookC
             payNumberTv.setText("暂无支付信息");
         }
         try {
+            SHOPMESSSAGE = unFactSureBookBean.getStore_member_info() == null || unFactSureBookBean.getStore_member_info().isEmpty();
             STOTERPHONENUMBER = TextEmptyUtils.getText(String.valueOf(unFactSureBookBean.getOrder_info().getStore_phone()));
             timeCreateTv.setText(String.format("创建时间:%s", TimeUtils.stampToDatemm2(Long.parseLong(unFactSureBookBean.getOrder_info().getAdd_time()))));
         } catch (Exception e) {

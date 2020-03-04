@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_right_layout" />
+    <include layout="@layout/toolbar_right_glayout" />
 
     <View
         android:layout_width="match_parent"
@@ -191,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/et_evaluate"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:background="@drawable/but_bg1"
+                    android:background="@drawable/g_but_bg1"
                     android:text="提交"
                     android:textColor="@color/white" />
 

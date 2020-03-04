@@ -17,6 +17,7 @@ import com.aite.a.activity.WebActivity;
 import com.aite.a.model.MeMenuinfo;
 import com.aiteshangcheng.a.R;
 import com.blankj.rxbus.RxBus;
+import com.lzy.basemodule.BaseConstant.AppConstant;
 
 import java.util.List;
 
@@ -101,7 +102,9 @@ public class MeMenu1Adapter extends BaseAdapter {
                     mcontext.startActivity(intent1);
                 }else if (info.txt.equals(mcontext.getString(R.string.virtualorders))){//虚拟订单
                     Intent intentvr = new Intent(mcontext, WebActivity.class);
-                    intentvr.putExtra("url", "http://aitecc.com/wap/index.php?act=member_vr_order");
+//                    http://zhongbyi.aitecc.com/mobile/
+//                    intentvr.putExtra("url", "http://aitecc.com/wap/index.php?act=member_vr_order");
+                    intentvr.putExtra("url", "http://zhongbyi.aitecc.com/wap/index.php?act=member_vr_order&key="+ AppConstant.KEY);
                     mcontext.startActivity(intentvr);
                 }
             }

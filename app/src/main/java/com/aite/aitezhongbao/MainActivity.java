@@ -3,27 +3,35 @@ package com.aite.aitezhongbao;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.aite.a.HomeTabActivity;
-import com.aite.a.activity.InformationActivity;
 import com.aite.mainlibrary.fragment.activityfragment.AroundBackgroundFragment;
 import com.aite.mainlibrary.fragment.activityfragment.LoveFamilyFragment;
 import com.aite.mainlibrary.fragment.activityfragment.ShopFragment;
 import com.aite.mainlibrary.fragment.activityfragment.main.MainFragment;
 import com.aite.mainlibrary.fragment.activityfragment.minefragment.MineFragment;
+import com.blankj.rxbus.RxBus;
+import com.example.event.ChangeRoleEvent;
+import com.example.event.PayMessageEvent;
+import com.example.ui.fagment.DoctorInfoFragment;
+import com.example.ui.fagment.VolunteerFagment;
+import com.lzy.basemodule.BaseConstant.AppConstant;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.view.StatusBarUtils;
+
+import org.greenrobot.eventbus.EventBus;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -61,10 +69,25 @@ public class MainActivity extends BaseActivity {
     TextView myTv;
     @BindView(R.id.my_layout)
     RelativeLayout myLayout;
+    @BindView(R.id.tabAllLl)
+    LinearLayout mTabAll;
+
+
     private static final String[] FRAGMENT_TAG = {"MainFragment", "ShopFragment", "AroundBackgroundFragment", "LoveFamilyFragment", "MineFragment"};
     protected String CODE_FRAGMENT_KEY = "fragment_tag";//key
 
+    private static final String[] HOME_PAGE = {"DoctorInfoFragment", "mVolunteerFagment"};
+
+
+    //会员首页
     private MainFragment mainFragment;
+
+    //医生首页
+    private DoctorInfoFragment mDoctorInfoFragment;
+
+    //义工首页
+    private VolunteerFagment mVolunteerFagment;
+
     private MineFragment mineFragment;
     private LoveFamilyFragment loveFamilyFragment;
     private ShopFragment shopFragment;
@@ -72,10 +95,39 @@ public class MainActivity extends BaseActivity {
     private int mFragmentTag_index = 0;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        EventBus.getDefault().post(new ChangeRoleEvent());
+
+        mainFragment = null;
+        mDoctorInfoFragment = null;
+
+        setTabSelection(0);
+
+
+    }
+
+    @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof MainFragment)
-            mainFragment = (MainFragment) fragment;
-        else if (fragment instanceof MineFragment)
+        switch (AppConstant.CURRENT_IDENTITY) {
+            case 1:
+                if (fragment instanceof MainFragment)
+                    mainFragment = (MainFragment) fragment;
+                break;
+            case 2:
+                if (fragment instanceof DoctorInfoFragment) {
+                    mDoctorInfoFragment = (DoctorInfoFragment) fragment;
+                }
+                break;
+            case 4:
+                if (fragment instanceof VolunteerFagment) {
+                    mVolunteerFagment = (VolunteerFagment) fragment;
+                }
+                break;
+        }
+
+        if (fragment instanceof MineFragment)
             mineFragment = (MineFragment) fragment;
         else if (fragment instanceof LoveFamilyFragment)
             loveFamilyFragment = (LoveFamilyFragment) fragment;
@@ -97,10 +149,25 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         fragmentManager = getSupportFragmentManager();
         if (getSavedInstanceState() != null) {
-            if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 0 && mainFragment == null)
-                mainFragment = (MainFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[0]);
+            switch (AppConstant.CURRENT_IDENTITY) {
+                case 1:
+                    if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 0 && mainFragment == null)
+                        mainFragment = (MainFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[0]);
+                    break;
+                case 2:
+                    if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 0 && mDoctorInfoFragment == null)
+                        mDoctorInfoFragment = (DoctorInfoFragment) fragmentManager.findFragmentByTag(HOME_PAGE[0]);
+                    break;
+                case 4:
+                    if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 0 && mVolunteerFagment == null)
+                        mVolunteerFagment = (VolunteerFagment) fragmentManager.findFragmentByTag(HOME_PAGE[1]);
+                    break;
+            }
+
 //            if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 1 && shopFragment == null)
 //                shopFragment = (ShopFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);\
+
+
             if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 1 && aroundBackgroundFragment == null)
                 aroundBackgroundFragment = (AroundBackgroundFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);
             if (getSavedInstanceState().getInt(CODE_FRAGMENT_KEY) == 2 && loveFamilyFragment == null)
@@ -129,12 +196,22 @@ public class MainActivity extends BaseActivity {
         return false;
     }
 
+
     @Override
     protected void initResume() {
+        RxBus.getDefault().subscribe(MainActivity.this, "ISSHOWHIDETABLL", new RxBus.Callback<String>() {
+            @Override
+            public void onEvent(String o) {
+                if (o.equals("hide")) {
+                    mTabAll.setVisibility(View.GONE);
+                } else {
+                    mTabAll.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
 
     }
-
-
 
     @Override
     protected void initReStart() {
@@ -153,12 +230,9 @@ public class MainActivity extends BaseActivity {
             case 0:
                 mainImg.setImageResource(R.mipmap.mainimg);
                 mainTv.setTextColor(getResources().getColor(R.color.blue));
-                if (mainFragment == null) {
-                    mainFragment = new MainFragment();
-                    transaction.add(R.id.content, mainFragment, FRAGMENT_TAG[index]);
-                } else {
-                    transaction.show(mainFragment);
-                }
+
+                initHomePage(transaction);
+
                 break;
 //            case 1:
 //                shopImg.setImageResource(R.drawable.shop);
@@ -208,6 +282,40 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    /***
+     * 切换角色处理多首页
+     */
+    private void initHomePage(FragmentTransaction transaction) {
+        switch (AppConstant.CURRENT_IDENTITY) {
+            case 1: //会员首页
+                if (mainFragment == null) {
+                    mainFragment = new MainFragment();
+                    transaction.add(R.id.content, mainFragment, FRAGMENT_TAG[0]);
+                } else {
+                    transaction.show(mainFragment);
+                }
+                break;
+            case 2:
+                if (mDoctorInfoFragment == null) {
+                    mDoctorInfoFragment = new DoctorInfoFragment();
+                    transaction.add(R.id.content, mDoctorInfoFragment, HOME_PAGE[0]);
+                } else {
+                    transaction.show(mDoctorInfoFragment);
+                }
+                break;
+            case 4:
+                if (mVolunteerFagment == null) {
+                    mVolunteerFagment = new VolunteerFagment();
+                    transaction.add(R.id.content, mVolunteerFagment, HOME_PAGE[1]);
+                } else {
+                    transaction.show(mVolunteerFagment);
+                }
+                break;
+
+        }
+
+    }
+
     private void clearSelection() {
         StatusBarUtils.setColor(context, getResources().getColor(R.color.white));
         shopImg.setImageResource(R.mipmap.unshop);
@@ -220,8 +328,6 @@ public class MainActivity extends BaseActivity {
         newsTv.setTextColor(Color.parseColor("#82858b"));
         myImg.setImageResource(R.mipmap.unmy);
         myTv.setTextColor(Color.parseColor("#82858b"));
-
-
     }
 
     /**
@@ -230,9 +336,10 @@ public class MainActivity extends BaseActivity {
      * 我的 unmy /// mine
      */
     private void hideFragment(FragmentTransaction transaction) {
-        if (mainFragment != null) {
-            transaction.hide(mainFragment);
-        }
+
+        hideHomeFragment(transaction);
+
+
 //        if (shopFragment != null) {
 //            transaction.hide(shopFragment);
 //        }
@@ -248,6 +355,31 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    /**
+     * 处理多首页 切换
+     *
+     * @param transaction
+     */
+    private void hideHomeFragment(FragmentTransaction transaction) {
+        switch (AppConstant.CURRENT_IDENTITY) {
+            case 1:
+                if (mainFragment != null) {
+                    transaction.hide(mainFragment);
+                }
+                break;
+            case 2:
+                if (mDoctorInfoFragment != null) {
+                    transaction.hide(mDoctorInfoFragment);
+                }
+                break;
+            case 4:
+                if (mVolunteerFagment != null) {
+                    transaction.hide(mVolunteerFagment);
+                }
+                break;
+        }
+    }
+
 
     @OnClick({R.id.main_layout, R.id.shop_layout, R.id.aroundbackground_layout, R.id.news_layout, R.id.my_layout})
     public void onViewClicked(View view) {
@@ -259,6 +391,7 @@ public class MainActivity extends BaseActivity {
                 //       setTabSelection(1);
                 Intent intent = new Intent(/*getContext(), HomeTabActivity.class*/);
                 intent.setClass(getContext(), HomeTabActivity.class);
+                intent.putExtra("userKey", AppConstant.KEY);
 //                //getContext(),com.aite.a.activity.MainActivity.class
 //                intent.setAction("com.aite.zhongbao.shop.MainActivity");
                 startActivity(intent);
@@ -288,13 +421,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (mFragmentTag_index == 2) {
+        if (mFragmentTag_index == 1) {
             if (aroundBackgroundFragment.WebonBackPressed()) {
                 super.onBackPressed();
             } else {
                 return;
             }
-        } else if (mFragmentTag_index == 3) {
+        } else if (mFragmentTag_index == 2) {
             if (loveFamilyFragment.WebonBackPressed()) {
                 super.onBackPressed();
             } else {
@@ -305,141 +438,3 @@ public class MainActivity extends BaseActivity {
         }
     }
 }
-//public class AroundBackgroundFragment extends BaseFragment {
-//    @BindView(R2.id.webView)
-//    WebView webView;
-//    private static final String WEBURL = "https://aitecc.com/wap/index.php?act=news";
-//    //    https://aitecc.com/wap/index.php?act=news
-//
-//    @Override
-//    protected void initModel() {
-//
-//    }
-//
-//    @Override
-//    protected void initViews() {
-//        initWebSetting();
-//        webView.loadUrl(WEBURL);
-//    }
-//
-//    private void initWebSetting() {
-//        // 声明WebSettings子类
-//        WebSettings webSettings = webView.getSettings();
-//        // 支持javascript
-//        webSettings.setJavaScriptEnabled(true);
-//        // 设置自适应屏幕，两者合用
-//        webSettings.setUseWideViewPort(true); // 将图片调整到适合webview的大小
-//        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-//
-//        // 缩放操作
-//        webSettings.setSupportZoom(true); // 支持缩放，默认为true。是下面那个的前提。
-//        webSettings.setBuiltInZoomControls(true); // 设置内置的缩放控件。若为false，则该WebView不可缩放
-//        webSettings.setDisplayZoomControls(false); // 隐藏原生的缩放控件
-//        webSettings.setLoadsImagesAutomatically(true);  //支持自动加载图片
-//
-//        //启用数据库
-//        webSettings.setDatabaseEnabled(true);
-//        String dir = MainApp.getAppContext().getDir("database", Context.MODE_PRIVATE).getPath();
-//        //启用地理定位
-//        webSettings.setGeolocationEnabled(true);
-//        //设置定位的数据库路径
-//        webSettings.setGeolocationDatabasePath(dir);
-//        //最重要的方法，一定要设置，这就是出不来的主要原因
-//        webSettings.setDomStorageEnabled(true);
-//        webView.addJavascriptInterface(new com.aite.mainlibrary.fragment.AroundBackgroundFragment.JsInterface(getActivity()), "AndroidWebView");
-//        //如果不设置WebViewClient，请求会跳转系统浏览器
-//        webView.setWebViewClient(new WebViewClient() {
-//
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
-//                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
-//                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
-//                view.loadUrl(WEBURL);
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
-//                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    if (request.getUrl().toString().contains("sina.cn")) {
-//                        view.loadUrl("http://ask.csdn.net/questions/178242");
-//                        return true;
-//                    }
-//                }
-//
-//                return false;
-//            }
-//
-//        });
-//
-//    }
-//
-//    /**
-//     * 监听js事件
-//     *
-//     * @author Administrator
-//     */
-//    class JsInterface {
-//        private Context mContext;
-//
-//        public JsInterface(Context context) {
-//            this.mContext = context;
-//        }
-//
-//        /**
-//         * 返回
-//         */
-//        @JavascriptInterface
-//        public void AppGoBack() {
-//            Log.i("----------------", "返回  ");
-//            if (webView.canGoBack()) {
-//                webView.goBack();
-//            } else {
-//                getActivity().finish();
-//            }
-//        }
-//    }
-//
-//    @Override
-//    protected int getLayoutResId() {
-//        return com.aite.mainlibrary.R.layout.activity_around_fragment;
-//    }
-//
-//
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
-//
-//    public boolean onBackPressed(){
-//        if (webView.canGoBack()){
-//            webView.goBack();
-//            return false;
-//        }else {
-//            return true;
-//        }
-//    }
-//}
-//    @Override
-//    public void onBackPressed() {
-//        if (mFragmentTag_index == 2 ) {
-//            if (aroundBackgroundFragment.onBackPressed() ) {
-//                super.onBackPressed();
-//            } else {
-//                return;
-//            }
-//        } else if (mFragmentTag_index == 3){
-//            if (loveFamilyFragment.onBackPressed()) {
-//                super.onBackPressed();
-//            } else {
-//                return;
-//            }
-//        } else {
-//            return;
-//        }
-//    }

@@ -19,6 +19,7 @@ import com.aite.mainlibrary.activity.allshopcard.helpdoctor.HelpdoctorActivity;
 import com.aite.mainlibrary.activity.allshopcard.helpeat.HelpEatActivity;
 import com.aite.mainlibrary.activity.allshopcard.timebank.TimeBankActivity;
 import com.aite.mainlibrary.adapter.HelpElderRecyAdapter;
+import com.aite.mainlibrary.adapter.LessBodyIconRecyAdapter;
 import com.aite.mainlibrary.adapter.RecyMainIconAdapter;
 import com.example.ui.activity.StarDoctorPushActvity;
 import com.lzy.basemodule.BaseConstant.AppConstant;
@@ -40,6 +41,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 
 /**
@@ -70,8 +72,10 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
     @BindView(R2.id.sound_tv)
     TextBannerView soundTv;
     private HelpElderRecyAdapter helpElderRecyAdapter;
+    private LessBodyIconRecyAdapter lessBodyIconRecyAdapter;
     private RecyMainIconAdapter recyMainIconAdapter;
     private List<MainUiDataBean.PensionAdvsBean> pensionAdvsBeans = new ArrayList<>();
+    private List<MainUiDataBean.DisAdvsBean> disAdvsBeans = new ArrayList<>();
     private List<MainUiDataBean.ArticleBean> articleBeanList = new ArrayList<>();
     //banner datalist
     private List<String> list_img = new ArrayList<>();
@@ -108,7 +112,6 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
         smartRefreshLayout.setOnRefreshListener(refreshLayout -> {
             smartRefreshLayout.finishRefresh(5000/*,false*/);//传入false表示刷新失败
             initModel();
-
         });
         soundTv.setItemOnClickListener((data, position) -> {
             if (articleBeanList != null && !articleBeanList.isEmpty() && articleBeanList.get(position).getArticle_id() != null)
@@ -122,15 +125,20 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
 
         //初始化适配器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager lessBodyLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false);
         helpElderRecy.setLayoutManager(linearLayoutManager);
-        if (gridLayoutManager != null)
-            lessBodyRevy.setLayoutManager(gridLayoutManager);
-        recyMainIconAdapter = new RecyMainIconAdapter(context,
-                MainUIConstant.MainFragmentConstant.settingImg,
-                MainUIConstant.MainFragmentConstant.settingTv,
-                getScreenwidth());
-        lessBodyRevy.setAdapter(recyMainIconAdapter);
+        lessBodyRevy.setLayoutManager(lessBodyLinearLayoutManager);
+
+//        if (gridLayoutManager != null)
+//            lessBodyRevy.setLayoutManager(gridLayoutManager);
+//        recyMainIconAdapter = new RecyMainIconAdapter(context,
+//                MainUIConstant.MainFragmentConstant.settingImg,
+//                MainUIConstant.MainFragmentConstant.settingTv,
+//                getScreenwidth());
+//        lessBodyRevy.setAdapter(recyMainIconAdapter);
+
+        lessBodyRevy.setAdapter(lessBodyIconRecyAdapter = new LessBodyIconRecyAdapter(context, disAdvsBeans));
         helpElderRecyAdapter = new HelpElderRecyAdapter(context, pensionAdvsBeans);
         helpElderRecy.setAdapter(helpElderRecyAdapter);
         //        helpElderRecy.addItemDecoration(new GridSpacingItemDecoration(5, 20, false));
@@ -140,10 +148,16 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
                     , SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 0)
                     , ContextCompat.getColor(context, R.color.noglay), context
                     , 5f, "7.1:12"));
+        } if (lessBodyRevy.getItemDecorationCount() == 0) {
+            lessBodyRevy.addItemDecoration(new BaseItemDecoration(SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 10)
+                    , SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 0)
+                    , SystemUtil.dip2px(context, 0), SystemUtil.dip2px(context, 0)
+                    , ContextCompat.getColor(context, R.color.noglay), context
+                    , 5f, "7.1:12"));
         }
 
         //设置适配器点击监听
-        recyMainIconAdapter.setOnRecyClickInterface(postion -> {
+        lessBodyIconRecyAdapter.setLstenerInterface(postion -> {
             switch (postion) {
                 case 0:
                     startActivity(DayTogetherActivity.class, "type", "1");
@@ -210,6 +224,13 @@ public class MainFragment extends BaseFragment<MainContract.View, MainPresenter>
         if (((MainUiDataBean) msg).getPension_advs() != null || ((MainUiDataBean) msg).getPension_advs().size() > 0) {
             pensionAdvsBeans.addAll(((MainUiDataBean) msg).getPension_advs());
             helpElderRecyAdapter.notifyDataSetChanged();
+        }
+        MainUiDataBean mainUiDataBean = ((MainUiDataBean) msg);
+        if (mainUiDataBean.getDis_advs() != null) {
+            if (disAdvsBeans == null) disAdvsBeans = new ArrayList<>();
+            if (!disAdvsBeans.isEmpty()) disAdvsBeans.clear();
+            disAdvsBeans.addAll(mainUiDataBean.getDis_advs());
+            lessBodyIconRecyAdapter.notifyDataSetChanged();
         }
         //设置数据 textbanner
         List<String> soundlist = new ArrayList<>();

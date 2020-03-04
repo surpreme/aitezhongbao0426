@@ -1,8 +1,11 @@
 package com.aite.aitezhongbao.activity;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -11,7 +14,6 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aite.aitezhongbao.R;
-import com.aite.aitezhongbao.activity.login.LoginActivity;
 import com.aite.aitezhongbao.adapter.WelcomeAdapter;
 import com.lzy.basemodule.base.BaseActivity;
 import com.lzy.basemodule.logcat.LogUtils;
@@ -21,14 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class BaseWelcomeActivity extends BaseActivity {
+public abstract class BaseWelcomeActivity extends BaseActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recycler_view;
     protected WelcomeAdapter welcomeAdapter;
+
+    protected abstract void startYourActivity();
+
     protected List<String> urls = new ArrayList<>();
     @BindView(R.id.current_layout)
     LinearLayout current_layout;
+    @BindView(R.id.start_btn)
+    Button startBtn;
 
     @Override
     protected int getLayoutResId() {
@@ -39,6 +47,10 @@ public class BaseWelcomeActivity extends BaseActivity {
     protected void initView() {
         StatusBarUtils.setTransparent(context);
         initiRecy();
+        startBtn.setVisibility(View.GONE);
+        startBtn.setOnClickListener(v -> {
+            startYourActivity();
+        });
 //        if (urls.size() == 0) {
 //            startActivity(LoginActivity.class);
 //            killThisActvity();
@@ -104,10 +116,17 @@ public class BaseWelcomeActivity extends BaseActivity {
                         int firstItemPosition = linearManager.findFirstVisibleItemPosition();
                         int totalItemCount = linearManager.getItemCount();
                         initCurrentLogo(firstItemPosition + 1);
+                        if (firstItemPosition == lastItemPosition) {
+                            startBtn.setVisibility(View.VISIBLE);
+                        } else {
+                            startBtn.setVisibility(View.GONE);
+
+                        }
                         LogUtils.d(lastItemPosition + "   " + firstItemPosition + "fdss" + totalItemCount + "  " + current_layout.getChildCount());
                     }
                 }
             });
         }
     }
+
 }

@@ -3,6 +3,7 @@ package com.aite.mainlibrary.activity.allmain.messager;
 
 import android.app.Activity;
 
+import com.aite.mainlibrary.Mainbean.MallChaterBean;
 import com.aite.mainlibrary.Mainbean.SyStemRencenterBean;
 import com.aite.mainlibrary.Mainbean.SystemMsgBean;
 import com.aite.mainlibrary.Mainbean.TwoSuccessCodeBean;
@@ -61,6 +62,46 @@ public class MessagerPresenter extends BasePresenterImpl<MessagerContract.View> 
 
                     @Override
                     public void onSuccess(Response<BaseData<SystemMsgBean>> response) {
+                        LogUtils.d("onSuccess");
+
+                    }
+                });
+    }
+
+    @Override
+    public void onGetIMChatList(HttpParams httpParams) {
+        OkGo.<BaseData<MallChaterBean>>get(AppConstant.GET_IMSHOPMESSAGEINFORMATIONURL)
+                .tag(mView.getContext())
+                .params(httpParams)
+                .execute(new AbsCallback<BaseData<MallChaterBean>>() {
+                    @Override
+                    public BaseData<MallChaterBean> convertResponse(okhttp3.Response response) throws Throwable {
+                        LogUtils.d(response.request());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        BaseData baseData = BeanConvertor.convertBean(jsonObject.toString(), BaseData.class);
+                        if (baseData.getDatas().getError() != null) {
+                            mView.showError(baseData.getDatas().getError());
+                            return null;
+                        } else {
+                            JSONObject object = jsonObject.optJSONObject("datas");
+                            Gson gson = new Gson();
+                            MallChaterBean mallChaterBean = gson.fromJson(object.toString(), MallChaterBean.class);
+                            ((Activity) mView.getContext()).runOnUiThread(()
+                                    -> mView.onGetIMChatListSuccess(mallChaterBean));
+                        }
+
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onStart(Request<BaseData<MallChaterBean>, ? extends Request> request) {
+                        LogUtils.d("onStart");
+
+                    }
+
+                    @Override
+                    public void onSuccess(Response<BaseData<MallChaterBean>> response) {
                         LogUtils.d("onSuccess");
 
                     }

@@ -1,5 +1,6 @@
 package com.example.Utils;
 
+import android.annotation.SuppressLint;
 import
         android.app.Activity;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.example.glibrary.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -130,24 +133,24 @@ public class TextUtil {
     }
 
 
-
     /**
      * 将List<String>转化为String字符串显示，元素之间用“，”号隔开
+     *
      * @param list 要处理的list
      * @return 返回 元素之间用“，”号隔开的字符串
      */
-    public static String ArrayListToString(List<String> list){
+    public static String ArrayListToString(List<String> list) {
 
-        if(list == null || list.size() ==0){
+        if (list == null || list.size() == 0) {
             return null;
         }
 
         boolean isFirst = true;
         StringBuffer result = new StringBuffer();
         for (String s : list) {
-            if(isFirst){
+            if (isFirst) {
                 isFirst = false;
-            }else {
+            } else {
                 result.append(",");
             }
             result.append(s);
@@ -156,7 +159,25 @@ public class TextUtil {
         return result.toString();
     }
 
-
+    /**
+     * 分钟转换 小时
+     *
+     * @param time
+     * @param context
+     * @return
+     */
+    public static String getTime(String time, Context context) {
+        int totalTime = Integer.valueOf(time);
+        int hour = totalTime / 60;
+        int minute = totalTime % 60;
+        if (hour > 0) {
+            if (minute == 0) {
+                return context.getResources().getString(R.string.g_hour, hour);
+            }
+            return context.getResources().getString(R.string.g_hour_minute, hour, minute);
+        }
+        return context.getResources().getString(R.string.g_minute, totalTime);
+    }
 
 
 //    /**

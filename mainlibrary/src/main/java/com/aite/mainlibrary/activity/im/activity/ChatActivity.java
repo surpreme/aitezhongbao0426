@@ -1,7 +1,9 @@
 package com.aite.mainlibrary.activity.im.activity;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import com.aite.mainlibrary.R;
 import com.aite.mainlibrary.activity.im.fragment.ChatFragment;
 import com.tencent.qcloud.tim.uikit.modules.chat.base.ChatInfo;

@@ -780,7 +780,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name="com.aite.a.activity.li.activity.Amapactivity" />
         <activity android:name="com.aite.a.activity.li.activity.AroundLocationChoiceActivity" />
-        <activity android:name="com.aite.a.activity.li.activity.WelcomeActivity" /> <!-- 自定义相机 end -->
+        <activity android:name="com.aite.a.activity.li.activity.WelcomeActivity" />
+        <activity android:name="com.aite.a.activity.li.activity.topuppays.TopupPaysActivity" /> <!-- 自定义相机 end -->
         <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
         <!-- 【必须】 exported设置为true -->
         <!-- <activity -->

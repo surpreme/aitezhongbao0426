@@ -225,7 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:inputType="number"
+                        android:inputType="numberSigned"
                         android:maxLines="1"
                         android:textColor="@color/black"
                         android:textSize="18sp" />

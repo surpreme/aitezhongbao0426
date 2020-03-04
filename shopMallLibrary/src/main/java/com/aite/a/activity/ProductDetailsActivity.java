@@ -40,6 +40,8 @@ import com.aite.a.view.ServicePopu;
 import com.aiteshangcheng.a.R;
 import com.bumptech.glide.Glide;
 import com.community.utils.ClutterUtils;
+import com.lzy.basemodule.dailogwithpop.PopwindowUtils;
+import com.lzy.basemodule.util.toast.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +103,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     }
                     break;
                 case goods_details_err:
-                    Toast.makeText(ProductDetailsActivity.this, getString(R.string.systembusy), Toast.LENGTH_SHORT).show();
+                    if (msg.obj != null) {
+                        Toast.makeText(ProductDetailsActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                    } else
+                        Toast.makeText(ProductDetailsActivity.this, getString(R.string.systembusy), Toast.LENGTH_SHORT).show();
                     break;
                 case add_cart_id://添加购物车
                     if (msg.obj.equals("1")) {
@@ -321,6 +327,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             textIntent.setType("text/plain");
             textIntent.putExtra(Intent.EXTRA_TEXT, detailsInfo.goods_info.goods_url);
             startActivity(Intent.createChooser(textIntent, getString(R.string.order_reminder90)));
+        } else if (view.getId() == R.id.tv_conllect_shop) {
+            if (BooleanLogin.getInstance().hasLogin(ProductDetailsActivity.this)) {
+                if (isshoucang) {
+                    netRun.cancelGoodsFavorite(goods_id, "goods");
+                } else {
+                    netRun.addFavorites(goods_id, "goods");
+                }
+            }
         }
 
 
@@ -442,8 +456,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 //                textIntent.putExtra(Intent.EXTRA_TEXT, detailsInfo.goods_info.goods_url);
 //                startActivity(Intent.createChooser(textIntent, getString(R.string.order_reminder90)));
 //                break;
-//            case R.id.tv_conllect_shop:
-//                break;
+
 //            case R.id.tv_youhui:
 //                break;
 //            case R.id.tv_tuijian_group:
@@ -607,6 +620,16 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void init() {
+        if (detailsInfo == null) {
+            ToastUtils.showToast(this, "系统错误");
+            onBackPressed();
+            return;
+        }
+        if (detailsInfo.goods_info == null) {
+            ToastUtils.showToast(this, "系统错误");
+            onBackPressed();
+            return;
+        }
 //        tv_price1.setText(detailsInfo.goods_info.goods_price);    //原价
         if (detailsInfo.goods_info.promotion_type == null || detailsInfo.goods_info.promotion_type.length() == 0) {
 //            tv_price1.setText("¥" + detailsInfo.goods_info.goods_price + detailsInfo.goods_info.goods_unit);
@@ -645,7 +668,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         }
         Glide.with(ProductDetailsActivity.this).load(detailsInfo.store_info.avatar).into(iv_storeimg);
         tv_storename.setText(detailsInfo.store_info.store_name);
-
+        if (detailsInfo.store_info.store_credit_info == null) {
+            ToastUtils.showToast(this, "系统错误");
+            onBackPressed();
+            return;
+        }
         tv_description.setText(detailsInfo.store_info.store_credit_info.store_desccredit.credit);
         tv_service.setText(detailsInfo.store_info.store_credit_info.store_servicecredit.credit);
         tv_logistics.setText(detailsInfo.store_info.store_credit_info.store_deliverycredit.credit);

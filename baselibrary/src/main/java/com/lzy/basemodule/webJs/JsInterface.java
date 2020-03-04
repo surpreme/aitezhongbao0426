@@ -18,16 +18,20 @@ public class JsInterface {
         this.activity = activity;
     }
 
+
     /**
      * 返回
      */
     @JavascriptInterface
     public void AppGoBack() {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            activity.finish();
-        }
+        activity.runOnUiThread(() -> {
+            if (webView.canGoBack()) {
+                webView.goBack();
+            } else {
+                activity.finish();
+            }
+        });
+
     }
 }
 

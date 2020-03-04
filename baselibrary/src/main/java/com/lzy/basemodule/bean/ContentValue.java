@@ -58,6 +58,8 @@ public class ContentValue {
             bundle.putExtra(key, (String) value);
         } else if (value instanceof Integer)
             bundle.putExtra(key, Integer.parseInt(value.toString()));
+        else if (value instanceof Double)
+            bundle.putExtra(key, Double.valueOf(value.toString()));
         else if (value instanceof Boolean) {
             bundle.putExtra(key, Boolean.parseBoolean(value.toString()));
         } else if (value instanceof Float) {

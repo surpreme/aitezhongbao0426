@@ -1936,9 +1936,9 @@ public interface Mark {
     /**
      * 服务器
      */
-    public static String APPUrl = "https://aitecc.com/mobile/";
+//    public static String APPUrl = "https://aitecc.com/mobile/";
 
-//    public static String APPUrl = "https://mall2.aitecc.com/mobile/";
+    public static String APPUrl = "http://zhongbyi.aitecc.com/mobile/";
 //	public static String APPUrl = "http://cqzy.cnaite.cn/mobile/";
     /**
      * 我的商城
@@ -2095,7 +2095,7 @@ public interface Mark {
      */
     public static final String order_list = APPUrl
             + "index.php?act=member_order&op=order_list";
-    /**
+      /**
      * 虚拟订单列表接口
      */
     public static final String virtualorders = APPUrl
